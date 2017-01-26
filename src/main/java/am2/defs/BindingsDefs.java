@@ -6,12 +6,15 @@ import am2.ArsMagica2;
 import am2.extensions.AffinityData;
 import am2.gui.AuraCustomizationMenu;
 import am2.items.ItemSpellBook;
+import am2.packet.AMDataWriter;
 import am2.packet.AMNetHandler;
+import am2.packet.AMPacketIDs;
 import am2.utils.SpellUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -68,17 +71,29 @@ public class BindingsDefs {
 		}
 		else if (this.SPELL_BOOK_NEXT.isPressed()){
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			ItemStack curItem = player.inventory.getCurrentItem();
-			if (curItem == null || (curItem.getItem() != ItemDefs.spellBook || curItem.getItem() != ItemDefs.arcaneSpellbook))
-				return;
-			AMNetHandler.INSTANCE.sendSpellbookSlotChange(player, player.inventory.currentItem, ItemSpellBook.ID_NEXT_SPELL);
+			ItemStack curItem = player.getHeldItem(EnumHand.MAIN_HAND);
+			if (curItem.getItem() instanceof ItemSpellBook){
+				AMNetHandler.INSTANCE.sendPacketToServer(
+					AMPacketIDs.SPELLBOOK_CHANGE_ACTIVE_SLOT,
+					new AMDataWriter()
+						.add(ItemSpellBook.ID_NEXT_SPELL)
+						.add(player.getEntityId())
+						.add(Minecraft.getMinecraft().thePlayer.inventory.currentItem)
+						.generate());
+			}
 		}
 		else if (this.SPELL_BOOK_PREV.isPressed()){
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			ItemStack curItem = player.inventory.getCurrentItem();
-			if (curItem == null || (curItem.getItem() != ItemDefs.spellBook || curItem.getItem() != ItemDefs.arcaneSpellbook))
-				return;
-			AMNetHandler.INSTANCE.sendSpellbookSlotChange(player, player.inventory.currentItem, ItemSpellBook.ID_PREV_SPELL);
+			ItemStack curItem = player.getHeldItem(EnumHand.MAIN_HAND);
+			if (curItem.getItem() instanceof ItemSpellBook){
+				AMNetHandler.INSTANCE.sendPacketToServer(
+					AMPacketIDs.SPELLBOOK_CHANGE_ACTIVE_SLOT,
+					new AMDataWriter()
+						.add(ItemSpellBook.ID_PREV_SPELL)
+						.add(player.getEntityId())
+						.add(Minecraft.getMinecraft().thePlayer.inventory.currentItem)
+						.generate());
+			}
 		}
 //		else if (this.SpellBookNextSpellKey.isPressed()){
 //			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
