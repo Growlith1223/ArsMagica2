@@ -134,15 +134,6 @@ public class AMNetHandler{
 		sendPacketToClientPlayer((EntityPlayerMP)player, AMPacketIDs.PLAYER_LOGIN_DATA, data);
 	}
 
-	public void sendSpellbookSlotChange(EntityPlayer player, int inventoryIndex, byte subID){
-		sendPacketToServer(AMPacketIDs.SPELLBOOK_CHANGE_ACTIVE_SLOT,
-				new AMDataWriter()
-						.add(subID)
-						.add(player.getEntityId())
-						.add(inventoryIndex)
-						.generate());
-	}
-
 	public void sendShapeGroupChangePacket(int newCastingMode, int entityid){
 		byte[] packetData = new AMDataWriter().add(newCastingMode).add(entityid).generate();
 		sendPacketToServer(AMPacketIDs.SPELL_SHAPE_GROUP_CHANGE, packetData);
