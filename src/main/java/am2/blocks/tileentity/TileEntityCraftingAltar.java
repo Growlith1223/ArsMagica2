@@ -1,13 +1,5 @@
 package am2.blocks.tileentity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import am2.blocks.render.TileCraftingAltarRenderer;
-import com.google.common.collect.Lists;
-
 import am2.ArsMagica2;
 import am2.api.CraftingAltarMaterials;
 import am2.api.IMultiblockStructureController;
@@ -34,6 +26,7 @@ import am2.spell.shape.Binding;
 import am2.utils.KeyValuePair;
 import am2.utils.NBTUtils;
 import am2.utils.SpellUtils;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockLever.EnumOrientation;
@@ -55,7 +48,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityCraftingAltar extends TileEntityAMPower implements IMultiblockStructureController{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+public class TileEntityCraftingAltar extends TileEntityAMPower implements IMultiblockStructureController, ITileEntityAMBase {
 
 	private MultiblockStructureDefinition primary = new MultiblockStructureDefinition("craftingAltar_alt");
 	private MultiblockStructureDefinition secondary = new MultiblockStructureDefinition("craftingAltar");
@@ -93,6 +91,7 @@ public class TileEntityCraftingAltar extends TileEntityAMPower implements IMulti
 	private BlockPos podiumLocation;
 	private BlockPos switchLocation;
 	private int maxEffects;
+	private boolean dirty = false;
 
 	private ItemStack addedPhylactery = null;
 	private ItemStack addedBindingCatalyst = null;
@@ -540,6 +539,7 @@ private IBlockState mimicState;
 				}
 			}
 		}
+		this.markDirty();
 	}
 
 	private void updateLecternInformation(){
@@ -867,7 +867,7 @@ private IBlockState mimicState;
 	private void setStructureValid(boolean valid){
 		if (this.structureValid == valid) return;
 		this.structureValid = valid;
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		this.markDirty();
 	}
 
 	public void deactivate(){
@@ -1070,16 +1070,41 @@ private IBlockState mimicState;
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
-		NBTTagCompound compound = new NBTTagCompound();
-		this.writeToNBT(compound);
-		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), compound);
+		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), getUpdateTag());
 		return packet;
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
 		this.readFromNBT(pkt.getNbtCompound());
-		this.worldObj.markAndNotifyBlock(pos, this.worldObj.getChunkFromBlockCoords(pos), this.worldObj.getBlockState(pos), this.worldObj.getBlockState(pos), 3);
+		this.markDirty();
+        //worldObj.notifyBlockUpdate(pos, worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		//this.worldObj.markAndNotifyBlock(pos, this.worldObj.getChunkFromBlockCoords(pos), this.worldObj.getBlockState(pos), this.worldObj.getBlockState(pos), 3);
 	}
 
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public void markDirty() {
+		this.markForUpdate();
+		super.markDirty();
+	}
+
+	@Override
+	public void markForUpdate() {
+		this.dirty = true;
+	}
+
+	@Override
+	public boolean needsUpdate() {
+		return this.dirty;
+	}
+
+	@Override
+	public void clean() {
+		this.dirty = false;
+	}
 }

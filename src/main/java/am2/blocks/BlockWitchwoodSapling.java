@@ -1,8 +1,5 @@
 package am2.blocks;
 
-import java.util.List;
-import java.util.Random;
-
 import am2.defs.BlockDefs;
 import am2.defs.CreativeTabsDefs;
 import am2.items.ItemBlockSubtypes;
@@ -22,6 +19,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockWitchwoodSapling extends BlockBush implements IGrowable{
 	
@@ -46,6 +46,8 @@ public class BlockWitchwoodSapling extends BlockBush implements IGrowable{
 	}
 
 	private void updateOrGrowTree(World world, BlockPos pos, Random rand, int numNearbyPools){
+		if(!(world.getBlockState(pos).getBlock() instanceof BlockWitchwoodSapling))
+			return;
 		if (rand.nextInt(7) == 0){
 			int meta = world.getBlockState(pos).getValue(AGE) + numNearbyPools;
 			world.setBlockState(pos, world.getBlockState(pos).withProperty(AGE, Math.min(meta, 15)));

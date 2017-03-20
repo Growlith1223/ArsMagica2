@@ -1,7 +1,5 @@
 package am2.blocks.tileentity;
 
-import java.util.*;
-
 import am2.ArsMagica2;
 import am2.LogHelper;
 import am2.api.ArsMagicaAPI;
@@ -9,11 +7,7 @@ import am2.api.SpellRegistry;
 import am2.api.affinity.Affinity;
 import am2.api.event.SpellRecipeItemsEvent;
 import am2.api.skill.Skill;
-import am2.api.spell.AbstractSpellPart;
-import am2.api.spell.SpellComponent;
-import am2.api.spell.SpellModifier;
-import am2.api.spell.SpellModifiers;
-import am2.api.spell.SpellShape;
+import am2.api.spell.*;
 import am2.blocks.BlockInscriptionTable;
 import am2.container.ContainerInscriptionTable;
 import am2.defs.BlockDefs;
@@ -32,7 +26,6 @@ import am2.utils.KeyValuePair;
 import am2.utils.NBTUtils;
 import am2.utils.RecipeUtils;
 import am2.utils.SpellUtils;
-import com.google.common.collect.Iterables;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -59,12 +52,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityInscriptionTable extends TileEntity implements IInventory, ITickable{
+import java.util.*;
+
+public class TileEntityInscriptionTable extends TileEntity implements IInventory, ITickable, ITileEntityAMBase {
 
 	private ItemStack inscriptionTableItemStacks[];
 	private final ArrayList<AbstractSpellPart> currentRecipe;
 	private final ArrayList<ArrayList<AbstractSpellPart>> shapeGroups;
 	private int numStageGroups = 2;
+	private boolean dirty = false;
 	public static final int MAX_STAGE_GROUPS = 5;
 	public static int bookIndex = 0;
 	public static int paperIndex = 1;
@@ -160,7 +156,8 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	public void setInUse(EntityPlayer player){
 		this.currentPlayerUsing = player;
 		if (!this.worldObj.isRemote){
-			worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+			this.markDirty();
+			//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
 		}
 	}
 
@@ -197,7 +194,8 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 			if (shouldSet)
 				this.worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockInscriptionTable.TIER_1, getUpgradeState() >= 1).withProperty(BlockInscriptionTable.TIER_2, getUpgradeState() >= 2).withProperty(BlockInscriptionTable.TIER_3, getUpgradeState() >= 3), 2);
 		}
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		this.markDirty();
+		//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
 	}
 
 	public int getUpgradeState(){
@@ -836,8 +834,8 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 			bookstack.getTagCompound().setBoolean("spellFinalized", true);
 
 			//worldObj.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), "arsmagica2:misc.inscriptiontable.takebook", 1.0f, 1.0f, true);
-
-			worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+			this.markDirty();
+			//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
 		}
 		return bookstack;
 	}
@@ -885,6 +883,33 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	public boolean modifierCanBeAdded(SpellModifier modifier){
 		return false;
+	}
+
+
+	@Override
+	public void markDirty() {
+		this.markForUpdate();
+		super.markDirty();
+	}
+
+	@Override
+	public void markForUpdate() {
+		this.dirty = true;
+	}
+
+	@Override
+	public boolean needsUpdate() {
+		return this.dirty;
+	}
+
+	@Override
+	public void clean() {
+		this.dirty = false;
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
 	}
 
 	static class ValueComparator implements Comparator<Affinity>{
@@ -967,10 +992,13 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	public int getShapeGroupSize(int groupIndex){
+		if(groupIndex > this.shapeGroups.size() || groupIndex < 0)
+			return 0;
 		return this.shapeGroups.get(groupIndex).size();
 	}
 
 	public AbstractSpellPart getShapeGroupPartAt(int groupIndex, int index){
+
 		return this.shapeGroups.get(groupIndex).get(index);
 	}
 

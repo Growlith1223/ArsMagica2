@@ -25,8 +25,7 @@ This is a reworked version of the Ars Magica 2 mod by Mithion.
 ## The Compendium Update
 The compendium is getting entirely reworked in a way that you'll need to add Entries in a different way that you previously did. Though this will allow you to have more that one kind of right page. For example you can check am2.defs.LoreDefs which contains all the pages definition.
  
-## Things to note
- * Due to the removal of metadata values, the Lightning Guardian and the Ice Guardian now requires a special block in place of the top one.
+
 
 ## License
 This mod is open sourced under the Creative Commons 3.0 Attribution Non-Commercial License

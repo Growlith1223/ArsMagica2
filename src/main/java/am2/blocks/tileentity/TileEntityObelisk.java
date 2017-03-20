@@ -1,10 +1,5 @@
 package am2.blocks.tileentity;
 
-import java.util.HashMap;
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import am2.ObeliskFuelHelper;
 import am2.api.IMultiblockStructureController;
 import am2.api.blocks.MultiblockGroup;
@@ -19,6 +14,7 @@ import am2.packet.AMNetHandler;
 import am2.power.PowerNodeRegistry;
 import am2.power.PowerTypes;
 import am2.utils.InventoryUtilities;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,7 +33,10 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityObelisk extends TileEntityAMPower implements IMultiblockStructureController, IInventory{
+import java.util.HashMap;
+import java.util.List;
+
+public class TileEntityObelisk extends TileEntityAMPower implements IMultiblockStructureController, IInventory, ITileEntityAMBase {
 	protected static int pillarBlockID = 98; //stone brick
 	protected static int pillarBlockMeta = 3; //arcane texture
 	protected int surroundingCheckTicks;
@@ -204,10 +203,13 @@ public class TileEntityObelisk extends TileEntityAMPower implements IMultiblockS
 	}
 
 	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
-		NBTTagCompound compound = new NBTTagCompound();
-		this.writeToNBT(compound);
-		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(pos, getBlockMetadata(), compound);
+		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(pos, getBlockMetadata(), getUpdateTag());
 		return packet;
 	}
 
@@ -280,9 +282,8 @@ public class TileEntityObelisk extends TileEntityAMPower implements IMultiblockS
 			offsetY = (float)Math.max(Math.sin(worldObj.getTotalWorldTime() / 20f) / 5, 0.25f);
 			if (burnTimeRemaining > 0)
 				burnTimeRemaining--;
-
 		}
-
+		markDirty();
 		super.update();
 	}
 
@@ -482,5 +483,28 @@ public class TileEntityObelisk extends TileEntityAMPower implements IMultiblockS
 	public void clear() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void markDirty() {
+		markForUpdate();
+		super.markDirty();
+	}
+
+	private boolean dirty = false;
+
+	@Override
+	public void markForUpdate() {
+		this.dirty = true;
+	}
+
+	@Override
+	public boolean needsUpdate() {
+		return this.dirty;
+	}
+
+	@Override
+	public void clean() {
+		this.dirty = false;
 	}
 }

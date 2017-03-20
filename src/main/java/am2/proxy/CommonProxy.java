@@ -1,13 +1,5 @@
 package am2.proxy;
 
-import static am2.defs.IDDefs.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-
-import com.google.common.collect.ImmutableMap;
-
 import am2.AMChunkLoader;
 import am2.ArsMagica2;
 import am2.affinity.AffinityAbilityHelper;
@@ -28,12 +20,9 @@ import am2.defs.*;
 import am2.enchantments.AMEnchantments;
 import am2.extensions.RiftStorage;
 import am2.handler.*;
-import am2.items.ItemEssenceBag;
-import am2.items.ItemKeystone;
-import am2.items.ItemOre;
-import am2.items.ItemRuneBag;
-import am2.items.ItemSpellBook;
+import am2.items.*;
 import am2.lore.CompendiumUnlockHandler;
+import am2.network.PacketHandler;
 import am2.network.SeventhSanctum;
 import am2.packet.AMNetHandler;
 import am2.packet.AMPacketProcessorServer;
@@ -49,7 +38,7 @@ import am2.utils.InventoryUtilities;
 import am2.utils.NPCSpells;
 import am2.world.AM2WorldDecorator;
 import am2.world.BiomeWitchwoodForest;
-
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,12 +68,19 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import static am2.defs.IDDefs.*;
+
 
 public class CommonProxy implements IGuiHandler{
 
 	public ParticleManagerServer particleManager;
 	protected ServerTickHandler serverTickHandler;
 	protected AMPacketProcessorServer packetProcessor;
+	public PacketHandler packetHandler;
 	private HashMap<EntityLivingBase, ArrayList<PotionEffect>> deferredPotionEffects = new HashMap<>();
 	private HashMap<EntityLivingBase, Integer> deferredDimensionTransfers = new HashMap<>();
 	public ItemDefs items;
@@ -180,6 +176,8 @@ public class CommonProxy implements IGuiHandler{
 		initHandlers();
 		ArsMagica2.config.init();
 		serverTickHandler = new ServerTickHandler();
+		packetHandler = new PacketHandler();
+		packetHandler.registerMessages();
 		enchantments = new AMEnchantments();
 		AMNetHandler.INSTANCE.init();
 		AMNetHandler.INSTANCE.registerChannels(packetProcessor);
@@ -195,6 +193,7 @@ public class CommonProxy implements IGuiHandler{
 		MinecraftForge.EVENT_BUS.register(playerTracker);
 		MinecraftForge.EVENT_BUS.register(new FlickerEvents());
 		MinecraftForge.EVENT_BUS.register(new ShrinkHandler());
+		MinecraftForge.EVENT_BUS.register(new EventManager());
 		
 		registerInfusions();
 		registerFlickerOperators();

@@ -175,12 +175,13 @@ public class SpellBase extends ItemSpellBase{
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack p_onBlockStartBreak_1_, BlockPos p_onBlockStartBreak_2_, EntityPlayer p_onBlockStartBreak_3_) {
-		return false;
+	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
+	    player.worldObj.destroyBlock(pos, player.canHarvestBlock(player.worldObj.getBlockState(pos)));
+	    return true;
 	}
 
 	@Override
 	public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
-		return stack.getTagCompound().hasKey("ArsMagica2.harvestByProjectile") && stack.getTagCompound().getBoolean("ArsMagica2.harvestByProjectile") == true ? SpellUtils.getModifiedInt_Add(2, stack, (EntityLivingBase)player, (EntityLivingBase)player, player.getEntityWorld(), SpellModifiers.MINING_POWER) : -1;
+	    return SpellUtils.getModifiedInt_Add(2, stack, (EntityLivingBase)player, (EntityLivingBase)player, player.getEntityWorld(), SpellModifiers.MINING_POWER);
 	}
 }

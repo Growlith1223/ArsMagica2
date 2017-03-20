@@ -38,7 +38,7 @@ public class ArsMagica2 {
 	public static CommonProxy proxy;
 	
 	@Instance(MODID)
-	public static ArsMagica2 instance = new ArsMagica2();
+	public static ArsMagica2 instance;
 	public static AMConfig config;
 	public static SpellPartConfiguration disabledSkills;
 	private File configDir;

@@ -32,7 +32,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityCalefactor extends TileEntityAMPower implements IInventory, ISidedInventory, IKeystoneLockable<TileEntityCalefactor>{
+public class TileEntityCalefactor extends TileEntityAMPower implements IInventory, ISidedInventory, IKeystoneLockable<TileEntityCalefactor>, ITileEntityAMBase {
 
 	private ItemStack calefactorItemStacks[];
 	private float rotationX, rotationY, rotationZ;
@@ -42,6 +42,7 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	private final float basePowerConsumedPerTickCooking = 0.85f;
 	private int particleCount = 0;
 	private boolean isCooking;
+	private boolean dirty = false;
 
 	private static final byte PKT_PRG_UPDATE = 1;
 	private boolean isFirstTick = true;
@@ -319,6 +320,7 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 		}else if (!this.canSmelt()){
 			this.timeSpentCooking = 0;
 		}
+		this.markDirty();
 	}
 
 	public int getCookProgressScaled(int par1){
@@ -510,10 +512,7 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
-		NBTTagCompound compound = new NBTTagCompound();
-		this.writeToNBT(compound);
-		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(pos, 0, compound);
-		return packet;
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
 	}
 
 	@Override
@@ -549,5 +548,31 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public void clear() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public void markDirty() {
+		markForUpdate();
+		super.markDirty();
+	}
+
+	@Override
+	public void markForUpdate() {
+		this.dirty = true;
+	}
+
+	@Override
+	public boolean needsUpdate() {
+		return this.dirty;
+	}
+
+	@Override
+	public void clean() {
+		this.dirty = false;
 	}
 }

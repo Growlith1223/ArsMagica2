@@ -1,10 +1,5 @@
 package am2.blocks.tileentity;	
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import am2.ArsMagica2;
 import am2.api.ArsMagicaAPI;
 import am2.api.blocks.IKeystoneLockable;
@@ -22,6 +17,7 @@ import am2.spell.shape.Binding;
 import am2.utils.InventoryUtilities;
 import am2.utils.RecipeUtils;
 import am2.utils.SpellUtils;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +35,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityArcaneDeconstructor extends TileEntityAMPower implements IInventory, ISidedInventory, IKeystoneLockable<TileEntityArcaneDeconstructor>{
 
@@ -95,7 +94,8 @@ public class TileEntityArcaneDeconstructor extends TileEntityAMPower implements 
 				if (inventory[0] == null){
 					current_deconstruction_time = 0;
 					deconstructionRecipe = null;
-					worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+					this.markDirty();
+					//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
 				}else{
 					if (PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.DARK, DECONSTRUCTION_POWER_COST)){
 						if (deconstructionRecipe == null){
@@ -115,7 +115,8 @@ public class TileEntityArcaneDeconstructor extends TileEntityAMPower implements 
 								current_deconstruction_time = 0;
 							}
 							if (current_deconstruction_time % 10 == 0)
-								worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+								this.markDirty();
+								//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
 						}
 						PowerNodeRegistry.For(worldObj).consumePower(this, PowerTypes.DARK, DECONSTRUCTION_POWER_COST);
 					}
