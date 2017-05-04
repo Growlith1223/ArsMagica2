@@ -514,7 +514,7 @@ skill.arsmagica2:augmented_casting.name=Augmented Casting
 skill.arsmagica2:affinity_gains.name=Affinity Gains Boost
 
 skill.arsmagica2:projectile.occulusdesc=Snowball!
-skill.arsmagica2:physical_damage.occulusdesc=Ranged sword... Why not ?
+skill.arsmagica2:physical_damage.occulusdesc=Ranged sword... Why not?
 skill.arsmagica2:gravity.occulusdesc=Falling... Okay...
 skill.arsmagica2:bounce.occulusdesc=Hey! Come back!
 skill.arsmagica2:fire_damage.occulusdesc=You shall burn!
@@ -631,8 +631,8 @@ skill.arsmagica2:daylight.occulusdesc=So... Does that means I can control time?
 skill.arsmagica2:moonrise.occulusdesc=Full Moon.
 skill.arsmagica2:prosperity.occulusdesc=Gold. Loads of Gold.
 
-skill.arsmagica2:mana_regen1.occulusdesc=You can fell the mana flowing around you...
-skill.arsmagica2:mana_regen2.occulusdesc=All this energy... Why waste it ?
+skill.arsmagica2:mana_regen1.occulusdesc=You can feel the mana flowing around you...
+skill.arsmagica2:mana_regen2.occulusdesc=All this energy... Why waste it?
 skill.arsmagica2:mana_regen3.occulusdesc=Your control over mana has come to it's best
 skill.arsmagica2:mage_posse1.occulusdesc=Cool, a mage friend!
 skill.arsmagica2:mage_posse2.occulusdesc=Let's share!
