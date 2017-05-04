@@ -21,7 +21,6 @@ public class BuffEffectFlight extends BuffEffect{
 		if (entityliving instanceof EntityPlayerMP){
 			EntityPlayer player = (EntityPlayer)entityliving;
 			player.capabilities.allowFlying = true;
-			player.capabilities.isFlying = true;
 			player.sendPlayerAbilities();		
 		} 
 	}
