@@ -35,6 +35,8 @@ public class AoE extends SpellShape{
 	@Override
 	public SpellCastResult beginStackStage(ItemSpellBase item, ItemStack stack, EntityLivingBase caster, EntityLivingBase target, World world, double x, double y, double z, EnumFacing side, boolean giveXP, int useCount){
 		double radius = SpellUtils.getModifiedDouble_Add(1, stack, caster, target, world, SpellModifiers.RADIUS);
+		if (radius > 1D) 
+			radius++;
 		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius));
 
 		boolean appliedToAtLeastOneEntity = false;

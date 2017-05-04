@@ -13,6 +13,7 @@ import am2.buffs.BuffEffectTemporalAnchor;
 import am2.buffs.BuffStatModifiers;
 import am2.defs.ItemDefs;
 import am2.defs.PotionEffectsDefs;
+import am2.enchantments.EnchantMagicResist;
 import am2.extensions.EntityExtension;
 import am2.utils.DimensionUtilities;
 import am2.utils.KeystoneUtilities;
@@ -20,6 +21,7 @@ import am2.utils.SelectionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.ItemStack;
@@ -79,6 +81,13 @@ public class PotionEffectHandler {
 			event.setAmount(event.getAmount() * 0.25f);
 		
 		float damage = EntityExtension.For(event.getEntityLiving()).protect(event.getAmount());
+		
+		EntityLivingBase entity = (EntityLivingBase) event.getEntity();
+		
+		if (event.getSource().damageType.equals(DamageSource.magic.damageType) || event.getSource().damageType.equals(DamageSource.dragonBreath.damageType)){
+			damage = EnchantMagicResist.ApplyEnchantment(entity, damage);
+		}
+		
 		event.setAmount(damage);
 	}	
 	

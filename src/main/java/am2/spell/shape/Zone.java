@@ -23,7 +23,12 @@ public class Zone extends SpellShape{
 	@Override
 	public SpellCastResult beginStackStage(ItemSpellBase item, ItemStack stack, EntityLivingBase caster, EntityLivingBase target, World world, double x, double y, double z, EnumFacing side, boolean giveXP, int useCount){
 		if (world.isRemote) return SpellCastResult.SUCCESS;
-		int radius = SpellUtils.getModifiedInt_Add(2, stack, caster, target, world, SpellModifiers.RADIUS);
+		//modified add is borked, so here's a bootleg fix
+		double temp = SpellUtils.getModifiedDouble_Add(2, stack, caster, target, world, SpellModifiers.RADIUS);
+		if (temp > 2D)
+			temp++;
+		int radius = (int) temp;
+//		int radius = SpellUtils.getModifiedInt_Add(1, stack, caster, target, world, SpellModifiers.RADIUS);
 		double gravity = SpellUtils.getModifiedDouble_Add(0, stack, caster, target, world, SpellModifiers.GRAVITY);
 		int duration = SpellUtils.getModifiedInt_Mul(100, stack, caster, target, world, SpellModifiers.DURATION);
 		EntitySpellEffect zone = new EntitySpellEffect(world);

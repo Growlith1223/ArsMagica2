@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 
-import am2.api.ArsMagicaAPI;
 import com.google.common.collect.Sets;
 
 import am2.api.affinity.Affinity;
@@ -12,25 +11,17 @@ import am2.api.spell.SpellComponent;
 import am2.api.spell.SpellModifiers;
 import am2.extensions.EntityExtension;
 import am2.utils.SpellUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentUntouching;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
 
 public class Dig extends SpellComponent {
 
@@ -47,23 +38,26 @@ public class Dig extends SpellComponent {
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace, double impactX, double impactY, double impactZ, EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer))
 			return false;
+		stack.getTagCompound().setBoolean("ArsMagica2.harvestByProjectile", true);
 		if (world.isRemote)
 			return true;
-        if (SpellUtils.modifierIsPresent(SpellModifiers.SILKTOUCH_LEVEL, stack)) {
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0) {
-				stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
-			}
-		}else if (SpellUtils.modifierIsPresent(SpellModifiers.FORTUNE_LEVEL, stack)){
-
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack) <= 0){
-				stack.addEnchantment(Enchantments.FORTUNE, SpellUtils.countModifiers(SpellModifiers.FORTUNE_LEVEL, stack));
-			}
-		}
-
 		IBlockState state = world.getBlockState(blockPos);
 		float hardness = state.getBlockHardness(world, blockPos);
 		if (hardness != -1 && state.getBlock().getHarvestLevel(state) <= SpellUtils.getModifiedInt_Add(2, stack, caster, null, world, SpellModifiers.MINING_POWER)) {
-			state.getBlock().harvestBlock(world, (EntityPlayer)caster, blockPos, state, null, stack);
+			if (SpellUtils.modifierIsPresent(SpellModifiers.SILKTOUCH_LEVEL, stack)) {
+				ItemStack blockstack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+				EntityItem blockitem = new EntityItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockstack);
+	            blockitem.setDefaultPickupDelay();
+	            //items were flying at insane speeds, so I'm toning it down a bit
+	            blockitem.motionX = (double)((float)(Math.random() * 0.020000000298023224D - 0.01000000149011612D));
+	            blockitem.motionY = 0.01;
+	            blockitem.motionZ = (double)((float)(Math.random() * 0.02000000298023224D - 0.01000000149011612D));
+	            world.spawnEntityInWorld(blockitem);
+			}else{
+				int xp = state.getBlock().getExpDrop(state, world, blockPos, SpellUtils.countModifiers(SpellModifiers.FORTUNE_LEVEL, stack));
+				state.getBlock().dropBlockAsItem(world, blockPos, state, SpellUtils.countModifiers(SpellModifiers.FORTUNE_LEVEL, stack));
+				state.getBlock().dropXpOnBlockBreak(world, blockPos, xp);
+			}
 			world.destroyBlock(blockPos, false);
 			EntityExtension.For(caster).deductMana(hardness * 1.28f);
 		}

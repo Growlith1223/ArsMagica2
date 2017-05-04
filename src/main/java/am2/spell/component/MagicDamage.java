@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 
-import am2.enchantments.AMEnchantments;
 import com.google.common.collect.Sets;
 
 import am2.ArsMagica2;
@@ -15,10 +14,8 @@ import am2.api.spell.SpellModifiers;
 import am2.defs.ItemDefs;
 import am2.particles.AMParticle;
 import am2.utils.SpellUtils;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -39,16 +36,6 @@ public class MagicDamage extends SpellComponent{
 		if (!(target instanceof EntityLivingBase)) return false;
 		float baseDamage = 6;
 		double damage = SpellUtils.getModifiedDouble_Add(baseDamage, stack, caster, target, world, SpellModifiers.DAMAGE);
-		float mod = 0.0f;
-		if (target instanceof EntityPlayer){
-			for (ItemStack item : ((EntityPlayer)target).inventory.armorInventory){
-				if (item == null)
-					continue;
-				if (EnchantmentHelper.getEnchantmentLevel(AMEnchantments.magicResist, item) > 0)
-					mod = mod + (0.04f * EnchantmentHelper.getEnchantmentLevel(AMEnchantments.magicResist, item));
-			}
-		}
-		damage = damage - (damage * mod);
 		return SpellUtils.attackTargetSpecial(stack, target, DamageSources.causeMagicDamage(caster), SpellUtils.modifyDamage(caster, (float)damage));
 	}
 

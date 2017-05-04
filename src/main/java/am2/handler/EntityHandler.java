@@ -24,6 +24,7 @@ import am2.api.skill.SkillPoint;
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
 import am2.defs.ItemDefs;
+import am2.enchantments.EnchantMagicResist;
 import am2.extensions.AffinityData;
 import am2.extensions.EntityExtension;
 import am2.extensions.RiftStorage;
@@ -57,6 +58,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -73,6 +75,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -235,7 +238,7 @@ public class EntityHandler {
                 double newVel = Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ);
 
                 projectile.motionX = newVel * rX;
-                //projectile.motionY = newVel * rY;
+                projectile.motionY = newVel * rY;
                 projectile.motionZ = newVel * rZ;
             }
 		}
@@ -520,4 +523,14 @@ public class EntityHandler {
 			EntityItemWatcher.instance.addWatchedItem((EntityItem) event.getEntity());
 		}
 	}
+	
+//	@SubscribeEvent(priority = EventPriority.LOWEST)
+//    public void entityDamageEvent(LivingHurtEvent event) {
+//		EntityLivingBase entity = (EntityLivingBase) event.getEntity();
+//		if (event.getSource() == DamageSource.magic || event.getSource() == DamageSource.dragonBreath){
+//			float newDamage = EnchantMagicResist.ApplyEnchantment(entity, event.getAmount());
+//	        event.setAmount(newDamage);
+//		}
+//    }
+	
 }
