@@ -82,6 +82,7 @@ public class AMConfig extends Configuration{
 
 	private final String KEY_allowCreativeTargets = "Allow_Creative_Targets";
 
+	private final String KEY_AllowSoulbound = "AllowSoulbound";
 	/**
 	 * Beta Particles
 	 **/
@@ -236,6 +237,7 @@ public class AMConfig extends Configuration{
 	private boolean allowCompendiumUpdates;
 	private boolean allowVersionChecks;
 	private boolean canDryadsDespawn;
+	private boolean allowSoulbound;
 
 	public static final String DEFAULT_LANGUAGE = "en_US";
 
@@ -336,7 +338,9 @@ public class AMConfig extends Configuration{
 		canDryadsDespawn = get(CATEGORY_MOBS, KEY_CanDryadsDespawn, true, "Set this to false if you don't want dryads to despawn.").getBoolean(true);
 
 		enderAffinityAbilityCooldown = get(CATEGORY_GENERAL, KEY_EnderAffinityAbilityCooldown, 100, "Set this to the number of ticks between ender affinity teleports.").getInt();
-
+		
+		allowSoulbound = get(CATEGORY_GENERAL, KEY_AllowSoulbound, true, "Set this to false to disable the soulbound enchantment.").getBoolean(true);
+		
 		String digBlacklistString = get(CATEGORY_GENERAL, KEY_DigDisabledBlocks, "", "Comma-separated list of block IDs that dig cannot break.  If a block is flagged as unbreackable in code, Dig will already be unable to break it.  There is no need to set it here (eg, bedrock, etc.).  Dig also makes use of Forge block harvest checks.  This is mainly for fine-tuning.").getString();
 		digBlacklist = digBlacklistString.split(",");
 
@@ -661,6 +665,10 @@ public class AMConfig extends Configuration{
 
 	public boolean getAllowCreativeTargets(){
 		return this.allowCreativeTargets;
+	}
+	
+	public boolean getAllowSoulbound(){
+		return this.allowSoulbound;
 	}
 
 	//====================================================================================

@@ -109,6 +109,7 @@ public class PlayerTracker{
 	}
 	
 	public void onPlayerDeath(EntityPlayer player){
+		if (ArsMagica2.config.getAllowSoulbound())
 		storeSoulboundItemsForRespawn(player);
 	}
 

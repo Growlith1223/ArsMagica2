@@ -1,5 +1,6 @@
 package am2.enchantments;
 
+import am2.ArsMagica2;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -34,6 +35,8 @@ public class EnchantmentSoulbound extends Enchantment{
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack){
+		if (ArsMagica2.config.getAllowSoulbound())
 		return super.canApplyAtEnchantingTable(stack);
+		else return false;
 	}
 }

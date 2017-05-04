@@ -2,6 +2,7 @@ package am2.enchantments;
 
 import java.util.Map;
 
+import am2.ArsMagica2;
 import am2.api.enchantment.IAMEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,6 +21,8 @@ public class AMEnchantmentHelper implements IAMEnchantmentHelper{
 	}
 
 	public static ItemStack soulbindStack(ItemStack stack){
+		if (!ArsMagica2.config.getAllowSoulbound())
+			return stack;
 		stack.addEnchantment(AMEnchantments.soulbound, 1);
 		return stack;
 	}
