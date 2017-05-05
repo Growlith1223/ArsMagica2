@@ -131,14 +131,14 @@ item.arsmagica2:player_focus.name=プレイヤーのレンズ
 item.arsmagica2:nature_scythe.name=§6自然のガーディアンの鎌§f
 item.arsmagica2:winter_arm.name=§6冬の握り§f
 item.arsmagica2:air_sled.name=§6風のそり§f
-item.arsmagica2:arcane_spellbook.name=§6秘儀呪文書§f
+item.arsmagica2:arcane_spellbook.name=§6神秘の魔典§f
 item.arsmagica2:earth_armor.name=§6大地の鎧§f
 item.arsmagica2:ender_boots.name=§6エンダーブーツ§f
 item.arsmagica2:fire_ears.name=§6火のガーディアンのアンテナ§f
 item.arsmagica2:life_ward.name=§6ライフウォード§f
 item.arsmagica2:lightning_charm.name=§6雷のお守り§f
 item.arsmagica2:water_orbs.name=§6水のオーブ§f
-item.arsmagica2:spellbook.name=魔術本
+item.arsmagica2:spellbook.name=魔典
 item.arsmagica2:magic_broom.name=魔法の箒
 item.arsmagica2:keystone.name=楔石
 item.arsmagica2:keystone_door.name=楔石の扉
@@ -1508,7 +1508,7 @@ compendium.item.crystal_wrench.name=クリスタルレンチ
 compendium.item.spell_parchment.name=呪文紙
 compendium.item.crystal_phylactery.name=クリスタルのお守り
 compendium.item.spell_staff_magitech.name=魔法技師の杖
-compendium.item.spell_book.name=魔術本
+compendium.item.spell_book.name=魔典
 compendium.item.magic_broom.name=魔法の箒
 compendium.item.nature_scythe.name=自然のガーディアンの鎌
 compendium.item.arcane_spellbook.name=秘儀呪文書
@@ -1856,5 +1856,13 @@ compendium.winter_guardian.page2=To summon the Winter Guardian, seek out an area
 
 
 
+# キーコンフィグの項目
+key.am2.bridge=ブリッジ
+key.am2.aura_customization=オーラのカスタマイズ
+key.am2.dark_vision=ダークビジョン
+key.am2.shape_groups=魔法の形態の切り替え
+key.am2.spellbooknext=魔典内の次の魔法を選択
+key.am2.spellbookprev=魔典内の前の魔法を選択
+key.am2.teleport=テレポート
 
 
