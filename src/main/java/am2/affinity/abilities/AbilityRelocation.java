@@ -50,7 +50,7 @@ public class AbilityRelocation extends AbstractAffinityAbility {
 	@Override
 	public void applyKeyPress(EntityPlayer player) {
 		if (AffinityData.For(player).getCooldown("EnderTP") > 0) {
-			if (player.worldObj.isRemote)
+			if (!player.worldObj.isRemote)
 				player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.chat.relocation_cooldown")));
 			return;
 		}

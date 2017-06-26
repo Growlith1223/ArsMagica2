@@ -1,6 +1,8 @@
 package am2.packet;
 
 import am2.LogHelper;
+import am2.api.ArsMagicaAPI;
+import am2.api.affinity.AbstractAffinityAbility;
 import am2.api.math.AMVector3;
 import am2.api.power.IPowerNode;
 import am2.blocks.tileentity.TileEntityArmorImbuer;
@@ -16,7 +18,9 @@ import am2.lore.ArcaneCompendium;
 import am2.power.PowerNodeRegistry;
 import am2.utils.SpellUtils;
 import io.netty.buffer.ByteBufInputStream;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -122,6 +126,9 @@ public class AMPacketProcessorServer{
 			case AMPacketIDs.TOGGLE_ABILITY:
 				handleAbilityToggle(remaining, player);
 				break;
+			case AMPacketIDs.KEY_ABILITY_PRESS:
+				handleKeyAbilityPress(remaining, player);
+				break;
 			}
 		}catch (Throwable t){
 			LogHelper.error("Server Packet Failed to Handle!");
@@ -135,6 +142,16 @@ public class AMPacketProcessorServer{
 				t.printStackTrace();
 			}
 		}
+	}
+
+	private void handleKeyAbilityPress(byte[] remaining, EntityPlayerMP player) {
+		AMDataReader reader = new AMDataReader(remaining, false);
+		Entity target = player.getEntityWorld().getEntityByID(reader.getInt());
+		if (target == null || !(target instanceof EntityPlayer))
+			return;
+		AbstractAffinityAbility ability = ArsMagicaAPI.getAffinityAbilityRegistry().getObject(new ResourceLocation(reader.getString()));
+		if (ability != null && ability.canApply((EntityPlayer) target))
+			ability.applyKeyPress((EntityPlayer) target);
 	}
 
 	private void handleAbilityToggle(byte[] remaining, EntityPlayerMP player) {

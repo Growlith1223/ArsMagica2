@@ -52,4 +52,5 @@ public class AMPacketIDs{
 	public static final byte SYNC_CLIENT = 62;
 	public static final byte UNLOCK_OCCULUS_ENTRY = 63;
 	public static final byte TOGGLE_ABILITY = 64;
+	public static final byte KEY_ABILITY_PRESS = 67;
 }

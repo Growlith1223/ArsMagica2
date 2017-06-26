@@ -39,17 +39,15 @@ import am2.api.affinity.AbstractAffinityAbility;
 import am2.api.affinity.Affinity;
 import am2.api.event.SpellCastEvent;
 import am2.extensions.AffinityData;
-import am2.utils.WorldUtils;
-import net.minecraft.client.Minecraft;
+import am2.packet.AMDataWriter;
+import am2.packet.AMNetHandler;
+import am2.packet.AMPacketIDs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -121,14 +119,12 @@ public class AffinityAbilityHelper {
 		for (AbstractAffinityAbility ability : GameRegistry.findRegistry(AbstractAffinityAbility.class).getValues()) {
 			if (ability.getKey() != null && ability.getKey().isPressed()) {
 				EntityPlayer player = ArsMagica2.proxy.getLocalPlayer();
-				//if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
-				//	return;
-
-				player = player.getEntityWorld().getPlayerEntityByUUID(player.getUniqueID());
 				if (ability.canApply(player)) {
-
-					WorldUtils.runSided(Side.CLIENT, ability.createRunnable(ArsMagica2.proxy.getLocalPlayer()));
-					WorldUtils.runSided(Side.SERVER, ability.createRunnable(player));
+					AMDataWriter syncPacket = new AMDataWriter();
+					syncPacket.add(player.getEntityId());
+					syncPacket.add(ability.getRegistryName().toString());
+					ability.applyKeyPress(player);
+					AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.KEY_ABILITY_PRESS, syncPacket.generate());
 				}
 			}
 		}
