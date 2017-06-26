@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import am2.api.ArsMagicaAPI;
 import am2.api.affinity.Affinity;
 import am2.api.extensions.IAffinityData;
-import am2.api.extensions.IDataSyncExtension;
-import am2.extensions.datamanager.DataSyncExtension;
+import am2.packet.AMDataReader;
+import am2.packet.AMDataWriter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -28,43 +28,60 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 	private static final float ADJACENT_FACTOR = 0.25f;
 	private static final float MINOR_OPPOSING_FACTOR = 0.5f;
 	private static final float MAJOR_OPPOSING_FACTOR = 0.75f;
-	private EntityPlayer player;
+	
+	private static final int SYNC_DEPTHS = 0x1;
+	private static final int SYNC_ABILITY_BOOLEANS = 0x2;
+	private static final int SYNC_ABILITY_FLOATS = 0x4;
+	private static final int SYNC_COOLDOWNS = 0x8;
+	private static final int SYNC_DIMINISHING_RETURNS = 0x10;
+	
+	private HashMap<Affinity, Double> depths;
+	private HashMap<String, Boolean> abilityBools;
+	private HashMap<String, Float> abilityFloats;
+	private HashMap<String, Integer> cooldowns;
+	private float diminishingReturns = 1.0F;
 	public float accumulatedLifeRegen = 0.0f;
 	public float accumulatedHungerRegen = 0.0f;
 	
+	private int syncCode = 0;
+	
 	@CapabilityInject(value = IAffinityData.class)
 	public static Capability<IAffinityData> INSTANCE = null;
-		
+	
+	public AffinityData() {
+		this.depths = new HashMap<>();
+		this.abilityBools = new HashMap<>();
+		this.abilityFloats = new HashMap<>();
+		this.cooldowns = new HashMap<>();
+	}
+	
 	public static AffinityData For(EntityLivingBase living){
 		return (AffinityData) living.getCapability(INSTANCE, null);
 	}
 	
 	public double getAffinityDepth(Affinity aff) {
-		return DataSyncExtension.For(player).get(DataDefinitions.AFFINITY_DATA).get(aff) / MAX_DEPTH;
+		Double depth = depths.get(aff);
+		if (depth == null)
+			depth = 0D;
+		return depth / MAX_DEPTH;
 	}
 	
 	public void setAffinityDepth (Affinity name, double value) {
 		value = MathHelper.clamp_double(value, 0, MAX_DEPTH);
-		HashMap<Affinity, Double> map = DataSyncExtension.For(player).get(DataDefinitions.AFFINITY_DATA);
-		map.put(name, value);
-		DataSyncExtension.For(player).setWithSync(DataDefinitions.AFFINITY_DATA, map);
+		if (value != getAffinityDepth(name)) {
+			syncCode |= SYNC_DEPTHS;
+			depths.put(name, value);
+		}
 	}
 	
 	public HashMap<Affinity, Double> getAffinities() {
-		return DataSyncExtension.For(player).get(DataDefinitions.AFFINITY_DATA);
+		return depths;
 	}
 
-	public void init(EntityPlayer entity, IDataSyncExtension ext) {
-		this.player = entity;
+	public void init(EntityPlayer entity) {
 		HashMap<Affinity, Double> map = new HashMap<>();
-		for (Affinity DEPTH : ArsMagicaAPI.getAffinityRegistry().getValues())
-			map.put(DEPTH, 0D);
-		map.put(Affinity.NONE, 0D);
-		ext.setWithSync(DataDefinitions.AFFINITY_DATA, map);
-		ext.setWithSync(DataDefinitions.ABILITY_BOOLEAN, new HashMap<>());
-		ext.setWithSync(DataDefinitions.ABILITY_FLOAT, new HashMap<>());
-		ext.setWithSync(DataDefinitions.DIMINISHING_RETURNS, 1.0F);
-		ext.setWithSync(DataDefinitions.COOLDOWNS, new HashMap<>());
+		for (Affinity aff : ArsMagicaAPI.getAffinityRegistry().getValues())
+			map.put(aff, 0D);
 	}
 	
 	@Override
@@ -75,9 +92,10 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 	
 	@Override
 	public void addAbilityBoolean(String name, boolean bool) {
-		HashMap<String, Boolean> map = DataSyncExtension.For(player).get(DataDefinitions.ABILITY_BOOLEAN);
-		map.put(name, bool);
-		DataSyncExtension.For(player).setWithSync(DataDefinitions.ABILITY_BOOLEAN, map);
+		if (getAbilityBoolean(name) != bool) {
+			abilityBools.put(name, bool);
+			syncCode |= SYNC_ABILITY_BOOLEANS;
+		}
 	}
 	
 	@Override
@@ -88,54 +106,59 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 	
 	@Override
 	public void addAbilityFloat(String name, float f) {
-		HashMap<String, Float> map = DataSyncExtension.For(player).get(DataDefinitions.ABILITY_FLOAT);
-		map.put(name, f);
-		DataSyncExtension.For(player).setWithSync(DataDefinitions.ABILITY_FLOAT, map);
+		if (getAbilityFloat(name) != f) {
+			abilityFloats.put(name, f);
+			syncCode |= SYNC_ABILITY_FLOATS;
+		}
 	}
 	
 	@Override
 	public Map<String, Boolean> getAbilityBooleanMap() {
-		return DataSyncExtension.For(player).get(DataDefinitions.ABILITY_BOOLEAN);
+		return abilityBools;
 	}
 	
 	@Override
 	public Map<String, Float> getAbilityFloatMap() {
-		return DataSyncExtension.For(player).get(DataDefinitions.ABILITY_FLOAT);
+		return abilityFloats;
 	}
 	
 	@Override
 	public void addCooldown(String name, int cooldown) {
-		HashMap<String, Integer> map = DataSyncExtension.For(player).get(DataDefinitions.COOLDOWNS);
-		map.put(name, cooldown);
-		DataSyncExtension.For(player).setWithSync(DataDefinitions.COOLDOWNS, map);
+		if (getCooldown(name) != cooldown) {
+			cooldowns.put(name, cooldown);
+			syncCode |= SYNC_COOLDOWNS;
+		}
 	}
 	
 	@Override
 	public int getCooldown(String name) {
-		return getCooldowns().get(name) == null ? 0 : getCooldowns().get(name);
+		return cooldowns.get(name) == null ? 0 : cooldowns.get(name);
 	}
 	
 	@Override
 	public Map<String, Integer> getCooldowns() {
-		return DataSyncExtension.For(player).get(DataDefinitions.COOLDOWNS);
+		return cooldowns;
 	}
 	
 	@Override
 	public float getDiminishingReturnsFactor(){
-		return DataSyncExtension.For(player).get(DataDefinitions.DIMINISHING_RETURNS);
+		return diminishingReturns;
 	}
 	
 	@Override
 	public void tickDiminishingReturns(){
 		if (getDiminishingReturnsFactor() < 1.3f){
-			DataSyncExtension.For(player).set(DataDefinitions.DIMINISHING_RETURNS, DataSyncExtension.For(player).get(DataDefinitions.DIMINISHING_RETURNS) + 0.005f);
+			diminishingReturns += 0.005f;
+			syncCode |= SYNC_DIMINISHING_RETURNS;
 		}
 	}
 	
 	@Override
 	public void addDiminishingReturns(boolean isChanneled){
-		DataSyncExtension.For(player).set(DataDefinitions.DIMINISHING_RETURNS, getDiminishingReturnsFactor() - (isChanneled ? 0.1f : 0.3f));
-		if (this.getDiminishingReturnsFactor() < 0) DataSyncExtension.For(player).set(DataDefinitions.DIMINISHING_RETURNS, 0F);
+		diminishingReturns -= isChanneled ? 0.1f : 0.3f;
+		syncCode |= SYNC_DIMINISHING_RETURNS;
+		if (diminishingReturns < 0) 
+			diminishingReturns = 0F;
 	}
 	
 	@Override
@@ -179,6 +202,92 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 			}
 		}
 		return new Affinity[] {maxAff1, maxAff2};
+	}
+	
+	@Override
+	public byte[] generateUpdatePacket() {
+		AMDataWriter writer = new AMDataWriter();
+		writer.add(syncCode);
+		if ((syncCode & SYNC_DEPTHS) == SYNC_DEPTHS) {
+			writer.add(depths.size());
+			for (Entry<Affinity, Double> entry : depths.entrySet()) {
+				writer.add(entry.getKey().getRegistryName().toString());
+				writer.add(entry.getValue().doubleValue());
+			}
+		}
+		if ((syncCode & SYNC_ABILITY_BOOLEANS) == SYNC_ABILITY_BOOLEANS) {
+			writer.add(abilityBools.size());
+			for (Entry<String, Boolean> entry : abilityBools.entrySet()) {
+				writer.add(entry.getKey());
+				writer.add(entry.getValue().booleanValue());
+			}
+		}
+		if ((syncCode & SYNC_ABILITY_FLOATS) == SYNC_ABILITY_FLOATS) {
+			writer.add(abilityFloats.size());
+			for (Entry<String, Float> entry : abilityFloats.entrySet()) {
+				writer.add(entry.getKey());
+				writer.add(entry.getValue().floatValue());
+			}
+		}
+		if ((syncCode & SYNC_COOLDOWNS) == SYNC_COOLDOWNS) {
+			writer.add(cooldowns.size());
+			for (Entry<String, Integer> entry : cooldowns.entrySet()) {
+				writer.add(entry.getKey());
+				writer.add(entry.getValue());
+			}
+		}
+		if ((syncCode & SYNC_DIMINISHING_RETURNS) == SYNC_DIMINISHING_RETURNS)
+			writer.add(diminishingReturns);
+		syncCode = 0;
+		return writer.generate();
+	}
+	
+	@Override
+	public void handleUpdatePacket(byte[] bytes) {
+		AMDataReader reader = new AMDataReader(bytes, false);
+		int syncCode = reader.getInt();
+		if ((syncCode & SYNC_DEPTHS) == SYNC_DEPTHS) {
+			depths.clear();
+			int size = reader.getInt();
+			for (int i = 0; i < size; i++) {
+				Affinity key = ArsMagicaAPI.getAffinityRegistry().getObject(new ResourceLocation(reader.getString()));
+				double value = reader.getDouble();
+				if (key != null)
+					depths.put(key, value);
+			}
+		}
+		if ((syncCode & SYNC_ABILITY_BOOLEANS) == SYNC_ABILITY_BOOLEANS) {
+			abilityBools.clear();
+			int size = reader.getInt();
+			for (int i = 0; i < size; i++) {
+				String key = reader.getString();
+				boolean value = reader.getBoolean();
+				if (key != null)
+					abilityBools.put(key, value);
+			}
+		}
+		if ((syncCode & SYNC_ABILITY_FLOATS) == SYNC_ABILITY_FLOATS) {
+			abilityFloats.clear();
+			int size = reader.getInt();
+			for (int i = 0; i < size; i++) {
+				String key = reader.getString();
+				float value = reader.getFloat();
+				if (key != null)
+					abilityFloats.put(key, value);
+			}
+		}
+		if ((syncCode & SYNC_COOLDOWNS) == SYNC_COOLDOWNS) {
+			cooldowns.clear();
+			int size = reader.getInt();
+			for (int i = 0; i < size; i++) {
+				String key = reader.getString();
+				int value = reader.getInt();
+				if (key != null)
+					cooldowns.put(key, value);
+			}
+		}
+		if ((syncCode & SYNC_DIMINISHING_RETURNS) == SYNC_DIMINISHING_RETURNS)
+			diminishingReturns = reader.getFloat();
 	}
 
 	@Override
@@ -239,5 +348,15 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 	@Override
 	public boolean isLocked() {
 		return getAbilityBoolean("affinity_data_locked");
+	}
+
+	@Override
+	public boolean shouldUpdate() {
+		return syncCode != 0;
+	}
+
+	@Override
+	public void forceUpdate() {
+		syncCode = 0xFFFFFFFF;
 	}
 }

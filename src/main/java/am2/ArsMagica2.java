@@ -7,7 +7,6 @@ import am2.api.affinity.Affinity;
 import am2.commands.CommandArsMagica;
 import am2.config.AMConfig;
 import am2.config.SpellPartConfiguration;
-import am2.extensions.DataDefinitions;
 import am2.packet.MessageBoolean;
 import am2.packet.MessageCapabilities;
 import am2.proxy.CommonProxy;
@@ -44,7 +43,6 @@ public class ArsMagica2 {
 	private File configDir;
 	
 	static {
-		new DataDefinitions();
 		new ArsMagicaAPI();
 		Affinity.registerAffinities();
 		if (!FluidRegistry.isUniversalBucketEnabled())

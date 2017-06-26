@@ -25,7 +25,7 @@ public interface IAffinityData {
 	
 	public HashMap<Affinity, Double> getAffinities();
 
-	public void init(EntityPlayer entity, IDataSyncExtension ext);
+	public void init(EntityPlayer entity);
 	
 	public static class Storage implements IStorage<IAffinityData> {
 		
@@ -127,4 +127,11 @@ public interface IAffinityData {
 	public void setLocked(boolean b);
 
 	public boolean isLocked();
+
+	byte[] generateUpdatePacket();
+
+	void handleUpdatePacket(byte[] bytes);
+	
+	boolean shouldUpdate();
+	public void forceUpdate();
 }

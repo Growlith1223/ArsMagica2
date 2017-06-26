@@ -3,12 +3,6 @@ package am2.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import am2.defs.PotionEffectsDefs;
-import am2.entity.EntitySpellProjectile;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.event.world.BlockEvent;
 import org.lwjgl.opengl.GL11;
 
 import am2.ArsMagica2;
@@ -24,11 +18,12 @@ import am2.api.skill.SkillPoint;
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
 import am2.defs.ItemDefs;
+import am2.defs.PotionEffectsDefs;
+import am2.entity.EntitySpellProjectile;
 import am2.extensions.AffinityData;
 import am2.extensions.EntityExtension;
 import am2.extensions.RiftStorage;
 import am2.extensions.SkillData;
-import am2.extensions.datamanager.DataSyncExtension;
 import am2.items.ItemOre;
 import am2.items.SpellBase;
 import am2.lore.ArcaneCompendium;
@@ -43,9 +38,9 @@ import am2.utils.EntityUtils;
 import am2.utils.SpellUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
@@ -58,6 +53,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -92,22 +88,19 @@ public class EntityHandler {
 	}
 
 	@SubscribeEvent
-	public void attachEntity(AttachCapabilitiesEvent.Entity event) {
-		if (event.getEntity() instanceof EntityLivingBase) {
-			DataSyncExtension dataSync = new DataSyncExtension();
-			dataSync.init(event.getEntity());
-			event.addCapability(DataSyncExtension.ID, dataSync);
+	public void attachEntity(AttachCapabilitiesEvent<Entity> event) {
+		if (event.getObject() instanceof EntityLivingBase) {
 			EntityExtension ext = new EntityExtension();
-			ext.init((EntityLivingBase) event.getEntity(), dataSync);
+			ext.init((EntityLivingBase) event.getObject());
 			event.addCapability(EntityExtension.ID, ext);
-			if (event.getEntity() instanceof EntityPlayer) {
+			if (event.getObject() instanceof EntityPlayer) {
 				ArcaneCompendium compendium = new ArcaneCompendium();
 				AffinityData affData = new AffinityData();
 				SkillData skillData = new SkillData();
 				RiftStorage storage = new RiftStorage();
-				affData.init((EntityPlayer) event.getEntity(), dataSync);
-				skillData.init((EntityPlayer) event.getEntity(), dataSync);
-				compendium.init((EntityPlayer) event.getEntity(), dataSync);
+				affData.init((EntityPlayer) event.getObject());
+				skillData.init((EntityPlayer) event.getObject());
+				compendium.init((EntityPlayer) event.getObject());
 				event.addCapability(new ResourceLocation("arsmagica2", "Compendium"), compendium);
 				event.addCapability(SkillData.ID, skillData);
 				event.addCapability(AffinityData.ID, affData);
@@ -141,8 +134,10 @@ public class EntityHandler {
 	
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityPlayer)
-			DataSyncExtension.For((EntityLivingBase) event.getEntity()).scheduleFullUpdate();
+		if (event.getEntity() instanceof EntityPlayer && !event.getWorld().isRemote) {
+			EntityExtension.For((EntityLivingBase) event.getEntity()).forceUpdate();
+			AffinityData.For((EntityLivingBase) event.getEntity()).forceUpdate();
+		}
 	}
 	
 	@SubscribeEvent
@@ -159,7 +154,6 @@ public class EntityHandler {
 		transferCapability(SkillData.INSTANCE, SkillData.For(event.getOriginal()), SkillData.For(event.getEntityPlayer()));
 		transferCapability(RiftStorage.INSTANCE, RiftStorage.For(event.getOriginal()), RiftStorage.For(event.getEntityPlayer()));
 		transferCapability(ArcaneCompendium.INSTANCE, ArcaneCompendium.For(event.getOriginal()), ArcaneCompendium.For(event.getEntityPlayer()));
-		DataSyncExtension.For(event.getEntityPlayer()).scheduleFullUpdate();
 	}
 	
 	private <T> void transferCapability(Capability<T> capability, T original, T target) {
@@ -169,9 +163,18 @@ public class EntityHandler {
 	@SubscribeEvent
 	public void entityTick (LivingUpdateEvent event) {
 		//Pre Tick, Data Sync
-		if (!event.getEntity().worldObj.isRemote && DataSyncExtension.For(event.getEntityLiving()).shouldSync())
-			AMNetHandler.INSTANCE.sendPacketToAllClientsNear(event.getEntity().dimension, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, 64, AMPacketIDs.SYNC_CLIENT, DataSyncExtension.For(event.getEntityLiving()).createUpdatePacket());
-		
+		if (!event.getEntity().worldObj.isRemote) {
+			if (EntityExtension.For(event.getEntityLiving()).shouldUpdate())
+				sendUpdate(event.getEntityLiving(), AMPacketIDs.SYNC_EXTENDED_PROPS, EntityExtension.For(event.getEntityLiving()).generateUpdatePacket());
+			if (event.getEntityLiving() instanceof EntityPlayer) {
+				if (AffinityData.For(event.getEntityLiving()).shouldUpdate())
+					sendUpdate(event.getEntityLiving(), AMPacketIDs.SYNC_AFFINITY_DATA, AffinityData.For(event.getEntityLiving()).generateUpdatePacket());
+				if (SkillData.For(event.getEntityLiving()).shouldUpdate())
+					sendUpdate(event.getEntityLiving(), AMPacketIDs.SYNC_SKILL_DATA, SkillData.For(event.getEntityLiving()).generateUpdatePacket());
+				if (ArcaneCompendium.For((EntityPlayer) event.getEntityLiving()).shouldUpdate())
+					sendUpdate(event.getEntityLiving(), AMPacketIDs.SYNC_COMPENDIUM, ArcaneCompendium.For((EntityPlayer) event.getEntityLiving()).generateUpdatePacket());
+			}
+		}
 		if (event.getEntityLiving() instanceof EntityPlayer) playerTick((EntityPlayer) event.getEntityLiving());
 		
 		if (event.getEntity().worldObj.isRemote)
@@ -212,7 +215,7 @@ public class EntityHandler {
 		if (event.getEntityLiving().isPotionActive(PotionEffectsDefs.spellReflect)){
 			int d0 = 3;
 			AxisAlignedBB bb = new AxisAlignedBB(event.getEntityLiving().posX - 0.5, event.getEntityLiving().posY - 0.5, event.getEntityLiving().posZ - 0.5, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5).expand(d0, d0, d0);
-			List entityList = event.getEntityLiving().getEntityWorld().getEntitiesWithinAABB(Entity.class, bb);
+			List<Entity> entityList = event.getEntityLiving().getEntityWorld().getEntitiesWithinAABB(Entity.class, bb);
 
             for (Object thing : entityList){
                 if (!(thing instanceof EntitySpellProjectile)) continue;
@@ -260,6 +263,10 @@ public class EntityHandler {
 				ext.setContingency(ContingencyType.NULL, null);
 			}
 		}
+	}
+	
+	private void sendUpdate(EntityLivingBase ent, byte id, byte[] data) {
+		AMNetHandler.INSTANCE.sendPacketToAllClientsNear(ent.dimension, ent.posX, ent.posY, ent.posZ, 64, id, new AMDataWriter().add(ent.getEntityId()).add(data).generate());		
 	}
 	
 	@SubscribeEvent

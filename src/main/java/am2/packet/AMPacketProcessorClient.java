@@ -12,9 +12,11 @@ import am2.blocks.tileentity.TileEntityLectern;
 import am2.blocks.tileentity.TileEntityObelisk;
 import am2.bosses.BossActions;
 import am2.bosses.IArsMagicaBoss;
+import am2.extensions.AffinityData;
 import am2.extensions.EntityExtension;
-import am2.extensions.datamanager.DataSyncExtension;
+import am2.extensions.SkillData;
 import am2.gui.AMGuiHelper;
+import am2.lore.ArcaneCompendium;
 import am2.particles.AMParticle;
 import am2.particles.ParticleChangeSize;
 import am2.particles.ParticleFadeOut;
@@ -76,9 +78,9 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //			case AMPacketIDs.REMOVE_BUFF_EFFECT:
 //				handleRemoveBuffEffect(remaining);
 //				break;
-//			case AMPacketIDs.SYNC_EXTENDED_PROPS:
-//				handleSyncProps(remaining);
-//				break;
+			case AMPacketIDs.SYNC_EXTENDED_PROPS:
+				handleSyncProps(remaining, player);
+				break;
 //			case AMPacketIDs.SYNC_BETA_PARTICLES:
 //				handleSyncBetaParticles(remaining);
 //				break;
@@ -88,9 +90,9 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //			case AMPacketIDs.SYNC_AIR_CHANGE:
 //				handleSyncAir(remaining);
 //				break;
-//			case AMPacketIDs.SYNC_AFFINITY_DATA:
-//				handleSyncAffinity(remaining);
-//				break;
+			case AMPacketIDs.SYNC_AFFINITY_DATA:
+				handleSyncAffinity(remaining, player);
+				break;
 //			case AMPacketIDs.SYNC_SPELL_KNOWLEDGE:
 //				handleSyncSpellKnowledge(remaining);
 //				break;
@@ -142,9 +144,15 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 			case AMPacketIDs.MANA_LINK_UPDATE:
 				handleManaLinkUpdate(remaining);
 				break;
-			case AMPacketIDs.SYNC_CLIENT:
-				handleClientUpdate(remaining);
+			case AMPacketIDs.SYNC_COMPENDIUM:
+				handleCompendiumUpdate(remaining, player);
 				break;
+			case AMPacketIDs.SYNC_SKILL_DATA:
+				handleSkillDataUpdate(remaining, player);
+				break;
+//			case AMPacketIDs.SYNC_CLIENT:
+//				handleClientUpdate(remaining);
+//				break;
 			}
 		}catch (Throwable t){
 			LogHelper.error("Client Packet Failed to Handle!");
@@ -160,14 +168,14 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 		}
 	}
 
-	private void handleClientUpdate(byte[] remaining) {
-		AMDataReader reader = new AMDataReader(remaining, false);
-		if (Minecraft.getMinecraft().theWorld != null) {
-			EntityLivingBase ent = (EntityLivingBase) Minecraft.getMinecraft().theWorld.getEntityByID(reader.getInt());
-			if (ent != null)
-				DataSyncExtension.For(ent).handleUpdatePacket(reader);
-		}
-	}
+//	private void handleClientUpdate(byte[] remaining) {
+//		AMDataReader reader = new AMDataReader(remaining, false);
+//		if (Minecraft.getMinecraft().theWorld != null) {
+//			EntityLivingBase ent = (EntityLivingBase) Minecraft.getMinecraft().theWorld.getEntityByID(reader.getInt());
+//			if (ent != null)
+//				DataSyncExtension.For(ent).handleUpdatePacket(reader);
+//		}
+//	}
 
 	private void handleManaLinkUpdate(byte[] remaining) {
 		AMDataReader reader = new AMDataReader(remaining, false);
@@ -403,17 +411,35 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //		}
 //	}
 //
-//	private void handleSyncAffinity(byte[] data){
-//		AMDataReader rdr = new AMDataReader(data, false);
-//		int entityID = rdr.getInt();
-//
-//		EntityLivingBase ent = AMCore.proxy.getEntityByID(entityID);
-//		if (ent == null || !(ent instanceof EntityPlayer)) return;
-//
-//		if (!AffinityData.For(ent).handlePacketData(data)){
-//			LogHelper.error("Critical Error Handling Affinity Sync Packet!");
-//		}
-//	}
+	private void handleSyncAffinity(byte[] data, EntityPlayer player){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int entityID = rdr.getInt();
+
+		Entity ent = player.getEntityWorld().getEntityByID(entityID);
+		if (ent == null || !(ent instanceof EntityPlayer)) return;
+
+		AffinityData.For((EntityLivingBase) ent).handleUpdatePacket(rdr.getRemainingBytes());
+	}
+	
+	private void handleCompendiumUpdate(byte[] data, EntityPlayer player){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int entityID = rdr.getInt();
+
+		Entity ent = player.getEntityWorld().getEntityByID(entityID);
+		if (ent == null || !(ent instanceof EntityPlayer)) return;
+
+		ArcaneCompendium.For((EntityPlayer) ent).handleUpdatePacket(rdr.getRemainingBytes());
+	}
+	
+	private void handleSkillDataUpdate(byte[] data, EntityPlayer player){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int entityID = rdr.getInt();
+
+		Entity ent = player.getEntityWorld().getEntityByID(entityID);
+		if (ent == null || !(ent instanceof EntityPlayer)) return;
+
+		SkillData.For((EntityLivingBase) ent).handleUpdatePacket(rdr.getRemainingBytes());
+	}
 //
 //	private void handleSyncAir(byte[] data){
 //		AMDataReader rdr = new AMDataReader(data, false);
@@ -487,17 +513,15 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //		AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.SYNC_BETA_PARTICLES, writer.generate());
 //	}
 //
-//	private void handleSyncProps(byte[] data){
-//		AMDataReader rdr = new AMDataReader(data, false);
-//		int entityID = rdr.getInt();
-//
-//		EntityLivingBase ent = AMCore.proxy.getEntityByID(entityID);
-//		if (ent == null) return;
-//
-//		if (!ExtendedProperties.For(ent).handleDataPacket(data)){
-//			LogHelper.error("Critical Error Handling Sync Packet!");
-//		}
-//	}
+	private void handleSyncProps(byte[] data, EntityPlayer player){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int entityID = rdr.getInt();
+
+		Entity ent = player.getEntityWorld().getEntityByID(entityID);
+		if (ent == null || !(ent instanceof EntityLivingBase)) return;
+				
+		EntityExtension.For((EntityLivingBase)ent).handleUpdatePacket(rdr.getRemainingBytes());
+	}
 //
 //	private void handleRemoveBuffEffect(byte[] data){
 //		AMDataReader rdr = new AMDataReader(data, false);

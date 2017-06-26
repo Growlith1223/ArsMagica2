@@ -32,7 +32,11 @@ public interface ISkillData {
 	public void setSkillPoint(SkillPoint point, int num);
 
 	public boolean canLearn(String name);
-	
+	public boolean shouldUpdate();
+	public byte[] generateUpdatePacket();
+	public void handleUpdatePacket(byte[] bytes);
+	public void forceUpdate();
+
 	
 	public static class Storage implements IStorage<ISkillData> {
 		

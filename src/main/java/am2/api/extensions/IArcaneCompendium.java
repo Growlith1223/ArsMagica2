@@ -40,6 +40,12 @@ public interface IArcaneCompendium {
 	
 	public void setPath(String str);
 	
+	public boolean shouldUpdate();
+	public byte[] generateUpdatePacket();
+	public void handleUpdatePacket(byte[] bytes);
+	public void forceUpdate();
+
+	
 	public static class Storage implements IStorage<IArcaneCompendium> {
 
 		@Override

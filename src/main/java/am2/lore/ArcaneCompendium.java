@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import am2.api.compendium.CompendiumCategory;
 import am2.api.compendium.CompendiumEntry;
 import am2.api.extensions.IArcaneCompendium;
-import am2.api.extensions.IDataSyncExtension;
 import am2.defs.ItemDefs;
-import am2.extensions.DataDefinitions;
-import am2.extensions.datamanager.DataSyncExtension;
+import am2.packet.AMDataReader;
+import am2.packet.AMDataWriter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,27 +29,33 @@ public class ArcaneCompendium implements IArcaneCompendium, ICapabilityProvider,
 	public static Achievement compendiumData = (new Achievement("am2_ach_data", "compendiumData", 0, 0, ItemDefs.arcaneCompendium, null));
 	public static Achievement componentUnlock = (new Achievement("am2_ach_unlock", "componentUnlock", 0, 0, ItemDefs.spellParchment, null));
 	
+	public static final int SYNC_COMPENDIUM = 0x1;
+	
 	private EntityPlayer player;
 	private String path = "";
-	public ArcaneCompendium() {}
+	private int syncCode = 0;
+	
+	private ArrayList<String> compendium;
+	
+	public ArcaneCompendium() {
+		compendium = new ArrayList<>();
+	}
 	
 	public void unlockEntry(String name) {
-		ArrayList<String> compendium = DataSyncExtension.For(player).get(DataDefinitions.COMPENDIUM);
 		compendium.add(name);
-		DataSyncExtension.For(player).setWithSync(DataDefinitions.COMPENDIUM, compendium);
+		syncCode |= SYNC_COMPENDIUM;
 	}
 	
 	public boolean isUnlocked(String name) {
-		for (String str : DataSyncExtension.For(player).get(DataDefinitions.COMPENDIUM)) {
+		for (String str : compendium) {
 			if (str.equalsIgnoreCase(name))
 				return true;
 		}
 		return false;
 	}
 	
-	public void init(EntityPlayer player, IDataSyncExtension ext) {
+	public void init(EntityPlayer player) {
 		this.player = player;
-		ext.setWithSync(DataDefinitions.COMPENDIUM, new ArrayList<String>());
 	}
 
 	public static IArcaneCompendium For(EntityPlayer entityPlayer) {
@@ -113,5 +118,41 @@ public class ArcaneCompendium implements IArcaneCompendium, ICapabilityProvider,
 	@Override
 	public ArrayList<CompendiumEntry> getEntriesForCategory(String categoryName) {
 		return null;
+	}
+
+	@Override
+	public boolean shouldUpdate() {
+		return syncCode != 0;
+	}
+
+	@Override
+	public byte[] generateUpdatePacket() {
+		AMDataWriter writer = new AMDataWriter();
+		writer.add(syncCode);
+		if ((syncCode & SYNC_COMPENDIUM) == SYNC_COMPENDIUM) {
+			writer.add(compendium.size());
+			for (String entry : compendium)
+				writer.add(entry);
+		}
+		syncCode = 0;
+		return writer.generate();
+	}
+
+	@Override
+	public void handleUpdatePacket(byte[] bytes) {
+		AMDataReader reader = new AMDataReader(bytes, false);
+		int syncCode = reader.getInt();
+		if ((syncCode & SYNC_COMPENDIUM) == SYNC_COMPENDIUM) {
+			compendium.clear();
+			int size = reader.getInt();
+			for (int i = 0; i < size; i++) {
+				compendium.add(reader.getString());
+			}
+		}
+	}
+
+	@Override
+	public void forceUpdate() {
+		this.syncCode = 0xFFFFFFFF;
 	}
 }

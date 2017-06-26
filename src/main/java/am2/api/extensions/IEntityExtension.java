@@ -97,12 +97,17 @@ public interface IEntityExtension {
 	
 	public void addEntityReference(EntityLivingBase entity);
 	
-	public void init(EntityLivingBase entity, IDataSyncExtension ext);
+	public void init(EntityLivingBase entity);
 	
 	public boolean canHeal();
 	
 	public int getMaxSummons();
-
+	
+	public boolean shouldUpdate();
+	public byte[] generateUpdatePacket();
+	public void handleUpdatePacket(byte[] bytes);
+	public void forceUpdate();
+	
 	public static class Storage implements IStorage<IEntityExtension> {
 		
 		@Override

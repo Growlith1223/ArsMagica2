@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import am2.extensions.AffinityData;
 import am2.extensions.EntityExtension;
-import am2.extensions.datamanager.DataSyncExtension;
+import am2.extensions.SkillData;
+import am2.lore.ArcaneCompendium;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -43,7 +45,10 @@ public class CommandArsMagica extends CommandBase {
 		else if (args[0].equalsIgnoreCase("magiclevel"))
 			handleMagicLevelUp(server, sender, args);
 		else if (args[0].equalsIgnoreCase("forcesync")) {
-			DataSyncExtension.For(getCommandSenderAsPlayer(sender)).scheduleFullUpdate();
+			EntityExtension.For(getCommandSenderAsPlayer(sender)).forceUpdate();
+			AffinityData.For(getCommandSenderAsPlayer(sender)).forceUpdate();
+			SkillData.For(getCommandSenderAsPlayer(sender)).forceUpdate();
+			ArcaneCompendium.For(getCommandSenderAsPlayer(sender)).forceUpdate();
 			notifyCommandListener(sender, this, "commands.am2.sync.successful", new Object[] {});
 		}
 	}

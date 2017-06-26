@@ -177,7 +177,7 @@ public class CommonProxy implements IGuiHandler{
 		ArsMagica2.config.init();
 		serverTickHandler = new ServerTickHandler();
 		packetHandler = new PacketHandler();
-		packetHandler.registerMessages();
+		PacketHandler.registerMessages();
 		enchantments = new AMEnchantments();
 		AMNetHandler.INSTANCE.init();
 		AMNetHandler.INSTANCE.registerChannels(packetProcessor);
@@ -258,7 +258,6 @@ public class CommonProxy implements IGuiHandler{
 		CapabilityManager.INSTANCE.register(ISkillData.class, new ISkillData.Storage(), new ISkillData.Factory());
 		CapabilityManager.INSTANCE.register(IRiftStorage.class, new IRiftStorage.Storage(), new IRiftStorage.Factory());
 		CapabilityManager.INSTANCE.register(IArcaneCompendium.class, new IArcaneCompendium.Storage(), new IArcaneCompendium.Factory());
-		CapabilityManager.INSTANCE.register(IDataSyncExtension.class, new IDataSyncExtension.Storage(), new IDataSyncExtension.Factory());
 	}
 	
 	public void init() {
