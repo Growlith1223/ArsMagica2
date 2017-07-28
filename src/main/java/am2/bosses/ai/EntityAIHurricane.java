@@ -50,21 +50,21 @@ public class EntityAIHurricane extends EntityAIBase{
 		}
 		if (AITarget == null || AITarget.isDead || ((IArsMagicaBoss)host).getTicksInCurrentAction() > BossActions.SPINNING.getMaxActionTime()){
 
-			if (!host.worldObj.isRemote){
+			if (!host.world.isRemote){
 				int y = (int)host.posY + 1;
 				for (int x = -1; x <= 1; ++x){
 					for (int z = -1; z <= 1; ++z){
 						BlockPos pos = new BlockPos(host.posX + x, y, host.posZ + z);
-						while (!host.worldObj.canBlockSeeSky(pos) && host.worldObj.getBlockState(pos).getBlock() != Blocks.BEDROCK){
+						while (!host.world.canBlockSeeSky(pos) && host.world.getBlockState(pos).getBlock() != Blocks.BEDROCK){
 							if (Math.abs(y - host.posY) > 10) break;
-							host.worldObj.destroyBlock(new BlockPos ((int)host.posX + x, y++, (int)host.posZ + z), true);
+							host.world.destroyBlock(new BlockPos ((int)host.posX + x, y++, (int)host.posZ + z), true);
 						}
 						y = (int)host.posY + 2;
 					}
 				}
 			}
 
-			List<EntityLivingBase> nearbyEntities = host.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(2, 2, 2));
+			List<EntityLivingBase> nearbyEntities = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(2, 2, 2));
 			for (Iterator<EntityLivingBase> enti = nearbyEntities.iterator();enti.hasNext();){
 				EntityLivingBase ent = enti.next();
 				if (ent == host) continue;
@@ -80,7 +80,7 @@ public class EntityAIHurricane extends EntityAIBase{
 				ent.addVelocity(x, y, z);
 
 				if (ent instanceof EntityPlayer){
-					AMNetHandler.INSTANCE.sendVelocityAddPacket(host.worldObj, ent, x, y, z);
+					AMNetHandler.INSTANCE.sendVelocityAddPacket(host.world, ent, x, y, z);
 				}
 				ent.fallDistance = 0f;
 			}
@@ -95,11 +95,11 @@ public class EntityAIHurricane extends EntityAIBase{
 	public void updateTask(){
 		host.getLookHelper().setLookPositionWithEntity(target, 30, 30);
 		//host.getNavigator().tryMoveToEntityLiving(target, moveSpeed);
-		List<EntityLivingBase> nearbyEntities = host.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(6, 3, 6));
+		List<EntityLivingBase> nearbyEntities = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(6, 3, 6));
 		for (EntityLivingBase ent : nearbyEntities){
 			if (ent == host) continue;
 
-			if (!host.worldObj.isRemote && ent instanceof EntityWhirlwind){
+			if (!host.world.isRemote && ent instanceof EntityWhirlwind){
 				ent.setDead();
 				continue;
 			}
@@ -124,7 +124,7 @@ public class EntityAIHurricane extends EntityAIBase{
 			}
 
 			if (ent instanceof EntityPlayer){
-				AMNetHandler.INSTANCE.sendVelocityAddPacket(host.worldObj, ent, -(oX - ent.motionX), -(oY - ent.motionY), -(oZ - ent.motionZ));
+				AMNetHandler.INSTANCE.sendVelocityAddPacket(host.world, ent, -(oX - ent.motionX), -(oY - ent.motionY), -(oZ - ent.motionZ));
 			}
 			ent.fallDistance = 0f;
 

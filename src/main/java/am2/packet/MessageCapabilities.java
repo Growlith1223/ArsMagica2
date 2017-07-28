@@ -37,7 +37,7 @@ public class MessageCapabilities implements IMessage, IMessageHandler<MessageCap
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		String out = ByteBufUtils.readUTF8String(buf);
-		player = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(UUID.fromString(out.split("\0")[0]));
+		player = Minecraft.getMinecraft().world.getPlayerEntityByUUID(UUID.fromString(out.split("\0")[0]));
 		id = Integer.valueOf(out.split("\0")[1]);
 		state = Boolean.valueOf(out.split("\0")[2]);
 	}
@@ -50,7 +50,7 @@ public class MessageCapabilities implements IMessage, IMessageHandler<MessageCap
 
 	@Override
 	public IMessage onMessage(final MessageCapabilities message, final MessageContext ctx) {
-		((WorldServer)ctx.getServerHandler().playerEntity.worldObj).addScheduledTask(new Runnable () {
+		((WorldServer)ctx.getServerHandler().player.world).addScheduledTask(new Runnable () {
 			@Override
 			public void run() {
 				if (message.player == null)

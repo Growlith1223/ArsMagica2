@@ -63,9 +63,9 @@ public class EntityItemWatcher{
 			for (int i = -1; i <= 1 && insideRing; i++){
 				for (int j = -1; j <= 1 && insideRing; ++j){
 					if (i == 0 && j == 0) continue;
-					Block blockID1 = item.worldObj.getBlockState(pos.add(i, 0, j)).getBlock();
-					Block blockID2 = item.worldObj.getBlockState(pos.add(i, -1, j)).getBlock();
-					Block blockID3 = item.worldObj.getBlockState(pos.add(i, 1, j)).getBlock();
+					Block blockID1 = item.world.getBlockState(pos.add(i, 0, j)).getBlock();
+					Block blockID2 = item.world.getBlockState(pos.add(i, -1, j)).getBlock();
+					Block blockID3 = item.world.getBlockState(pos.add(i, 1, j)).getBlock();
 					if (inlayBlocks.contains(blockID1) || inlayBlocks.contains(blockID2) || inlayBlocks.contains(blockID3)){
 						if (ringType == null){
 							ringType = inlayBlocks.contains(blockID1) ? blockID1 : inlayBlocks.contains(blockID2) ? blockID2 : blockID3;

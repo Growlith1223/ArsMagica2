@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arsmagica2:items/flickerjar_bottle",
-		"layer1": "arsmagica2:items/flickerjar_flicker"
+        "layer0": "arsmagica2:items/flicker_jar_bottle",
+		"layer1": "arsmagica2:items/flicker_jar_flicker"
     }
 }

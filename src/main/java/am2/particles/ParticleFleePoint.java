@@ -34,7 +34,7 @@ public class ParticleFleePoint extends ParticleController{
 		posX = particle.getPosX() + (fleeSpeed * Math.cos(radians));
 		posZ = particle.getPosZ() + (fleeSpeed * Math.sin(radians));
 		double deltaY = target.yCoord - posY;
-		double horizontalDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+		double horizontalDistance = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		float pitchRotation = (float)(-Math.atan2(deltaY, horizontalDistance));
 		double pitchRadians = pitchRotation;
 

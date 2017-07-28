@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arsmagica2:items/woodenLeg"
+        "layer0": "arsmagica2:items/wooden_leg"
     }
 }

@@ -103,15 +103,15 @@ public class EntityWaterGuardian extends AM2Boss {
 			uberSpinAvailable = false;
 		}
 
-		if (!worldObj.isRemote && uberSpinAvailable && currentAction != BossActions.CASTING && currentAction != BossActions.IDLE){
+		if (!world.isRemote && uberSpinAvailable && currentAction != BossActions.CASTING && currentAction != BossActions.IDLE){
 			setCurrentAction(BossActions.IDLE);
 		}
 
-		if (!worldObj.isRemote && isClone() && (master == null || ticksExisted > 400)){
+		if (!world.isRemote && isClone() && (master == null || ticksExisted > 400)){
 			setDead();
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			updateRotations();
 		}
 		super.onUpdate();
@@ -145,7 +145,7 @@ public class EntityWaterGuardian extends AM2Boss {
 		super.setCurrentAction(action);
 		this.spinRotation = 0;
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			AMNetHandler.INSTANCE.sendActionUpdateToAllAround(this);
 		}
 	}
@@ -162,7 +162,7 @@ public class EntityWaterGuardian extends AM2Boss {
 		}
 
 		if (!isClone() && rand.nextInt(10) < 6){
-			worldObj.playSound(posX, posY, posZ, getAmbientSound(), SoundCategory.HOSTILE, 1.0f, 0.4f + rand.nextFloat() * 0.6f, false);
+			world.playSound(posX, posY, posZ, getAmbientSound(), SoundCategory.HOSTILE, 1.0f, 0.4f + rand.nextFloat() * 0.6f, false);
 			return false;
 		}
 

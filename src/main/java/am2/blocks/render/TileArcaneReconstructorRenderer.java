@@ -135,7 +135,7 @@ public class TileArcaneReconstructorRenderer extends TileEntitySpecialRenderer<T
 			wr.begin(7, DefaultVertexFormats.BLOCK);
 			World world = te.getWorld();
 			if (world == null)
-				world = Minecraft.getMinecraft().theWorld;
+				world = Minecraft.getMinecraft().world;
 			IBlockState state = world.getBlockState(te.getPos());
 			if (state.getBlock() != BlockDefs.arcaneReconstructor)
 				state = BlockDefs.arcaneReconstructor.getDefaultState();
@@ -148,7 +148,7 @@ public class TileArcaneReconstructorRenderer extends TileEntitySpecialRenderer<T
 	}
 
 	private void RenderItemAtCoords(ItemStack item, double x, double y, double z, float partialTick){
-		item.stackSize = 1;
+		item.setCount(1);
 		AMGuiHelper.instance.dummyItem.setEntityItemStack(item);
 		renderItem.doRender(AMGuiHelper.instance.dummyItem, x, y, z, AMGuiHelper.instance.dummyItem.rotationYaw, partialTick);
 	}

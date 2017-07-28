@@ -74,9 +74,9 @@ public final class ParticleColorShift extends ParticleController{
 	}
 
 	private void GenerateNextColorTarget(){
-		targetRed = (particle.getWorldObj().rand.nextFloat() * (maxRed - minRed)) + minRed;
-		targetGreen = (particle.getWorldObj().rand.nextFloat() * (maxGreen - minGreen)) + minGreen;
-		targetBlue = (particle.getWorldObj().rand.nextFloat() * (maxBlue - minBlue)) + minBlue;
+		targetRed = (particle.getworld().rand.nextFloat() * (maxRed - minRed)) + minRed;
+		targetGreen = (particle.getworld().rand.nextFloat() * (maxGreen - minGreen)) + minGreen;
+		targetBlue = (particle.getworld().rand.nextFloat() * (maxBlue - minBlue)) + minBlue;
 	}
 
 	@Override

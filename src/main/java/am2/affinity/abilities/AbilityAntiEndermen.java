@@ -27,7 +27,7 @@ public class AbilityAntiEndermen extends AbstractAffinityAbility {
 	@Override
 	public void applyHurt(EntityPlayer player, LivingHurtEvent event, boolean isAttacker) {
 		if (!isAttacker && event.getSource().getSourceOfDamage() instanceof EntityEnderman){
-			event.getSource().getSourceOfDamage().attackEntityFrom(DamageSource.drown, 2);
+			event.getSource().getSourceOfDamage().attackEntityFrom(DamageSource.DROWN, 2);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class EntityWinterGuardianLaunchArm extends EntityAIBase{
 			target = host.getAttackTarget();
 			return true;
 		}
-		List<EntityLivingBase> entities = host.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(20, 20, 20));
+		List<EntityLivingBase> entities = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(20, 20, 20));
 		if (entities.size() > 0){
 			for (EntityLivingBase entity : entities){
 				if (entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isCreativeMode) continue;
@@ -67,15 +67,15 @@ public class EntityWinterGuardianLaunchArm extends EntityAIBase{
 
 			if (host.getTicksInCurrentAction() == 14){
 				host.faceEntity(target, 180, 180);
-				if (!host.worldObj.isRemote){
+				if (!host.world.isRemote){
 
-					if (!host.worldObj.isRemote)
-						host.worldObj.playSound(host.posX, host.posY, host.posZ, AMSounds.WINTER_GUARDIAN_LAUNCH_ARM, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+					if (!host.world.isRemote)
+						host.world.playSound(host.posX, host.posY, host.posZ, AMSounds.WINTER_GUARDIAN_LAUNCH_ARM, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 
-					EntityWinterGuardianArm projectile = new EntityWinterGuardianArm(host.worldObj, host, 1.25f);
+					EntityWinterGuardianArm projectile = new EntityWinterGuardianArm(host.world, host, 1.25f);
 					projectile.setThrowingEntity(host);
 					projectile.setProjectileSpeed(2.0);
-					host.worldObj.spawnEntityInWorld(projectile);
+					host.world.spawnEntity(projectile);
 				}
 			}
 		}

@@ -23,6 +23,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -49,7 +50,7 @@ public class ItemSpellBook extends ItemArsMagica{
 	@Override
 	public String getItemStackDisplayName(ItemStack par1ItemStack){
 		ItemStack activeSpell = GetActiveItemStack(par1ItemStack);
-		if (activeSpell != null){
+		if (!activeSpell.isEmpty()){
 			return String.format("\2477%s (" + activeSpell.getDisplayName() + "\2477)", I18n.translateToLocal("item.arsmagica2:spellbook.name"));
 		}
 		return I18n.translateToLocal("item.arsmagica2:spellbook.name");
@@ -73,10 +74,11 @@ public class ItemSpellBook extends ItemArsMagica{
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		if (playerIn.isSneaking()){
 			FMLNetworkHandler.openGui(playerIn, ArsMagica2.instance, IDDefs.GUI_SPELL_BOOK, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
-			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn );
 		}
 
 		playerIn.setActiveHand(hand);
@@ -84,39 +86,39 @@ public class ItemSpellBook extends ItemArsMagica{
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 	}
 	
-	private ItemStack[] getMyInventory(ItemStack itemStack){
+	private NonNullList<ItemStack> getMyInventory(ItemStack itemStack){
 		return ReadFromStackTagCompound(itemStack);
 	}
 
-	public ItemStack[] getActiveScrollInventory(ItemStack bookStack){
-		ItemStack[] inventoryItems = getMyInventory(bookStack);
-		ItemStack[] returnArray = new ItemStack[8];
+	public NonNullList<ItemStack> getActiveScrollInventory(ItemStack bookStack){
+		NonNullList<ItemStack> inventoryItems = getMyInventory(bookStack);
+		NonNullList<ItemStack> returnItems = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
 		for (int i = 0; i < 8; ++i){
-			returnArray[i] = inventoryItems[i];
+			returnItems.set(i, inventoryItems.get(i));
 		}
-		return returnArray;
+		return returnItems;
 	}
 
 	public ItemSpellBase GetActiveScroll(ItemStack bookStack){
-		ItemStack[] inventoryItems = getMyInventory(bookStack);
-		if (inventoryItems[GetActiveSlot(bookStack)] == null){
+		NonNullList<ItemStack> inventoryItems = getMyInventory(bookStack);
+		if (inventoryItems.get(GetActiveSlot(bookStack)).isEmpty()){
 			return null;
 		}
-		return (ItemSpellBase)inventoryItems[GetActiveSlot(bookStack)].getItem();
+		return (ItemSpellBase)inventoryItems.get(GetActiveSlot(bookStack)).getItem();
 	}
 
 	public ItemStack GetActiveItemStack(ItemStack bookStack){
-		ItemStack[] inventoryItems = getMyInventory(bookStack);
-		if (inventoryItems[GetActiveSlot(bookStack)] == null){
-			return null;
+		NonNullList<ItemStack> inventoryItems = getMyInventory(bookStack);
+		if (inventoryItems.get(GetActiveSlot(bookStack)).isEmpty()){
+			return ItemStack.EMPTY;
 		}
-		return inventoryItems[GetActiveSlot(bookStack)].copy();
+		return inventoryItems.get(GetActiveSlot(bookStack)).copy();
 	}
 
 	public void replaceAciveItemStack(ItemStack bookStack, ItemStack newstack){
-		ItemStack[] inventoryItems = getMyInventory(bookStack);
+		NonNullList<ItemStack> inventoryItems = getMyInventory(bookStack);
 		int index = GetActiveSlot(bookStack);
-		inventoryItems[index] = newstack;
+		inventoryItems.set(index, newstack);
 		UpdateStackTagCompound(bookStack, inventoryItems);
 	}
 	
@@ -126,20 +128,20 @@ public class ItemSpellBook extends ItemArsMagica{
 			FMLNetworkHandler.openGui((EntityPlayer) entityLiving, ArsMagica2.instance, IDDefs.GUI_SPELL_BOOK, worldIn, (int)entityLiving.posX, (int)entityLiving.posY, (int)entityLiving.posZ);
 		}else{
 			ItemStack currentSpellStack = GetActiveItemStack(stack);
-			if (currentSpellStack != null){
+			if (!currentSpellStack.isEmpty()){
 				ItemDefs.spell.onPlayerStoppedUsing(currentSpellStack, worldIn, entityLiving, timeLeft);
 			}
 		}
 	}
 
-	public void UpdateStackTagCompound(ItemStack itemStack, ItemStack[] values){
+	public void UpdateStackTagCompound(ItemStack itemStack, NonNullList<ItemStack> inventoryItems){
 		if (itemStack.getTagCompound() == null){
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
 
 		NBTTagList list = new NBTTagList();
-		for (int i = 0; i < values.length; ++i){
-			ItemStack stack = values[i];
+		for (int i = 0; i < inventoryItems.size(); ++i){
+			ItemStack stack = inventoryItems.get(i);
 			NBTTagCompound spell = new NBTTagCompound();
 			if (stack != null){
 				spell.setInteger("meta", stack.getItemDamage());
@@ -155,7 +157,7 @@ public class ItemSpellBook extends ItemArsMagica{
 
 		ItemStack active = GetActiveItemStack(itemStack);
 		boolean Soulbound = EnchantmentHelper.getEnchantmentLevel(AMEnchantments.soulbound, itemStack) > 0;
-		if (active != null)
+		if (!active.isEmpty())
 			AMEnchantmentHelper.copyEnchantments(active, itemStack);
 		if (Soulbound)
 			AMEnchantmentHelper.soulbindStack(itemStack);
@@ -209,11 +211,11 @@ public class ItemSpellBook extends ItemArsMagica{
 		return itemStack.getTagCompound().getInteger("spellbookactiveslot");
 	}
 
-	public ItemStack[] ReadFromStackTagCompound(ItemStack itemStack){
+	public NonNullList<ItemStack> ReadFromStackTagCompound(ItemStack itemStack){
 		if (itemStack.getTagCompound() == null){
-			return new ItemStack[InventorySpellBook.inventorySize];
+			return NonNullList.<ItemStack>withSize(InventorySpellBook.inventorySize, ItemStack.EMPTY);
 		}
-		ItemStack[] items = new ItemStack[InventorySpellBook.inventorySize];
+		NonNullList<ItemStack> items = NonNullList.<ItemStack>withSize(InventorySpellBook.inventorySize, ItemStack.EMPTY);
 		/*for (int i = 0; i < items.length; ++i){
 			if (!itemStack.stackTagCompound.hasKey("spellbookitem" + i) || itemStack.stackTagCompound.getInteger("spellbookitem" + i) == -1){
 				items[i] = null;
@@ -236,12 +238,14 @@ public class ItemSpellBook extends ItemArsMagica{
 		NBTTagList list = itemStack.getTagCompound().getTagList("spell_book_inventory", Constants.NBT.TAG_COMPOUND);
 		for (int i = 0; i < list.tagCount(); ++i){
 			NBTTagCompound spell = (NBTTagCompound)list.getCompoundTagAt(i);
+			if (spell.getTag("data") == null) continue;
+			if (spell == null) continue;
 			int meta = spell.getInteger("meta");
 			NBTTagCompound tag = spell.getCompoundTag("data");
 			int index = spell.getInteger("index");
-			items[index] = new ItemStack(ItemDefs.spell, 1, meta);
-			items[index].setTagCompound(tag);
-
+			ItemStack stack = new ItemStack(ItemDefs.spell, 1, meta);
+			stack.setTagCompound(tag);
+			items.set(index, stack);
 		}
 		return items;
 	}
@@ -307,7 +311,7 @@ public class ItemSpellBook extends ItemArsMagica{
 	}
 
 	@Override
-	public boolean isItemTool(ItemStack par1ItemStack){
+	public boolean isFull3D(){
 		return true;
 	}
 

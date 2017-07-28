@@ -2,6 +2,6 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "arsmagica2:items/bound_bow",
-		"layer1": "arsmagica2:items/bindingCatalyst"
+		"layer1": "arsmagica2:items/binding_catalyst"
     }
 }

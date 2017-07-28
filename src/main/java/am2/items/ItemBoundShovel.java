@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,7 +30,10 @@ public class ItemBoundShovel extends ItemSpade implements IBoundItem {
 			return true;
 		ItemStack copiedStack = SpellUtils.merge(stack.copy());
 		copiedStack.getTagCompound().getCompoundTag("AM2").setInteger("CurrentGroup", SpellUtils.currentStage(stack) + 1);
-		copiedStack.setItem(ItemDefs.spell);
+		ItemStack spell = new ItemStack(ItemDefs.spell);
+		spell.setTagCompound(copiedStack.getTagCompound());
+		spell.getTagCompound().getCompoundTag("AM2").setInteger("CurrentGroup", SpellUtils.currentStage(stack) + 1);
+		copiedStack = spell.copy();
 		SpellUtils.applyStackStage(copiedStack, entityLiving, null, pos.getX(), pos.getY(), pos.getZ(), null, worldIn, true, true, 0);
 		return true;
 	}
@@ -41,7 +45,9 @@ public class ItemBoundShovel extends ItemSpade implements IBoundItem {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
-		item.setItem(ItemDefs.spell);
+		NBTTagCompound nbt = item.getTagCompound();
+		item = new ItemStack(ItemDefs.spell);
+		item.setTagCompound(nbt);
 		return false;
 	}
 

@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class GuiCrystalMarker extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/crystalMarker.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/crystal_marker.png");
 	
 	public GuiCrystalMarker(EntityPlayer player, TileEntityCrystalMarker tileEntityCrystalMarker){
 		super(new ContainerCrystalMarker(player, tileEntityCrystalMarker));

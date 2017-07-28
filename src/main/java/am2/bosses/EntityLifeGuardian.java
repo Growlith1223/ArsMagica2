@@ -99,7 +99,7 @@ public class EntityLifeGuardian extends AM2Boss{
 	@Override
 	public void onUpdate(){
 		//Minion management - add any queued minions to the minion list and prune out any fallen or nonexistant ones
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			minions.addAll(queued_minions);
 			queued_minions.clear();
 			Iterator<EntityLiving> it = minions.iterator();
@@ -113,7 +113,7 @@ public class EntityLifeGuardian extends AM2Boss{
 
 			if (this.ticksExisted % 100 == 0){
 				for (EntityLivingBase e : minions)
-					ArsMagica2.proxy.particleManager.spawn(worldObj, "textures/blocks/oreblocksunstone.png", this, e);
+					ArsMagica2.proxy.particleManager.spawn(world, "textures/blocks/oreblocksunstone.png", this, e);
 			}
 		}
 

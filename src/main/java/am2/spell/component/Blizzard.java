@@ -58,7 +58,7 @@ public class Blizzard extends SpellComponent{
 			blizzard.setTicksToExist(duration);
 			blizzard.setDamageBonus((float)damage);
 			blizzard.SetCasterAndStack(caster, stack);
-			world.spawnEntityInWorld(blizzard);
+			world.spawnEntity(blizzard);
 		}
 		return true;
 	}

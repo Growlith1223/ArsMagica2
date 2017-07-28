@@ -97,7 +97,7 @@ public class PageMultiblock extends CompendiumPage<MultiblockStructureDefinition
 		int cy = posY + 92;
 		String label = String.format("%s: %s", I18n.translateToLocal("am2.gui.layer"), curLayer == -1 ? I18n.translateToLocal("am2.gui.all") : "" + curLayer);
 
-		mc.fontRendererObj.drawString(label, cx - mc.fontRendererObj.getStringWidth(label) / 2, cy - 90, 0x000000);
+		mc.fontRenderer.drawString(label, cx - mc.fontRenderer.getStringWidth(label) / 2, cy - 90, 0x000000);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -231,7 +231,7 @@ public class PageMultiblock extends CompendiumPage<MultiblockStructureDefinition
 			mc.renderEngine.bindTexture(LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.enableLighting();
 		if (state.getBlock() instanceof ITileEntityProvider)
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(((ITileEntityProvider)state.getBlock()).createNewTileEntity(Minecraft.getMinecraft().theWorld, state.getBlock().getMetaFromState(state)), 0, 0, 0, 0, 0);
+			TileEntityRendererDispatcher.instance.renderTileEntityAt(((ITileEntityProvider)state.getBlock()).createNewTileEntity(Minecraft.getMinecraft().world, state.getBlock().getMetaFromState(state)), 0, 0, 0, 0, 0);
 		GlStateManager.disableLighting();
 		Tessellator.getInstance().getBuffer().begin(7, DefaultVertexFormats.BLOCK);
 		GlStateManager.enableBlend();

@@ -30,11 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityShadowHelper extends EntityLiving{
 
 	private static final DataParameter<String> DW_MIMIC_USER = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.STRING); //who are we going to mimic (MC skin)?	
-	private static final DataParameter<Optional<ItemStack>> DW_SEARCH_ITEM = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.OPTIONAL_ITEM_STACK); //what are we currently looking for?
+	private static final DataParameter<ItemStack> DW_SEARCH_ITEM = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.OPTIONAL_ITEM_STACK); //what are we currently looking for?
 	private static final DataParameter<Integer> DW_TRANS_LOC_X = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //x-coordinate of search
 	private static final DataParameter<Integer> DW_TRANS_LOC_Y = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //y-coordinate of search
 	private static final DataParameter<Integer> DW_TRANS_LOC_Z = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //z-coordinate of search
-	private static final DataParameter<Optional<ItemStack>> DW_HELD_ITEM = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.OPTIONAL_ITEM_STACK); //current held item
+	private static final DataParameter<ItemStack> DW_HELD_ITEM = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.OPTIONAL_ITEM_STACK); //current held item
 	private static final DataParameter<Integer> DW_DROP_LOC_X = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //x-coordinate of search
 	private static final DataParameter<Integer> DW_DROP_LOC_Y = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //y-coordinate of search
 	private static final DataParameter<Integer> DW_DROP_LOC_Z = EntityDataManager.createKey(EntityShadowHelper.class, DataSerializers.VARINT); //z-coordinate of search
@@ -53,16 +53,16 @@ public class EntityShadowHelper extends EntityLiving{
 	@Override
 	public void onDeath(DamageSource par1DamageSource){
 		super.onDeath(par1DamageSource);
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			spawnParticles();
-			worldObj.playSound(posX, posY, posZ, AMSounds.CRAFTING_ALTAR_CREATE_SPELL, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
+			world.playSound(posX, posY, posZ, AMSounds.CRAFTING_ALTAR_CREATE_SPELL, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
 		}
 	}
 
 	private void spawnParticles(){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			for (int i = 0; i < 25 * ArsMagica2.config.getGFXLevel() + 1; ++i){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "arcane", posX, posY, posZ);
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "arcane", posX, posY, posZ);
 				if (particle != null){
 					particle.addRandomOffset(1, 1, 1);
 					particle.AddParticleController(new ParticleFloatUpward(particle, 0, 0.02f + getRNG().nextFloat() * 0.2f, 1, false));
@@ -92,19 +92,19 @@ public class EntityShadowHelper extends EntityLiving{
 	protected void entityInit(){
 		super.entityInit();
 		this.dataManager.register(DW_MIMIC_USER, "");
-		this.dataManager.register(DW_SEARCH_ITEM, Optional.of(new ItemStack(Items.APPLE)));
+		this.dataManager.register(DW_SEARCH_ITEM, new ItemStack(Items.APPLE));
 		this.dataManager.register(DW_TRANS_LOC_X, 0);
 		this.dataManager.register(DW_TRANS_LOC_Y, 0);
 		this.dataManager.register(DW_TRANS_LOC_Z, 0);
-		this.dataManager.register(DW_HELD_ITEM, Optional.of(new ItemStack(Items.PAPER)));
+		this.dataManager.register(DW_HELD_ITEM, new ItemStack(Items.PAPER));
 		this.dataManager.register(DW_DROP_LOC_X, 0);
 		this.dataManager.register(DW_DROP_LOC_Y, 0);
 		this.dataManager.register(DW_DROP_LOC_Z, 0);
 	}
 
 	public void setSearchLocationAndItem(AMVector3 location, ItemStack item){
-		if (this.worldObj.isRemote) return;
-		this.dataManager.set(DW_SEARCH_ITEM, Optional.of(item));
+		if (this.world.isRemote) return;
+		this.dataManager.set(DW_SEARCH_ITEM, item);
 		this.dataManager.set(DW_TRANS_LOC_X, (int)location.x);
 		this.dataManager.set(DW_TRANS_LOC_Y, (int)location.y);
 		this.dataManager.set(DW_TRANS_LOC_Z, (int)location.z);
@@ -125,11 +125,11 @@ public class EntityShadowHelper extends EntityLiving{
 	}
 
 	public ItemStack getSearchItem(){
-		return this.dataManager.get(DW_SEARCH_ITEM).orNull();
+		return this.dataManager.get(DW_SEARCH_ITEM);
 	}
 
 	public void setHeldItem(ItemStack item){
-		this.dataManager.set(DW_HELD_ITEM, Optional.of(item));
+		this.dataManager.set(DW_HELD_ITEM, (item));
 	}
 
 	public void setMimicUser(String userName){
@@ -160,24 +160,24 @@ public class EntityShadowHelper extends EntityLiving{
 
 	@Override
 	public ItemStack getHeldItemMainhand(){
-		return this.dataManager.get(DW_HELD_ITEM).orNull();
+		return this.dataManager.get(DW_HELD_ITEM);
 	}
 
 	@Override
 	public void onUpdate(){
 		super.onUpdate();
-		if (worldObj != null && worldObj.isRemote && skinHelper == null) {
+		if (world != null && world.isRemote && skinHelper == null) {
 			this.skinHelper = new ShadowSkinHelper();
 			spawnParticles();
 		}
 		
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			if (this.getMimicUser() != lastDWString){
 				lastDWString = getMimicUser();
 				this.skinHelper.setupCustomSkin(lastDWString);
 			}
 		}
-		if (!worldObj.isRemote && (altarTarget == null || !altarTarget.isCrafting())){
+		if (!world.isRemote && (altarTarget == null || !altarTarget.isCrafting())){
 			this.unSummon();
 		}
 	}
@@ -188,7 +188,7 @@ public class EntityShadowHelper extends EntityLiving{
 	}
 
 	public void unSummon(){
-		this.attackEntityFrom(DamageSource.generic, 5000);
+		this.attackEntityFrom(DamageSource.GENERIC, 5000);
 	}
 
 	public ResourceLocation getLocationSkin(){

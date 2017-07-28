@@ -58,15 +58,15 @@ public class EntityDryad extends EntityCreature{
 	
 	@Override
 	public void onUpdate(){
-		World world = this.worldObj;
+		World world = this.world;
 		super.onUpdate();
 		if (!world.isRemote || world == null){
 			return;
 		}
-		if (worldObj.rand.nextInt(100) == 3){
+		if (world.rand.nextInt(100) == 3){
 			AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "hr_sparkles_1", this.posX, this.posY + 2, this.posZ);
 			if (effect != null){
-				effect.AddParticleController(new ParticleOrbitEntity(effect, this, worldObj.rand.nextDouble() * 0.2 + 0.2, 1, false));
+				effect.AddParticleController(new ParticleOrbitEntity(effect, this, world.rand.nextDouble() * 0.2 + 0.2, 1, false));
 				effect.setIgnoreMaxAge(false);
 				effect.setRGBColorF(0.1f, 0.8f, 0.1f);
 			}
@@ -103,7 +103,7 @@ public class EntityDryad extends EntityCreature{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), worldObj, this))
+		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), world, this))
 			return false;
 		return super.getCanSpawnHere();
 	}

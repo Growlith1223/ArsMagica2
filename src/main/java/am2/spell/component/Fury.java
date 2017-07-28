@@ -135,14 +135,14 @@ public class Fury extends SpellComponent implements IRitualInteraction{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

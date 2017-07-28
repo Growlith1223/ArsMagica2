@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -59,7 +60,8 @@ public class ItemManaPotionBundle extends ItemArsMagica{
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World par2World, EntityPlayer par3EntityPlayer, EnumHand hand){
+		ItemStack par1ItemStack = par3EntityPlayer.getHeldItem(hand);
 		EntityExtension props = EntityExtension.For(par3EntityPlayer);
 		if (props.getCurrentMana() < props.getMaxMana()){
 			par3EntityPlayer.setActiveHand(hand);
@@ -90,8 +92,10 @@ public class ItemManaPotionBundle extends ItemArsMagica{
 
 		if (getUses(par1ItemStack.getItemDamage()) == 0){
 			giveOrDropItem(par3EntityPlayer, new ItemStack(Items.STRING));
-			if (par1ItemStack.stackSize-- == 0)
+			par1ItemStack.shrink(1);
+			if (par1ItemStack.isEmpty()){
 				par1ItemStack = null;
+			}
 		}
 
 		giveOrDropItem(par3EntityPlayer, new ItemStack(Items.GLASS_BOTTLE));
@@ -124,7 +128,7 @@ public class ItemManaPotionBundle extends ItemArsMagica{
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, NonNullList<ItemStack> par3List){
 		par3List.add(new ItemStack(ItemDefs.manaPotionBundle, 1, (0 << 8) + 3));
 		par3List.add(new ItemStack(ItemDefs.manaPotionBundle, 1, (1 << 8) + 3));
 		par3List.add(new ItemStack(ItemDefs.manaPotionBundle, 1, (2 << 8) + 3));

@@ -11,15 +11,15 @@ public abstract class AbstractFlickerFunctionality extends IForgeRegistryEntry.I
 
 	public abstract int PowerPerOperation();
 
-	public abstract boolean DoOperation(World worldObj, IFlickerController<?> controller, boolean powered);
+	public abstract boolean DoOperation(World world, IFlickerController<?> controller, boolean powered);
 
-	public abstract boolean DoOperation(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers);
+	public abstract boolean DoOperation(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers);
 	
-	public abstract void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered);
+	public abstract void RemoveOperator(World world, IFlickerController<?> controller, boolean powered);
 
 	public abstract int TimeBetweenOperation(boolean powered, Affinity[] flickers);
 
-	public abstract void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers);
+	public abstract void RemoveOperator(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers);
 
 	public abstract Object[] getRecipe();
 	

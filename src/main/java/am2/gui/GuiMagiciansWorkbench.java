@@ -70,13 +70,13 @@ public class GuiMagiciansWorkbench extends GuiContainer{
 		if (par1GuiButton == clearGridOne){
 			for (int i = 0; i < 9; ++i){
 				Slot slot = this.inventorySlots.getSlot(i);
-				this.mc.playerController.windowClick(this.inventorySlots.windowId, slot.slotNumber, 0, ClickType.THROW, this.mc.thePlayer);
+				this.mc.playerController.windowClick(this.inventorySlots.windowId, slot.slotNumber, 0, ClickType.THROW, this.mc.player);
 			}
 		}else if (par1GuiButton == clearGridTwo){
 			int stop = ((ContainerMagiciansWorkbench)this.inventorySlots).getWorkbench().getUpgradeStatus(TileEntityMagiciansWorkbench.UPG_CRAFT) ? 9 : 4;
 			for (int i = 10; i < 10 + stop; ++i){
 				Slot slot = this.inventorySlots.getSlot(i);
-				this.mc.playerController.windowClick(this.inventorySlots.windowId, slot.slotNumber, 0, ClickType.THROW, this.mc.thePlayer);
+				this.mc.playerController.windowClick(this.inventorySlots.windowId, slot.slotNumber, 0, ClickType.THROW, this.mc.player);
 			}
 		}
 	}
@@ -184,7 +184,7 @@ public class GuiMagiciansWorkbench extends GuiContainer{
 		int i1 = (height - ySize) / 2;
 
 		if (ttList.size() > 0){
-			drawHoveringText(ttList, mouseX - l, mouseY - i1, fontRendererObj, color);
+			drawHoveringText(ttList, mouseX - l, mouseY - i1, fontRenderer, color);
 		}
 	}
 

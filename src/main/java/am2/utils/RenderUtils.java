@@ -102,7 +102,7 @@ public class RenderUtils {
 	}
 	
 	public static void drawTextInWorldAtOffset(String text, double x, double y, double z, int color){
-		FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
 		float f = 1.6F;
 		float f1 = 0.016666668F * f;
 		GL11.glPushMatrix();
@@ -158,7 +158,7 @@ public class RenderUtils {
 			wr.begin(7, DefaultVertexFormats.BLOCK);
 			World world = te.getWorld();
 			if (world == null)
-				world = Minecraft.getMinecraft().theWorld;
+				world = Minecraft.getMinecraft().world;
 			IBlockState state = world.getBlockState(te.getPos());
 			if (state.getBlock() != defaultState.getBlock())
 				state = defaultState;

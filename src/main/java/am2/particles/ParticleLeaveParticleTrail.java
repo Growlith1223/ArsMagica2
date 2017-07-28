@@ -70,7 +70,7 @@ public class ParticleLeaveParticleTrail extends ParticleController{
 		updateTicks++;
 		if (updateTicks == ticksBetweenSpawns){
 			updateTicks = 0;
-			AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(particle.getWorldObj(), particleName, particle.getPosX(), particle.getPosY(), particle.getPosZ());
+			AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(particle.getworld(), particleName, particle.getPosX(), particle.getPosY(), particle.getPosZ());
 			if (effect != null){
 				effect.setMaxAge(this.maxAge);
 				effect.setIgnoreMaxAge(this.ignoreMaxAge);

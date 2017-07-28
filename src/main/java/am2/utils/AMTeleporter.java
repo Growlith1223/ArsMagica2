@@ -26,7 +26,7 @@ public class AMTeleporter extends Teleporter{
 	// Move the Entity to the portal
 	public void teleport(EntityLivingBase entity, World world){
 		// Set Dimension
-		if (entity.worldObj.provider.getDimension() != world.provider.getDimension()){
+		if (entity.world.provider.getDimension() != world.provider.getDimension()){
 			BlockPos teleportPos = clearTeleportPath(world, entity);
 
 			entity.motionX = entity.motionY = entity.motionZ = 0.0D;

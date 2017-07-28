@@ -37,13 +37,13 @@ public class InventoryEssenceBag implements IInventory{
 	public ItemStack decrStackSize(int i, int j){
 
 		if (inventoryItems[i] != null){
-			if (inventoryItems[i].stackSize <= j){
+			if (inventoryItems[i].getCount() <= j){
 				ItemStack itemstack = inventoryItems[i];
 				inventoryItems[i] = null;
 				return itemstack;
 			}
 			ItemStack itemstack1 = inventoryItems[i].splitStack(j);
-			if (inventoryItems[i].stackSize == 0){
+			if (inventoryItems[i].getCount() == 0){
 				inventoryItems[i] = null;
 			}
 			return itemstack1;
@@ -68,7 +68,7 @@ public class InventoryEssenceBag implements IInventory{
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
 		return true;
 	}
 
@@ -111,33 +111,42 @@ public class InventoryEssenceBag implements IInventory{
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
+	
+	@Override
+	public boolean isEmpty(){
+		for (ItemStack item : this.inventoryItems){
+			if (!item.isEmpty()) return false;
+		}
+		return true;
+	}
+	
 
 
 }

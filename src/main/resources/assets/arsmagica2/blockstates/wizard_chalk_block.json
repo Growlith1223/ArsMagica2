@@ -6,23 +6,23 @@
 	},
 	"variants": {
 		"variant": {
-			0:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk1"}},
-			1:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk2"}},
-			2:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk3"}},
-			3:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk4"}},
-			4:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk5"}},
-			5:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk6"}},
-			6:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk7"}},
-			7:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk8"}},
-			8:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk9"}},
-			9:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk10"}},
-			10:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk11"}},
-			11:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk12"}},
-			12:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk13"}},
-			13:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk14"}},
-			14:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk15"}},
-			15:{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk16"}}
+			0:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_1"}},
+			1:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_2"}},
+			2:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_3"}},
+			3:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_4"}},
+			4:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_5"}},
+			5:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_6"}},
+			6:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_7"}},
+			7:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_8"}},
+			8:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_9"}},
+			9:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_10"}},
+			10:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_11"}},
+			11:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_12"}},
+			12:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_13"}},
+			13:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_14"}},
+			14:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_15"}},
+			15:{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_16"}}
 		},
-		"inventory": [{"textures":{"all":"arsmagica2:blocks/wizardchalk/WizardChalk1"}}]
+		"inventory": [{"textures":{"all":"arsmagica2:blocks/wizardchalk/wizard_chalk_1"}}]
 	}
 }

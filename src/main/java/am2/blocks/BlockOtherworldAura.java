@@ -41,12 +41,10 @@ public class BlockOtherworldAura extends BlockAMPowered{
 		return 15;
 	}
 	
-	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		if (placer instanceof EntityPlayer){
 			TileEntityOtherworldAura te = (TileEntityOtherworldAura)worldIn.getTileEntity(pos);

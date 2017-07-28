@@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class EntityAIRangedAttackSpell extends EntityAIBase{
-	World worldObj;
+	World world;
 
 	/**
 	 * The entity the AI instance has been applied to
@@ -36,7 +36,7 @@ public class EntityAIRangedAttackSpell extends EntityAIBase{
 		rangedAttackTime = 0;
 		field_48367_f = 0;
 		entityHost = host;
-		worldObj = host.worldObj;
+		world = host.world;
 		field_48370_e = moveSpeed;
 		maxRangedAttackTime = cooldown;
 		this.spellStack = spellStack;
@@ -132,7 +132,7 @@ public class EntityAIRangedAttackSpell extends EntityAIBase{
 		if (entityHost.getAttackTarget() == null)
 			return;
 		entityHost.faceEntity(entityHost.getAttackTarget(), 180, 180);
-		SpellUtils.applyStackStage(spellStack, entityHost, entityHost.getAttackTarget(), entityHost.posX, entityHost.posY, entityHost.posZ, null, entityHost.worldObj, true, false, 0);
+		SpellUtils.applyStackStage(spellStack, entityHost, entityHost.getAttackTarget(), entityHost.posX, entityHost.posY, entityHost.posZ, null, entityHost.world, true, false, 0);
 		entityHost.swingArm(EnumHand.MAIN_HAND);
 	}
 }

@@ -1,8 +1,8 @@
 {
     "variants": {
-        "axis=y":    { "model": "arsmagica2:witchwoodLog" },
-        "axis=z":     { "model": "arsmagica2:witchwoodLog", "x": 90 },
-        "axis=x":     { "model": "arsmagica2:witchwoodLog", "x": 90, "y": 90 },
-        "axis=none":   { "model": "arsmagica2:witchwoodBark" }
+        "axis=y":    { "model": "arsmagica2:witchwood_log" },
+        "axis=z":     { "model": "arsmagica2:witchwood_log", "x": 90 },
+        "axis=x":     { "model": "arsmagica2:witchwood_log", "x": 90, "y": 90 },
+        "axis=none":   { "model": "arsmagica2:witchwood_bark" }
     }
 }

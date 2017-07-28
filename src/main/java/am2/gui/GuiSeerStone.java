@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiSeerStone extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/seerStoneGui.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/seer_stone_gui.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

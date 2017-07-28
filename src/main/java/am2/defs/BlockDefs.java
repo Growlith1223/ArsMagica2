@@ -164,7 +164,7 @@ public class BlockDefs {
 	public static final BlockSlab witchwoodDoubleSlab = new BlockWitchwoodSlabsDouble();
 	
 	public static HashMap<Integer, ArrayList<AMVector3>> KeystonePortalLocations = new HashMap<>();
-	public static Fluid liquid_essence = new Fluid("liquid_essence", new ResourceLocation("arsmagica2", "blocks/liquidEssenceStill"), new ResourceLocation("arsmagica2", "blocks/liquidEssenceFlowing")).setRarity(EnumRarity.RARE).setLuminosity(7);
+	public static Fluid liquid_essence = new Fluid("liquid_essence", new ResourceLocation("arsmagica2", "blocks/liquid_essence_still"), new ResourceLocation("arsmagica2", "blocks/liquid_essence_flowing")).setRarity(EnumRarity.RARE).setLuminosity(7);
 	
 	
 	public void preInit () {

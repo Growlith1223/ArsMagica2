@@ -82,7 +82,7 @@ public class EntityThrownSickle extends EntityLiving{
 	}
 
 	public void setHeading(double movementX, double movementY, double movementZ, double projectileSpeed, double projectileSpeed2){
-		float f = MathHelper.sqrt_double(movementX * movementX + movementY * movementY + movementZ * movementZ);
+		float f = MathHelper.sqrt(movementX * movementX + movementY * movementY + movementZ * movementZ);
 		movementX /= f;
 		movementY /= f;
 		movementZ /= f;
@@ -95,7 +95,7 @@ public class EntityThrownSickle extends EntityLiving{
 		motionX = movementX;
 		motionY = movementY;
 		motionZ = movementZ;
-		float f1 = MathHelper.sqrt_double(movementX * movementX + movementZ * movementZ);
+		float f1 = MathHelper.sqrt(movementX * movementX + movementZ * movementZ);
 		prevRotationYaw = rotationYaw = (float)((Math.atan2(movementX, movementZ) * 180D) / Math.PI);
 		prevRotationPitch = rotationPitch = (float)((Math.atan2(movementY, f1) * 180D) / Math.PI);
 	}
@@ -105,19 +105,19 @@ public class EntityThrownSickle extends EntityLiving{
 		if (getThrowingEntity() != null && getThrowingEntity() instanceof EntityNatureGuardian){
 			((EntityNatureGuardian)getThrowingEntity()).hasSickle = true;
 		}else if (getThrowingEntity() != null && getThrowingEntity() instanceof EntityPlayer){
-			if (!worldObj.isRemote) {
+			if (!world.isRemote) {
                 ItemStack res = itemNBT == null ? ItemDefs.natureScytheEnchanted.copy() : itemNBT;
                 if (getThrowingEntity().getHealth() <= 0) {
                     PlayerTracker.storeSoulboundItemForRespawn((EntityPlayer) getThrowingEntity(), res);
                 } else {
                     if (!((EntityPlayer) getThrowingEntity()).inventory.addItemStackToInventory(res)) {
-                        EntityItem item = new EntityItem(worldObj);
+                        EntityItem item = new EntityItem(world);
                         item.setPosition(posX, posY, posZ);
                         if (itemNBT != null)
                             item.setEntityItemStack(res);
                         else
                             item.setEntityItemStack(res);
-                        worldObj.spawnEntityInWorld(item);
+                        world.spawnEntity(item);
                     }
                 }
             }
@@ -127,12 +127,12 @@ public class EntityThrownSickle extends EntityLiving{
 
 	@Override
 	public void onUpdate(){
-		if (!worldObj.isRemote && (getThrowingEntity() == null || getThrowingEntity().isDead)){
+		if (!world.isRemote && (getThrowingEntity() == null || getThrowingEntity().isDead)){
 			setDead();
 			return;
 		}else{
 			ticksExisted++;
-			if (ticksExisted >= maxTicksToExist && !worldObj.isRemote){
+			if (ticksExisted >= maxTicksToExist && !world.isRemote){
 				setDead();
 				return;
 			}
@@ -143,14 +143,14 @@ public class EntityThrownSickle extends EntityLiving{
 		
 		Vec3d vec3d = new Vec3d(posX, posY, posZ);
 		Vec3d vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
-		RayTraceResult movingobjectposition = worldObj.rayTraceBlocks(vec3d, vec3d1);
+		RayTraceResult movingobjectposition = world.rayTraceBlocks(vec3d, vec3d1);
 		vec3d = new Vec3d(posX, posY, posZ);
 		vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
 		if (movingobjectposition != null){
 			vec3d1 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
 		}
 		Entity entity = null;
-		List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
 		double d = 0.0D;
 		for (int j = 0; j < list.size(); j++){
 			Entity entity1 = list.get(j);
@@ -182,7 +182,7 @@ public class EntityThrownSickle extends EntityLiving{
 		posY += motionY;
 		posZ += motionZ;
 		setPosition(posX, posY, posZ);
-		float f = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+		float f = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
 		rotationYaw = (float)((Math.atan2(motionX, motionZ) * 180D) / 3.1415927410125732D);
 		for (rotationPitch = (float)((Math.atan2(motionY, f) * 180D) / 3.1415927410125732D); rotationPitch - prevRotationPitch < -180F; prevRotationPitch -= 360F){
 		}
@@ -197,7 +197,7 @@ public class EntityThrownSickle extends EntityLiving{
 		if (isInWater()){
 			for (int k = 0; k < 4; k++){
 				float f3 = 0.25F;
-				worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * f3, posY - motionY * f3, posZ - motionZ * f3, motionX, motionY, motionZ);
+				world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * f3, posY - motionY * f3, posZ - motionZ * f3, motionX, motionY, motionZ);
 			}
 		}
 
@@ -212,14 +212,14 @@ public class EntityThrownSickle extends EntityLiving{
 			double angle = Math.atan2(deltaZ, deltaX);
 			double speed = Math.min((this.ticksExisted - 40f) / 10f, this.getProjectileSpeed());
 
-			double horizontalDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+			double horizontalDistance = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 			float pitchRotation = (float)(-Math.atan2(deltaY, horizontalDistance));
 
 			this.motionX = -Math.cos(angle) * speed;
 			this.motionZ = -Math.sin(angle) * speed;
 			this.motionY = Math.sin(pitchRotation) * speed;
 
-			if (this.getDistanceSqToEntity(getThrowingEntity()) < 1.2 && !worldObj.isRemote){
+			if (this.getDistanceSqToEntity(getThrowingEntity()) < 1.2 && !world.isRemote){
 				this.setDead();
 			}
 		}
@@ -232,7 +232,7 @@ public class EntityThrownSickle extends EntityLiving{
 			if (getThrowingEntity() != null && !this.entityHits.contains(movingobjectposition.entityHit.getEntityId())){
 				this.entityHits.add(movingobjectposition.entityHit.getEntityId());
 				if (getThrowingEntity() instanceof EntityPlayer){
-					if (movingobjectposition.entityHit instanceof EntityPlayer && (getThrowingEntity().worldObj.isRemote || !FMLCommonHandler.instance().getMinecraftServerInstance().isPVPEnabled()))
+					if (movingobjectposition.entityHit instanceof EntityPlayer && (getThrowingEntity().world.isRemote || !FMLCommonHandler.instance().getMinecraftServerInstance().isPVPEnabled()))
 						return;
 					movingobjectposition.entityHit.attackEntityFrom(DamageSources.causeCactusDamage(getThrowingEntity(), true), 10);
 				}else{
@@ -244,12 +244,12 @@ public class EntityThrownSickle extends EntityLiving{
 			for (int i = -radius; i <= radius; ++i){
 				for (int j = -radius; j <= radius; ++j){
 					for (int k = -radius; k <= radius; ++k){
-						IBlockState nextBlock = worldObj.getBlockState(movingobjectposition.getBlockPos().add(i, j, k));
+						IBlockState nextBlock = world.getBlockState(movingobjectposition.getBlockPos().add(i, j, k));
 						if (nextBlock == null) continue;
 						if (nextBlock.getBlock() instanceof BlockLeaves || nextBlock.getBlock() instanceof BlockBush || nextBlock.getBlock() instanceof BlockCrops){
 							if (ForgeEventFactory.doPlayerHarvestCheck(DummyEntityPlayer.fromEntityLiving(getThrowingEntity()), nextBlock, true))
-								if (!worldObj.isRemote)
-									worldObj.destroyBlock(movingobjectposition.getBlockPos().add(i, j, k), true);
+								if (!world.isRemote)
+									world.destroyBlock(movingobjectposition.getBlockPos().add(i, j, k), true);
 						}
 					}
 				}
@@ -279,7 +279,7 @@ public class EntityThrownSickle extends EntityLiving{
 
 	private EntityLivingBase getThrowingEntity(){
 		if (throwingEntity == null){
-			Entity e = this.worldObj.getEntityByID(this.dataManager.get(THROWING_ENTITY));
+			Entity e = this.world.getEntityByID(this.dataManager.get(THROWING_ENTITY));
 			if (e instanceof EntityLivingBase)
 				throwingEntity = (EntityLivingBase)e;
 		}

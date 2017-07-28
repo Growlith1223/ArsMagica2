@@ -83,8 +83,8 @@ public class BlockParticleEmitter extends BlockAMContainer{
 	
 	
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
 	@Override
@@ -114,7 +114,8 @@ public class BlockParticleEmitter extends BlockAMContainer{
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+		ItemStack heldItem = playerIn.getHeldItem(hand);
 		if (worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te != null && te instanceof TileEntityParticleEmitter) {
@@ -124,11 +125,11 @@ public class BlockParticleEmitter extends BlockAMContainer{
 						ArsMagica2.proxy.openParticleBlockGUI(worldIn, playerIn, (TileEntityParticleEmitter) te);
 					} else {
 						if (ArsMagica2.proxy.cwCopyLoc == null) {
-							playerIn.addChatMessage(new TextComponentString("Settings Copied."));
+							playerIn.sendMessage(new TextComponentString("Settings Copied."));
 							ArsMagica2.proxy.cwCopyLoc = new NBTTagCompound();
 							((TileEntityParticleEmitter) te).writeSettingsToNBT(ArsMagica2.proxy.cwCopyLoc);
 						} else {
-							playerIn.addChatMessage(new TextComponentString("Settings Applied."));
+							playerIn.sendMessage(new TextComponentString("Settings Applied."));
 							((TileEntityParticleEmitter) te).readSettingsFromNBT(ArsMagica2.proxy.cwCopyLoc);
 							((TileEntityParticleEmitter) te).syncWithServer();
 							ArsMagica2.proxy.cwCopyLoc = null;

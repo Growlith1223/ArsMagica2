@@ -40,7 +40,7 @@ public class EntityAIOtherworldlyRoar extends AIAnimation{
 		//must have an attack target
 		if (living.getAttackTarget() == null) return false;
 
-		if (living.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, living.getEntityBoundingBox().expand(9, 3, 9)).size() < 2){
+		if (living.world.getEntitiesWithinAABB(EntityLivingBase.class, living.getEntityBoundingBox().expand(9, 3, 9)).size() < 2){
 			return false;
 		}
 
@@ -59,7 +59,7 @@ public class EntityAIOtherworldlyRoar extends AIAnimation{
 		if (guardian.getAttackTarget() != null){
 			if (guardian.getTicksInCurrentAction() == 33){
 				guardian.faceEntity(guardian.getAttackTarget(), 180, 180);
-				SpellUtils.applyStackStage(NPCSpells.instance.enderGuardian_otherworldlyRoar, guardian, guardian, guardian.posX, guardian.posY + 0.5f, guardian.posZ, null, guardian.worldObj, false, false, 0);
+				SpellUtils.applyStackStage(NPCSpells.instance.enderGuardian_otherworldlyRoar, guardian, guardian, guardian.posX, guardian.posY + 0.5f, guardian.posZ, null, guardian.world, false, false, 0);
 			}else{
 				guardian.faceEntity(guardian.getAttackTarget(), 180, 180);
 			}

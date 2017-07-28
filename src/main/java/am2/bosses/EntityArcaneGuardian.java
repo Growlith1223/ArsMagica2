@@ -56,7 +56,7 @@ public class EntityArcaneGuardian extends AM2Boss{
 
 		updateRotations();
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			int eid = this.dataManager.get(DW_TARGET_ID);
 			int tid = -1;
 			if (this.getAttackTarget() != null){
@@ -137,7 +137,7 @@ public class EntityArcaneGuardian extends AM2Boss{
 				double radians = angle;
 
 				if (source instanceof EntityPlayer){
-					AMNetHandler.INSTANCE.sendVelocityAddPacket(source.worldObj, (EntityLivingBase)source, speed * Math.cos(radians), vertSpeed, speed * Math.sin(radians));
+					AMNetHandler.INSTANCE.sendVelocityAddPacket(source.world, (EntityLivingBase)source, speed * Math.cos(radians), vertSpeed, speed * Math.sin(radians));
 				}
 				source.motionX = (speed * Math.cos(radians));
 				source.motionZ = (speed * Math.sin(radians));
@@ -162,7 +162,7 @@ public class EntityArcaneGuardian extends AM2Boss{
 	public Entity getTarget(){
 		int eid = this.dataManager.get(DW_TARGET_ID);
 		if (eid == -1) return null;
-		return this.worldObj.getEntityByID(eid);
+		return this.world.getEntityByID(eid);
 	}
 
 	public float getRuneRotationZ(){
@@ -189,7 +189,7 @@ public class EntityArcaneGuardian extends AM2Boss{
 	@Override
 	public void setCurrentAction(BossActions action){
 		super.setCurrentAction(action);
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			AMNetHandler.INSTANCE.sendActionUpdateToAllAround(this);
 		}
 	}

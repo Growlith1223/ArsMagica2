@@ -27,10 +27,10 @@ public class TileEntityIllusionBlock extends TileEntity implements ITickable{
 	@Override
 	public void update() {
 		BlockPos pos = this.pos.down();
-		IBlockState blockBellow = worldObj.getBlockState(pos);
+		IBlockState blockBellow = world.getBlockState(pos);
 		while (blockBellow.getBlock() == BlockDefs.illusionBlock) {
 			pos = pos.down();
-			blockBellow = worldObj.getBlockState(pos);
+			blockBellow = world.getBlockState(pos);
 		}
 		mimicBlock = blockBellow;
 	}

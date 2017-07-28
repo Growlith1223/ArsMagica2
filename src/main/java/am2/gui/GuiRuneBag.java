@@ -13,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiRuneBag extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/rune_bag_GUI.png");
-	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spellBookGui_2.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/rune_bag_gui.png");
+	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spell_book_gui_2.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

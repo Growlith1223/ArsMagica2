@@ -13,7 +13,7 @@ public class GuiAstralBarrier extends GuiContainer{
 
 	GuiButton radiusButton;
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/astralBarrierGui.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/astral_barrier_gui.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

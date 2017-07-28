@@ -35,7 +35,7 @@ public class Dispelling extends ArmorImbuement{
 		if (player.getActivePotionEffects().size() == 0)
 			return false;
 
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			return false;
 
 		ArrayList<Potion> effectsToRemove = new ArrayList<>();

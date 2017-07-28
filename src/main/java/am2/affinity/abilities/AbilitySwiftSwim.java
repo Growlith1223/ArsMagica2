@@ -27,7 +27,7 @@ public class AbilitySwiftSwim extends AbstractAffinityAbility {
 	@Override
 	public void applyTick(EntityPlayer player) {
 		if (player.isInWater()) {
-			if (!player.worldObj.isRemote && (!player.isPotionActive(PotionEffectsDefs.swiftSwim) || player.getActivePotionEffect(PotionEffectsDefs.swiftSwim).getDuration() < 10)){
+			if (!player.world.isRemote && (!player.isPotionActive(PotionEffectsDefs.swiftSwim) || player.getActivePotionEffect(PotionEffectsDefs.swiftSwim).getDuration() < 10)){
 				player.addPotionEffect(new BuffEffectSwiftSwim(100, AffinityData.For(player).getAffinityDepth(getAffinity()) > 0.75f ? 1 : 0));
 			}
 		}

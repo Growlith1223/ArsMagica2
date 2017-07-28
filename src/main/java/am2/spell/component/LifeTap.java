@@ -50,7 +50,7 @@ public class LifeTap extends SpellComponent implements IRitualInteraction{
 					EntityItem item = new EntityItem(world);
 					item.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 					item.setEntityItemStack(new ItemStack(BlockDefs.inertSpawner));
-					world.spawnEntityInWorld(item);
+					world.spawnEntity(item);
 				}else{
 
 				}
@@ -70,7 +70,7 @@ public class LifeTap extends SpellComponent implements IRitualInteraction{
 			IEntityExtension casterProperties = EntityExtension.For(caster);
 			float manaRefunded = (float)(((damage * 0.01)) * casterProperties.getMaxMana());
 
-			if ((caster).attackEntityFrom(DamageSource.outOfWorld, (int)Math.floor(damage))){
+			if ((caster).attackEntityFrom(DamageSource.OUT_OF_WORLD, (int)Math.floor(damage))){
 				casterProperties.setCurrentMana(casterProperties.getCurrentMana() + manaRefunded);
 			}else{
 				return false;

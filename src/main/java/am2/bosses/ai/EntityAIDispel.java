@@ -47,9 +47,9 @@ public class EntityAIDispel extends EntityAIBase{
 
 		boltTicks++;
 		if (boltTicks == 16){
-			if (!host.worldObj.isRemote)
-				host.worldObj.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
-			SpellUtils.applyStackStage(NPCSpells.instance.dispel, host, host, host.posX, host.posY, host.posZ, null, host.worldObj, false, false, 0);
+			if (!host.world.isRemote)
+				host.world.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+			SpellUtils.applyStackStage(NPCSpells.instance.dispel, host, host, host.posX, host.posY, host.posZ, null, host.world, false, false, 0);
 		}
 		if (boltTicks >= 23){
 			resetTask();

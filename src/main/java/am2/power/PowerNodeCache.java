@@ -165,17 +165,17 @@ public class PowerNodeCache{
 	public void onChunkUnload(ChunkEvent.Unload event){
 		if (!event.getWorld().isRemote && PowerNodeRegistry.For(event.getWorld()).hasDataForChunk(event.getChunk())){
 			NBTTagCompound dataCompound = new NBTTagCompound();
-			PowerNodeRegistry.For(event.getWorld()).SaveChunkToNBT(event.getChunk().getChunkCoordIntPair(), dataCompound);
+			PowerNodeRegistry.For(event.getWorld()).SaveChunkToNBT(event.getChunk().getPos(), dataCompound);
 			PowerNodeRegistry.For(event.getWorld()).unloadChunk(event.getChunk());
-			SaveNBTToFile(event.getWorld(), event.getChunk().getChunkCoordIntPair(), dataCompound, false);
+			SaveNBTToFile(event.getWorld(), event.getChunk().getPos(), dataCompound, false);
 		}
 	}
 	
 	@SubscribeEvent
 	public void onChunkLoad(ChunkEvent.Load event) {
-		NBTTagCompound dataCompound = LoadNBTFromFile(event.getWorld(), event.getChunk().getChunkCoordIntPair());
+		NBTTagCompound dataCompound = LoadNBTFromFile(event.getWorld(), event.getChunk().getPos());
 		if (dataCompound != null)
-			PowerNodeRegistry.For(event.getWorld()).LoadChunkFromNBT(event.getChunk().getChunkCoordIntPair(), dataCompound);
+			PowerNodeRegistry.For(event.getWorld()).LoadChunkFromNBT(event.getChunk().getPos(), dataCompound);
 	}
 
 	@SubscribeEvent

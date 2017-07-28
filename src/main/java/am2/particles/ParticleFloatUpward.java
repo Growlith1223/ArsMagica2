@@ -21,7 +21,7 @@ public class ParticleFloatUpward extends ParticleController{
 			this.finish();
 			return;
 		}
-		particle.moveEntity((particle.getWorldObj().rand.nextDouble() * jitter) - halfJitter, speed, (particle.getWorldObj().rand.nextDouble() * jitter) - halfJitter);
+		particle.move((particle.getworld().rand.nextDouble() * jitter) - halfJitter, speed, (particle.getworld().rand.nextDouble() * jitter) - halfJitter);
 	}
 
 	@Override

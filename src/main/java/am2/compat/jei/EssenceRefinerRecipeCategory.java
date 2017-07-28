@@ -1,9 +1,15 @@
 package am2.compat.jei;
 
+import java.util.Collections;
+import java.util.List;
+
+import am2.ArsMagica2;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
+import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -14,14 +20,18 @@ import net.minecraft.util.text.translation.I18n;
 public class EssenceRefinerRecipeCategory implements IRecipeCategory<EssenceRefinerRecipeWrapper> {
 
 	IDrawableStatic background;
+	private final String name;
+	private IGuiHelper helper;
 	
 	public EssenceRefinerRecipeCategory(IGuiHelper helpers) {
-		this.background = helpers.createDrawable(new ResourceLocation("arsmagica2:textures/gui/essenceExtractorGui.png"), 3, 25, 170, 114);
+		this.helper = helpers;
+		this.name = I18n.translateToLocal("am2.jei.recipe.refiner");
+		this.background = helpers.createDrawable(new ResourceLocation("arsmagica2:textures/gui/essence_extractor_gui.png"), 3, 25, 170, 114);
 	}
 
 	@Override
 	public String getTitle() {
-		return I18n.translateToLocal(getUid());
+		return name;
 	}
 
 	@Override
@@ -40,25 +50,37 @@ public class EssenceRefinerRecipeCategory implements IRecipeCategory<EssenceRefi
 	}
 
 	@Override
-	public void drawAnimations(Minecraft minecraft) {
+	public void setRecipe(IRecipeLayout recipeLayout, EssenceRefinerRecipeWrapper recipeWrapper, IIngredients ingredients) {
+		IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 		
+		stacks.init(0, true, 76, 16);
+		stacks.init(1, true, 44, 48);
+		stacks.init(2, true, 76, 48);
+		stacks.init(3, true, 108, 48);
+		stacks.init(4, true, 76, 81);
+		stacks.init(5, false, 139, 84);
+		
+		stacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
+		stacks.set(1, ingredients.getInputs(ItemStack.class).get(1));
+		stacks.set(2, ingredients.getInputs(ItemStack.class).get(2));
+		stacks.set(3, ingredients.getInputs(ItemStack.class).get(3));
+		stacks.set(4, ingredients.getInputs(ItemStack.class).get(4));
+		stacks.set(5, ingredients.getOutputs(ItemStack.class).get(0));
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, EssenceRefinerRecipeWrapper recipeWrapper) {
-		recipeLayout.getItemStacks().init(0, true, 76, 16);
-		recipeLayout.getItemStacks().init(1, true, 44, 48);
-		recipeLayout.getItemStacks().init(2, true, 76, 48);
-		recipeLayout.getItemStacks().init(3, true, 108, 48);
-		recipeLayout.getItemStacks().init(4, true, 76, 81);
-		recipeLayout.getItemStacks().init(5, false, 139, 84);
-		
-		recipeLayout.getItemStacks().set(0, (ItemStack)recipeWrapper.getInputs().get(0));
-		recipeLayout.getItemStacks().set(1, (ItemStack)recipeWrapper.getInputs().get(1));
-		recipeLayout.getItemStacks().set(2, (ItemStack)recipeWrapper.getInputs().get(2));
-		recipeLayout.getItemStacks().set(3, (ItemStack)recipeWrapper.getInputs().get(3));
-		recipeLayout.getItemStacks().set(4, (ItemStack)recipeWrapper.getInputs().get(4));
-		recipeLayout.getItemStacks().set(5, (ItemStack)recipeWrapper.getOutputs().get(0));
+	public String getModName() {
+		return ArsMagica2.MODID;
+	}
+
+	@Override
+	public IDrawable getIcon() {
+		return null;
+	}
+
+	@Override
+	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+		return Collections.emptyList();
 	}
 
 }

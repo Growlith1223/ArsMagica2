@@ -43,6 +43,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -78,7 +79,7 @@ public class AMIngameGUI extends Gui {
 		if (e.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE)
 			return;
 		if (mc.currentScreen instanceof GuiHudCustomization || mc.inGameHasFocus) {
-			ItemStack ci = Minecraft.getMinecraft().thePlayer.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack ci = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
 			boolean drawAMHud = !ArsMagica2.config.showHudMinimally() || (ci != null && (ci.getItem() == ItemDefs.spellBook || ci.getItem() == ItemDefs.spell || ci.getItem() == ItemDefs.arcaneSpellbook || ci.getItem() instanceof IBoundItem));
 			ScaledResolution scaledresolution = new ScaledResolution(mc);
 			int i = scaledresolution.getScaledWidth();
@@ -94,15 +95,15 @@ public class AMIngameGUI extends Gui {
 			if (drawAMHud)
 				RenderContingency(i, j);
 			if (drawAMHud)
-				RenderArsMagicaGUIItems(i, j, mc.fontRendererObj);
+				RenderArsMagicaGUIItems(i, j, mc.fontRenderer);
 			if (drawAMHud)
 				RenderAffinity(i, j);
-			RenderArmorStatus(i, j, mc, mc.fontRendererObj);
+			RenderArmorStatus(i, j, mc, mc.fontRenderer);
 			if (drawAMHud)
 				RenderMagicXP(i, j);
-			ItemStack item = mc.thePlayer.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack item = mc.player.getHeldItem(EnumHand.MAIN_HAND);
 			if (item != null && item.getItem() instanceof ItemSpellBook) {
-				RenderSpellBookUI(i, j, mc.fontRendererObj, mc.thePlayer.getHeldItem(EnumHand.MAIN_HAND));
+				RenderSpellBookUI(i, j, mc.fontRenderer, mc.player.getHeldItem(EnumHand.MAIN_HAND));
 			}
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 			GlStateManager.popAttrib();
@@ -115,7 +116,7 @@ public class AMIngameGUI extends Gui {
 	}
 
 	private void RenderArsMagicaGUIItems(int i, int j, FontRenderer fontRenderer){
-		if (EntityExtension.For(mc.thePlayer).getCurrentLevel() > 0 || mc.thePlayer.capabilities.isCreativeMode){
+		if (EntityExtension.For(mc.player).getCurrentLevel() > 0 || mc.player.capabilities.isCreativeMode){
 			RenderManaBar(i, j, fontRenderer);
 		}
 	}
@@ -141,7 +142,7 @@ public class AMIngameGUI extends Gui {
 		this.zLevel = -5;
 		drawTexturedModalRect_Classic(spellUI_x, spellUI_y, 0, 0, 106, 15, spellUI_width, spellUI_height);
 
-		ItemStack[] activeScrolls = ((ItemSpellBook)bookStack.getItem()).getActiveScrollInventory(bookStack);
+		NonNullList<ItemStack> activeScrolls = ((ItemSpellBook)bookStack.getItem()).getActiveScrollInventory(bookStack);
 
 		Minecraft.getMinecraft().getTextureMapBlocks();
 		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -149,7 +150,7 @@ public class AMIngameGUI extends Gui {
 		this.zLevel = 0;
 		for (int n = 0; n < 8; ++n){
 			float IIconX = spellUI_x + 1.5f + n * 12.9f;
-			ItemStack stackItem = activeScrolls[n];
+			ItemStack stackItem = activeScrolls.get(n);
 			if (stackItem == null){
 				continue;
 			}
@@ -167,7 +168,7 @@ public class AMIngameGUI extends Gui {
 		mc.renderEngine.bindTexture(mc_gui);
 	}
 
-	private void RenderManaBar(int i, int j, FontRenderer fontRendererObj){
+	private void RenderManaBar(int i, int j, FontRenderer fontRenderer){
 
 		int barWidth = i / 8;
 
@@ -178,7 +179,7 @@ public class AMIngameGUI extends Gui {
 		float blue = 1.0f;
 		float red = 0.126f;
 
-		IEntityExtension props = EntityExtension.For(mc.thePlayer);
+		IEntityExtension props = EntityExtension.For(mc.player);
 
 		//mana bar
 		float mana = props.getCurrentMana();
@@ -220,7 +221,7 @@ public class AMIngameGUI extends Gui {
 				GlStateManager.color(0.2f, 0.9f, 0.6f);
 			else if (hasOverloadMana)
 				GlStateManager.color(1f, 0.0f, 0.0f);
-			ItemStack curItem = Minecraft.getMinecraft().thePlayer.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack curItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
 			//TODO Spell Groups
 			if (curItem != null && (curItem.getItem() == ItemDefs.spell
 					|| curItem.getItem() == ItemDefs.spellBook || curItem.getItem() == ItemDefs.arcaneSpellbook)){
@@ -259,10 +260,10 @@ public class AMIngameGUI extends Gui {
 			manaBarColor = (manaBarColor << 8) + Math.round(green * 255);
 			manaBarColor = (manaBarColor << 8) + Math.round(blue * 255);
 
-			String magicLevel = (new StringBuilder()).append("").append(EntityExtension.For(mc.thePlayer).getCurrentLevel()).toString();
+			String magicLevel = (new StringBuilder()).append("").append(EntityExtension.For(mc.player).getCurrentLevel()).toString();
 			AMVector2 magicLevelPos = getShiftedVector(ArsMagica2.config.getLevelPosition(), i, j);
-			magicLevelPos.iX -= Minecraft.getMinecraft().fontRendererObj.getStringWidth(magicLevel) / 2;
-			fontRendererObj.drawStringWithShadow(magicLevel, magicLevelPos.iX, magicLevelPos.iY, manaBarColor);
+			magicLevelPos.iX -= Minecraft.getMinecraft().fontRenderer.getStringWidth(magicLevel) / 2;
+			fontRenderer.drawStringWithShadow(magicLevel, magicLevelPos.iX, magicLevelPos.iY, manaBarColor);
 
 			if (flashTimer > 0){
 				GlStateManager.color(1.0f, 1.0f, 1.0f);
@@ -272,13 +273,13 @@ public class AMIngameGUI extends Gui {
 		if (ArsMagica2.config.getShowNumerics()){
 			GlStateManager.enableBlend();
 			String spellcost = "";
-			ItemStack curItem = Minecraft.getMinecraft().thePlayer.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack curItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
 			if (curItem != null && (curItem.getItem() == ItemDefs.spell
 					|| curItem.getItem() == ItemDefs.spellBook || curItem.getItem() == ItemDefs.arcaneSpellbook)){
 				ItemStack spellStack = curItem.getItem() == ItemDefs.spell ? curItem : ((ItemSpellBook)curItem.getItem()).GetActiveItemStack(curItem);
 				if (spellStack != null) {
-					float manaCost = SpellUtils.getManaCost(spellStack, Minecraft.getMinecraft().thePlayer) * (1F + (float)((float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getCurrentBurnout() / (float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getMaxBurnout()));
-					spellcost = (EntityExtension.For(Minecraft.getMinecraft().thePlayer).hasEnoughtMana(manaCost) ? ChatFormatting.AQUA.toString() : ChatFormatting.DARK_RED.toString()) + " (" + (int)(manaCost) + ")";
+					float manaCost = SpellUtils.getManaCost(spellStack, Minecraft.getMinecraft().player) * (1F + (float)((float)EntityExtension.For(Minecraft.getMinecraft().player).getCurrentBurnout() / (float)EntityExtension.For(Minecraft.getMinecraft().player).getMaxBurnout()));
+					spellcost = (EntityExtension.For(Minecraft.getMinecraft().player).hasEnoughtMana(manaCost) ? ChatFormatting.AQUA.toString() : ChatFormatting.DARK_RED.toString()) + " (" + (int)(manaCost) + ")";
 					spellcost += ChatFormatting.RESET.toString();
 				}
 			}
@@ -287,8 +288,8 @@ public class AMIngameGUI extends Gui {
 			String burnoutStr = I18n.translateToLocal("am2.gui.burnout") + ": " + (int)props.getCurrentBurnout() + "/" + (int)props.getMaxBurnout();
 			AMVector2 manaNumericPos = getShiftedVector(ArsMagica2.config.getManaNumericPosition(), i, j);
 			AMVector2 burnoutNumericPos = getShiftedVector(ArsMagica2.config.getBurnoutNumericPosition(), i, j);
-			fontRendererObj.drawString(manaStr, manaNumericPos.iX, manaNumericPos.iY, hasBonusMana ? 0xeae31c : hasOverloadMana ? 0xFF2020 : 0x2080FF);
-			fontRendererObj.drawString(burnoutStr, burnoutNumericPos.iX + 25 - fontRendererObj.getStringWidth(burnoutStr), burnoutNumericPos.iY, 0xFF2020);
+			fontRenderer.drawString(manaStr, manaNumericPos.iX, manaNumericPos.iY, hasBonusMana ? 0xeae31c : hasOverloadMana ? 0xFF2020 : 0x2080FF);
+			fontRenderer.drawString(burnoutStr, burnoutNumericPos.iX + 25 - fontRenderer.getStringWidth(burnoutStr), burnoutNumericPos.iY, 0xFF2020);
 		}
 		//Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 	}
@@ -308,12 +309,12 @@ public class AMIngameGUI extends Gui {
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
 		for (int slot = 0; slot < 4; ++slot){
-			if (ArmorHelper.PlayerHasArmorInSlot(mc.thePlayer, EntityEquipmentSlot.values()[5 - slot])){
+			if (ArmorHelper.PlayerHasArmorInSlot(mc.player, EntityEquipmentSlot.values()[5 - slot])){
 				AMVector2 position = getArmorSlotPosition(slot, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 				int blackoutTimer = AMGuiHelper.instance.getBlackoutTimer(3 - slot);
 				int blackoutMaxTimer = AMGuiHelper.instance.getBlackoutTimerMax(3 - slot);
 				GlStateManager.color(1.0f, 1.0f, 1.0f);
-				ItemStack armor = mc.thePlayer.inventory.armorInventory[3 - slot];
+				ItemStack armor = mc.player.inventory.armorInventory.get(3 - slot);
 				float lineweight = 4f;
 				//durability
 				if (armor.isItemDamaged() && armor.getMaxDamage() > 0){
@@ -358,7 +359,7 @@ public class AMIngameGUI extends Gui {
 //					AMGuiHelper.DrawIconAtXY(icon, position.iX, position.iY, this.zLevel, 10, 10, true);
 //				}else{
 				GlStateManager.pushMatrix();
-				AMGuiHelper.DrawItemAtXY(mc.thePlayer.inventory.armorInventory[3 - slot], position.iX, position.iY, this.zLevel, 0.63f);
+				AMGuiHelper.DrawItemAtXY(mc.player.inventory.armorInventory.get(3 - slot), position.iX, position.iY, this.zLevel, 0.63f);
 				GlStateManager.popMatrix();
 //				}
 			}
@@ -367,7 +368,7 @@ public class AMIngameGUI extends Gui {
 		
 		mc.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/overlay.png"));
 		AMVector2 shieldPos = getShiftedVector(ArsMagica2.config.getManaShieldingPosition(), scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-		int shielding = (int) EntityExtension.For(mc.thePlayer).getManaShielding();
+		int shielding = (int) EntityExtension.For(mc.player).getManaShielding();
 		if (shielding <= 20) {
 			for (int iter = 0; iter < shielding; iter += 2) {
 				drawTexturedModalRect(shieldPos.iX + (iter * 8 / 2), shieldPos.iY, 0, 0, 9, 9);
@@ -380,7 +381,7 @@ public class AMIngameGUI extends Gui {
 			drawTexturedModalRect(shieldPos.iX, shieldPos.iY, 0, 0, 9, 9);
 			drawTexturedModalRect(shieldPos.iX, shieldPos.iY, 18, 0, 9, 9);
 			
-			mc.fontRendererObj.drawString("x" + shielding, shieldPos.iX + 10, shieldPos.iY, 0x007aff);
+			mc.fontRenderer.drawString("x" + shielding, shieldPos.iX + 10, shieldPos.iY, 0x007aff);
 		}
 		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 	}
@@ -405,7 +406,7 @@ public class AMIngameGUI extends Gui {
 		int x = affinityPos.iX;
 		int y = affinityPos.iY;
 
-		IAffinityData ad = AffinityData.For(Minecraft.getMinecraft().thePlayer);
+		IAffinityData ad = AffinityData.For(Minecraft.getMinecraft().player);
 		for (Affinity affinity : ad.getHighestAffinities()){
 			if (affinity == null || affinity == Affinity.NONE) continue;
 			GlStateManager.color(1.0f, 1.0f, 1.0f);
@@ -413,11 +414,11 @@ public class AMIngameGUI extends Gui {
 
 			if (ArsMagica2.config.getShowNumerics()){
 				GlStateManager.enableBlend();
-				String display = String.format("%.2f%%", AffinityData.For(mc.thePlayer).getAffinityDepth(affinity) * 100f);
+				String display = String.format("%.2f%%", AffinityData.For(mc.player).getAffinityDepth(affinity) * 100f);
 				if (x < i / 2)
-					Minecraft.getMinecraft().fontRendererObj.drawString(display, x + 14, y + 2, affinity.getColor());
+					Minecraft.getMinecraft().fontRenderer.drawString(display, x + 14, y + 2, affinity.getColor());
 				else
-					Minecraft.getMinecraft().fontRendererObj.drawString(display, x - 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(display), y + 2, affinity.getColor());
+					Minecraft.getMinecraft().fontRenderer.drawString(display, x - 2 - Minecraft.getMinecraft().fontRenderer.getStringWidth(display), y + 2, affinity.getColor());
 			}
 			y += 15;
 		}
@@ -428,7 +429,7 @@ public class AMIngameGUI extends Gui {
 		AMVector2 contingencyPos = getShiftedVector(ArsMagica2.config.getContingencyPosition(), i, j);
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		TextureAtlasSprite icon = null;
-		ContingencyType type = EntityExtension.For(Minecraft.getMinecraft().thePlayer).getContingencyType();
+		ContingencyType type = EntityExtension.For(Minecraft.getMinecraft().player).getContingencyType();
 		switch (type){
 		case DAMAGE:
 			icon = SpellIconManager.INSTANCE.getSprite("arsmagica2:contingency_damage");
@@ -520,7 +521,7 @@ public class AMIngameGUI extends Gui {
 //	}
 
 	public void RenderMagicXP(int i, int j){
-		IEntityExtension props = EntityExtension.For(Minecraft.getMinecraft().thePlayer);
+		IEntityExtension props = EntityExtension.For(Minecraft.getMinecraft().player);
 		if (props.getCurrentLevel() > 0){
 			GlStateManager.enableBlend();
 			AMVector2 position = getShiftedVector(ArsMagica2.config.getXPBarPosition(), i, j);
@@ -542,13 +543,13 @@ public class AMIngameGUI extends Gui {
 			if (ArsMagica2.config.getShowNumerics() && (ArsMagica2.config.showXPAlways() || AMGuiHelper.instance.getMagicXPBarAlpha() > 0)){
 				String xpStr = I18n.translateToLocal("am2.gui.xp") + ": " + +(int)(props.getCurrentXP() * 100) + "/" + (int)(props.getMaxXP() * 100);
 				AMVector2 numericPos = getShiftedVector(ArsMagica2.config.getXPNumericPosition(), i, j);
-				Minecraft.getMinecraft().fontRendererObj.drawString(xpStr, numericPos.iX, numericPos.iY, 0x999999);
+				Minecraft.getMinecraft().fontRenderer.drawString(xpStr, numericPos.iX, numericPos.iY, 0x999999);
 			}
 		}
 	}
 
 //	private ArrayList<PotionEffect> getPotionEffectsByTimeRemaining(){
-//		Iterator i = mc.thePlayer.getActivePotionEffects().iterator();
+//		Iterator i = mc.player.getActivePotionEffects().iterator();
 //		ArrayList<PotionEffect> potions = new ArrayList<PotionEffect>();
 //
 //		while (i.hasNext())

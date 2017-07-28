@@ -42,7 +42,7 @@ public class FlickerOperatorMoonstoneAttractor extends AbstractFlickerFunctional
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		AMVector3 vec = new AMVector3((TileEntity)habitat);
 		if (powered){
 			if (!attractors.contains(vec)){
@@ -56,12 +56,12 @@ public class FlickerOperatorMoonstoneAttractor extends AbstractFlickerFunctional
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		return DoOperation(worldObj, habitat, powered);
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		return DoOperation(world, habitat, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 		AMVector3 vec = new AMVector3((TileEntity)habitat);
 		attractors.remove(vec);
 	}
@@ -72,8 +72,8 @@ public class FlickerOperatorMoonstoneAttractor extends AbstractFlickerFunctional
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		RemoveOperator(worldObj, habitat, powered);
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		RemoveOperator(world, habitat, powered);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class FlickerOperatorMoonstoneAttractor extends AbstractFlickerFunctional
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorMoonstoneAttractor");
+		return new ResourceLocation("arsmagica2", "flicker_operator_moonstone_attractor");
 	}
 
 	@Override

@@ -38,8 +38,8 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
-		if (!worldObj.isRemote){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
+		if (!world.isRemote){
 			int radius = 16;
 			int yRadius = radius / 4;
 			int checksPerOperation = 8;
@@ -55,10 +55,10 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 
 			for (int i = 0; i < checksPerOperation; ++i){
 
-				int light = worldObj.getLightFor(EnumSkyBlock.BLOCK, checkPos);
+				int light = world.getLightFor(EnumSkyBlock.BLOCK, checkPos);
 
-				if (light < 10 && worldObj.isAirBlock(checkPos)){
-					worldObj.setBlockState(checkPos, BlockDefs.invisibleUtility.getDefaultState().withProperty(BlockInvisibleUtility.TYPE, EnumInvisibleType.SPECIAL_ILLUMINATED), 2);
+				if (light < 10 && world.isAirBlock(checkPos)){
+					world.setBlockState(checkPos, BlockDefs.invisibleUtility.getDefaultState().withProperty(BlockInvisibleUtility.TYPE, EnumInvisibleType.SPECIAL_ILLUMINATED), 2);
 				}
 
 				checkPos.east();
@@ -80,7 +80,7 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 
 			habitat.setMetadata(this, writer.generate());
 		}else{
-			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "sparkle", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getY() + 1, ((TileEntity)habitat).getPos().getZ() + 0.5);
+			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "sparkle", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getY() + 1, ((TileEntity)habitat).getPos().getZ() + 0.5);
 			if (particle != null){
 				particle.addRandomOffset(0.5, 0.4, 0.5);
 				particle.AddParticleController(new ParticleFloatUpward(particle, 0, 0.02f, 1, false));
@@ -93,15 +93,15 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		return DoOperation(worldObj, habitat, powered);
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		return DoOperation(world, habitat, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 		habitat.removeMetadata(this);
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			int radius = 28;
 			int yRadius = radius / 4;
 
@@ -109,10 +109,10 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 				for (int j = ((TileEntity)habitat).getPos().getY() - yRadius; j <= ((TileEntity)habitat).getPos().getY() + yRadius; ++j){
 					for (int k = ((TileEntity)habitat).getPos().getY() - radius; k <= ((TileEntity)habitat).getPos().getY() + radius; ++k){
 						BlockPos removePos = new BlockPos(i, j, k);
-						Block block = worldObj.getBlockState(removePos).getBlock();
+						Block block = world.getBlockState(removePos).getBlock();
 						if (block == BlockDefs.invisibleUtility){
-							if (BlockInvisibleUtility.getType(worldObj.getBlockState(removePos)) == EnumInvisibleType.SPECIAL_ILLUMINATED){
-								worldObj.setBlockToAir(removePos);
+							if (BlockInvisibleUtility.getType(world.getBlockState(removePos)) == EnumInvisibleType.SPECIAL_ILLUMINATED){
+								world.setBlockToAir(removePos);
 							}
 						}
 					}
@@ -127,8 +127,8 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		RemoveOperator(worldObj, habitat, powered);
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		RemoveOperator(world, habitat, powered);
 	}
 
 
@@ -148,7 +148,7 @@ public class FlickerOperatorLight extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorLight");
+		return new ResourceLocation("arsmagica2", "flicker_operator_light");
 	}
 
 	@Override

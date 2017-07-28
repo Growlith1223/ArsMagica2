@@ -46,7 +46,7 @@ public class Wall extends SpellShape{
 		wall.SetCasterAndStack(caster, stack);
 		wall.setPosition(x, y, z);
 		wall.setWall(caster.rotationYaw);
-		world.spawnEntityInWorld(wall);
+		world.spawnEntity(wall);
 		return SpellCastResult.SUCCESS;
 	}
 	

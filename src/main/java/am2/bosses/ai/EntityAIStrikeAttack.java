@@ -61,12 +61,12 @@ public class EntityAIStrikeAttack extends EntityAIBase{
 
 		if (((IArsMagicaBoss)host).getCurrentAction() == BossActions.STRIKE && ((IArsMagicaBoss)host).getTicksInCurrentAction() > 12){
 
-			if (!host.worldObj.isRemote)
-				host.worldObj.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+			if (!host.world.isRemote)
+				host.world.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 
 			double offsetX = Math.cos(host.rotationYaw) * 2;
 			double offsetZ = Math.sin(host.rotationYaw) * 2;
-			List<EntityLivingBase> aoeEntities = host.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().offset(offsetX, 0, offsetZ).expand(2.5, 2, 2.5));
+			List<EntityLivingBase> aoeEntities = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().offset(offsetX, 0, offsetZ).expand(2.5, 2, 2.5));
 			for (EntityLivingBase ent : aoeEntities){
 				if (ent == host) continue;
 				ent.attackEntityFrom(DamageSources.causeDamage(damageType, host, true), damage);

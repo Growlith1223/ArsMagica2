@@ -52,10 +52,10 @@ public class EntityEarthGuardian extends AM2Boss{
 	public void setCurrentAction(BossActions action){
 		super.setCurrentAction(action);
 
-		if (currentAction != action && action == BossActions.STRIKE && worldObj.isRemote)
+		if (currentAction != action && action == BossActions.STRIKE && world.isRemote)
 			this.leftArm = !this.leftArm;
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			AMNetHandler.INSTANCE.sendActionUpdateToAllAround(this);
 		}
 	}
@@ -66,11 +66,11 @@ public class EntityEarthGuardian extends AM2Boss{
 
 	@Override
 	public void onUpdate(){
-		if (ticksInCurrentAction > 40 && !worldObj.isRemote){
+		if (ticksInCurrentAction > 40 && !world.isRemote){
 			setCurrentAction(BossActions.IDLE);
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			updateRotations();
 		}
 		

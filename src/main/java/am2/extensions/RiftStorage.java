@@ -35,7 +35,7 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 	@Override
 	public ItemStack decrStackSize(int i, int j){
 		if (stacks[i] != null){
-			if (stacks[i].stackSize <= j){
+			if (stacks[i].getCount() <= j){
 				ItemStack itemstack = stacks[i];
 				stacks[i] = null;
 				return itemstack;
@@ -43,7 +43,7 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 
 			ItemStack itemstack1 = stacks[i].splitStack(j);
 
-			if (stacks[i].stackSize == 0){
+			if (stacks[i].getCount() == 0){
 				stacks[i] = null;
 			}
 
@@ -67,8 +67,8 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
 		stacks[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		if (itemstack != null && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -88,7 +88,7 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
 		//if (accessEntity == null || accessEntity.isDead) return false;
 		return true;//entityplayer.getDistanceSqToEntity(accessEntity) < 64;
 	}
@@ -146,8 +146,8 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 		return null;
 	}
 	
-	public static IRiftStorage For(EntityLivingBase thePlayer) {
-		return thePlayer.getCapability(INSTANCE, null);
+	public static IRiftStorage For(EntityLivingBase player) {
+		return player.getCapability(INSTANCE, null);
 	}
 	
 	@Override
@@ -168,5 +168,17 @@ public class RiftStorage implements IRiftStorage, ICapabilityProvider, ICapabili
 	@Override
 	public void setAccessLevel(int accessLevel) {
 		this.accessLevel = accessLevel;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.stacks)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
 	}
 }

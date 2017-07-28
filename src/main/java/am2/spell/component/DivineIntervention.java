@@ -38,13 +38,13 @@ public class DivineIntervention extends SpellComponent{
 
 		if (((EntityLivingBase)target).isPotionActive(PotionEffectsDefs.astralDistortion)){
 			if (target instanceof EntityPlayer)
-				((EntityPlayer)target).addChatMessage(new TextComponentString("The distortion around you prevents you from teleporting"));
+				((EntityPlayer)target).sendMessage(new TextComponentString("The distortion around you prevents you from teleporting"));
 			return true;
 		}
 
 		if (target.dimension == 1){
 			if (target instanceof EntityPlayer)
-				((EntityPlayer)target).addChatMessage(new TextComponentString("Nothing happens..."));
+				((EntityPlayer)target).sendMessage(new TextComponentString("Nothing happens..."));
 			return true;
 		}else if (target.dimension == 0){
 			BlockPos coords = target instanceof EntityPlayer ? ((EntityPlayer)target).getBedLocation(target.dimension) : null;
@@ -117,14 +117,14 @@ public class DivineIntervention extends SpellComponent{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 }

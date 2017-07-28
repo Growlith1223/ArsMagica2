@@ -1,6 +1,6 @@
 {
 	"parent":"block/cube_all",
 	"textures": {
-		"all":"arsmagica2:blocks/illusionBlockRevealed"
+		"all":"arsmagica2:blocks/illusion_block_revealed"
 	}
 }

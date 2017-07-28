@@ -1,6 +1,6 @@
 {
     "parent": "arsmagica2:block/rail_curved",
     "textures": {
-        "rail": "arsmagica2:blocks/Inlay_Corner_Gold"
+        "rail": "arsmagica2:blocks/inlay_corner_gold"
     }
 }

@@ -51,11 +51,11 @@ public class EntityManaElemental extends EntityMob{
 
 	@Override
 	public void onUpdate(){
-		if (this.worldObj != null){
-			if (this.worldObj.isRemote){
+		if (this.world != null){
+			if (this.world.isRemote){
 			}else{
 				if (EntityExtension.For(this).getCurrentMana() <= 0){
-					this.attackEntityFrom(DamageSource.generic, 500);
+					this.attackEntityFrom(DamageSource.GENERIC, 500);
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class EntityManaElemental extends EntityMob{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), worldObj, this))
+		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), world, this))
 			return false;
 		return super.getCanSpawnHere();
 	}

@@ -77,63 +77,63 @@ public class TileEntityManaDrain extends TileEntityAMPower implements IMultibloc
 
 	@Override
 	public int getChargeRate() {
-		return worldObj.isBlockIndirectlyGettingPowered(pos) == 0 ? 0 : 500;
+		return world.isBlockIndirectlyGettingPowered(pos) == 0 ? 0 : 500;
 	}
 	
 	@Override
 	public void update() {
 		super.update();
 		if (!isMultiblockComplete()) return;
-		if (PowerNodeRegistry.For(worldObj).getPower(this, PowerTypes.NEUTRAL) == capacity) return;
-		List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.add(-1, 1, -1), pos.add(2, 4, 2)));
+		if (PowerNodeRegistry.For(world).getPower(this, PowerTypes.NEUTRAL) == capacity) return;
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.add(-1, 1, -1), pos.add(2, 4, 2)));
 		boolean isWorking = false;
 		for (EntityLivingBase entity : entities) {
 			EntityExtension ext = EntityExtension.For(entity);
 			if (ext == null) continue;
-			if (worldObj.isBlockIndirectlyGettingPowered(pos) == 0) {
+			if (world.isBlockIndirectlyGettingPowered(pos) == 0) {
 				isWorking = true;
-				if (!worldObj.isRemote) {
+				if (!world.isRemote) {
 					float drain = ext.getMaxMana() / 100f;
 					if (drain < 1)
 						drain = 1;
 					if (ext.getCurrentMana() >= drain) {
-						PowerNodeRegistry.For(worldObj).setPower(this, PowerTypes.NEUTRAL, PowerNodeRegistry.For(worldObj).getPower(this, PowerTypes.NEUTRAL) + drain * 10);
+						PowerNodeRegistry.For(world).setPower(this, PowerTypes.NEUTRAL, PowerNodeRegistry.For(world).getPower(this, PowerTypes.NEUTRAL) + drain * 10);
 						ext.setCurrentMana(ext.getCurrentMana() - drain);
 					}else if (entity.ticksExisted % 20 == 0) {
 						entity.attackEntityFrom(DamageSources.causeHolyDamage(null), 1);
-						PowerNodeRegistry.For(worldObj).setPower(this, PowerTypes.NEUTRAL, PowerNodeRegistry.For(worldObj).getPower(this, PowerTypes.NEUTRAL) + 40);
+						PowerNodeRegistry.For(world).setPower(this, PowerTypes.NEUTRAL, PowerNodeRegistry.For(world).getPower(this, PowerTypes.NEUTRAL) + 40);
 					}
 				}
 			} else {
 				if (!(entity instanceof EntityPlayer)) continue;
 				isWorking = true;
-				if (!worldObj.isRemote) {
-					float toConsume = PowerNodeRegistry.For(worldObj).getPower(this, PowerTypes.NEUTRAL) / 10;
+				if (!world.isRemote) {
+					float toConsume = PowerNodeRegistry.For(world).getPower(this, PowerTypes.NEUTRAL) / 10;
 					if (toConsume > 10)
 						toConsume = 10;
 					if (toConsume + ext.getCurrentMana() > ext.getMaxMana())
 						toConsume = ext.getMaxMana() - ext.getCurrentMana();
 					ext.setCurrentMana(ext.getCurrentMana() + toConsume);
-					PowerNodeRegistry.For(worldObj).consumePower(this, PowerTypes.NEUTRAL, toConsume * 10);
+					PowerNodeRegistry.For(world).consumePower(this, PowerTypes.NEUTRAL, toConsume * 10);
 				}
 			}
 		}
-		if (worldObj.isRemote && isWorking) {
-			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "sparkle2", pos.getX() - 1 + worldObj.rand.nextDouble() * 3, pos.getY() + 2, pos.getZ() - 1 + worldObj.rand.nextDouble() * 3);
+		if (world.isRemote && isWorking) {
+			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "sparkle2", pos.getX() - 1 + world.rand.nextDouble() * 3, pos.getY() + 2, pos.getZ() - 1 + world.rand.nextDouble() * 3);
 			if (particle != null) {
 				particle.setRGBColorI(0x00AAFF);
-				particle.AddParticleController(new ParticleFloatUpward(particle, 0.1f, worldObj.isBlockIndirectlyGettingPowered(pos) == 0 ? -0.05f : 0.05f, 1, false));
+				particle.AddParticleController(new ParticleFloatUpward(particle, 0.1f, world.isBlockIndirectlyGettingPowered(pos) == 0 ? -0.05f : 0.05f, 1, false));
 			}
 		}
 	}
 	
 	private boolean isMultiblockComplete() {
-		return multiblock.matches(worldObj, pos);
+		return multiblock.matches(world, pos);
 	}
 	
 	@Override
 	public boolean canProvidePower(PowerTypes type) {
-		return worldObj.isBlockIndirectlyGettingPowered(pos) == 0 && type == PowerTypes.NEUTRAL;
+		return world.isBlockIndirectlyGettingPowered(pos) == 0 && type == PowerTypes.NEUTRAL;
 	}
 	
 	@Override

@@ -20,24 +20,23 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInventory, IKeystoneLockable<TileEntityEssenceRefiner>, ISidedInventory{
+public class TileEntityEssenceRefiner extends TileEntityAMPoweredContainer implements IInventory, IKeystoneLockable<TileEntityEssenceRefiner>, ISidedInventory{
 
 	public static final float REFINE_TIME = 400;
 	private static final int OUTPUT_INDEX = 5;
 	private static final int FUEL_INDEX = 2;
 	public static final float TICK_REFINE_COST = 12.5f;
-
-	private ItemStack inventory[];
+	
 	public float remainingRefineTime;
 
 	public TileEntityEssenceRefiner(){
 		super(1000);
-		inventory = new ItemStack[getSizeInventory()];
 		remainingRefineTime = 0;
 	}
 
@@ -47,57 +46,21 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int i){
-		return inventory[i];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int i, int j){
-		if (inventory[i] != null){
-			if (inventory[i].stackSize <= j){
-				ItemStack itemstack = inventory[i];
-				inventory[i] = null;
-				return itemstack;
-			}
-			ItemStack itemstack1 = inventory[i].splitStack(j);
-			if (inventory[i].stackSize == 0){
-				inventory[i] = null;
-			}
-			return itemstack1;
-		}else{
-			return null;
-		}
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inventory[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
-		}
-	}
-
-	@Override
 	public String getName(){
 		return "Essence Refiner";
-	}
-
-	@Override
-	public int getInventoryStackLimit(){
-		return 64;
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound){
 		super.readFromNBT(nbttagcompound);
 		NBTTagList nbttaglist = nbttagcompound.getTagList("EssenceRefinerInventory", Constants.NBT.TAG_COMPOUND);
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < inventory.length){
-				inventory[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inventory.size()){
+				inventory.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 
@@ -109,12 +72,12 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setFloat("RefineTime", remainingRefineTime);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inventory.length; i++){
-			if (inventory[i] != null){
+		for (int i = 0; i < inventory.size(); i++){
+			if (!inventory.get(i).isEmpty()){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				inventory[i].writeToNBT(nbttagcompound1);
+				inventory.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -157,34 +120,34 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 	public void update(){
 		super.update();
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			if (canRefine()){
 				if (remainingRefineTime <= 0){
 					//start refining
 					remainingRefineTime = getRefineTime();
-					worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+					world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 				}
 			}else{
 				if (remainingRefineTime != 0){
 					remainingRefineTime = 0;
-					worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+					world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 				}
 			}
 
 			if (isRefining()){
 				setActiveTexture();
-				if (PowerNodeRegistry.For(this.worldObj).checkPower(this, TICK_REFINE_COST)){
+				if (PowerNodeRegistry.For(this.world).checkPower(this, TICK_REFINE_COST)){
 					remainingRefineTime--;
 					if (remainingRefineTime % 10 == 0)
-						worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+						world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 					if (remainingRefineTime <= 0){
 						remainingRefineTime = 0;
-						if (!worldObj.isRemote){
+						if (!world.isRemote){
 							refineItem();
 						}
 					}
 
-					PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerNodeRegistry.For(this.worldObj).getHighestPowerType(this), TICK_REFINE_COST);
+					PowerNodeRegistry.For(this.world).consumePower(this, PowerNodeRegistry.For(this.world).getHighestPowerType(this), TICK_REFINE_COST);
 				}
 			}else{
 				setActiveTexture();
@@ -194,14 +157,14 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 
 	private void setActiveTexture(){
 		if (this.getWorld().getBlockState(pos).getBlock() != BlockDefs.essenceRefiner){ this.invalidate(); return;}
-		if (worldObj.getBlockState(pos).getValue(BlockEssenceRefiner.ACTIVE) == isRefining() || worldObj.isRemote) return;
+		if (world.getBlockState(pos).getValue(BlockEssenceRefiner.ACTIVE) == isRefining() || world.isRemote) return;
 		if (isRefining()){
-			if (!worldObj.isRemote){
-				worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockEssenceRefiner.ACTIVE, true), 3);
+			if (!world.isRemote){
+				world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockEssenceRefiner.ACTIVE, true), 3);
 			}
 		}else{
-			if (!worldObj.isRemote){
-				worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockEssenceRefiner.ACTIVE, false), 3);
+			if (!world.isRemote){
+				world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockEssenceRefiner.ACTIVE, false), 3);
 			}
 		}
 	}
@@ -212,23 +175,20 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 	}
 
 	private boolean canRefine(){
-		if (inventory[FUEL_INDEX] == null){
-			return false;
-		}
+		if (inventory.get(FUEL_INDEX).isEmpty())
+		return false;
+		
 		ItemStack itemstack = RecipesEssenceRefiner.essenceRefinement().GetResult(getCraftingGridContents(), null);
-		if (itemstack == null){
-			return false;
-		}
-		if (inventory[OUTPUT_INDEX] == null){
-			return true;
-		}
-		if (!inventory[OUTPUT_INDEX].isItemEqual(itemstack)){
-			return false;
-		}
-		if (inventory[OUTPUT_INDEX].stackSize < getInventoryStackLimit() && inventory[OUTPUT_INDEX].stackSize < inventory[OUTPUT_INDEX].getMaxStackSize()){
-			return true;
-		}
-		return inventory[OUTPUT_INDEX].stackSize < itemstack.getMaxStackSize();
+		
+		if (itemstack.isEmpty())
+		return false;
+		if (inventory.get(OUTPUT_INDEX).isEmpty())
+		return true;
+		if (!inventory.get(OUTPUT_INDEX).isItemEqual(itemstack))
+		return false;
+		if (inventory.get(OUTPUT_INDEX).getCount() < getInventoryStackLimit() && inventory.get(OUTPUT_INDEX).getCount() < inventory.get(OUTPUT_INDEX).getMaxStackSize())
+		return true;
+		return inventory.get(OUTPUT_INDEX).getCount() < itemstack.getMaxStackSize();
 	}
 
 	public void refineItem(){
@@ -236,10 +196,10 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 			return;
 		}
 		ItemStack itemstack = RecipesEssenceRefiner.essenceRefinement().GetResult(getCraftingGridContents(), null);
-		if (inventory[OUTPUT_INDEX] == null){
-			inventory[OUTPUT_INDEX] = itemstack.copy();
-		}else if (inventory[OUTPUT_INDEX].getItem() == itemstack.getItem()){
-			inventory[OUTPUT_INDEX].stackSize += itemstack.stackSize;
+		if (inventory.get(OUTPUT_INDEX).isEmpty()){
+			inventory.set(OUTPUT_INDEX, itemstack.copy());
+		}else if (inventory.get(OUTPUT_INDEX).getItem() == itemstack.getItem()){
+			inventory.get(OUTPUT_INDEX).grow(itemstack.getCount());;
 		}
 		decrementCraftingGridContents();
 	}
@@ -252,31 +212,23 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 
 	@SuppressWarnings("deprecation")
 	private void decrementCraftingGridSlot(int slot){
-		if (inventory[slot].getItem().hasContainerItem()){
-			inventory[slot] = new ItemStack(inventory[slot].getItem().getContainerItem());
+		if (inventory.get(slot).getItem().hasContainerItem()){
+		inventory.set(slot, new ItemStack(inventory.get(slot).getItem().getContainerItem()));
 		}else{
-			inventory[slot].stackSize--;
+			inventory.get(slot).shrink(1);
 		}
 
-		if (inventory[slot].stackSize <= 0){
-			inventory[slot] = null;
+		if (inventory.get(slot).getCount() <= 0){
+			inventory.set(slot, ItemStack.EMPTY);
 		}
 	}
 
 	private ItemStack[] getCraftingGridContents(){
 		ItemStack[] contents = new ItemStack[5];
 		for (int i = 0; i < 5; ++i){
-			contents[i] = inventory[i];
+			contents[i] = inventory.get(i);
 		}
 		return contents;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
-			return false;
-		}
-		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
 	}
 
 	@Override
@@ -289,9 +241,9 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventory[i] != null){
-			ItemStack itemstack = inventory[i];
-			inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			ItemStack itemstack = inventory.get(i);
+			inventory.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
 			return null;
@@ -321,9 +273,9 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 	@Override
 	public ItemStack[] getRunesInKey(){
 		ItemStack[] runes = new ItemStack[3];
-		runes[0] = inventory[6];
-		runes[1] = inventory[7];
-		runes[2] = inventory[8];
+		runes[0] = inventory.get(6);
+		runes[1] = inventory.get(7);
+		runes[2] = inventory.get(8);
 		return runes;
 	}
 
@@ -365,31 +317,31 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
 }

@@ -20,7 +20,8 @@ public class ItemMagicBroom extends ItemArsMagica{
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
+		ItemStack stack = player.getHeldItem(hand);
 		if (!world.isRemote){
 			RayTraceResult mop = this.rayTrace(world, player, true);
 			if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK){
@@ -29,11 +30,11 @@ public class ItemMagicBroom extends ItemArsMagica{
 					EntityBroom broom = new EntityBroom(world);
 					broom.setPosition(player.posX, player.posY, player.posZ);
 					broom.setChestLocation(new AMVector3(mop.getBlockPos()));
-					world.spawnEntityInWorld(broom);
+					world.spawnEntity(broom);
 
-					stack.stackSize--;
+					stack.shrink(1);
 
-					if (stack.stackSize == 0){
+					if (stack.getCount() == 0){
 						player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 					}
 					return EnumActionResult.SUCCESS;

@@ -186,7 +186,7 @@ public abstract class CompendiumPage<E> {
     
 	protected void renderItemToolTip(ItemStack stack, int x, int y){
 		try{
-			List<String> list = stack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+			List<String> list = stack.getTooltip(this.mc.player, this.mc.gameSettings.advancedItemTooltips);
 
 			if (stack.getItem() instanceof ItemBlock){
 			}else{
@@ -198,7 +198,7 @@ public abstract class CompendiumPage<E> {
 					list.add(skill.getName());
 				}else if (stack.getItem() == ItemDefs.etherium){
 					list.clear();
-					list.add(stack.stackSize + " " + I18n.translateToLocal("item.arsmagica2:etherium.name"));
+					list.add(stack.getCount() + " " + I18n.translateToLocal("item.arsmagica2:etherium.name"));
 					ArrayList<String> subList = new ArrayList<>();
 					for (PowerTypes type : PowerTypes.all()) {
 						if ((stack.getItemDamage() & type.ID()) == type.ID()) {
@@ -235,7 +235,7 @@ public abstract class CompendiumPage<E> {
 			}
 
 			FontRenderer font = stack.getItem().getFontRenderer(stack);
-			drawHoveringText(list, x, y, (font == null ? this.mc.fontRendererObj : font));
+			drawHoveringText(list, x, y, (font == null ? this.mc.fontRenderer : font));
 		}catch (Throwable t){
 		}
 	}

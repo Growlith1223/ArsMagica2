@@ -32,13 +32,13 @@ public class TileEntityEverstone extends TileEntity implements ITickable{
 	public void setFacade(IBlockState facade){
 		this.facade = facade;
 	
-		if (!worldObj.isRemote){
-			List<EntityPlayerMP> players = worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(64, 64, 64));
+		if (!world.isRemote){
+			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(64, 64, 64));
 			for (EntityPlayerMP player : players){
 				player.connection.sendPacket(getUpdatePacket());
 			}
 		}
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	private void propagatePoweredByEverstone(boolean powered, ArrayList<BlockPos> completedUpdates){
@@ -51,8 +51,8 @@ public class TileEntityEverstone extends TileEntity implements ITickable{
 		poweredFromEverstone = powered;
 		onBreak();
 
-		if (worldObj.isRemote){
-			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "radiant", pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+		if (world.isRemote){
+			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "radiant", pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 			if (particle != null){
 				particle.setMaxAge(20);
 				particle.setDontRequireControllers();
@@ -64,9 +64,9 @@ public class TileEntityEverstone extends TileEntity implements ITickable{
 			for (int j = -1; j <= 1; j++){
 				for (int k = -1; k <= 1; k++){
 					BlockPos targetPosition = pos.add(i, j, k);
-					Block blockID = worldObj.getBlockState(targetPosition).getBlock();
+					Block blockID = world.getBlockState(targetPosition).getBlock();
 					if (blockID == BlockDefs.everstone && !completedUpdates.contains(targetPosition)){
-						TileEntityEverstone everstone = ((TileEntityEverstone)worldObj.getTileEntity(targetPosition));
+						TileEntityEverstone everstone = ((TileEntityEverstone)world.getTileEntity(targetPosition));
 						if (everstone != null)
 							everstone.propagatePoweredByEverstone(powered, completedUpdates);
 					}
@@ -82,26 +82,26 @@ public class TileEntityEverstone extends TileEntity implements ITickable{
 	
 	@Override
 	public void update(){
-		if (reconstructTimer <= 0 && worldObj.isBlockIndirectlyGettingPowered(pos) > 0){
+		if (reconstructTimer <= 0 && world.isBlockIndirectlyGettingPowered(pos) > 0){
 			propagatePoweredByEverstone(true, new ArrayList<BlockPos>());
 			poweredFromRedstone = true;
-		}else if (poweredFromRedstone && worldObj.isBlockIndirectlyGettingPowered(pos) == 0){
+		}else if (poweredFromRedstone && world.isBlockIndirectlyGettingPowered(pos) == 0){
 			poweredFromRedstone = false;
 			propagatePoweredByEverstone(false, new ArrayList<BlockPos>());
 		}
 
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
-		worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockEverstone.HAS_FACADE, getFacade() != null).withProperty(BlockEverstone.IS_SOLID, isSolid()), 2);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
+		world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockEverstone.HAS_FACADE, getFacade() != null).withProperty(BlockEverstone.IS_SOLID, isSolid()), 2);
 		if (reconstructTimer <= 0)
 			return;
 
-		if (worldObj.isBlockIndirectlyGettingPowered(pos) == 0 && !poweredFromEverstone){
+		if (world.isBlockIndirectlyGettingPowered(pos) == 0 && !poweredFromEverstone){
 			reconstructTimer--;
-			if (worldObj.isRemote){ //
-				//worldObj.scheduleBlockUpdateWithPriority(xCoord, yCoord, zCoord, BlocksCommonProxy.everstone.blockID, 0, 0);
-				worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
-				if (reconstructTimer < reconstructMax - 20 && reconstructTimer > 20 && worldObj.rand.nextInt(10) < 8){
-					//TODO ArsMagica2.proxy.addDigParticle(worldObj, pos, getFacade() == null ? BlockDefs.everstone : getFacade(), getFacadeMeta());
+			if (world.isRemote){ //
+				//world.scheduleBlockUpdateWithPriority(xCoord, yCoord, zCoord, BlocksCommonProxy.everstone.blockID, 0, 0);
+				world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
+				if (reconstructTimer < reconstructMax - 20 && reconstructTimer > 20 && world.rand.nextInt(10) < 8){
+					//TODO ArsMagica2.proxy.addDigParticle(world, pos, getFacade() == null ? BlockDefs.everstone : getFacade(), getFacadeMeta());
 				}
 			}
 		}
@@ -124,8 +124,8 @@ public class TileEntityEverstone extends TileEntity implements ITickable{
 
 	public void onBreak(){
 		reconstructTimer = reconstructMax;
-		if (!worldObj.isRemote){
-			List<EntityPlayerMP> players = worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(64, 64, 64));
+		if (!world.isRemote){
+			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(64, 64, 64));
 			for (EntityPlayerMP player : players){
 				player.connection.sendPacket(getUpdatePacket());
 			}

@@ -158,7 +158,7 @@ public class AMLineArc extends Particle{
 
 		int fxQuality = 8;//AMCore.config.getGFXLevel() * 8;
 
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer player = Minecraft.getMinecraft().player;
 		double interpolatedX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
 		double interpolatedY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks;
 		double interpolatedZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
@@ -171,7 +171,7 @@ public class AMLineArc extends Particle{
 
 		float time = System.nanoTime() / 10000000L;
 
-		float dist = MathHelper.sqrt_double(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+		float dist = MathHelper.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		float blocks = Math.round(dist);
 		float length = blocks * (fxQuality / 2.0F);
 

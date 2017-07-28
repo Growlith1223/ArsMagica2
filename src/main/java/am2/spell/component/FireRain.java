@@ -60,7 +60,7 @@ public class FireRain extends SpellComponent{
 			fire.setDamageBonus((float)damage);
 			fire.setTicksToExist(duration);
 			fire.SetCasterAndStack(caster, stack);
-			world.spawnEntityInWorld(fire);
+			world.spawnEntity(fire);
 		}
 		return true;
 	}
@@ -106,7 +106,7 @@ public class FireRain extends SpellComponent{
 	
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

@@ -35,13 +35,12 @@ import am2.spell.modifier.Colour;
 import am2.spell.shape.MissingShape;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -133,7 +132,7 @@ public class SpellUtils {
 	
 	public static boolean attackTargetSpecial(ItemStack spellStack, Entity target, DamageSource damagesource, float magnitude){
 
-		if (target.worldObj.isRemote)
+		if (target.world.isRemote)
 			return true;
 
 		EntityPlayer dmgSrcPlayer = null;
@@ -147,7 +146,7 @@ public class SpellUtils {
 					return false;
 				}else if (source instanceof EntityDarkMage && target instanceof EntityDarkMage){
 					return false;
-				}else  if (source instanceof EntityPlayer && target instanceof EntityPlayer && !target.worldObj.isRemote && (!FMLCommonHandler.instance().getMinecraftServerInstance().isPVPEnabled() || ((EntityPlayer)target).capabilities.isCreativeMode)){
+				}else  if (source instanceof EntityPlayer && target instanceof EntityPlayer && !target.world.isRemote && (!FMLCommonHandler.instance().getMinecraftServerInstance().isPVPEnabled() || ((EntityPlayer)target).capabilities.isCreativeMode)){
 					return false;
 				}
 
@@ -192,12 +191,12 @@ public class SpellUtils {
 
 		if (dmgSrcPlayer != null){
 			if (spellStack != null && target instanceof EntityLivingBase){
-				if (!target.worldObj.isRemote &&
+				if (!target.world.isRemote &&
 						((EntityLivingBase)target).getHealth() <= 0 &&
 						modifierIsPresent(SpellModifiers.DISMEMBERING_LEVEL, spellStack)){
-					double chance = SpellUtils.getModifiedDouble_Add(0, spellStack, dmgSrcPlayer, target, dmgSrcPlayer.worldObj, SpellModifiers.DISMEMBERING_LEVEL);
-					if (dmgSrcPlayer.worldObj.rand.nextDouble() <= chance){
-						dropHead(target, dmgSrcPlayer.worldObj);
+					double chance = SpellUtils.getModifiedDouble_Add(0, spellStack, dmgSrcPlayer, target, dmgSrcPlayer.world, SpellModifiers.DISMEMBERING_LEVEL);
+					if (dmgSrcPlayer.world.rand.nextDouble() <= chance){
+						dropHead(target, dmgSrcPlayer.world);
 					}
 				}
 			}
@@ -208,11 +207,10 @@ public class SpellUtils {
 	
 	private static void dropHead(Entity target, World world){
 		if (target.getClass() == EntitySkeleton.class){
-			if (((EntitySkeleton)target).getSkeletonType() == SkeletonType.WITHER){
-				dropHead_do(world, target.posX, target.posY, target.posZ, 1);
-			}else{
-				dropHead_do(world, target.posX, target.posY, target.posZ, 0);
-			}
+			dropHead_do(world, target.posX, target.posY, target.posZ, 0);
+		}
+		else if (target.getClass() == EntityWitherSkeleton.class){
+			dropHead_do(world, target.posX, target.posY, target.posZ, 1);
 		}else if (target.getClass() == EntityZombie.class){
 			dropHead_do(world, target.posX, target.posY, target.posZ, 2);
 		}else if (target.getClass() == EntityCreeper.class){
@@ -227,7 +225,7 @@ public class SpellUtils {
 		ItemStack stack = new ItemStack(Items.SKULL, 1, type);
 		item.setEntityItemStack(stack);
 		item.setPosition(x, y, z);
-		world.spawnEntityInWorld(item);
+		world.spawnEntity(item);
 	}
 	
 	public static NBTTagCompound encode(KeyValuePair<ArrayList<AbstractSpellPart>, NBTTagCompound> toEncode) {
@@ -348,9 +346,9 @@ public class SpellUtils {
 			return spellIn;
 		}
 		ItemStack newStack = spellIn.copy();
-		if (spellIn.getItem() != ItemDefs.spell) {
-			newStack.setItem(ItemDefs.spell);
-		}
+		spellIn = new ItemStack(ItemDefs.spell);
+		
+		
 		NBTTagCompound group = (NBTTagCompound) NBTUtils.addCompoundList(NBTUtils.getAM2Tag(newStack.getTagCompound()), "ShapeGroups").getCompoundTagAt(NBTUtils.getAM2Tag(newStack.getTagCompound()).getInteger("CurrentShapeGroup")).copy();
 		int stageNum = numStages(newStack);
 		for (int i = 0; i < stageNum; i++) {
@@ -490,7 +488,7 @@ public class SpellUtils {
 			}
 			if (!casterHasAllReagents(caster, stack)) {
 				if (world.isRemote)
-					caster.addChatMessage(new TextComponentString(getMissingReagents(caster, stack)));
+					caster.sendMessage(new TextComponentString(getMissingReagents(caster, stack)));
 				return SpellCastResult.REAGENTS_MISSING;
 			}
 		}
@@ -511,7 +509,7 @@ public class SpellUtils {
 		if (caster instanceof EntityPlayer) {
 			if (consumeMBR && !((EntityPlayer) caster).capabilities.isCreativeMode && (result == SpellCastResult.SUCCESS || result == SpellCastResult.SUCCESS_REDUCE_MANA || result == SpellCastResult.MALFORMED_SPELL_STACK)) {
 				ext.deductMana(manaCost);
-				ext.setCurrentBurnout(getBurnoutCost(stack));
+				ext.setCurrentBurnout(ext.getCurrentBurnout() + getBurnoutCost(stack));
 				consumeReagents(caster, stack);
 				if (ext.getCurrentBurnout() > ext.getMaxBurnout())
 					ext.setCurrentBurnout(ext.getMaxBurnout());
@@ -534,7 +532,7 @@ public class SpellUtils {
 							ItemStack is = player.inventory.getStackInSlot(i);
 							if (is == null) continue;
 							if (is.getItem() == stack.getItem() && (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE || is.getItemDamage() == stack.getItemDamage())) {
-								if (is.stackSize >= stack.stackSize) {
+								if (is.getCount() >= stack.getCount()) {
 									foundMatch = true;
 									break;
 								}
@@ -563,7 +561,7 @@ public class SpellUtils {
 							ItemStack is = player.inventory.getStackInSlot(i);
 							if (is == null) continue;
 							if (is.getItem() == stack.getItem() && (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE || is.getItemDamage() == stack.getItemDamage())) {
-								if (is.stackSize >= stack.stackSize) {
+								if (is.getCount() >= stack.getCount()) {
 									foundMatch = true;
 									break;
 								}
@@ -571,7 +569,7 @@ public class SpellUtils {
 						}
 						if (!foundMatch)  {
 							if (!first) string.append(", ");
-							string.append(stack.stackSize).append("x ").append(stack.getDisplayName());
+							string.append(stack.getCount()).append("x ").append(stack.getDisplayName());
 							first = false;
 						}
 					}
@@ -594,9 +592,9 @@ public class SpellUtils {
 							ItemStack is = player.inventory.getStackInSlot(i);
 							if (is == null) continue;
 							if (is.getItem() == stack.getItem() && (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE || is.getItemDamage() == stack.getItemDamage())) {
-								if (is.stackSize >= stack.stackSize) {
-									is.stackSize -= stack.stackSize;
-									if (is.stackSize <= 0) {
+								if (is.getCount() >= stack.getCount()) {
+									is.shrink(stack.getCount());
+									if (is.getCount() <= 0) {
 										player.inventory.setInventorySlotContents(i, null);
 									} else {
 										player.inventory.setInventorySlotContents(i, is);

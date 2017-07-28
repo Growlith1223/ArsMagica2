@@ -114,7 +114,7 @@ public class AMNetHandler{
 	@SideOnly(Side.CLIENT)
 	public void requestAuras(EntityPlayer player){
 		AMDataWriter writer = new AMDataWriter();
-		EntityPlayer localPlayer = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer localPlayer = Minecraft.getMinecraft().player;
 		if (localPlayer == null) return;
 		writer.add(localPlayer.getEntityId());
 		writer.add(player.getEntityId());
@@ -140,12 +140,12 @@ public class AMNetHandler{
 	}
 
 	public <T extends EntityLivingBase & IArsMagicaBoss> void sendActionUpdateToAllAround(T boss){
-		if (boss.worldObj != null && !boss.worldObj.isRemote){
+		if (boss.world != null && !boss.world.isRemote){
 			AMDataWriter writer = new AMDataWriter();
 			writer.add(boss.getEntityId());
 			writer.add(boss.getCurrentAction().ordinal());
 
-			sendPacketToAllClientsNear(boss.worldObj.provider.getDimension(), boss.posX, boss.posY, boss.posZ, 64, AMPacketIDs.ENTITY_ACTION_UPDATE, writer.generate());
+			sendPacketToAllClientsNear(boss.world.provider.getDimension(), boss.posX, boss.posY, boss.posZ, 64, AMPacketIDs.ENTITY_ACTION_UPDATE, writer.generate());
 		}
 	}
 
@@ -178,7 +178,7 @@ public class AMNetHandler{
 		AMDataWriter writer = new AMDataWriter();
 		writer.add(hecate.posX).add(hecate.posY).add(hecate.posZ);
 
-		sendPacketToAllClientsNear(hecate.worldObj.provider.getDimension(), hecate.posX, hecate.posY, hecate.posZ, 32, AMPacketIDs.HECATE_DEATH, writer.generate());
+		sendPacketToAllClientsNear(hecate.world.provider.getDimension(), hecate.posX, hecate.posY, hecate.posZ, 32, AMPacketIDs.HECATE_DEATH, writer.generate());
 	}
 
 	public void syncPowerPaths(IPowerNode<?> node, EntityPlayerMP player){

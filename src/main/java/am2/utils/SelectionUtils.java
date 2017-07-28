@@ -78,7 +78,7 @@ public class SelectionUtils {
 	
 	public static EntityPlayer getPlayersForRuneSet (int[] runes) {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		GameProfile[] profiles = server.getPlayerList().getAllProfiles();
+		GameProfile[] profiles = server.getPlayerList().getOnlinePlayerProfiles();
 		if (runes.length != 4)
 			return null;
 		for (GameProfile profile : profiles) {

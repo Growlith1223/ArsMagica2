@@ -43,10 +43,10 @@ public class ItemFrameWatcher{
 			Integer time = watchedFrames.get(frameComp);
 			if (time == null) time = 0;
 
-			if (frameComp == null || frameComp.frame == null || frameComp.frame.worldObj == null)
+			if (frameComp == null || frameComp.frame == null || frameComp.frame.world == null)
 				continue;
 
-			if (!frameComp.frame.worldObj.isRemote || time >= processTime)
+			if (!frameComp.frame.world.isRemote || time >= processTime)
 				toRemove.add(frameComp);
 
 			if (frameIsValid(frameComp.frame)){
@@ -78,7 +78,7 @@ public class ItemFrameWatcher{
 			for (int j = -radius; j <= radius; ++j){
 				for (int k = -radius; k <= radius; ++k){
 
-					if (frame.worldObj.getBlockState(frame.getPosition().add(i, j, k)).getBlock() == BlockDefs.liquid_essence.getBlock()){
+					if (frame.world.getBlockState(frame.getPosition().add(i, j, k)).getBlock() == BlockDefs.liquid_essence.getBlock()){
 						if (time == null){
 							time = 0;
 						}
@@ -87,14 +87,14 @@ public class ItemFrameWatcher{
 
 
 						if (time >= processTime){
-							if (!frame.worldObj.isRemote){
+							if (!frame.world.isRemote){
 								frame.setDisplayedItem(new ItemStack(ItemDefs.arcaneCompendium));
 								shouldRemove = true;
 								break;
 							}
 						}else{
 							shouldRemove = false;
-							if (frame.worldObj.isRemote && (time / 64) % 1 == 0){
+							if (frame.world.isRemote && (time / 64) % 1 == 0){
 								spawnCompendiumProgressParticles(frame, frame.getPosition().add(i, j, k));
 							}
 						}
@@ -129,7 +129,7 @@ public class ItemFrameWatcher{
 		for (EntityItemFrameComparator comp : toRemove){
 			Integer time = watchedFrames.get(comp);
 			if (time != null && time >= processTime &&
-					comp.frame != null && !comp.frame.isDead && comp.frame.worldObj.isRemote &&
+					comp.frame != null && !comp.frame.isDead && comp.frame.world.isRemote &&
 					(comp.frame.getDisplayedItem() != null &&
 							(comp.frame.getDisplayedItem().getItem() == Items.BOOK || comp.frame.getDisplayedItem().getItem() == ItemDefs.arcaneCompendium))){
 				spawnCompendiumCompleteParticles(comp.frame);
@@ -149,7 +149,7 @@ public class ItemFrameWatcher{
 	@SideOnly(Side.CLIENT)
 	public void spawnCompendiumProgressParticles(EntityItemFrame frame, BlockPos pos){
 		Random rand = new Random();
-		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(frame.worldObj, "symbols", pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble());
+		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(frame.world, "symbols", pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble());
 		if (particle != null){
 			particle.setIgnoreMaxAge(true);
 			particle.AddParticleController(new ParticleApproachEntity(particle, frame, 0.02f, 0.04f, 1, false).setKillParticleOnFinish(true));
@@ -160,7 +160,7 @@ public class ItemFrameWatcher{
 
 	@SideOnly(Side.CLIENT)
 	public void spawnCompendiumCompleteParticles(EntityItemFrame frame){
-		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(frame.worldObj, "radiant", frame.posX, frame.posY, frame.posZ);
+		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(frame.world, "radiant", frame.posX, frame.posY, frame.posZ);
 		if (particle != null){
 			particle.setIgnoreMaxAge(false);
 			particle.setMaxAge(40);
@@ -182,18 +182,18 @@ public class ItemFrameWatcher{
 		public boolean equals(Object obj){
 			if (frame == null) return false;
 			if (obj instanceof EntityItemFrame){
-				return ((EntityItemFrame)obj).getEntityId() == frame.getEntityId() && ((EntityItemFrame)obj).worldObj.isRemote == frame.worldObj.isRemote;
+				return ((EntityItemFrame)obj).getEntityId() == frame.getEntityId() && ((EntityItemFrame)obj).world.isRemote == frame.world.isRemote;
 			}
 			if (obj instanceof EntityItemFrameComparator){
-				return ((EntityItemFrameComparator)obj).frame.getEntityId() == frame.getEntityId() && ((EntityItemFrameComparator)obj).frame.worldObj.isRemote == frame.worldObj.isRemote;
+				return ((EntityItemFrameComparator)obj).frame.getEntityId() == frame.getEntityId() && ((EntityItemFrameComparator)obj).frame.world.isRemote == frame.world.isRemote;
 			}
 			return false;
 		}
 
 		@Override
 		public int hashCode(){
-			if (frame == null || frame.worldObj == null) return 0;
-			return frame.getEntityId() + (frame.worldObj.isRemote ? 1 : 2);
+			if (frame == null || frame.world == null) return 0;
+			return frame.getEntityId() + (frame.world.isRemote ? 1 : 2);
 		}
 	}
 }

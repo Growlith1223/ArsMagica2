@@ -114,7 +114,7 @@ public class ContainerKeystone extends Container{
 	@Override
 	public void onContainerClosed(EntityPlayer entityplayer){
 
-		World world = entityplayer.worldObj;
+		World world = entityplayer.world;
 
 		if (!world.isRemote){
 			ItemStack keyStoneItemStack = keystoneStack;
@@ -135,12 +135,12 @@ public class ContainerKeystone extends Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return keyStoneInventory.isUseableByPlayer(entityplayer);
+		return keyStoneInventory.isUsableByPlayer(entityplayer);
 	}
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i){
-		ItemStack itemstack = null;
+		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = (Slot)inventorySlots.get(i);
 
 		if (slot != null && slot.getHasStack()){
@@ -155,12 +155,12 @@ public class ContainerKeystone extends Container{
 
 							runeSlot.putStack(new ItemStack(itemstack1.getItem(), 1, itemstack1.getItemDamage()));
 							runeSlot.onSlotChanged();
-							itemstack1.stackSize--;
-							if (itemstack1.stackSize == 0){
-								slot.putStack(null);
+							itemstack1.shrink(1);
+							if (itemstack1.getCount() == 0){
+								slot.putStack(ItemStack.EMPTY);
 								slot.onSlotChanged();
 							}
-							return null;
+							return ItemStack.EMPTY;
 						}
 					}else{
 						for (int n = InventoryKeyStone.inventorySize; n < PLAYER_INVENTORY_START; n++){
@@ -169,17 +169,17 @@ public class ContainerKeystone extends Container{
 
 							runeSlot.putStack(new ItemStack(itemstack1.getItem(), 1, itemstack1.getItemDamage()));
 							runeSlot.onSlotChanged();
-							itemstack1.stackSize--;
-							if (itemstack1.stackSize == 0){
-								slot.putStack(null);
+							itemstack1.shrink(1);
+							if (itemstack1.getCount() == 0){
+								slot.putStack(ItemStack.EMPTY);
 								slot.onSlotChanged();
 							}
-							return null;
+							return ItemStack.EMPTY;
 						}
 					}
 				}
 				if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END - 1, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_INVENTORY_START && i < PLAYER_ACTION_BAR_START) //range 27 - player inventory
 			{
@@ -190,16 +190,16 @@ public class ContainerKeystone extends Container{
 
 						runeSlot.putStack(new ItemStack(itemstack1.getItem(), 1, itemstack1.getItemDamage()));
 						runeSlot.onSlotChanged();
-						itemstack1.stackSize--;
-						if (itemstack1.stackSize == 0){
-							slot.putStack(null);
+						itemstack1.shrink(1);
+						if (itemstack1.getCount() == 0){
+							slot.putStack(ItemStack.EMPTY);
 							slot.onSlotChanged();
 						}
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 				if (!mergeItemStack(itemstack1, PLAYER_ACTION_BAR_START, PLAYER_ACTION_BAR_END - 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_ACTION_BAR_START && i < PLAYER_ACTION_BAR_END) //range 9 - player action bar
 			{
@@ -210,29 +210,29 @@ public class ContainerKeystone extends Container{
 
 						runeSlot.putStack(new ItemStack(itemstack1.getItem(), 1, itemstack1.getItemDamage()));
 						runeSlot.onSlotChanged();
-						itemstack1.stackSize--;
-						if (itemstack1.stackSize == 0){
-							slot.putStack(null);
+						itemstack1.shrink(1);
+						if (itemstack1.getCount() == 0){
+							slot.putStack(ItemStack.EMPTY);
 							slot.onSlotChanged();
 						}
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 				if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_START, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
-			if (itemstack1.stackSize == 0){
-				slot.putStack(null);
+			if (itemstack1.getCount() == 0){
+				slot.putStack(ItemStack.EMPTY);
 			}else{
 				slot.onSlotChanged();
 			}
-			if (itemstack1.stackSize != itemstack.stackSize){
+			if (itemstack1.getCount() != itemstack.getCount()){
 				slot.onSlotChange(itemstack1, itemstack);
 			}else{
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}
 		return itemstack;
@@ -272,7 +272,7 @@ public class ContainerKeystone extends Container{
 
 		if (!inventoryContainsAllMetas(combo.metas)) return false;
 
-		if (player.worldObj.isRemote){
+		if (player.world.isRemote){
 			AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.SET_KEYSTONE_COMBO, new AMDataWriter().add(comboIndex).generate());
 			return true;
 		}

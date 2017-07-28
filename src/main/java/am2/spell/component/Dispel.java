@@ -44,7 +44,7 @@ public class Dispel extends SpellComponent{
 
 		if (EntityUtils.isSummon((EntityLivingBase)target)){
 			if (EntityUtils.getOwner((EntityLivingBase)target) == caster.getEntityId()){
-				target.attackEntityFrom(DamageSource.magic, 50000);
+				target.attackEntityFrom(DamageSource.MAGIC, 50000);
 				return true;
 			}
 		}
@@ -157,14 +157,14 @@ public class Dispel extends SpellComponent{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 }

@@ -33,33 +33,33 @@ public class FlickerOperatorFlatLands extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		int searchesPerLoop = 12;
 
 		int radius = 6;
 		int diameter = radius * 2 + 1;
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 
 			boolean actionPerformed = false;
 
 			for (int i = 0; i < searchesPerLoop && !actionPerformed; ++i){
-				int effectX = ((TileEntity)habitat).getPos().getX() - radius + (worldObj.rand.nextInt(diameter));
-				int effectZ = ((TileEntity)habitat).getPos().getZ() - radius + (worldObj.rand.nextInt(diameter));
-				int effectY = ((TileEntity)habitat).getPos().getY() + worldObj.rand.nextInt(radius);
+				int effectX = ((TileEntity)habitat).getPos().getX() - radius + (world.rand.nextInt(diameter));
+				int effectZ = ((TileEntity)habitat).getPos().getZ() - radius + (world.rand.nextInt(diameter));
+				int effectY = ((TileEntity)habitat).getPos().getY() + world.rand.nextInt(radius);
 				
 				BlockPos effectPos = new BlockPos(effectX, effectY, effectZ);
 				
 				if (effectPos == ((TileEntity)habitat).getPos())
 					return false;
 
-				IBlockState block = worldObj.getBlockState(effectPos);
+				IBlockState block = world.getBlockState(effectPos);
 
-				if (block != null && !worldObj.isAirBlock(effectPos) && block.isOpaqueCube() && block.getBlock() != BlockDefs.invisibleUtility){
-					if (ForgeEventFactory.doPlayerHarvestCheck(new DummyEntityPlayer(worldObj), block, true)){
-						if (block.getBlock().removedByPlayer(block, worldObj, effectPos, new DummyEntityPlayer(worldObj), true)){
-							block.getBlock().onBlockDestroyedByPlayer(worldObj, effectPos, block);
-							block.getBlock().dropBlockAsItem(worldObj, effectPos, block, 0);
+				if (block != null && !world.isAirBlock(effectPos) && block.isOpaqueCube() && block.getBlock() != BlockDefs.invisibleUtility){
+					if (ForgeEventFactory.doPlayerHarvestCheck(new DummyEntityPlayer(world), block, true)){
+						if (block.getBlock().removedByPlayer(block, world, effectPos, new DummyEntityPlayer(world), true)){
+							block.getBlock().onBlockDestroyedByPlayer(world, effectPos, block);
+							block.getBlock().dropBlockAsItem(world, effectPos, block, 0);
 							actionPerformed = true;
 						}
 					}
@@ -73,12 +73,12 @@ public class FlickerOperatorFlatLands extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		return DoOperation(worldObj, habitat, powered);
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		return DoOperation(world, habitat, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class FlickerOperatorFlatLands extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
 	}
 
 
@@ -108,7 +108,7 @@ public class FlickerOperatorFlatLands extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorFlatLands");
+		return new ResourceLocation("arsmagica2", "flicker_operator_flat_lands");
 	}
 
 	@Override

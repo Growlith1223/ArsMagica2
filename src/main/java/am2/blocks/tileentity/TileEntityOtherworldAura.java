@@ -73,7 +73,7 @@ public class TileEntityOtherworldAura extends TileEntityAMPower{
 			for (int j = -radius; j <= radius; ++j){
 				for (int k = -radius; k <= radius; ++k){
 					if (i == 0 && j == 0 && k == 0) continue;
-					TileEntity te = worldObj.getTileEntity(pos.add(i, j, k));
+					TileEntity te = world.getTileEntity(pos.add(i, j, k));
 					if (te == null) continue;
 					if (!(te instanceof IInventory)) continue;
 					nearbyInventories.add(new AMVector3(te));
@@ -86,7 +86,7 @@ public class TileEntityOtherworldAura extends TileEntityAMPower{
 		Iterator<AMVector3> it = this.nearbyInventories.iterator();
 		while (it.hasNext()){
 			AMVector3 vec = it.next();
-			TileEntity te = worldObj.getTileEntity(vec.toBlockPos());
+			TileEntity te = world.getTileEntity(vec.toBlockPos());
 			if (te == null || !(te instanceof IInventory)){
 				//not found, prune list and move on
 				it.remove();
@@ -104,14 +104,14 @@ public class TileEntityOtherworldAura extends TileEntityAMPower{
 	}
 
 	private void spawnHelper(){
-		if (helper != null || worldObj.isRemote)
+		if (helper != null || world.isRemote)
 			return;
 
-		this.helper = new EntityShadowHelper(worldObj);
+		this.helper = new EntityShadowHelper(world);
 		this.helper.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
 		if (this.watchTarget != null)
 			this.helper.setAltarTarget(watchTarget);
-		this.worldObj.spawnEntityInWorld(helper);
+		this.world.spawnEntity(helper);
 
 		if (this.watchTarget != null){
 			this.helper.setDropoffLocation(new AMVector3(watchTarget.getPos().down(2)));
@@ -135,15 +135,15 @@ public class TileEntityOtherworldAura extends TileEntityAMPower{
 			return;
 		}
 
-		if (!worldObj.isRemote){
-			if (PowerNodeRegistry.For(worldObj).checkPower(this, 1.25f)){
+		if (!world.isRemote){
+			if (PowerNodeRegistry.For(world).checkPower(this, 1.25f)){
 				if (delayCounter-- <= 0){
 					if (helper == null){
 						spawnHelper();
 					}
 
 					ItemStack next = watchTarget.getNextPlannedItem();
-					if (next == null){
+					if (next.isEmpty()){
 						setActive(false, null);
 						return;
 					}
@@ -165,7 +165,7 @@ public class TileEntityOtherworldAura extends TileEntityAMPower{
 						}
 					}
 				}
-				PowerNodeRegistry.For(worldObj).consumePower(this, PowerNodeRegistry.For(worldObj).getHighestPowerType(this), 1.25f);
+				PowerNodeRegistry.For(world).consumePower(this, PowerNodeRegistry.For(world).getHighestPowerType(this), 1.25f);
 			}else{
 				if (this.helper != null)
 					this.helper.unSummon();

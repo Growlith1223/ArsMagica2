@@ -51,14 +51,14 @@ public class CraftingEssenceExtractor implements IInventory{
 
 	public ItemStack decrStackSize(int i, int j){
 		if (stackList[i] != null){
-			if (stackList[i].stackSize <= j){
+			if (stackList[i].getCount() <= j){
 				ItemStack itemstack = stackList[i];
 				stackList[i] = null;
 				eventHandler.onCraftMatrixChanged(this);
 				return itemstack;
 			}
 			ItemStack itemstack1 = stackList[i].splitStack(j);
-			if (stackList[i].stackSize == 0){
+			if (stackList[i].getCount() == 0){
 				stackList[i] = null;
 			}
 			eventHandler.onCraftMatrixChanged(this);
@@ -79,8 +79,9 @@ public class CraftingEssenceExtractor implements IInventory{
 
 	public void onInventoryChanged(){
 	}
-
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
+	
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
 		return true;
 	}
 
@@ -109,31 +110,36 @@ public class CraftingEssenceExtractor implements IInventory{
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
+	public void setField(int id, int value) {		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
+	public void clear() {		
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.stackList)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
 	}
 }

@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
@@ -39,7 +40,8 @@ public class ItemCandle extends ItemArsMagica{
 	}
 	
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = playerIn.getHeldItem(hand);
 		if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("search_block")){
 			IBlockState block = worldIn.getBlockState(pos);
 			if (playerIn.isSneaking() && block != null && block.getBlockHardness(worldIn, pos) > 0f && worldIn.getTileEntity(pos) == null){
@@ -60,7 +62,7 @@ public class ItemCandle extends ItemArsMagica{
 		if (!worldIn.isRemote){
 
 			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("search_block")){
-				playerIn.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.candlecantplace")));
+				playerIn.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.candlecantplace")));
 				return EnumActionResult.PASS;
 			}
 
@@ -101,7 +103,7 @@ public class ItemCandle extends ItemArsMagica{
 //		if (!world.isRemote){
 //
 //			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("search_block")){
-//				player.addChatMessage(new ChatComponentText(I18n.translateToLocal("am2.tooltip.candlecantplace")));
+//				player.sendMessage(new ChatComponentText(I18n.translateToLocal("am2.tooltip.candlecantplace")));
 //				return false;
 //			}
 //
@@ -250,7 +252,7 @@ public class ItemCandle extends ItemArsMagica{
 	}
 
 	@Override
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, NonNullList<ItemStack> par3List){
 		ItemStack unattuned = new ItemStack(this, 1, 0);
 		par3List.add(unattuned);
 	}

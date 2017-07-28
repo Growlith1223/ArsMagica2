@@ -89,11 +89,11 @@ public class AMArmor extends ItemArmor implements ISpecialArmor{
 
 	@Override
 	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot){
-		if (source == DamageSource.onFire){
+		if (source == DamageSource.ON_FIRE){
 			stack.damageItem(damage * 7, entity);
-		}else if (source == DamageSource.fall || source == DamageSource.inWall || source == DamageSource.drown || source == DamageSource.starve){
+		}else if (source == DamageSource.FALL || source == DamageSource.IN_WALL || source == DamageSource.DROWN || source == DamageSource.STARVE){
 			return;
-		}else if (source == DamageSource.magic){
+		}else if (source == DamageSource.MAGIC){
 			stack.damageItem(damage * 7, entity);
 		}else if (source.isUnblockable()){
 			return;

@@ -3,22 +3,22 @@ package am2.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 public class InventorySpellBook implements IInventory{
 	public static int inventorySize = 40;
 	public static int activeInventorySize = 8;
-	private ItemStack[] inventoryItems;
+	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(inventorySize, ItemStack.EMPTY);
 
 	public InventorySpellBook(){
-		inventoryItems = new ItemStack[inventorySize];
 	}
 
-	public void SetInventoryContents(ItemStack[] inventoryContents){
-		int loops = (int)Math.min(inventorySize, inventoryContents.length);
+	public void SetInventoryContents(NonNullList<ItemStack> nonNullList){
+		int loops = (int)Math.min(inventorySize, nonNullList.size());
 		for (int i = 0; i < loops; ++i){
-			inventoryItems[i] = inventoryContents[i];
+			inventoryItems.set(i, nonNullList.get(i));
 		}
 	}
 
@@ -29,34 +29,34 @@ public class InventorySpellBook implements IInventory{
 
 	@Override
 	public ItemStack getStackInSlot(int i){
-		if (i < 0 || i > inventoryItems.length - 1){
-			return null;
+		if (i < 0 || i > inventoryItems.size() - 1){
+			return ItemStack.EMPTY;
 		}
-		return inventoryItems[i];
+		return inventoryItems.get(i);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j){
 
-		if (inventoryItems[i] != null){
-			if (inventoryItems[i].stackSize <= j){
-				ItemStack itemstack = inventoryItems[i];
-				inventoryItems[i] = null;
+		if (!inventoryItems.get(i).isEmpty()){
+			if (inventoryItems.get(i).getCount() <= j){
+				ItemStack itemstack = inventoryItems.get(i);
+				inventoryItems.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = inventoryItems[i].splitStack(j);
-			if (inventoryItems[i].stackSize == 0){
-				inventoryItems[i] = null;
+			ItemStack itemstack1 = inventoryItems.get(i).splitStack(j);
+			if (inventoryItems.get(i).getCount() == 0){
+				inventoryItems.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inventoryItems[i] = itemstack;
+		inventoryItems.set(i, itemstack);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class InventorySpellBook implements IInventory{
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
 		return true;
 	}
 
@@ -82,18 +82,18 @@ public class InventorySpellBook implements IInventory{
 	public void closeInventory(EntityPlayer player){
 	}
 
-	public ItemStack[] GetInventoryContents(){
+	public NonNullList<ItemStack> GetInventoryContents(){
 		return inventoryItems;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventoryItems[i] != null){
-			ItemStack itemstack = inventoryItems[i];
-			inventoryItems[i] = null;
+		if (!inventoryItems.get(i).isEmpty()){
+			ItemStack itemstack = inventoryItems.get(i);
+			inventoryItems.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
@@ -118,28 +118,35 @@ public class InventorySpellBook implements IInventory{
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
-
+	
+	@Override
+	public boolean isEmpty(){
+		for(ItemStack item : this.inventoryItems){
+			if (!item.isEmpty()) return false;
+		}
+		return true;
+	}
 
 }
 

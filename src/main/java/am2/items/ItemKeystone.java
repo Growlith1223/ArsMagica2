@@ -93,12 +93,12 @@ public class ItemKeystone extends ItemArsMagica{
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
 		if (player.isSneaking()){
 			FMLNetworkHandler.openGui(player, ArsMagica2.instance, IDDefs.GUI_KEYSTONE, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
 	}
 
 	private ItemStack[] getMyInventory(ItemStack itemStack){

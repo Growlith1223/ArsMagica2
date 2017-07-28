@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arsmagica2:items/lifeward"
+        "layer0": "arsmagica2:items/life_ward"
     }
 }

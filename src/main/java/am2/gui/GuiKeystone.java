@@ -29,8 +29,8 @@ import net.minecraft.util.text.translation.I18n;
 @SuppressWarnings("deprecation")
 public class GuiKeystone extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/keystone_GUI.png");
-	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spellBookGui_2.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/keystone_gui.png");
+	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spell_book_gui_2.png");
 
 	private GuiTextField combinationName;
 	private GuiStatedImageButton addCombination;
@@ -91,7 +91,7 @@ public class GuiKeystone extends GuiContainer{
 		int l = (width - xSize) / 2;
 		int i1 = (height - ySize) / 2;
 
-		combinationName = new GuiTextField(0, fontRendererObj, 44, 86, 88, 16);
+		combinationName = new GuiTextField(0, fontRenderer, 44, 86, 88, 16);
 
 		int sliderMax = Math.max(0, ItemDefs.keystone.numCombinations(((ContainerKeystone)this.inventorySlots).getKeystoneStack()) - 9);
 
@@ -363,7 +363,7 @@ public class GuiKeystone extends GuiContainer{
 		combinationName.drawTextBox();
 
 		if (AMGuiHelper.instance.getSlowTicker() < displayTime){
-			fontRendererObj.drawSplitString(displayMessage, -90, 0, 90, displayColor);
+			fontRenderer.drawSplitString(displayMessage, -90, 0, 90, displayColor);
 		}else{
 			displayTime = 0;
 		}
@@ -380,7 +380,7 @@ public class GuiKeystone extends GuiContainer{
 			lines.add(combo.name);
 			lines.add("\2477\247o" + I18n.translateToLocal("am2.gui.keystoneComboClick"));
 			lines.add("\2477\247o" + I18n.translateToLocal("am2.gui.keystoneComboClick2") + "\247r");
-			AMGuiHelper.drawHoveringText(lines, par1 - 25, par2 + 18, Minecraft.getMinecraft().fontRendererObj, this.xSize, this.ySize);
+			AMGuiHelper.drawHoveringText(lines, par1 - 25, par2 + 18, Minecraft.getMinecraft().fontRenderer, this.xSize, this.ySize);
 		}
 	}
 

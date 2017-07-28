@@ -30,7 +30,7 @@ public class BlockInertSpawner extends BlockAMPowered{
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (this.HandleSpecialItems(world, player, pos)){
 			return false;
 		}
@@ -64,7 +64,7 @@ public class BlockInertSpawner extends BlockAMPowered{
 			entityItem.motionX = (float)world.rand.nextGaussian() * force;
 			entityItem.motionY = (float)world.rand.nextGaussian() * force + 0.2F;
 			entityItem.motionZ = (float)world.rand.nextGaussian() * force;
-			world.spawnEntityInWorld(entityItem);
+			world.spawnEntity(entityItem);
 		}
 
 		super.breakBlock(world, pos, state);

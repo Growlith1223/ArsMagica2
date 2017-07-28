@@ -69,13 +69,13 @@ public class EntityAISpellmaking extends EntityAIBase{
 				host.getNavigator().tryMoveToXYZ(targetLocation.x, targetLocation.y, targetLocation.z, MOVE_SPEED);
 			}else if (action_state == 0 && hostLocation.distanceSqTo(targetLocation) < DISTANCE_THRESHOLD){
 				host.getNavigator().clearPathEntity();
-				TileEntity te = host.worldObj.getTileEntity(targetLocation.toBlockPos());
+				TileEntity te = host.world.getTileEntity(targetLocation.toBlockPos());
 				if (te == null || !(te instanceof IInventory)){
 					resetTask();
 					return;
 				}
-				((IInventory)te).openInventory(new DummyEntityPlayer(host.worldObj));
-				if (!host.worldObj.isRemote)
+				((IInventory)te).openInventory(new DummyEntityPlayer(host.world));
+				if (!host.world.isRemote)
 					InventoryUtilities.deductFromInventory(((IInventory)te), host.getSearchItem(), 1);
 				host.setHeldItem(host.getSearchItem());
 				action_state = 1;
@@ -83,16 +83,16 @@ public class EntityAISpellmaking extends EntityAIBase{
 				wait_counter++;
 			}else if (action_state == 1 && host.getNavigator().noPath() && wait_counter >= WAIT_TIME){
 				wait_counter = 0;
-				TileEntity te = host.worldObj.getTileEntity(targetLocation.toBlockPos());
+				TileEntity te = host.world.getTileEntity(targetLocation.toBlockPos());
 				if (te == null || !(te instanceof IInventory)){
 					resetTask();
 					return;
 				}
-				((IInventory)te).closeInventory(new DummyEntityPlayer(host.worldObj));
+				((IInventory)te).closeInventory(new DummyEntityPlayer(host.world));
 				host.getNavigator().tryMoveToXYZ(dropLocation.x, dropLocation.y, dropLocation.z, MOVE_SPEED);
 			}else if (action_state == 1 && hostLocation.distanceSqTo(dropLocation) < DISTANCE_THRESHOLD){
 				host.getNavigator().clearPathEntity();
-				if (!host.worldObj.isRemote){
+				if (!host.world.isRemote){
 					host.entityDropItem(host.getSearchItem(), 0f);
 					host.setHeldItem(new ItemStack(Items.PAPER));
 				}

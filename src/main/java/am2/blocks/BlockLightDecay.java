@@ -17,6 +17,7 @@ public class BlockLightDecay extends BlockAM {
 		super(Material.AIR);
 		setTickRandomly(true);
 		setCreativeTab(null);
+		this.setLightLevel(15);
 	}
 	
 	@Override
@@ -24,7 +25,6 @@ public class BlockLightDecay extends BlockAM {
 		return 15;
 	}
 	
-	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
 		return null;
 	}

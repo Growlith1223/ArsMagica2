@@ -24,7 +24,7 @@ public class TileSeerStoneRenderer extends TileEntitySpecialRenderer<TileEntityS
 
 	public TileSeerStoneRenderer(){
 		model = new ModelSeerStone();
-		block = new ResourceLocation("arsmagica2", "textures/blocks/custom/blockSeerStone.png");
+		block = new ResourceLocation("arsmagica2", "textures/blocks/custom/block_seer_stone.png");
 		eye = new ResourceLocation("arsmagica2", "textures/blocks/custom/eye_bw.png");
 	}
 

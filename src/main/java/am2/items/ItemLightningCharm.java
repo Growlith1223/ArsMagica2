@@ -42,10 +42,11 @@ public class ItemLightningCharm extends ItemArsMagica{
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, EnumHand hand){
-		if (par3EntityPlayer.isSneaking())
-			toggleActive(par1ItemStack);
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, par1ItemStack);
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+		ItemStack item = player.getHeldItem(hand);
+		if (player.isSneaking())
+			toggleActive(item);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, item);
 	}
 
 	private void attractItems(World world, Entity ent){

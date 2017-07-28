@@ -16,11 +16,11 @@ public class FlickerEvents {
 	public void endermanTeleport(EnderTeleportEvent event) {
 		EntityLivingBase ent = event.getEntityLiving();
 		
-		if (!ent.worldObj.isRemote && ent instanceof EntityEnderman && ent.worldObj.rand.nextDouble() < 0.01f){
-			EntityFlicker flicker = new EntityFlicker(ent.worldObj);
+		if (!ent.world.isRemote && ent instanceof EntityEnderman && ent.world.rand.nextDouble() < 0.01f){
+			EntityFlicker flicker = new EntityFlicker(ent.world);
 			flicker.setPosition(ent.posX, ent.posY, ent.posZ);
 			flicker.setFlickerType(Affinity.ENDER);
-			ent.worldObj.spawnEntityInWorld(flicker);
+			ent.world.spawnEntity(flicker);
 		}
 	}
 	

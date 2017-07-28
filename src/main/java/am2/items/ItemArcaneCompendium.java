@@ -15,10 +15,11 @@ public class ItemArcaneCompendium extends ItemArsMagica{
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack item = playerIn.getHeldItem(hand);
 		if (worldIn.isRemote){
-			AMGuiHelper.OpenCompendiumGui(itemStackIn);
+			AMGuiHelper.OpenCompendiumGui(item);
 		}
-		return ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
+		return ActionResult.newResult(EnumActionResult.SUCCESS, item);
 	}
 }

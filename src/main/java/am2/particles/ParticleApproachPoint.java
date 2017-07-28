@@ -54,7 +54,7 @@ public class ParticleApproachPoint extends ParticleController{
 		if (!ignoreYCoord){
 			double deltaY = posY - targetY;
 
-			double horizontalDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+			double horizontalDistance = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 			float pitchRotation = (float)(-Math.atan2(deltaY, horizontalDistance));
 			double pitchRadians = pitchRotation;
 

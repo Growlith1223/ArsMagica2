@@ -52,13 +52,13 @@ public class EntityAIThrowRock extends EntityAIBase{
 
 			if (((IArsMagicaBoss)host).getTicksInCurrentAction() == 27){
 
-				if (!host.worldObj.isRemote)
-					host.worldObj.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+				if (!host.world.isRemote)
+					host.world.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 
 				host.faceEntity(target, 180, 180);
-				if (!host.worldObj.isRemote){
-					EntityThrownRock projectile = new EntityThrownRock(host.worldObj, host, 2.0f);
-					host.worldObj.spawnEntityInWorld(projectile);
+				if (!host.world.isRemote){
+					EntityThrownRock projectile = new EntityThrownRock(host.world, host, 2.0f);
+					host.world.spawnEntity(projectile);
 				}
 			}
 		}

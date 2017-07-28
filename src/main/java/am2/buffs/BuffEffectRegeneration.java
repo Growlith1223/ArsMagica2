@@ -21,7 +21,7 @@ public class BuffEffectRegeneration extends BuffEffect{
 
 	public boolean onUpdate(EntityLivingBase entityliving){
 
-		World world = entityliving.worldObj;
+		World world = entityliving.world;
 		double ticks = 80 / Math.pow(2, this.getAmplifier());
 
 		if (getDuration() != 0 && (getDuration() % ticks) == 0){

@@ -59,7 +59,7 @@ public class Recall extends SpellComponent implements IRitualInteraction{
 
 		if (caster.isPotionActive(PotionEffectsDefs.astralDistortion) || ((EntityLivingBase)target).isPotionActive(PotionEffectsDefs.astralDistortion)){
 			if (caster instanceof EntityPlayer)
-				((EntityPlayer)caster).addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.cantTeleport")));
+				((EntityPlayer)caster).sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.cantTeleport")));
 			return false;
 		}
 		if (RitualShapeHelper.instance.matchesRitual(this, world, target.getPosition())) {
@@ -72,11 +72,11 @@ public class Recall extends SpellComponent implements IRitualInteraction{
 		IEntityExtension casterProperties = EntityExtension.For(caster);
 		if (casterProperties.getMarkDimensionID() == -512){
 			if (caster instanceof EntityPlayer && !world.isRemote)
-				((EntityPlayer)caster).addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noMark")));
+				((EntityPlayer)caster).sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noMark")));
 			return false;
 		}else if (casterProperties.getMarkDimensionID() != caster.dimension){
 			if (caster instanceof EntityPlayer && !world.isRemote)
-				((EntityPlayer)caster).addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.diffDimMark")));
+				((EntityPlayer)caster).sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.diffDimMark")));
 			return false;
 		}
 		if (!world.isRemote){
@@ -105,7 +105,7 @@ public class Recall extends SpellComponent implements IRitualInteraction{
 			AMVector3 vector = ArsMagica2.proxy.blocks.getNextKeystonePortalLocation(world, pos, false, key);
 			if (vector == null || vector.equals(new AMVector3(pos))){
 				if (caster instanceof EntityPlayer && !world.isRemote)
-					((EntityPlayer)caster).addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noMatchingGate")));
+					((EntityPlayer)caster).sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noMatchingGate")));
 				return false;
 			}else{
 				RitualShapeHelper.instance.consumeAllReagents(this, world, pos);
@@ -128,17 +128,17 @@ public class Recall extends SpellComponent implements IRitualInteraction{
 
 			if (player == null){
 				if (caster instanceof EntityPlayer && !world.isRemote)
-					((EntityPlayer)caster).addChatMessage(new TextComponentString("am2.tooltip.noMatchingPlayer"));
+					((EntityPlayer)caster).sendMessage(new TextComponentString("am2.tooltip.noMatchingPlayer"));
 				return false;
 			}
 			else if (player == caster){
 				if (caster instanceof EntityPlayer && !world.isRemote)
-					((EntityPlayer)caster).addChatMessage(new TextComponentString("am2.tooltip.cantSummonSelf"));
+					((EntityPlayer)caster).sendMessage(new TextComponentString("am2.tooltip.cantSummonSelf"));
 				return false;
 			}else{
 				RitualShapeHelper.instance.consumeAllReagents(this, world, pos);
-				if (target.worldObj.provider.getDimension() != caster.worldObj.provider.getDimension()){
-					DimensionUtilities.doDimensionTransfer(player, caster.worldObj.provider.getDimension());
+				if (target.world.provider.getDimension() != caster.world.provider.getDimension()){
+					DimensionUtilities.doDimensionTransfer(player, caster.world.provider.getDimension());
 				}
 				((EntityLivingBase)target).setPositionAndUpdate(pos.getX(), pos.getY() + 0.5D, pos.getZ());
 				return true;

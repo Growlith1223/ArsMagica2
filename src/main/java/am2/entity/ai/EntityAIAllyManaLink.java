@@ -40,7 +40,7 @@ public class EntityAIAllyManaLink extends EntityAIBase{
 
 	private EntityPlayer getHostOwner(){
 		int ownerID = EntityUtils.getOwner(host);
-		Entity owner = host.worldObj.getEntityByID(ownerID);
+		Entity owner = host.world.getEntityByID(ownerID);
 		if (owner == null || !(owner instanceof EntityPlayer))
 			return null;
 		return (EntityPlayer)owner;
@@ -54,7 +54,7 @@ public class EntityAIAllyManaLink extends EntityAIBase{
 		if (host.getDistanceToEntity(owner) < 1)
 			host.getNavigator().tryMoveToXYZ(host.posX, host.posY, host.posZ, 0.5f);
 		else
-			SpellUtils.applyStackStage(spellStack, host, owner, owner.posX, owner.posY, owner.posZ, null, host.worldObj, false, false, 0);
+			SpellUtils.applyStackStage(spellStack, host, owner, owner.posX, owner.posY, owner.posZ, null, host.world, false, false, 0);
 	}
 
 }

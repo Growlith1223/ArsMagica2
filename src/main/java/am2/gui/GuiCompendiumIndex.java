@@ -47,13 +47,13 @@ public class GuiCompendiumIndex extends GuiScreen{
 
 	ISkillData sk;
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/ArcaneCompendiumIndexGui.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/arcane_compendium_gui_index.png");
 
 	public GuiCompendiumIndex(){
 		categories = CompendiumCategory.getCategories();
 		currentCategory = categories.iterator().next();
 		lines = new ArrayList<String>();
-		String path = am2.lore.ArcaneCompendium.For(Minecraft.getMinecraft().thePlayer).getPath();
+		String path = am2.lore.ArcaneCompendium.For(Minecraft.getMinecraft().player).getPath();
 		if (path != null) {
 			CompendiumCategory category = CompendiumCategory.getCategoryFromID(path);
 			if (category != null)
@@ -61,7 +61,7 @@ public class GuiCompendiumIndex extends GuiScreen{
 		}
 		
 		
-		sk = SkillData.For(Minecraft.getMinecraft().thePlayer);
+		sk = SkillData.For(Minecraft.getMinecraft().player);
 	}
 
 	@Override
@@ -93,13 +93,13 @@ public class GuiCompendiumIndex extends GuiScreen{
 				if (sub.getParentsString().equals(category.getID())) {
 					boolean hasSubItems = false;
 					for (CompendiumEntry entry : category.getEntries()) {
-						if (entry.getRenderObject() == null || ArcaneCompendium.For(mc.thePlayer).isUnlocked(entry.getID())) {
+						if (entry.getRenderObject() == null || ArcaneCompendium.For(mc.player).isUnlocked(entry.getID())) {
 							hasSubItems = true;
 							break;
 						}
 					}
 					if (!hasSubItems) continue;
-					GuiButtonCompendiumLink tab = new GuiButtonCompendiumLink(idCount++, buttonX, buttonY, fontRendererObj, locPage, null, sub);
+					GuiButtonCompendiumLink tab = new GuiButtonCompendiumLink(idCount++, buttonX, buttonY, fontRenderer, locPage, null, sub);
 					tab.visible = sub.getParentsString().equals(currentCategory.getID()) && page == locPage;
 					buttonY += 12;
 					if (buttonY > posY + (ySize) - 25){
@@ -117,9 +117,9 @@ public class GuiCompendiumIndex extends GuiScreen{
 			ArrayList<CompendiumEntry> sortedEntries = Lists.newArrayList(category.getEntries());
 			sortedEntries.sort(new Comparator<CompendiumEntry>() {public int compare(CompendiumEntry o1, CompendiumEntry o2) { return o1.getName().compareTo(o2.getName());}});
 			for (CompendiumEntry entry : sortedEntries) {
-				if (!mc.thePlayer.capabilities.isCreativeMode && entry.getRenderObject() != null && !ArcaneCompendium.For(mc.thePlayer).isUnlocked(entry.getID()))
+				if (!mc.player.capabilities.isCreativeMode && entry.getRenderObject() != null && !ArcaneCompendium.For(mc.player).isUnlocked(entry.getID()))
 					continue;
-				GuiButtonCompendiumLink link = new GuiButtonCompendiumLink(idCount++, buttonX, buttonY, fontRendererObj, locPage, entry, null);
+				GuiButtonCompendiumLink link = new GuiButtonCompendiumLink(idCount++, buttonX, buttonY, fontRenderer, locPage, entry, null);
 				link.visible = entry.canBeDisplayed(category.getID()) && page == locPage;
 				buttonY += 12;
 				if (buttonY > posY + (ySize) - 25){
@@ -220,7 +220,7 @@ public class GuiCompendiumIndex extends GuiScreen{
 		nextPage.visible = page < numPages;
 		prevPage.visible = page > 0;
 		this.currentCategory = category;
-		am2.lore.ArcaneCompendium.For(Minecraft.getMinecraft().thePlayer).setPath(category.getID());
+		am2.lore.ArcaneCompendium.For(Minecraft.getMinecraft().player).setPath(category.getID());
 	}
 	
 	@Override
@@ -253,16 +253,16 @@ public class GuiCompendiumIndex extends GuiScreen{
 		String compendiumTitle = "\247nArcane Compendium";
 
 		int y_start_title = i1 + 20;
-		int x_start_title = l + 100 - (fontRendererObj.getStringWidth(compendiumTitle) / 2);
+		int x_start_title = l + 100 - (fontRenderer.getStringWidth(compendiumTitle) / 2);
 
 		if (page == 0)
-			fontRendererObj.drawString(compendiumTitle, x_start_title, y_start_title, 0);
+			fontRenderer.drawString(compendiumTitle, x_start_title, y_start_title, 0);
 
 		int x_start_line = l + 35;
 		int y_start_line = i1 + 35;
 
 		if (lines != null && lines.size() > page){
-			AMGuiHelper.drawCompendiumText(lines.get(page), x_start_line, y_start_line, lineWidth, 0x000000, fontRendererObj);
+			AMGuiHelper.drawCompendiumText(lines.get(page), x_start_line, y_start_line, lineWidth, 0x000000, fontRenderer);
 		}
 
 		super.drawScreen(par1, par2, par3);

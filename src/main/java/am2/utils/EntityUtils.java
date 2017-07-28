@@ -150,7 +150,7 @@ public class EntityUtils {
 			entityliving.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityGhast>(entityliving, EntityGhast.class, true));
 			entityliving.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityShulker>(entityliving, EntityShulker.class, true));
 
-			if (!entityliving.worldObj.isRemote && entityliving.getAttackTarget() != null && entityliving.getAttackTarget() instanceof EntityPlayer)
+			if (!entityliving.world.isRemote && entityliving.getAttackTarget() != null && entityliving.getAttackTarget() instanceof EntityPlayer)
 				ArsMagica2.proxy.addDeferredTargetSet(entityliving, null);
 
 			if (entityliving instanceof EntityTameable){
@@ -174,7 +174,7 @@ public class EntityUtils {
 			entityliving.targetTasks.taskEntries.clear();
 			entityliving.targetTasks.addTask(1, new EntityAIHurtByTarget(entityliving, true));
 			entityliving.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(entityliving, EntityPlayer.class, true));
-			if (!entityliving.worldObj.isRemote && entityliving.getAttackTarget() != null && entityliving.getAttackTarget() instanceof EntityMob)
+			if (!entityliving.world.isRemote && entityliving.getAttackTarget() != null && entityliving.getAttackTarget() instanceof EntityMob)
 				ArsMagica2.proxy.addDeferredTargetSet(entityliving, null);
 
 			entityliving.getEntityData().setBoolean(isSummonKey, true);
@@ -208,7 +208,7 @@ public class EntityUtils {
 	public static boolean revertAI(EntityCreature entityliving){
 
 		int ownerID = getOwner(entityliving);
-		Entity owner = entityliving.worldObj.getEntityByID(ownerID);
+		Entity owner = entityliving.world.getEntityByID(ownerID);
 		if (owner != null && owner instanceof EntityLivingBase){
 			EntityExtension.For((EntityLivingBase)owner).removeSummon();
 			if (EntityExtension.For((EntityLivingBase)owner).isManaLinkedTo(entityliving)){
@@ -238,7 +238,7 @@ public class EntityUtils {
 				entityliving.tasks.taskEntries.addAll(storedAITasks.get(entityliving.getEntityId()));
 				storedAITasks.remove(entityliving.getEntityId());
 			}
-			if (!entityliving.worldObj.isRemote && entityliving.getAttackTarget() != null)
+			if (!entityliving.world.isRemote && entityliving.getAttackTarget() != null)
 				ArsMagica2.proxy.addDeferredTargetSet(entityliving, null);
 			if (entityliving instanceof EntityTameable){
 				((EntityTameable)entityliving).setTamed(false);
@@ -312,7 +312,7 @@ public class EntityUtils {
 	        float f = strafe * strafe + forward * forward;
 	        if (f >= 1.0E-4F)
 	        {
-	            f = MathHelper.sqrt_float(f);
+	            f = MathHelper.sqrt(f);
 
 	            if (f < 1.0F)
 	            {

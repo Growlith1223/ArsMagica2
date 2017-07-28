@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiArcaneReconstructor extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/arcaneReconstructorGUI.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/arcane_reconstructor_gui.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

@@ -50,7 +50,7 @@ public class EntityRiftStorage extends EntityLiving {
 		}else if (this.scale < 0.99f){
 			this.scale = (float)(Math.sin((float)this.ticksExisted / 50));
 		}
-		//LogHelper.info(worldObj.isRemote);
+		//LogHelper.info(world.isRemote);
 
 		this.motionX = 0;
 		this.motionY = 0;
@@ -59,19 +59,19 @@ public class EntityRiftStorage extends EntityLiving {
 	}
 	
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
+	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (player.isSneaking()){
 			this.setTicksToLive(this.ticksExisted + 20);
-			return super.processInteract(player, hand, stack);
+			return super.processInteract(player, hand);
 		}
 		RiftStorage.For(player).setAccessLevel(getStorageLevel());
-		player.openGui(ArsMagica2.instance, IDDefs.GUI_RIFT, worldObj, (int)posX, (int)posY, (int)posZ);
-		return super.processInteract(player, hand, stack);
+		player.openGui(ArsMagica2.instance, IDDefs.GUI_RIFT, world, (int)posX, (int)posY, (int)posZ);
+		return super.processInteract(player, hand);
 	}
 	
 	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
-		return super.applyPlayerInteraction(player, vec, stack, hand);
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+		return super.applyPlayerInteraction(player, vec, hand);
 	}
 	
 	@Override

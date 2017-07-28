@@ -21,8 +21,8 @@ public class ItemWakebloom extends ItemBlock{
 	
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,
-			EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand){
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		RayTraceResult mop = this.rayTrace(worldIn, playerIn, true);
 
 		if (mop == null){
@@ -42,7 +42,7 @@ public class ItemWakebloom extends ItemBlock{
 					worldIn.setBlockState(mop.getBlockPos().up(), BlockDefs.wakebloom.getDefaultState());
 
 					if (!playerIn.capabilities.isCreativeMode){
-						--itemStackIn.stackSize;
+						itemStackIn.shrink(1);
 					}
 				}
 			}

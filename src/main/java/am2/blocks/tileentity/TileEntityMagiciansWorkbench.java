@@ -20,13 +20,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class TileEntityMagiciansWorkbench extends TileEntity implements ITickable, IKeystoneLockable<TileEntityMagiciansWorkbench>, ISidedInventory{
 
-	private ItemStack[] inventory;
+	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 	public IInventory firstCraftResult;
 	public IInventory secondCraftResult;
 
@@ -42,7 +43,7 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	private static final float drawerMin = 0.0f;
 
 	public TileEntityMagiciansWorkbench(){
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		firstCraftResult = new InventoryCraftResult();
 		secondCraftResult = new InventoryCraftResult();
 
@@ -64,7 +65,7 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 			}
 		}else{
 			if (getDrawerOffset() == drawerMax){
-				this.worldObj.playSound(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F, true);
+				this.world.playSound(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F, true);
 			}
 			if (getDrawerOffset() - drawerIncrement > drawerMin){
 				setDrawerOffset(getDrawerOffset() - drawerIncrement);
@@ -107,14 +108,14 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 		}
 
 		++this.numPlayersUsing;
-		this.worldObj.addBlockEvent(pos, this.getBlockType(), 1, this.numPlayersUsing);
+		this.world.addBlockEvent(pos, this.getBlockType(), 1, this.numPlayersUsing);
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player){
 		if (this.getBlockType() != null && this.getBlockType() instanceof BlockMagiciansWorkbench){
 			--this.numPlayersUsing;
-			this.worldObj.addBlockEvent(pos, this.getBlockType(), 1, this.numPlayersUsing);
+			this.world.addBlockEvent(pos, this.getBlockType(), 1, this.numPlayersUsing);
 		}
 	}
 
@@ -128,8 +129,8 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 		else
 			upgradeState &= ~flag;
 
-		if (!worldObj.isRemote)
-			worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+		if (!world.isRemote)
+			world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 
 	public void rememberRecipe(ItemStack output, ItemStack[] recipeItems, boolean is2x2){
@@ -143,11 +144,11 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 
 		for (ItemStack stack : recipeItems)
 			if (stack != null)
-				stack.stackSize = 1;
+				stack.setCount(1);
 
 		rememberedRecipes.add(new RememberedRecipe(output, recipeItems, is2x2));
 
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 
 	private boolean popRecipe(){
@@ -179,21 +180,21 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	@Override
 	public ItemStack getStackInSlot(int i){
 		if (i < 0 || i >= getSizeInventory())
-			return null;
-		return inventory[i];
+			return ItemStack.EMPTY;
+		return inventory.get(i);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j){
-		if (inventory[i] != null){
-			if (inventory[i].stackSize <= j){
-				ItemStack itemstack = inventory[i];
-				inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			if (inventory.get(i).getCount() <= j){
+				ItemStack itemstack = inventory.get(i);
+				inventory.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = inventory[i].splitStack(j);
-			if (inventory[i].stackSize == 0){
-				inventory[i] = null;
+			ItemStack itemstack1 = inventory.get(i).splitStack(j);
+			if (inventory.get(i).getCount() == 0){
+				inventory.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
@@ -203,9 +204,9 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventory[i] != null){
-			ItemStack itemstack = inventory[i];
-			inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			ItemStack itemstack = inventory.get(i);
+			inventory.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
 			return null;
@@ -214,9 +215,9 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inventory[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		inventory.set(i, itemstack);
+		if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -236,8 +237,8 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
@@ -293,7 +294,7 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 		if (index >= 0 && index < rememberedRecipes.size())
 			rememberedRecipes.get(index).isLocked = locked;
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			AMDataWriter writer = new AMDataWriter();
 			writer.add(pos.getX());
 			writer.add(pos.getY());
@@ -321,13 +322,13 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	public void readFromNBT(NBTTagCompound nbttagcompound){
 		super.readFromNBT(nbttagcompound);
 		NBTTagList nbttaglist = nbttagcompound.getTagList("ArcaneReconstructorInventory", Constants.NBT.TAG_COMPOUND);
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < inventory.length){
-				inventory[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inventory.size()){
+				inventory.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 
@@ -335,14 +336,14 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 		rememberedRecipes.clear();
 		for (int i = 0; i < recall.tagCount(); ++i){
 			NBTTagCompound rememberedRecipe = (NBTTagCompound)recall.getCompoundTagAt(i);
-			ItemStack output = ItemStack.loadItemStackFromNBT(rememberedRecipe);
+			ItemStack output = new ItemStack(rememberedRecipe);
 			boolean is2x2 = rememberedRecipe.getBoolean("is2x2");
 			NBTTagList componentNBT = rememberedRecipe.getTagList("components", Constants.NBT.TAG_COMPOUND);
 			ItemStack[] components = new ItemStack[componentNBT.tagCount()];
 			for (int n = 0; n < componentNBT.tagCount(); ++n){
 				NBTTagCompound componentTAG = (NBTTagCompound)componentNBT.getCompoundTagAt(n);
 				if (componentTAG.getBoolean("componentExisted")){
-					ItemStack component = ItemStack.loadItemStackFromNBT(componentTAG);
+					ItemStack component = new ItemStack(componentTAG);
 					components[n] = component;
 				}else{
 					components[n] = null;
@@ -361,12 +362,12 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound){
 		super.writeToNBT(nbttagcompound);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inventory.length; i++){
-			if (inventory[i] != null){
+		for (int i = 0; i < inventory.size(); i++){
+			if (!inventory.get(i).isEmpty()){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				inventory[i].writeToNBT(nbttagcompound1);
+				inventory.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -404,9 +405,9 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 	@Override
 	public ItemStack[] getRunesInKey(){
 		ItemStack[] runes = new ItemStack[3];
-		runes[0] = inventory[45];
-		runes[1] = inventory[46];
-		runes[2] = inventory[47];
+		runes[0] = inventory.get(45);
+		runes[1] = inventory.get(46);
+		runes[2] = inventory.get(47);
 		return runes;
 	}
 
@@ -448,31 +449,44 @@ public class TileEntityMagiciansWorkbench extends TileEntity implements ITickabl
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.inventory)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+
+        return true;
 	}
 }

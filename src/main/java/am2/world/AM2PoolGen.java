@@ -1,6 +1,7 @@
 package am2.world;
 
 import java.util.Random;
+import java.util.Set;
 
 import am2.defs.BlockDefs;
 import net.minecraft.block.state.IBlockState;
@@ -75,7 +76,7 @@ public class AM2PoolGen{
 
 	private boolean biomeIsValid(World world, BlockPos pos){
 		Biome biome = world.getBiome(pos);
-		Type[] types = BiomeDictionary.getTypesForBiome(biome);
+		Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biome);
 
 		for (Type type : types){
 			if (type == Type.END || type == Type.MUSHROOM || type == Type.NETHER || type == Type.WATER || type == Type.WASTELAND){

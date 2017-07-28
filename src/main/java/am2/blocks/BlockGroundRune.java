@@ -114,8 +114,8 @@ public abstract class BlockGroundRune extends BlockAMContainer{
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
-		worldIn.notifyBlockOfStateChange(pos, state.getBlock());
-		worldIn.notifyBlockOfStateChange(pos, worldIn.getBlockState(pos.down()).getBlock());
+		worldIn.updateObservingBlocksAt(pos, state.getBlock());
+		worldIn.updateObservingBlocksAt(pos, worldIn.getBlockState(pos.down()).getBlock());
 		super.breakBlock(worldIn, pos, state);
 	}
 	

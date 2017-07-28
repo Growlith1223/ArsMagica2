@@ -43,7 +43,7 @@ public class BlockSpellSealedDoor extends BlockDoor implements ITileEntityProvid
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 
 		if (worldIn.getBlockState(pos.down()).getBlock() == BlockDefs.spellSealedDoor)
 			pos = pos.down();
@@ -100,14 +100,14 @@ public class BlockSpellSealedDoor extends BlockDoor implements ITileEntityProvid
 		float f1 = worldIn.rand.nextFloat() * 0.8F + 0.1F;
 		float f2 = worldIn.rand.nextFloat() * 0.8F + 0.1F;
 		do{
-			if (itemstack.stackSize <= 0){
+			if (itemstack.getCount() <= 0){
 				break;
 			}
 			int i1 = worldIn.rand.nextInt(21) + 10;
-			if (i1 > itemstack.stackSize){
-				i1 = itemstack.stackSize;
+			if (i1 > itemstack.getCount()){
+				i1 = itemstack.getCount();
 			}
-			itemstack.stackSize -= i1;
+			itemstack.shrink(i1);
 			ItemStack newItem = new ItemStack(itemstack.getItem(), i1, itemstack.getItemDamage());
 			newItem.setTagCompound(itemstack.getTagCompound());
 			EntityItem entityitem = new EntityItem(worldIn, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, newItem);
@@ -115,7 +115,7 @@ public class BlockSpellSealedDoor extends BlockDoor implements ITileEntityProvid
 			entityitem.motionX = (float)worldIn.rand.nextGaussian() * f3;
 			entityitem.motionY = (float)worldIn.rand.nextGaussian() * f3 + 0.2F;
 			entityitem.motionZ = (float)worldIn.rand.nextGaussian() * f3;
-			worldIn.spawnEntityInWorld(entityitem);
+			worldIn.spawnEntity(entityitem);
 		}while (true);
 
 		worldIn.setBlockToAir(pos.up());

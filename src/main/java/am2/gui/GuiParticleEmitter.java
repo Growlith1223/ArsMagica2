@@ -47,7 +47,7 @@ public class GuiParticleEmitter extends GuiScreen{
 	public GuiParticleEmitter(TileEntityParticleEmitter target){
 		this.mc = Minecraft.getMinecraft();
 		this.parent = this.mc.currentScreen;
-		this.fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+		this.fontRenderer = Minecraft.getMinecraft().fontRenderer;
 		ScaledResolution scaledresolution = new ScaledResolution(mc);
 		this.width = scaledresolution.getScaledWidth();
 		this.height = scaledresolution.getScaledHeight();
@@ -119,14 +119,14 @@ public class GuiParticleEmitter extends GuiScreen{
 	@Override
 	public void drawScreen(int par1, int par2, float par3){
 		this.drawDefaultBackground();
-		drawCenteredString(fontRendererObj, screenTitle, width / 2, 4, 0xffffff);
-		drawString(fontRendererObj, I18n.translateToLocal("am2.gui.type"), 10, 45, 0xffffff);
-		drawString(fontRendererObj, I18n.translateToLocal("am2.gui.action"), 10, 65, 0xffffff);
-		drawString(fontRendererObj, I18n.translateToLocal("am2.gui.color"), 10, 85, 0xffffff);
-		drawString(fontRendererObj, I18n.translateToLocal("am2.gui.border"), 10, 105, 0xffffff);
+		drawCenteredString(fontRenderer, screenTitle, width / 2, 4, 0xffffff);
+		drawString(fontRenderer, I18n.translateToLocal("am2.gui.type"), 10, 45, 0xffffff);
+		drawString(fontRenderer, I18n.translateToLocal("am2.gui.action"), 10, 65, 0xffffff);
+		drawString(fontRenderer, I18n.translateToLocal("am2.gui.color"), 10, 85, 0xffffff);
+		drawString(fontRenderer, I18n.translateToLocal("am2.gui.border"), 10, 105, 0xffffff);
 
 		if (!tile.getShow()){
-			fontRendererObj.drawSplitString(I18n.translateToLocal("am2.gui.wrenchWarning"), 10, 125, 100, 0xff0000);
+			fontRenderer.drawSplitString(I18n.translateToLocal("am2.gui.wrenchWarning"), 10, 125, 100, 0xff0000);
 		}
 		
 		if (activeButton != null && activeButton instanceof GuiSlideControl){

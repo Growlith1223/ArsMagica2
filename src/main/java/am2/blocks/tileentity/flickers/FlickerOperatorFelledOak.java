@@ -120,26 +120,26 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	}
 
 	@SuppressWarnings("deprecation")
-	private void plantTree(World worldObj, IFlickerController<?> habitat, boolean powered){
-		if (!powered || worldObj.isRemote)
+	private void plantTree(World world, IFlickerController<?> habitat, boolean powered){
+		if (!powered || world.isRemote)
 			return;
 
-		ItemStack sapling = getSaplingFromNearbyChest(worldObj, habitat);
+		ItemStack sapling = getSaplingFromNearbyChest(world, habitat);
 		if (sapling == null)
 			return;
 
-		AMVector3 plantLoc = getPlantLocation(worldObj, habitat, sapling);
+		AMVector3 plantLoc = getPlantLocation(world, habitat, sapling);
 
 		if (plantLoc == null)
 			return;
 
-		deductSaplingFromNearbyChest(worldObj, habitat);
+		deductSaplingFromNearbyChest(world, habitat);
 		ItemBlock block = (ItemBlock)sapling.getItem();
 
-		worldObj.setBlockState(plantLoc.toBlockPos(), block.getBlock().getStateFromMeta(sapling.getItemDamage()), 3);
+		world.setBlockState(plantLoc.toBlockPos(), block.getBlock().getStateFromMeta(sapling.getItemDamage()), 3);
 	}
 
-	private AMVector3 getPlantLocation(World worldObj, IFlickerController<?> habitat, ItemStack sapling){
+	private AMVector3 getPlantLocation(World world, IFlickerController<?> habitat, ItemStack sapling){
 		if (sapling.getItem() instanceof ItemBlock == false)
 			return null;
 		TileEntity te = (TileEntity)habitat;
@@ -158,8 +158,8 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 			for (int k = (int)offset.z; k <= te.getPos().getZ() + radius_horiz; k += 2){
 				for (int j = (int)offset.y; j <= te.getPos().getY() + radius_vert; ++j){
 					BlockPos newPos = new BlockPos(i, j, k);
-					IBlockState block = worldObj.getBlockState(newPos);
-					if (block.getBlock().isReplaceable(worldObj, newPos) && treeBlock.canPlaceBlockAt(worldObj, newPos)){
+					IBlockState block = world.getBlockState(newPos);
+					if (block.getBlock().isReplaceable(world, newPos) && treeBlock.canPlaceBlockAt(world, newPos)){
 						AMDataWriter writer = new AMDataWriter();
 						writer.add(i).add(k);
 						habitat.setMetadata(this, writer.generate());
@@ -181,24 +181,24 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	 *
 	 * @return
 	 */
-	private ItemStack getSaplingFromNearbyChest(World worldObj, IFlickerController<?> habitat){
+	private ItemStack getSaplingFromNearbyChest(World world, IFlickerController<?> habitat){
 		for (EnumFacing dir : EnumFacing.values()){
-			IInventory inv = getOffsetInventory(worldObj, habitat, dir);
+			IInventory inv = getOffsetInventory(world, habitat, dir);
 			if (inv == null)
 				continue;
 			int index = InventoryUtilities.getInventorySlotIndexFor(inv, new ItemStack(Blocks.SAPLING, 1, Short.MAX_VALUE));
 			if (index > -1){
 				ItemStack stack = inv.getStackInSlot(index).copy();
-				stack.stackSize = 1;
+				stack.setCount(1);
 				return stack;
 			}
 		}
 		return null;
 	}
 
-	private void deductSaplingFromNearbyChest(World worldObj, IFlickerController<?> habitat){
+	private void deductSaplingFromNearbyChest(World world, IFlickerController<?> habitat){
 		for (EnumFacing dir : EnumFacing.values()){
-			IInventory inv = getOffsetInventory(worldObj, habitat, dir);
+			IInventory inv = getOffsetInventory(world, habitat, dir);
 			if (inv == null)
 				continue;
 			int index = InventoryUtilities.getInventorySlotIndexFor(inv, new ItemStack(Blocks.SAPLING, 1, Short.MAX_VALUE));
@@ -212,9 +212,9 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	/**
 	 * Gets an instance of the adjacent IInventory at direction offset.  Returns null if not found or invalid type adjacent.
 	 */
-	private IInventory getOffsetInventory(World worldObj, IFlickerController<?> habitat, EnumFacing direction){
+	private IInventory getOffsetInventory(World world, IFlickerController<?> habitat, EnumFacing direction){
 		TileEntity te = (TileEntity)habitat;
-		TileEntity adjacent = worldObj.getTileEntity(te.getPos().offset(direction));
+		TileEntity adjacent = world.getTileEntity(te.getPos().offset(direction));
 		if (adjacent != null && adjacent instanceof IInventory)
 			return (IInventory)adjacent;
 		return null;
@@ -231,19 +231,19 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		int radius = 6;
 		
-		dummyPlayer = new DummyEntityPlayer(worldObj);
+		dummyPlayer = new DummyEntityPlayer(world);
 
 		for (int i = -radius_horiz; i <= radius_horiz; ++i){
 			for (int j = -radius_horiz; j <= radius_horiz; ++j){
 				BlockPos newPos = ((TileEntity)habitat).getPos().add(i, 0, j);
-				Block block = worldObj.getBlockState(newPos).getBlock();
+				Block block = world.getBlockState(newPos).getBlock();
 				if (block == Blocks.AIR) continue;
-				if (block.isWood(worldObj, newPos)){
-					if (!worldObj.isRemote)
-						beginTreeFelling(worldObj, newPos);
+				if (block.isWood(world, newPos)){
+					if (!world.isRemote)
+						beginTreeFelling(world, newPos);
 					return true;
 				}
 			}
@@ -252,18 +252,18 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
 
 		boolean hasNatureAugment = Arrays.asList(flickers).contains(Affinity.NATURE);
 		if (hasNatureAugment){
-			plantTree(worldObj, habitat, powered);
+			plantTree(world, habitat, powered);
 		}
 
-		return DoOperation(worldObj, habitat, powered);
+		return DoOperation(world, habitat, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
 	}
 
 	@Override
@@ -298,7 +298,7 @@ public class FlickerOperatorFelledOak extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorFelledOak");
+		return new ResourceLocation("arsmagica2", "flicker_operator_felled_oak");
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class PageStackMap extends CompendiumPage<StackMapWrapper> {
 	@Override
 	protected void renderPage(int posX, int posY, int mouseX, int mouseY) {
 		String loc = element.getLocalizedName();
-		mc.fontRendererObj.drawString(loc, posX + 72 - (mc.fontRendererObj.getStringWidth(loc) / 2), posY, 0x000000);
+		mc.fontRenderer.drawString(loc, posX + 72 - (mc.fontRenderer.getStringWidth(loc) / 2), posY, 0x000000);
 		int index = 0;
 		int offsetX = 16;
 		int offsetY = 24;
@@ -84,7 +84,7 @@ public class PageStackMap extends CompendiumPage<StackMapWrapper> {
 					index++;
 					if (entryPage == page) {
 						mc.getRenderItem().renderItemIntoGUI(entry.getKey(), posX + offsetX, posY + offsetY);
-						mc.fontRendererObj.drawString(entry.getValue().toString(), posX + offsetX + 8 - (mc.fontRendererObj.getStringWidth(entry.getValue().toString()) / 2), posY + offsetY + 18, 0xffffff);
+						mc.fontRenderer.drawString(entry.getValue().toString(), posX + offsetX + 8 - (mc.fontRenderer.getStringWidth(entry.getValue().toString()) / 2), posY + offsetY + 18, 0xffffff);
 					}
 					if (mouseX > posX + offsetX && mouseX < posX + offsetX + 16 && mouseY > posY + offsetY && mouseY < posY + offsetY + 16)
 						tip = entry.getKey();

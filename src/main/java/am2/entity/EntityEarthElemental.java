@@ -82,7 +82,7 @@ public class EntityEarthElemental extends EntityMob{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (!SpawnBlacklists.entityCanSpawnHere(getPosition(), worldObj, this))
+		if (!SpawnBlacklists.entityCanSpawnHere(getPosition(), world, this))
 			return false;
 		return super.getCanSpawnHere();
 	}

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arsmagica2:items/keystoneDoor"
+        "layer0": "arsmagica2:items/keystone_door"
     }
 }

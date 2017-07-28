@@ -39,7 +39,7 @@ public class ContainerFlickerHabitat extends AM2Container{
 	 */
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return this.habitat.isUseableByPlayer(entityplayer);
+		return this.habitat.isUsableByPlayer(entityplayer);
 	}
 
 	@Override

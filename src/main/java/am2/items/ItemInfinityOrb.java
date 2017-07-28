@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -23,10 +24,11 @@ import net.minecraft.world.World;
 public class ItemInfinityOrb extends ItemArsMagica {
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		SkillPoint point = SkillPointRegistry.getPointForTier(itemStackIn.getItemDamage());
 		if (point == null)
-			playerIn.addChatMessage(new TextComponentString("Broken Item : Please use a trash bin."));
+			playerIn.sendMessage(new TextComponentString("Broken Item : Please use a trash bin."));
 		itemStackIn = doGiveSkillPoints(playerIn, itemStackIn, point);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 	}
@@ -48,27 +50,27 @@ public class ItemInfinityOrb extends ItemArsMagica {
 	
 	private ItemStack doGiveSkillPoints(EntityPlayer player, ItemStack stack, SkillPoint type){
 		if (EntityExtension.For(player).getCurrentLevel() > 0){
-			if (!player.worldObj.isRemote)
+			if (!player.world.isRemote)
 				SkillData.For(player).setSkillPoint(type, SkillData.For(player).getSkillPoint(type) + 1);
-			if (player.worldObj.isRemote){
-				player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.infOrb" + type.toString())));
+			if (player.world.isRemote){
+				player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.infOrb" + type.toString())));
 			}
 			if (!player.capabilities.isCreativeMode)
-			stack.stackSize--;
-			if (stack.stackSize < 1){
+			stack.shrink(1);
+			if (stack.getCount() < 1){
 				player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 			}
 		}else{
-			if (player.worldObj.isRemote){
-				int message = player.worldObj.rand.nextInt(10);
-				player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.infOrbFail" + message)));
+			if (player.world.isRemote){
+				int message = player.world.rand.nextInt(10);
+				player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.infOrbFail" + message)));
 			}
 		}
 		return stack;
 	}
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		subItems.add(new ItemStack(itemIn, 1, 0));
 		subItems.add(new ItemStack(itemIn, 1, 1));
 		subItems.add(new ItemStack(itemIn, 1, 2));

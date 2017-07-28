@@ -7,6 +7,7 @@ import java.util.Random;
 import am2.ArsMagica2;
 import am2.defs.ItemDefs;
 import am2.defs.PotionEffectsDefs;
+import am2.entity.EntityBroom;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFadeOut;
 import am2.particles.ParticleFloatUpward;
@@ -84,10 +85,9 @@ public class BlockInvisibleUtility extends BlockAM{
 	}
 	
 	@SuppressWarnings("incomplete-switch")
-	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity){
 
-		if (entity == null || world == null || entity instanceof EntityPlayer) // || entity instanceof EntityBroom
+		if (entity == null || world == null || entity instanceof EntityPlayer || entity instanceof EntityBroom)
 			return;
 
 		EnumInvisibleType meta = getType(state);

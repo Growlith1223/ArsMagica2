@@ -41,10 +41,10 @@ public class FlickerOperatorProgeny extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		HashMap<Class<? extends EntityAnimal>, Integer> entityCount = new HashMap<>();
 		int radius = 8;
-		List<EntityAnimal> creatures = worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(((TileEntity)habitat).getPos()).expandXyz(radius));
+		List<EntityAnimal> creatures = world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(((TileEntity)habitat).getPos()).expandXyz(radius));
 		for (EntityAnimal creature : creatures){
 			Class<? extends EntityAnimal> clazz = creature.getClass();
 			if (!SpawnBlacklists.canProgenyAffect(clazz))
@@ -56,14 +56,14 @@ public class FlickerOperatorProgeny extends AbstractFlickerFunctionality{
 				count++;
 			entityCount.put(clazz, count);
 			if (count == 2){
-				if (worldObj.isRemote){
-					AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "heart", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getX() + 0.7, ((TileEntity)habitat).getPos().getX() + 0.5);
+				if (world.isRemote){
+					AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "heart", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getX() + 0.7, ((TileEntity)habitat).getPos().getX() + 0.5);
 					if (particle != null){
 						particle.setMaxAge(20);
 						particle.AddParticleController(new ParticleFloatUpward(particle, 0, 0.05f, 1, false));
 					}
 				}else{
-					creatures = worldObj.getEntitiesWithinAABB(clazz, new AxisAlignedBB(((TileEntity)habitat).getPos()).expandXyz(radius));
+					creatures = world.getEntitiesWithinAABB(clazz, new AxisAlignedBB(((TileEntity)habitat).getPos()).expandXyz(radius));
 					count = 0;
 					for (EntityAnimal animal : creatures){
 						if (!animal.isChild()){
@@ -82,12 +82,12 @@ public class FlickerOperatorProgeny extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
-		return DoOperation(worldObj, controller, powered);
+	public boolean DoOperation(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
+		return DoOperation(world, controller, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered){
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class FlickerOperatorProgeny extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class FlickerOperatorProgeny extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorProgeny");
+		return new ResourceLocation("arsmagica2", "flicker_operator_progeny");
 	}
 
 	@Override

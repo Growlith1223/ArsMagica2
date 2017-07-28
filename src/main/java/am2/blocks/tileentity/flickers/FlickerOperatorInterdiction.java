@@ -18,8 +18,8 @@ public class FlickerOperatorInterdiction extends FlickerOperatorContainment{
 	public final static FlickerOperatorInterdiction instance = new FlickerOperatorInterdiction();
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		if (worldObj.isRemote)
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		if (world.isRemote)
 			return true;
 
 		boolean hasEnderAugment = false;
@@ -34,7 +34,7 @@ public class FlickerOperatorInterdiction extends FlickerOperatorContainment{
 		int calcRadius = calculateRadius(flickers);
 
 		if (lastRadius != calcRadius){
-			RemoveOperator(worldObj, habitat, powered, flickers);
+			RemoveOperator(world, habitat, powered, flickers);
 		}
 		
 		BlockPos habitatPos = ((TileEntity)habitat).getPos();
@@ -42,22 +42,22 @@ public class FlickerOperatorInterdiction extends FlickerOperatorContainment{
 		for (int i = 0; i < calcRadius * 2 + 1; ++i){
 			if (hasEnderAugment){
 				//-x
-				setUtilityBlock(worldObj, habitatPos.add(-calcRadius, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(-calcRadius, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
 				//+x
-				setUtilityBlock(worldObj, habitatPos.add(calcRadius + 1, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(calcRadius + 1, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
 				//-z
-				setUtilityBlock(worldObj, habitatPos.add(-calcRadius + i, 0, -calcRadius), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(-calcRadius + i, 0, -calcRadius), EnumInvisibleType.COLLISION_ALL);
 				//+z
-				setUtilityBlock(worldObj, habitatPos.add(calcRadius + 1 - i, 0, calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(calcRadius + 1 - i, 0, calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
 			}else{
 				//-x
-				setUtilityBlock(worldObj, habitatPos.add(-calcRadius, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(-calcRadius, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
 				//+x
-				setUtilityBlock(worldObj, habitatPos.add(calcRadius + 1, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(calcRadius + 1, 0, -calcRadius + i), EnumInvisibleType.COLLISION_ALL);
 				//-z
-				setUtilityBlock(worldObj, habitatPos.add(-calcRadius + i, 0, -calcRadius), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(-calcRadius + i, 0, -calcRadius), EnumInvisibleType.COLLISION_ALL);
 				//+z
-				setUtilityBlock(worldObj, habitatPos.add(calcRadius + 1 - i, 0, calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, habitatPos.add(calcRadius + 1 - i, 0, calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
 			}
 		}
 
@@ -67,19 +67,19 @@ public class FlickerOperatorInterdiction extends FlickerOperatorContainment{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 		int radius = 6;
 		BlockPos habitatPos = ((TileEntity)habitat).getPos();
 
 		for (int i = 0; i < radius * 2 + 1; ++i){
 			//-x
-			clearUtilityBlock(worldObj, habitatPos.add(-radius, 0, -radius+i));
+			clearUtilityBlock(world, habitatPos.add(-radius, 0, -radius+i));
 			//+x
-			clearUtilityBlock(worldObj, habitatPos.add(radius+1, 0, -radius+i));
+			clearUtilityBlock(world, habitatPos.add(radius+1, 0, -radius+i));
 			//-z
-			clearUtilityBlock(worldObj, habitatPos.add(-radius+i, 0, -radius));
+			clearUtilityBlock(world, habitatPos.add(-radius+i, 0, -radius));
 			//+z
-			clearUtilityBlock(worldObj, habitatPos.add(radius+1-i, 0, +radius + 1));
+			clearUtilityBlock(world, habitatPos.add(radius+1-i, 0, +radius + 1));
 		}
 	}
 
@@ -101,7 +101,7 @@ public class FlickerOperatorInterdiction extends FlickerOperatorContainment{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorInterdiction");
+		return new ResourceLocation("arsmagica2", "flicker_operator_interdiction");
 	}
 	
 	@Override

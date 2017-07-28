@@ -85,7 +85,7 @@ public abstract class BlockWitchwoodSlabs extends BlockSlab{
 		
 		public static EnumSlabType byMeta(int meta) {
 			meta &= 0x7;
-			meta = MathHelper.clamp_int(meta, 0, values().length - 1);
+			meta = MathHelper.clamp(meta, 0, values().length - 1);
 			return values()[meta];
 		}
 	}

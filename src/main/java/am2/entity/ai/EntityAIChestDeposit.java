@@ -51,7 +51,7 @@ public class EntityAIChestDeposit extends EntityAIBase{
 		if (iLoc == null)
 			return;
 
-		TileEntity te = host.worldObj.getTileEntity(iLoc.toBlockPos());
+		TileEntity te = host.world.getTileEntity(iLoc.toBlockPos());
 		if (te == null || !(te instanceof IInventory)) return;
 
 		if (new AMVector3(host).distanceSqTo(iLoc) > 256){
@@ -71,7 +71,7 @@ public class EntityAIChestDeposit extends EntityAIBase{
 
 			if (depositCounter > 10){
 				ItemStack mergeStack = InventoryUtilities.getFirstStackInInventory(host.getBroomInventory()).copy();
-				int originalSize = mergeStack.stackSize;
+				int originalSize = mergeStack.getCount();
 				if (!InventoryUtilities.mergeIntoInventory(inventory, mergeStack, 1)){
 					if (te instanceof TileEntityChest){
 						TileEntityChest chest = (TileEntityChest)te;
@@ -90,7 +90,7 @@ public class EntityAIChestDeposit extends EntityAIBase{
 						}
 					}
 				}
-				InventoryUtilities.deductFromInventory(host.getBroomInventory(), mergeStack, originalSize - mergeStack.stackSize);
+				InventoryUtilities.deductFromInventory(host.getBroomInventory(), mergeStack, originalSize - mergeStack.getCount());
 			}
 
 			if (depositCounter > 10 && (InventoryUtilities.isInventoryEmpty(host.getBroomInventory()) || !InventoryUtilities.canMergeHappen(host.getBroomInventory(), inventory))){

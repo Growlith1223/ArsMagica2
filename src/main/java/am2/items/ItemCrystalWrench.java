@@ -38,8 +38,8 @@ public class ItemCrystalWrench extends ItemArsMagicaRotated{
 	}
 	
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos,
-			EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos,	EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
+		ItemStack stack = player.getHeldItem(hand);
 		TileEntity te = world.getTileEntity(pos);
 
 		if (!stack.hasTagCompound())
@@ -47,7 +47,7 @@ public class ItemCrystalWrench extends ItemArsMagicaRotated{
 
 		int cMode = getMode(stack);
 		if (te != null && !(te instanceof IPowerNode || te instanceof TileEntityParticleEmitter) && cMode == MODE_DISCONNECT){
-			player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.wrongWrenchMode")));
+			player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.wrongWrenchMode")));
 			return EnumActionResult.FAIL;
 		}
 
@@ -110,7 +110,7 @@ public class ItemCrystalWrench extends ItemArsMagicaRotated{
 		AMVector3 source = AMVector3.readFromNBT(stack.getTagCompound().getCompoundTag(KEY_PAIRLOC));
 		TileEntity sourceTE = world.getTileEntity(source.toBlockPos());
 		if (sourceTE != null && sourceTE instanceof IPowerNode && !world.isRemote){
-			player.addChatMessage(new TextComponentString(PowerNodeRegistry.For(world).tryPairNodes((IPowerNode<?>)sourceTE, (IPowerNode<?>)te)));
+			player.sendMessage(new TextComponentString(PowerNodeRegistry.For(world).tryPairNodes((IPowerNode<?>)sourceTE, (IPowerNode<?>)te)));
 		}else if (world.isRemote){
 			spawnLinkParticles(world, pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ);
 		}
@@ -121,9 +121,9 @@ public class ItemCrystalWrench extends ItemArsMagicaRotated{
 	private void doDisconnect(IPowerNode<?> node, World world, double hitX, double hitY, double hitZ, EntityPlayer player){
 		PowerNodeRegistry.For(world).tryDisconnectAllNodes(node);
 		if (world.isRemote){
-			spawnLinkParticles(player.worldObj, hitX, hitY, hitZ, true);
+			spawnLinkParticles(player.world, hitX, hitY, hitZ, true);
 		}else{
-			player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.disconnectPower")));
+			player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.disconnectPower")));
 		}
 	}
 

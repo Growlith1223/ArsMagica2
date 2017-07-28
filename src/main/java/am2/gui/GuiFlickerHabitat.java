@@ -21,7 +21,7 @@ import net.minecraft.util.text.translation.I18n;
 @SuppressWarnings("deprecation")
 public class GuiFlickerHabitat extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/FlickerHabitat.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/flicker_habitat.png");
 	private final TileEntityFlickerHabitat flickerHabitat;
 
 	/**
@@ -62,7 +62,7 @@ public class GuiFlickerHabitat extends GuiContainer{
 		if (func == null)
 			return;
 
-		String colorCode = Minecraft.getMinecraft().theWorld.isBlockIndirectlyGettingPowered(flickerHabitat.getPos()) > 0 ? "\2474" : "\2472";
+		String colorCode = Minecraft.getMinecraft().world.isBlockIndirectlyGettingPowered(flickerHabitat.getPos()) > 0 ? "\2474" : "\2472";
 
 		int yPos = 5;
 		String curLine = "";
@@ -74,7 +74,7 @@ public class GuiFlickerHabitat extends GuiContainer{
 		}
 
 		drawCenteredString(curLine, yPos);
-		yPos += 12 * (int)Math.ceil(this.fontRendererObj.getStringWidth(curLine) / 170.0f);
+		yPos += 12 * (int)Math.ceil(this.fontRenderer.getStringWidth(curLine) / 170.0f);
 
 		drawCenteredString(
 				String.format(
@@ -100,12 +100,12 @@ public class GuiFlickerHabitat extends GuiContainer{
 	}
 
 	private void drawCenteredString(String s, int yCoord){
-		int w = this.fontRendererObj.getStringWidth(s);
+		int w = this.fontRenderer.getStringWidth(s);
 		int xPos = this.xSize / 2 - w / 2;
 		if (w > 170){
 			xPos = 3;
 		}
-		this.fontRendererObj.drawSplitString(s, xPos, yCoord, 170, 0);
+		this.fontRenderer.drawSplitString(s, xPos, yCoord, 170, 0);
 	}
 
 }

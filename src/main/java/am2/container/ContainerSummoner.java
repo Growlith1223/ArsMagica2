@@ -50,46 +50,46 @@ public class ContainerSummoner extends AM2Container{
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i){
-		ItemStack itemstack = null;
+		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = (Slot)inventorySlots.get(i);
 		if (slot != null && slot.getHasStack()){
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (i < PLAYER_INVENTORY_START){
 				if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_INVENTORY_START && i < PLAYER_ACTION_BAR_START) //from player inventory
 			{
 				if (!mergeSpecialItems(itemstack1, slot)){
 					if (!mergeItemStack(itemstack1, PLAYER_ACTION_BAR_START, PLAYER_ACTION_BAR_END, false)){
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}else{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_ACTION_BAR_START && i < PLAYER_ACTION_BAR_END){
 				if (!mergeSpecialItems(itemstack1, slot)){
 					if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_START - 1, false)){
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}else{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.stackSize == 0){
-				slot.putStack(null);
+			if (itemstack1.getCount() == 0){
+				slot.putStack(ItemStack.EMPTY);
 			}else{
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.stackSize != itemstack.stackSize){
+			if (itemstack1.getCount() != itemstack.getCount()){
 				slot.onSlotChange(itemstack1, itemstack);
 			}else{
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}
 		return itemstack;
@@ -105,8 +105,8 @@ public class ContainerSummoner extends AM2Container{
 
 					focusSlot.putStack(new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
 					focusSlot.onSlotChanged();
-					stack.stackSize--;
-					if (stack.stackSize == 0){
+					stack.shrink(1);
+					if (stack.getCount() == 0){
 						slot.putStack(null);
 						slot.onSlotChanged();
 					}
@@ -123,8 +123,8 @@ public class ContainerSummoner extends AM2Container{
 			}
 			scrollSlot.putStack(castStack);
 			scrollSlot.onSlotChanged();
-			stack.stackSize--;
-			if (stack.stackSize == 0){
+			stack.shrink(1);
+			if (stack.getCount() == 0){
 				slot.putStack(null);
 				slot.onSlotChanged();
 			}
@@ -135,6 +135,6 @@ public class ContainerSummoner extends AM2Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return summoner.isUseableByPlayer(entityplayer);
+		return summoner.isUsableByPlayer(entityplayer);
 	}
 }

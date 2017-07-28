@@ -29,27 +29,27 @@ public class EntityWhirlwind extends EntityFlying{
 
 	@Override
 	public void onCollideWithPlayer(EntityPlayer player){
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			Integer cd = cooldownList.get(player);
 			if (cd == null || cd <= 0){
-				if (!worldObj.isRemote && rand.nextInt(100) < 10){
-					int slot = player.inventory.mainInventory.length + rand.nextInt(4);
+				if (!world.isRemote && rand.nextInt(100) < 10){
+					int slot = player.inventory.mainInventory.size() - 1 + rand.nextInt(4);
 					if (player.inventory.getStackInSlot(slot) != null){
 						ItemStack armorStack = player.inventory.getStackInSlot(slot).copy();
 						if (!player.inventory.addItemStackToInventory(armorStack)){
-							EntityItem item = new EntityItem(worldObj);
+							EntityItem item = new EntityItem(world);
 							item.setPosition(player.posX, player.posY, player.posZ);
 							item.setVelocity(rand.nextDouble() * 0.2 - 0.1, rand.nextDouble() * 0.2 - 0.1, rand.nextDouble() * 0.2 - 0.1);
-							worldObj.spawnEntityInWorld(item);
+							world.spawnEntity(item);
 						}
 						player.inventory.setInventorySlotContents(slot, null);
 					}
 				}
 				player.attackEntityFrom(DamageSources.causeWindDamage(this), 2);
-				float velX = worldObj.rand.nextFloat() * 0.2f;
-				float veZ = worldObj.rand.nextFloat() * 0.2f;
+				float velX = world.rand.nextFloat() * 0.2f;
+				float veZ = world.rand.nextFloat() * 0.2f;
 				player.addVelocity(velX, 0.8, veZ);
-				AMNetHandler.INSTANCE.sendVelocityAddPacket(worldObj, player, velX, 0.8, veZ);
+				AMNetHandler.INSTANCE.sendVelocityAddPacket(world, player, velX, 0.8, veZ);
 				player.fallDistance = 0;
 				setCooldownFor(player);
 			}
@@ -66,9 +66,9 @@ public class EntityWhirlwind extends EntityFlying{
 		if (currentTarget == null || new AMVector3(this).distanceSqTo(currentTarget) < 2)
 			generateNewTarget();
 
-		nav.tryMoveFlying(worldObj, this);
+		nav.tryMoveFlying(world, this);
 
-		if (this.ticksExisted > 140 && !this.worldObj.isRemote)
+		if (this.ticksExisted > 140 && !this.world.isRemote)
 			this.setDead();
 
 
@@ -79,7 +79,7 @@ public class EntityWhirlwind extends EntityFlying{
 
 	private void generateNewTarget(){
 		EntityPlayer closest = null;
-		for (Object player : this.worldObj.playerEntities){
+		for (Object player : this.world.playerEntities){
 			if (closest == null || ((EntityPlayer)player).getDistanceSqToEntity(this) < this.getDistanceSqToEntity(closest)){
 				closest = (EntityPlayer)player;
 			}
@@ -87,9 +87,9 @@ public class EntityWhirlwind extends EntityFlying{
 		if (closest != null && this.getDistanceSqToEntity(closest) < 64D)
 			currentTarget = new AMVector3(closest);
 		else
-			currentTarget = new AMVector3(this).add(new AMVector3(worldObj.rand.nextInt(10) - 5, 0, worldObj.rand.nextInt(10) - 5));
+			currentTarget = new AMVector3(this).add(new AMVector3(world.rand.nextInt(10) - 5, 0, world.rand.nextInt(10) - 5));
 
-		nav.SetWaypoint(worldObj, currentTarget.toBlockPos(), this);
+		nav.SetWaypoint(world, currentTarget.toBlockPos(), this);
 	}
 
 	private void setCooldownFor(EntityPlayer player){

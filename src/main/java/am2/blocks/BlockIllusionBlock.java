@@ -81,7 +81,6 @@ public class BlockIllusionBlock extends BlockAMContainer{
 		return EnumBlockRenderType.INVISIBLE;
 	}
 
-	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
 		if (entityIn instanceof EntityLivingBase && ((EntityLivingBase)entityIn).isPotionActive(PotionEffectsDefs.trueSight))
 			return;
@@ -119,7 +118,6 @@ public class BlockIllusionBlock extends BlockAMContainer{
 		return 4;
 	}
 	
-	@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
 		list.add(new ItemStack(this, 1, 0));
 		list.add(new ItemStack(this, 1, 1));

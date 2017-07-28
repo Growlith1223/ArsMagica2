@@ -84,7 +84,7 @@ public class SpellRenderer implements ItemMeshDefinition {
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack) {
-			return locations.get(MathHelper.clamp_int(stack.getItemDamage(), 0, locations.size() - 1));
+			return locations.get(MathHelper.clamp(stack.getItemDamage(), 0, locations.size() - 1));
 	}
 
 }

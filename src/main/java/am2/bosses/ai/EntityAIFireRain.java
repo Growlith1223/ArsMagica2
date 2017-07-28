@@ -44,14 +44,14 @@ public class EntityAIFireRain extends EntityAIBase{
 
 		boltTicks++;
 		if (boltTicks == 12){
-			if (!host.worldObj.isRemote){
-				EntitySpellEffect fire = new EntitySpellEffect(host.worldObj);
+			if (!host.world.isRemote){
+				EntitySpellEffect fire = new EntitySpellEffect(host.world);
 				fire.setPosition(host.posX, host.posY, host.posZ);
 				fire.setTicksToExist(300);
 				fire.setRainOfFire(true);
 				fire.setRadius(10);
 				fire.SetCasterAndStack(host, null);
-				host.worldObj.spawnEntityInWorld(fire);
+				host.world.spawnEntity(fire);
 			}
 		}
 		if (boltTicks >= 23){

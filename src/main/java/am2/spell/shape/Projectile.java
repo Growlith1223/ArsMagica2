@@ -74,7 +74,7 @@ public class Projectile extends SpellShape {
 			projectile.setSpell(stack);
 			//if (AMParticleIcons.instance != null)
 			projectile.setIcon(AMParticleDefs.getParticleForAffinity(AffinityShiftUtils.getMainShiftForStack(stack)));
-			world.spawnEntityInWorld(projectile);
+			world.spawnEntity(projectile);
 		}
 		return SpellCastResult.SUCCESS;
 	}

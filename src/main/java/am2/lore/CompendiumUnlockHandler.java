@@ -42,7 +42,7 @@ public class CompendiumUnlockHandler{
 	 */
 	@SubscribeEvent
 	public void onPlayerMagicLevelChange(PlayerMagicLevelChangeEvent event){
-		if (event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityPlayer){
+		if (event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer){
 			IArcaneCompendium instance = ArcaneCompendium.For(event.getEntityPlayer());
 			if (event.getLevel() >= 5){
 				//ArcaneCompendium.instance.unlockEntry("dungeonsAndExploring");
@@ -84,7 +84,7 @@ public class CompendiumUnlockHandler{
 	 */
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event){
-		if (event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+		if (event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
 			if (event.getEntity() instanceof EntityEnderman){
 				ArcaneCompendium.For((EntityPlayer)event.getSource().getEntity()).unlockEntry("blockastralbarrier");
 			}else{
@@ -137,7 +137,7 @@ public class CompendiumUnlockHandler{
 	 */
 	@SubscribeEvent
 	public void onCrafting(ItemCraftedEvent event){
-		if (event.player.worldObj.isRemote){
+		if (event.player.world.isRemote){
 			IArcaneCompendium instance = ArcaneCompendium.For(event.player);
 			instance.unlockRelatedItems(event.crafting);
 		}

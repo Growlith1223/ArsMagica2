@@ -5,6 +5,7 @@ import am2.defs.ItemDefs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -25,7 +26,9 @@ public class ItemBoundShield extends ItemShield implements IBoundItem {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
-		item.setItem(ItemDefs.spell);
+		NBTTagCompound nbt = item.getTagCompound();
+		item = new ItemStack(ItemDefs.spell);
+		item.setTagCompound(nbt);
 		return false;
 	}
 

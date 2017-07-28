@@ -5,6 +5,7 @@ import am2.api.math.AMVector2;
 import am2.defs.PotionEffectsDefs;
 import am2.extensions.EntityExtension;
 import am2.utils.EntityUtils;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,11 +36,11 @@ public class ShrinkHandler{
 
 		boolean shrunk = exProps.isShrunk();
 
-		if (!player.worldObj.isRemote && shrunk && !player.isPotionActive(PotionEffectsDefs.shrink)){
+		if (!player.world.isRemote && shrunk && !player.isPotionActive(PotionEffectsDefs.shrink)){
 			exProps.setShrunk(false);
 			shrunk = false;
 			//player.yOffset = (float)exProps.getOriginalSize().y * 0.9f;
-		}else if (!player.worldObj.isRemote && !shrunk && player.isPotionActive(PotionEffectsDefs.shrink)){
+		}else if (!player.world.isRemote && !shrunk && player.isPotionActive(PotionEffectsDefs.shrink)){
 			exProps.setShrunk(true);
 			shrunk = true;
 			//player.yOffset = 0.0F;
@@ -71,13 +72,13 @@ public class ShrinkHandler{
 				//player.eyeHeight = player.getDefaultEyeHeight();
 				//player.yOffset = 0.0f;
 				if (exProps.getIsFlipped()){
-					event.getEntityLiving().moveEntity(0, -1, 0);
+					event.getEntityLiving().move(MoverType.SELF, 0.0, -1.0, 0.0);
 				}
 			}
 		}
 
 		// update Y offset
-		if (player.worldObj.isRemote && exProps.getPrevShrinkPct() != exProps.getShrinkPct()){
+		if (player.world.isRemote && exProps.getPrevShrinkPct() != exProps.getShrinkPct()){
 			// Vanilla player is 1.8f height with 1.62f yOffset => 0.9f
 			//player.yOffset = (float)exProps.getOriginalSize().y * 0.9f * (1f - 0.5f * exProps.getShrinkPct());
 		}

@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
     "textures": {
-        "all": "arsmagica2:blocks/decoBlockFrame"
+        "all": "arsmagica2:blocks/deco_block_frame"
     }
 }

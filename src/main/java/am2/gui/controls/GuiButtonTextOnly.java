@@ -20,7 +20,7 @@ public class GuiButtonTextOnly extends GuiButtonVariableDims {
 				textColor = 0x6600FF;
 			}
 			GlStateManager.disableAlpha();
-			par1Minecraft.fontRendererObj.drawString(this.displayString, xPosition, yPosition, textColor);
+			par1Minecraft.fontRenderer.drawString(this.displayString, xPosition, yPosition, textColor);
 		}
 	}
 

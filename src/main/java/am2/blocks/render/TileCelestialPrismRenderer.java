@@ -68,7 +68,7 @@ public class TileCelestialPrismRenderer extends TileEntitySpecialRenderer<TileEn
 		if (x != 0 || y != 0 || z != 0) {
 			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(te.getWorld(), getBakedModel(), te.getWorld().getBlockState(te.getPos()), te.getPos(), tessellator.getBuffer(), false);
 		} else {
-			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(Minecraft.getMinecraft().theWorld, getBakedModel(), BlockDefs.celestialPrism.getDefaultState(), BlockPos.ORIGIN, tessellator.getBuffer(), false);
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(Minecraft.getMinecraft().world, getBakedModel(), BlockDefs.celestialPrism.getDefaultState(), BlockPos.ORIGIN, tessellator.getBuffer(), false);
 		}
 		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();

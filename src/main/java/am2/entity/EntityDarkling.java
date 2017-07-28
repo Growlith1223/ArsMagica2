@@ -79,7 +79,7 @@ public class EntityDarkling extends EntityMob{
 	}
 	
 	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		return EnumActionResult.PASS;
 	}
 }

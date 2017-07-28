@@ -111,7 +111,7 @@ public class NBTUtils {
 		ItemStack[] array = new ItemStack[list.tagCount()];
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound tmp = list.getCompoundTagAt(i);
-			array[tmp.getInteger("ID")] = ItemStack.loadItemStackFromNBT(tmp);
+			array[tmp.getInteger("ID")] = new ItemStack(tmp);
 		}
 		return array;
 	}

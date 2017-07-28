@@ -90,15 +90,15 @@ public class EntityAILightningRod extends AIAnimation{
 			guardian.getLookHelper().setLookPositionWithEntity(target, 30, 30);
 
 			if (ticks > 85 && ticks <= 150){
-				if (!guardian.worldObj.isRemote && ticks % 20 == 0)
-					guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_LIGHTNING_ROD_1, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
+				if (!guardian.world.isRemote && ticks % 20 == 0)
+					guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_LIGHTNING_ROD_1, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
 			}
 
 			if (ticks > 25 && ticks <= 85){
 				forcePosition(target, startPos.x, startPos.y + ((ticks - 25) * 0.1), startPos.z);
 				EntityExtension.For(target).setDisableGravity(true);
-				if (!guardian.worldObj.isRemote && ticks == 30)
-					guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_LIGHTNING_ROD_START, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
+				if (!guardian.world.isRemote && ticks == 30)
+					guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_LIGHTNING_ROD_START, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
 			}else if (ticks > 85 && ticks <= 105){
 				forcePosition(target, startPos.x, startPos.y + 6, startPos.z);
 			}else if (ticks > 105 && ticks <= 150){
@@ -106,9 +106,9 @@ public class EntityAILightningRod extends AIAnimation{
 				if (ticks > 115){
 					target.attackEntityFrom(DamageSources.causeLightningDamage(guardian), 3);
 				}
-				ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(guardian.worldObj, guardian, guardian, target, 0);
-				if (!guardian.worldObj.isRemote && ticks % 20 == 0)
-					guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_IDLE, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
+				ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(guardian.world, guardian, guardian, target, 0);
+				if (!guardian.world.isRemote && ticks % 20 == 0)
+					guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_IDLE, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
 			}else if (ticks > 150 && ticks <= 158){
 				if (!hasThrown){
 					target.addVelocity(0, -3, 0);
@@ -119,9 +119,9 @@ public class EntityAILightningRod extends AIAnimation{
 			}else if (ticks > 165){
 				if (!hasBolted){
 					hasBolted = true;
-					EntityLightningBolt bolt = new EntityLightningBolt(guardian.worldObj, target.posX, target.posY, target.posZ, false);
+					EntityLightningBolt bolt = new EntityLightningBolt(guardian.world, target.posX, target.posY, target.posZ, false);
 					bolt.setPosition(target.posX, target.posY, target.posZ);
-					guardian.worldObj.addWeatherEffect(bolt);
+					guardian.world.addWeatherEffect(bolt);
 				}
 			}
 		}

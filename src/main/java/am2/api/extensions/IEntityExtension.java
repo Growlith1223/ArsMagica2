@@ -164,7 +164,7 @@ public interface IEntityExtension {
 			
 			NBTTagCompound contingencyTag = NBTUtils.addTag(am2tag, "Contingency");
 			if (!contingencyTag.hasKey("Type") || !contingencyTag.getString("Type").equals("null")) {
-				instance.setContingency(ContingencyType.fromName(contingencyTag.getString("Type")), ItemStack.loadItemStackFromNBT(contingencyTag.getCompoundTag("Stack")));
+				instance.setContingency(ContingencyType.fromName(contingencyTag.getString("Type")), new ItemStack(contingencyTag.getCompoundTag("Stack")));
 			} else {
 				instance.setContingency(ContingencyType.NULL, null);
 			}

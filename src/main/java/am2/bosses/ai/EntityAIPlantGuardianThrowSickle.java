@@ -50,11 +50,11 @@ public class EntityAIPlantGuardianThrowSickle extends EntityAIBase{
 
 			if (host.getTicksInCurrentAction() == 12){
 				host.faceEntity(target, 180, 180);
-				if (!host.worldObj.isRemote){
-					EntityThrownSickle projectile = new EntityThrownSickle(host.worldObj, host, 2.0f);
+				if (!host.world.isRemote){
+					EntityThrownSickle projectile = new EntityThrownSickle(host.world, host, 2.0f);
 					projectile.setThrowingEntity(host);
 					projectile.setProjectileSpeed(2.0);
-					host.worldObj.spawnEntityInWorld(projectile);
+					host.world.spawnEntity(projectile);
 				}
 			}
 		}

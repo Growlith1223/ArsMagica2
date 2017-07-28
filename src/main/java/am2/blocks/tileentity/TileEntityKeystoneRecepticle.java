@@ -40,6 +40,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +48,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements IInventory, IMultiblockStructureController, IKeystoneLockable<TileEntityKeystoneRecepticle>{
+public class TileEntityKeystoneRecepticle extends TileEntityAMPoweredContainer implements IInventory, IMultiblockStructureController, IKeystoneLockable<TileEntityKeystoneRecepticle>{
 
 	private boolean isActive;
 	private long key;
@@ -58,12 +59,9 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	public static int keystoneSlot = 0;
 
-	private ItemStack[] inventory;
-
 	public TileEntityKeystoneRecepticle(){
 		super(250000);
 		this.isActive = false;
-		inventory = new ItemStack[getSizeInventory()];
 		initMultiblock();
 	}
 
@@ -153,17 +151,17 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	}
 
 	public void onPlaced(){
-		if (!worldObj.isRemote){
-			AMChunkLoader.INSTANCE.requestStaticChunkLoad(this.getClass(), this.pos, this.worldObj);
+		if (!world.isRemote){
+			AMChunkLoader.INSTANCE.requestStaticChunkLoad(this.getClass(), this.pos, this.world);
 		}
 	}
 
 	@Override
 	public void invalidate(){
-		ArsMagica2.proxy.blocks.removeKeystonePortal(pos, worldObj.provider.getDimension());
+		ArsMagica2.proxy.blocks.removeKeystonePortal(pos, world.provider.getDimension());
 
-		if (!worldObj.isRemote){
-			AMChunkLoader.INSTANCE.releaseStaticChunkLoad(this.getClass(), pos, this.worldObj);
+		if (!world.isRemote){
+			AMChunkLoader.INSTANCE.releaseStaticChunkLoad(this.getClass(), pos, this.world);
 		}
 
 		super.invalidate();
@@ -173,14 +171,14 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 		this.isActive = true;
 		this.key = key;
 
-		if (!this.worldObj.isRemote){
-			for (Object player : this.worldObj.playerEntities){
+		if (!this.world.isRemote){
+			for (Object player : this.world.playerEntities){
 				if (player instanceof EntityPlayerMP && new AMVector3((EntityPlayerMP)player).distanceSqTo(new AMVector3(this)) <= 4096){
 					((EntityPlayerMP)player).connection.sendPacket(getUpdatePacket());
 				}
 			}
 		}else{
-			worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), AMSounds.GATEWAY_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), AMSounds.GATEWAY_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
 		}
 	}
 
@@ -190,12 +188,12 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	@Override
 	public void update(){
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 		super.update();
 
 		AxisAlignedBB bb = new AxisAlignedBB(pos.getX() + 0.3, pos.getY() - 3, pos.getZ() + 0.3, pos.getX() + 0.7, pos.getY(), pos.getZ() + 0.7);
-		List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, bb);
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bb);
 
 		if (this.isActive){
 			surroundingCheckTicks--;
@@ -207,17 +205,17 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 				doTeleport(entities.get(0));
 			}
 		}else{
-			if (entities.size() == 1 && worldObj.canBlockSeeSky(pos)){
+			if (entities.size() == 1 && world.canBlockSeeSky(pos)){
 				Entity entity = entities.get(0);
 				if (entity instanceof EntityPlayer){
 					EntityPlayer player = (EntityPlayer)entity;
 					if (player.isPotionActive(PotionEffectsDefs.haste) && player.isPotionActive(Potion.getPotionFromResourceLocation("speed")) && player.isSprinting()){
-						//if (worldObj.isRemote)
+						//if (world.isRemote)
 						//player.addStat(ArsMagica2.achievements.EightyEightMilesPerHour, 1);
 						this.key = 0;
-						if (!worldObj.isRemote){
-							EntityLightningBolt elb = new EntityLightningBolt(worldObj, pos.getX(), pos.getY(), pos.getZ(), false);
-							worldObj.spawnEntityInWorld(elb);
+						if (!world.isRemote){
+							EntityLightningBolt elb = new EntityLightningBolt(world, pos.getX(), pos.getY(), pos.getZ(), false);
+							world.spawnEntity(elb);
 						}
 						doTeleport(player);
 					}
@@ -229,11 +227,11 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	public boolean canActivate(){
 		boolean allGood = true;
-		allGood &= worldObj.isAirBlock(pos.down());
-		allGood &= worldObj.isAirBlock(pos.down(2));
-		allGood &= worldObj.isAirBlock(pos.down(3));
+		allGood &= world.isAirBlock(pos.down());
+		allGood &= world.isAirBlock(pos.down(2));
+		allGood &= world.isAirBlock(pos.down(3));
 		allGood &= checkStructure();
-		allGood &= PowerNodeRegistry.For(this.worldObj).checkPower(this);
+		allGood &= PowerNodeRegistry.For(this.world).checkPower(this);
 		allGood &= !this.isActive;
 		return allGood;
 	}
@@ -247,14 +245,14 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	private boolean checkStructure(){
 		boolean remainActive = true;
 
-		switch (worldObj.getBlockState(pos).getValue(BlockKeystoneReceptacle.FACING)){
+		switch (world.getBlockState(pos).getValue(BlockKeystoneReceptacle.FACING)){
 		case NORTH:
 		case SOUTH:
-			remainActive &= secondary.matches(worldObj, pos);
+			remainActive &= secondary.matches(world, pos);
 			break;
 		case EAST:
 		default:
-			remainActive &= primary.matches(worldObj, pos);
+			remainActive &= primary.matches(world, pos);
 			break;
 		}
 		return remainActive;
@@ -262,15 +260,15 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	public void deactivate(){
 		this.isActive = false;
-		if (!this.worldObj.isRemote){
-			worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		if (!this.world.isRemote){
+			world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 
 	private void doTeleport(Entity entity){
 		deactivate();
 
-		AMVector3 newLocation = ArsMagica2.proxy.blocks.getNextKeystonePortalLocation(this.worldObj, pos, false, this.key);
+		AMVector3 newLocation = ArsMagica2.proxy.blocks.getNextKeystonePortalLocation(this.world, pos, false, this.key);
 		AMVector3 myLocation = new AMVector3(pos);
 
 		double distance = myLocation.distanceTo(newLocation);
@@ -280,11 +278,11 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 		if (ArsMagica2.config.getHazardousGateways()){
 			//uh-oh!  Not enough power!  The teleporter will still send you though, but I wonder where...
-			float charge = PowerNodeRegistry.For(this.worldObj).getHighestPower(this);
+			float charge = PowerNodeRegistry.For(this.world).getHighestPower(this);
 			if (charge < essenceCost){
 				essenceCost = charge;
 				//get the distance that our charge *will* take us towards the next point
-				double distanceWeCanGo = MathHelper.sqrt_double(charge / 0.00175);
+				double distanceWeCanGo = MathHelper.sqrt(charge / 0.00175);
 				//get the angle between the 2 vectors
 				double deltaZ = newLocation.z - myLocation.z;
 				double deltaX = newLocation.x - myLocation.x;
@@ -294,14 +292,14 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 				double newZ = myLocation.z + (Math.sin(angleH) * distanceWeCanGo);
 				double newY = myLocation.y;
 
-				while (worldObj.isAirBlock(new BlockPos(newX, newY, newZ))){
+				while (world.isAirBlock(new BlockPos(newX, newY, newZ))){
 					newY++;
 				}
 
 				newLocation = new AMVector3(newX, newY, newZ);
 			}
 		}else{
-			this.worldObj.playSound(newLocation.x, newLocation.y, newLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
+			this.world.playSound(newLocation.x, newLocation.y, newLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
 			return;
 		}
 
@@ -323,10 +321,10 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 		}
 		entity.setPositionAndRotation(newLocation.x + 0.5, newLocation.y - entity.height, newLocation.z + 0.5, newRotation, entity.rotationPitch);
 
-		PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerNodeRegistry.For(this.worldObj).getHighestPowerType(this), essenceCost);
+		PowerNodeRegistry.For(this.world).consumePower(this, PowerNodeRegistry.For(this.world).getHighestPowerType(this), essenceCost);
 
-		this.worldObj.playSound(myLocation.x, myLocation.y, myLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
-		this.worldObj.playSound(newLocation.x, newLocation.y, newLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
+		this.world.playSound(myLocation.x, myLocation.y, myLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
+		this.world.playSound(newLocation.x, newLocation.y, newLocation.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F, true);
 	}
 
 	@Override
@@ -337,9 +335,9 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	@Override
 	public ItemStack[] getRunesInKey(){
 		ItemStack[] runes = new ItemStack[3];
-		runes[0] = inventory[0];
-		runes[1] = inventory[1];
-		runes[2] = inventory[2];
+		runes[0] = inventory.get(0);
+		runes[1] = inventory.get(1);
+		runes[2] = inventory.get(2);
 		return runes;
 	}
 
@@ -354,23 +352,16 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot){
-		if (slot >= inventory.length)
-			return null;
-		return inventory[slot];
-	}
-
-	@Override
 	public ItemStack decrStackSize(int i, int j){
-		if (inventory[i] != null){
-			if (inventory[i].stackSize <= j){
-				ItemStack itemstack = inventory[i];
-				inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			if (inventory.get(i).getCount() <= j){
+				ItemStack itemstack = inventory.get(i);
+				inventory.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = inventory[i].splitStack(j);
-			if (inventory[i].stackSize == 0){
-				inventory[i] = null;
+			ItemStack itemstack1 = inventory.get(i).splitStack(j);
+			if (inventory.get(i).getCount() == 0){
+				inventory.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
@@ -380,9 +371,9 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventory[i] != null){
-			ItemStack itemstack = inventory[i];
-			inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			ItemStack itemstack = inventory.get(i);
+			inventory.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
 			return null;
@@ -391,9 +382,9 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inventory[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		inventory.set(i, itemstack);
+		if (itemstack != null && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -408,8 +399,8 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
@@ -427,13 +418,13 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	public void readFromNBT(NBTTagCompound nbttagcompound){
 		super.readFromNBT(nbttagcompound);
 		NBTTagList nbttaglist = nbttagcompound.getTagList("KeystoneRecepticleInventory", Constants.NBT.TAG_COMPOUND);
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < inventory.length){
-				inventory[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inventory.size()){
+				inventory.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 		ArsMagica2.proxy.blocks.registerKeystonePortal(pos, nbttagcompound.getInteger("keystone_receptacle_dimension_id"));
@@ -445,17 +436,17 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound){
 		super.writeToNBT(nbttagcompound);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inventory.length; i++){
-			if (inventory[i] != null){
+		for (int i = 0; i < inventory.size(); i++){
+			if (!inventory.get(i).isEmpty()){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				inventory[i].writeToNBT(nbttagcompound1);
+				inventory.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
 
-		nbttagcompound.setInteger("keystone_receptacle_dimension_id", worldObj.provider.getDimension());
+		nbttagcompound.setInteger("keystone_receptacle_dimension_id", world.provider.getDimension());
 		nbttagcompound.setTag("KeystoneRecepticleInventory", nbttaglist);
 		nbttagcompound.setBoolean("isActive", this.isActive);
 		return nbttagcompound;
@@ -516,31 +507,46 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
+	}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return null;
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return false;
 	}
 }

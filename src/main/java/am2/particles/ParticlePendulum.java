@@ -27,16 +27,18 @@ public class ParticlePendulum extends ParticleController{
 	}
 
 	private void generateNewAngle(){
-		angle = Math.toRadians(particle.getWorldObj().rand.nextInt(360));
+		angle = Math.toRadians(particle.getworld().rand.nextInt(360));
 	}
 
 	@Override
 	public void doUpdate(){
 
-		if (stopOnCollide && (particle.isCollided())){
+		
+		//TODO: Find out how to deal with collisions now.
+		/*if (stopOnCollide && (particle.isCollided())){
 			this.finish();
 			return;
-		}
+		}*/
 
 		double deltaX = Math.sin(angle) * amplitude * Math.sin(particle.GetParticleAge() * speed);
 		double deltaZ = Math.cos(angle) * amplitude * Math.sin(particle.GetParticleAge() * speed);
@@ -48,7 +50,7 @@ public class ParticlePendulum extends ParticleController{
 		lastDeltaX = deltaX;
 		lastDeltaZ = deltaZ;
 
-		particle.moveEntity(posX, posY, posZ);
+		particle.move(posX, posY, posZ);
 	}
 
 	@Override

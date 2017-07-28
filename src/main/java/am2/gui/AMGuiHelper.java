@@ -137,7 +137,7 @@ public class AMGuiHelper{
 	public void tick(){
 
 		if (dummyItem == null){
-			dummyItem = new EntityItem(Minecraft.getMinecraft().theWorld);
+			dummyItem = new EntityItem(Minecraft.getMinecraft().world);
 		}else{
 			dummyItem.rotationYaw += 0.1f;
 			ReflectionHelper.setPrivateValue(EntityItem.class, dummyItem, (Integer)ReflectionHelper.getPrivateValue(EntityItem.class, dummyItem, "age", "field_70292_b", "d") + 1, "age", "field_70292_b", "d");
@@ -665,13 +665,13 @@ public class AMGuiHelper{
 	}
 
 	public static void flipView(float f){
-		float flip = EntityExtension.For(Minecraft.getMinecraft().thePlayer).getFlipRotation();
-		float lastFlip = EntityExtension.For(Minecraft.getMinecraft().thePlayer).getPrevFlipRotation();
+		float flip = EntityExtension.For(Minecraft.getMinecraft().player).getFlipRotation();
+		float lastFlip = EntityExtension.For(Minecraft.getMinecraft().player).getPrevFlipRotation();
 		GlStateManager.rotate(lastFlip + (flip - lastFlip) * f, 0, 0, 1);
 	}
 
 	public static void shiftView(float f){
-		EntityPlayer entity = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer entity = Minecraft.getMinecraft().player;
 //		int viewSet = Minecraft.getMinecraft().gameSettings.thirdPersonView;
 //		if (viewSet == 0){
 //			EntityExtension exProps = EntityExtension.For(entity);
@@ -693,8 +693,8 @@ public class AMGuiHelper{
 
 	public static void overrideKeyboardInput(){
 		Minecraft mc = Minecraft.getMinecraft();
-		if (mc.thePlayer != null && mc.theWorld != null && EntityExtension.For(mc.thePlayer).shouldReverseInput()){
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		if (mc.player != null && mc.world != null && EntityExtension.For(mc.player).shouldReverseInput()){
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			if (mc.gameSettings.keyBindLeft.isKeyDown()){
 				LogHelper.debug("Override Left");
 				player.movementInput.moveStrafe -= 2;
@@ -705,7 +705,7 @@ public class AMGuiHelper{
 				player.movementInput.moveStrafe += 2;
 			}
 
-			if (mc.thePlayer.isPotionActive(PotionEffectsDefs.scrambleSynapses)){
+			if (mc.player.isPotionActive(PotionEffectsDefs.scrambleSynapses)){
 				if (mc.gameSettings.keyBindForward.isKeyDown()){
 					player.movementInput.moveForward -= 2;
 				}
@@ -719,10 +719,10 @@ public class AMGuiHelper{
 	public static boolean overrideMouseInput(EntityRenderer renderer, float f, boolean b){
 		Minecraft mc = Minecraft.getMinecraft();
 
-		if (!mc.inGameHasFocus || mc.thePlayer == null || mc.theWorld == null)
+		if (!mc.inGameHasFocus || mc.player == null || mc.world == null)
 			return true;
 
-		if (!mc.thePlayer.isPotionActive(PotionEffectsDefs.scrambleSynapses)){
+		if (!mc.player.isPotionActive(PotionEffectsDefs.scrambleSynapses)){
 			return true;
 		}
 
@@ -756,11 +756,8 @@ public class AMGuiHelper{
 			f3 = (Float)ReflectionHelper.getPrivateValue(EntityRenderer.class, renderer, scfx) * f5;
 			//f4 = renderer.smoothCamFilterY * f5;
 			f4 = (Float)ReflectionHelper.getPrivateValue(EntityRenderer.class, renderer, scfy) * f5;
-			mc.thePlayer.setAngles(-f3, f4 * (float)b0);
-		}else{
-			mc.thePlayer.setAngles(-f3, f4 * (float)b0);
 		}
-
+			mc.player.setLocationAndAngles(mc.player.posX, mc.player.posY, mc.player.posZ, -f3, f4 * (float)b0);
 		return false;
 	}
 	

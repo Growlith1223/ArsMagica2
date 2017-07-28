@@ -13,14 +13,14 @@ public class PageText extends CompendiumPage<String> {
 	@Override
 	protected void renderPage(int posX, int posY, int mouseX, int mouseY) {
 //		int y_start_title = posY + 50;
-//		int x_start_title = posX + 100 - (mc.fontRendererObj.getStringWidth(element) / 2);
+//		int x_start_title = posX + 100 - (mc.fontRenderer.getStringWidth(element) / 2);
 //		int x_start_line = posX + 35;
 //		int y_start_line = posY + 50;
 //		if (page > numPages) page = numPages;
 //
 //		if (page == 0)
-//			fontRendererObj.drawString(entrySkill != null ? entrySkill.getName() : entry.getName(), x_start_title, y_start_title, 0x000000);
-		AMGuiHelper.drawCompendiumText(I18n.translateToLocal(element), posX, posY, 140, 0x000000, mc.fontRendererObj);
+//			fontRenderer.drawString(entrySkill != null ? entrySkill.getName() : entry.getName(), x_start_title, y_start_title, 0x000000);
+		AMGuiHelper.drawCompendiumText(I18n.translateToLocal(element), posX, posY, 140, 0x000000, mc.fontRenderer);
 	}
 
 }

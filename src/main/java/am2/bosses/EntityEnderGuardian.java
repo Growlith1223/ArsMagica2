@@ -104,7 +104,7 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 		switch (getCurrentAction()){
 		case LONG_CASTING: //roar
 			if (this.getTicksInCurrentAction() == 32)
-				worldObj.playSound(posX, posY, posZ, AMSounds.ENDER_GUARDIAN_ROAR, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+				world.playSound(posX, posY, posZ, AMSounds.ENDER_GUARDIAN_ROAR, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 			break;
 		case CHARGE:
 			if (this.getTicksInCurrentAction() == 0)
@@ -114,7 +114,7 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 		}
 
 		if (shouldFlapWings() && wingFlapTime % (50 * this.getWingFlapSpeed()) == 0){
-			worldObj.playSound(posX, posY, posZ, AMSounds.ENDER_GUARDIAN_FLAP, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+			world.playSound(posX, posY, posZ, AMSounds.ENDER_GUARDIAN_FLAP, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 	@Override
 	public void setAttackTarget(EntityLivingBase par1EntityLivingBase){
 		super.setAttackTarget(par1EntityLivingBase);
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			if (par1EntityLivingBase != null)
 				this.dataManager.set(ATTACK_TARGET, par1EntityLivingBase.getEntityId());
 			else
@@ -146,6 +146,8 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 		
 		//Thanks but I'm not reading all the code, just fixing.
 		
+		//I actually am a cheater, but got here by accident.
+		
 		if (par1DamageSource.getSourceOfDamage() instanceof EntityEnderman){
 			((EntityEnderman)par1DamageSource.getSourceOfDamage()).attackEntityFrom(DamageSources.wtfBoom, 5000);
 			this.heal(10);
@@ -156,7 +158,7 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 			if (spawn != null){
 				this.setPosition(spawn.x, spawn.y, spawn.z);
 				this.setCurrentAction(BossActions.IDLE);
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 					ArsMagica2.proxy.addDeferredTargetSet(this, null);
 			}else{
 				this.setDead();
@@ -166,7 +168,7 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 
 		ticksSinceLastAttack = 0;
 
-		if (!worldObj.isRemote && par1DamageSource.getSourceOfDamage() != null && par1DamageSource.getSourceOfDamage() instanceof EntityPlayer){
+		if (!world.isRemote && par1DamageSource.getSourceOfDamage() != null && par1DamageSource.getSourceOfDamage() instanceof EntityPlayer){
 			if (par1DamageSource.damageType == this.lastDamageType){
 				hitCount++;
 				if (hitCount > 5)
@@ -183,10 +185,10 @@ public class EntityEnderGuardian extends AM2Boss implements IAnimatedEntity{
 
 	@Override
 	public EntityLivingBase getAttackTarget(){
-		if (!worldObj.isRemote)
+		if (!world.isRemote)
 			return super.getAttackTarget();
 		else
-			return (EntityLivingBase)worldObj.getEntityByID(this.dataManager.get(ATTACK_TARGET));
+			return (EntityLivingBase)world.getEntityByID(this.dataManager.get(ATTACK_TARGET));
 	}
 
 	@Override

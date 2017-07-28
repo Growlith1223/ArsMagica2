@@ -2,10 +2,12 @@ package am2.container;
 
 import java.util.EnumSet;
 
+import am2.LogHelper;
 import am2.api.spell.AbstractSpellPart;
 import am2.api.spell.SpellModifier;
 import am2.api.spell.SpellModifiers;
 import am2.blocks.tileentity.TileEntityInscriptionTable;
+import am2.container.slot.AM2Container;
 import am2.container.slot.SlotInscriptionTable;
 import am2.spell.SpellValidator;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,14 +18,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWritableBook;
 
-public class ContainerInscriptionTable extends Container{
+public class ContainerInscriptionTable extends AM2Container{
 
 	private final TileEntityInscriptionTable table;
 	private final InventoryPlayer inventoryPlayer;
 
-	private static final int PLAYER_INVENTORY_START = 1;
-	private static final int PLAYER_ACTION_BAR_START = 28;
-	private static final int PLAYER_ACTION_BAR_END = 37;
+	private static final int PLAYER_INVENTORY_START = 0;
+	private static final int PLAYER_ACTION_BAR_START = 27;
+	private static final int PLAYER_ACTION_BAR_END = 36;
 
 	public ContainerInscriptionTable(TileEntityInscriptionTable table, InventoryPlayer inventoryplayer){
 		this.table = table;
@@ -45,51 +47,51 @@ public class ContainerInscriptionTable extends Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return table.isUseableByPlayer(entityplayer);
+		return table.isUsableByPlayer(entityplayer);
 	}
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i){
-		ItemStack itemstack = null;
-		Slot slot = (Slot)inventorySlots.get(i);
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = (Slot)this.inventorySlots.get(i);
 		if (slot != null && slot.getHasStack()){
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (i < PLAYER_INVENTORY_START){
 				if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_INVENTORY_START && i < PLAYER_ACTION_BAR_START) //from player inventory
 			{
 				if (!mergeSpecialItems(itemstack1, slot)){
 					if (!mergeItemStack(itemstack1, PLAYER_ACTION_BAR_START, PLAYER_ACTION_BAR_END, false)){
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}else{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_ACTION_BAR_START && i < PLAYER_ACTION_BAR_END){
 				if (!mergeSpecialItems(itemstack1, slot)){
 					if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_START - 1, false)){
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}else{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.stackSize == 0){
-				slot.putStack(null);
+			if (itemstack1.getCount() == 0){
+				slot.putStack(ItemStack.EMPTY);
 			}else{
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.stackSize != itemstack.stackSize){
+			if (itemstack1.getCount() != itemstack.getCount()){
 				slot.onSlotChange(itemstack1, itemstack);
 			}else{
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}
 		return itemstack;
@@ -101,13 +103,13 @@ public class ContainerInscriptionTable extends Container{
 			if (bookSlot.getHasStack()) return false;
 
 			ItemStack newStack = stack.copy();
-			newStack.stackSize = 1;
+			newStack.setCount(1);
 			bookSlot.putStack(newStack);
 			bookSlot.onSlotChanged();
 
-			stack.stackSize--;
-			if (stack.stackSize == 0){
-				slot.putStack(null);
+			stack.shrink(1);
+			if (stack.getCount() == 0){
+				slot.putStack(ItemStack.EMPTY);
 				slot.onSlotChanged();
 			}
 			return true;

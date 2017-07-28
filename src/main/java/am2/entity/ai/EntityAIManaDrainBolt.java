@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class EntityAIManaDrainBolt extends EntityAIBase{
 
-	World worldObj;
+	World world;
 
 	/**
 	 * The entity the AI instance has been applied to
@@ -40,7 +40,7 @@ public class EntityAIManaDrainBolt extends EntityAIBase{
 		rangedAttackTime = 0;
 		stuckTime = 0;
 		entityHost = par1EntityLiving;
-		worldObj = par1EntityLiving.worldObj;
+		world = par1EntityLiving.world;
 		this.moveSpeed = moveSpeed;
 		maxRangedAttackTime = attackTime;
 		setMutexBits(3);
@@ -122,15 +122,15 @@ public class EntityAIManaDrainBolt extends EntityAIBase{
 	private void doRangedAttack(){
 		//43% chance to "miss"
 		int chanceToMiss = entityHost.isPotionActive(Potion.getPotionFromResourceLocation("speed")) ? 10 : 43;
-		if (worldObj.rand.nextInt(100) < chanceToMiss){
-			ArsMagica2.proxy.particleManager.BoltFromPointToPoint(worldObj,
+		if (world.rand.nextInt(100) < chanceToMiss){
+			ArsMagica2.proxy.particleManager.BoltFromPointToPoint(world,
 					entityHost.posX, entityHost.posY + entityHost.getEyeHeight(),
-					entityHost.posZ, attackTarget.posX + worldObj.rand.nextFloat() - 0.5f,
-					attackTarget.posY + attackTarget.getEyeHeight() + worldObj.rand.nextFloat() - 0.5f,
-					attackTarget.posZ + worldObj.rand.nextFloat() - 0.5f,
+					entityHost.posZ, attackTarget.posX + world.rand.nextFloat() - 0.5f,
+					attackTarget.posY + attackTarget.getEyeHeight() + world.rand.nextFloat() - 0.5f,
+					attackTarget.posZ + world.rand.nextFloat() - 0.5f,
 					2, -1);
 		}else{
-			ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(worldObj, entityHost, entityHost, attackTarget, this.damage, 2, -1);
+			ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(world, entityHost, entityHost, attackTarget, this.damage, 2, -1);
 			float manaDrained = this.manaDrainedPerCasterLevel * EntityExtension.For(attackTarget).getCurrentLevel();
 			EntityExtension.For(attackTarget).setCurrentMana(EntityExtension.For(attackTarget).getCurrentMana() - (manaDrained));
 
@@ -138,7 +138,7 @@ public class EntityAIManaDrainBolt extends EntityAIBase{
 
 			if (manaDrained > 100){
 				entityHost.heal(1);
-				if (entityHost.worldObj.getDifficulty() == EnumDifficulty.HARD){
+				if (entityHost.world.getDifficulty() == EnumDifficulty.HARD){
 					attackTarget.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("slowness"), 40, 1, true, true));
 					entityHost.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("speed"), 40, 3, true, true));
 				}

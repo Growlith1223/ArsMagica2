@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderHecate extends RenderLiving<EntityHecate>{
 
 	private ModelHecate model;
-	private static final ResourceLocation rLoc = new ResourceLocation("arsmagica2", "textures/mobs/mobHecate.png");
+	private static final ResourceLocation rLoc = new ResourceLocation("arsmagica2", "textures/mobs/mob_hecate.png");
 
 
 	public RenderHecate(RenderManager manager){

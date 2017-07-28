@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import am2.utils.EntityUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -14,8 +15,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 @SuppressWarnings("deprecation")
@@ -38,26 +42,26 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4){
-		if (par1ItemStack.hasTagCompound()){
-			String className = par1ItemStack.getTagCompound().getString("SpawnClassName");
-			if (className != null){
-				par3List.add(String.format(I18n.translateToLocal("am2.tooltip.phyEss"), I18n.translateToLocal("entity." + className + ".name")));
-				Float f = par1ItemStack.getTagCompound().getFloat("PercentFilled");
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tip, boolean HIGHLYNECESSARYPARAMETER){
+		if (stack.hasTagCompound()){
+			int id = stack.getTagCompound().getInteger("id");
+			if (id != 0){
+				tip.add(String.format("am2.tooltip.phyEss", "entity." + EntityList.getClassFromID(id).getName() + ".name"));
+				Float f = stack.getTagCompound().getFloat("PercentFilled");
 				float pct = f == null ? 0 : f.floatValue();
-				par3List.add(String.format(I18n.translateToLocal("am2.tooltip.pctFull"), pct));
+				tip.add(String.format(I18n.translateToLocal("am2.tooltip.pctFull"), pct));
 			}else{
-				par3List.add(I18n.translateToLocal("am2.tooltip.empty"));
+				tip.add(I18n.translateToLocal("am2.tooltip.empty"));
 			}
 		}else{
-			par3List.add(I18n.translateToLocal("am2.tooltip.empty"));
+			tip.add(I18n.translateToLocal("am2.tooltip.empty"));
 		}
 	}
 	
 	public void addFill(ItemStack stack){
 		if (stack.hasTagCompound()){
-			String className = stack.getTagCompound().getString("SpawnClassName");
-			if (className != null){
+			int id = stack.getTagCompound().getInteger("id");
+			if (id != 0){
 				Float f = stack.getTagCompound().getFloat("PercentFilled");
 				float pct = f == null ? 0 : f.floatValue();
 				pct += itemRand.nextFloat() * 5;
@@ -78,8 +82,8 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 
 	public void addFill(ItemStack stack, float amt){
 		if (stack.hasTagCompound()){
-			String className = stack.getTagCompound().getString("SpawnClassName");
-			if (className != null){
+			int id = stack.getTagCompound().getInteger("id");
+			if (id != 0){
 				Float f = stack.getTagCompound().getFloat("PercentFilled");
 				float pct = f == null ? 0 : f.floatValue();
 				pct += amt;
@@ -108,10 +112,10 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 
 		if (!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());
-
-		String s = (String)EntityList.CLASS_TO_NAME.get(clazz);
-		if (s != null)
-			stack.getTagCompound().setString("SpawnClassName", s);
+		
+		int e = EntityList.getID(clazz);
+		if (e != -1)
+			stack.getTagCompound().setInteger("id", e);
 	}
 
 	public boolean canStore(ItemStack stack, EntityLiving entity){
@@ -120,25 +124,25 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 			return false;
 		if (!stack.hasTagCompound())
 			return true;
-
-		String e = stack.getTagCompound().getString("SpawnClassName");
-		String s = (String)EntityList.CLASS_TO_NAME.get(entity.getClass());
-
-		return (e != null && s != null) && e.equals(s);
+		
+		int e = stack.getTagCompound().getInteger("id");
+		int s = EntityList.getID(entity.getClass());
+		return (e == s);
 	}
 
 	public boolean isFull(ItemStack stack){
 		return stack.getItemDamage() == META_FULL;
 	}
 
-	public String getSpawnClass(ItemStack stack){
+	public int getSpawnClass(ItemStack stack){
 		if (!stack.hasTagCompound())
-			return null;
-		return stack.getTagCompound().getString("SpawnClassName");
+			return 0;
+		return stack.getTagCompound().getInteger("id");
 	}
 	
 	public void getSpawnableEntities(World world){
-		for (Object clazz : EntityList.CLASS_TO_NAME.keySet()){
+		for (ResourceLocation key : ForgeRegistries.ENTITIES.getKeys()){
+			Object clazz = EntityList.getClass(key);
 			if (EntityCreature.class.isAssignableFrom((Class<?>)clazz)){
 				try{
 					EntityCreature temp = (EntityCreature)((Class<?>)clazz).getConstructor(World.class).newInstance(world);
@@ -148,7 +152,7 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 						//look for entity egg
 						for (Object info : EntityList.ENTITY_EGGS.values()){
 							EntityEggInfo eei = (EntityEggInfo)info;
-							Class<?> spawnClass = EntityList.getClassFromID(EntityList.getIDFromString(eei.spawnedID));
+							Class<?> spawnClass = EntityList.getClass(eei.spawnedID);
 							if (spawnClass == (Class<?>)clazz){
 								color = eei.primaryColor;
 								found = true;
@@ -159,7 +163,7 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 							//no spawn egg...pick random color?
 							color = world.rand.nextInt();
 						}
-						spawnableEntities.put((String)EntityList.CLASS_TO_NAME.get(clazz), color);
+						spawnableEntities.put(clazz.getClass().getName(), color);
 					}
 				}catch (Throwable e){
 					//e.printStackTrace();
@@ -170,7 +174,7 @@ public class ItemCrystalPhylactery extends ItemArsMagica{
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, NonNullList<ItemStack> par3List){
 		par3List.add(new ItemStack(this));
 		for (String s : spawnableEntities.keySet()){
 			ItemStack stack = new ItemStack(this, 1, META_FULL);

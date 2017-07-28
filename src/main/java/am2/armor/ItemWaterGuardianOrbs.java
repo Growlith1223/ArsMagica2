@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -59,9 +60,8 @@ public class ItemWaterGuardianOrbs extends AMArmor{
 		return "arsmagica2:textures/mobs/bosses/water_guardian.png";
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, NonNullList<ItemStack> par3List){
 		par3List.add(ItemDefs.waterOrbsEnchanted.copy());
 	}
 
@@ -79,12 +79,12 @@ public class ItemWaterGuardianOrbs extends AMArmor{
 	{
 		AxisAlignedBB bb = entityIn.getEntityBoundingBox();
 
-		int minX = MathHelper.floor_double(bb.minX);
-		int maxX = MathHelper.ceiling_double_int(bb.maxX);
-		int minY = MathHelper.floor_double(bb.minY);
-		int maxY = MathHelper.ceiling_double_int(bb.maxY);
-		int minZ = MathHelper.floor_double(bb.minZ);
-		int maxZ = MathHelper.ceiling_double_int(bb.maxZ);
+		int minX = MathHelper.floor(bb.minX);
+		int maxX = MathHelper.ceil(bb.maxX);
+		int minY = MathHelper.floor(bb.minY);
+		int maxY = MathHelper.ceil(bb.maxY);
+		int minZ = MathHelper.floor(bb.minZ);
+		int maxZ = MathHelper.ceil(bb.maxZ);
 
 		Vec3d vec3d = Vec3d.ZERO;
 		BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain();
@@ -116,9 +116,9 @@ public class ItemWaterGuardianOrbs extends AMArmor{
 		{
 			vec3d = vec3d.normalize();
 			double d1 = 0.014D;
-			entityIn.motionX -= vec3d.xCoord * 0.014D;
-			entityIn.motionY -= vec3d.yCoord * 0.014D;
-			entityIn.motionZ -= vec3d.zCoord * 0.014D;
+			entityIn.motionX -= vec3d.xCoord * d1;
+			entityIn.motionY -= vec3d.yCoord * d1;
+			entityIn.motionZ -= vec3d.zCoord * d1;
 		}
 
 	}

@@ -14,8 +14,8 @@ public class TileSummonerRenderer extends TileEntitySpecialRenderer<TileEntitySu
 
 	public TileSummonerRenderer(){
 		model = new ModelSummoner();
-		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/blockSummoner.png");
-		powered = new ResourceLocation("arsmagica2", "textures/blocks/custom/essenceConduit.png");
+		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/block_summoner.png");
+		powered = new ResourceLocation("arsmagica2", "textures/blocks/custom/essence_conduit.png");
 	}
 	
 	@Override

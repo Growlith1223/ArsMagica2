@@ -32,7 +32,7 @@ public class ContainerInertSpawner extends AM2Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return this.spawner.isUseableByPlayer(entityplayer);
+		return this.spawner.isUsableByPlayer(entityplayer);
 	}
 
 }

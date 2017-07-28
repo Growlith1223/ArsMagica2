@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+    "textures": {
+        "all": "arsmagica2:blocks/broken_node_block"
+    }
+}

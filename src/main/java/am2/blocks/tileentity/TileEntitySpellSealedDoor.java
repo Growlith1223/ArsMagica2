@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -21,7 +22,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, IInventory, IKeystoneLockable<TileEntitySpellSealedDoor>{
 
-	private ItemStack[] inventory;
+	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
 	private int lastAppliedTime = -1;
 	private int closeTime = -1;
@@ -32,7 +33,7 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	private ArrayList<SpellComponent> key;
 
 	public TileEntitySpellSealedDoor(){
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		appliedParts = new ArrayList<SpellComponent>();
 		key = new ArrayList<SpellComponent>();
 	}
@@ -40,9 +41,9 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	@Override
 	public ItemStack[] getRunesInKey(){
 		ItemStack[] runes = new ItemStack[3];
-		runes[0] = inventory[0];
-		runes[1] = inventory[1];
-		runes[2] = inventory[2];
+		runes[0] = inventory.get(0);
+		runes[1] = inventory.get(1);
+		runes[2] = inventory.get(2);
 		return runes;
 	}
 
@@ -63,22 +64,22 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 
 	@Override
 	public ItemStack getStackInSlot(int slot){
-		if (slot >= inventory.length)
-			return null;
-		return inventory[slot];
+		if (slot >= inventory.size())
+			return ItemStack.EMPTY;
+		return inventory.get(slot);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j){
-		if (inventory[i] != null){
-			if (inventory[i].stackSize <= j){
-				ItemStack itemstack = inventory[i];
-				inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			if (inventory.get(i).getCount() <= j){
+				ItemStack itemstack = inventory.get(i);
+				inventory.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = inventory[i].splitStack(j);
-			if (inventory[i].stackSize == 0){
-				inventory[i] = null;
+			ItemStack itemstack1 = inventory.get(i).splitStack(j);
+			if (inventory.get(i).getCount() == 0){
+				inventory.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
@@ -94,9 +95,9 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventory[i] != null){
-			ItemStack itemstack = inventory[i];
-			inventory[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			ItemStack itemstack = inventory.get(i);
+			inventory.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
 			return null;
@@ -105,9 +106,9 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inventory[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		inventory.set(i, itemstack);
+		if (itemstack != null && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -122,8 +123,8 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
@@ -152,13 +153,13 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	public void readFromNBT(NBTTagCompound nbttagcompound){
 		super.readFromNBT(nbttagcompound);
 		NBTTagList nbttaglist = nbttagcompound.getTagList("SpellSealedDoorInventory", Constants.NBT.TAG_COMPOUND);
-		inventory = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < inventory.length){
-				inventory[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inventory.size()){
+				inventory.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 	}
@@ -167,12 +168,12 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound){
 		super.writeToNBT(nbttagcompound);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inventory.length; i++){
-			if (inventory[i] != null){
+		for (int i = 0; i < inventory.size(); i++){
+			if (!inventory.get(i).isEmpty()){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				inventory[i].writeToNBT(nbttagcompound1);
+				inventory.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -184,7 +185,7 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	@Override
 	public void update(){
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			curTime++;
 
 			if (closeTime == -1 && lastAppliedTime != -1){
@@ -208,7 +209,7 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	}
 
 	private void setOpenState(boolean open){
-		BlockDefs.spellSealedDoor.toggleDoor(worldObj, pos, open);
+		BlockDefs.spellSealedDoor.toggleDoor(world, pos, open);
 	}
 
 	public void addPartToCurrentKey(SpellComponent component){
@@ -228,9 +229,9 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 	}
 
 	public void analyzeSpellForKey(){
-		ItemStack spell = this.inventory[3];
+		ItemStack spell = this.inventory.get(3);
 
-		if (spell == null) return;
+		if (spell.isEmpty()) return;
 
 		//if we're here, we have a spell to analyze!
 		key.clear();
@@ -247,31 +248,43 @@ public class TileEntitySpellSealedDoor extends TileEntity implements ITickable, 
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.inventory)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
 	}
 }

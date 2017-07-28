@@ -59,7 +59,7 @@ public class PageEntity extends CompendiumPage<Entity> {
 				GlStateManager.rotate(curRotationH, 0, 1, 0);
 	
 				//entity, x, y, z, yaw, partialtick
-				Entity ent = element.getClass().getConstructor(World.class).newInstance(Minecraft.getMinecraft().theWorld);
+				Entity ent = element.getClass().getConstructor(World.class).newInstance(Minecraft.getMinecraft().world);
 				ent.readFromNBT(compound);
 				renderer.doRender(ent, 0.0, 0.0, 0.0, 90.0F, 0.0F);
 				GlStateManager.disableRescaleNormal();
@@ -77,7 +77,7 @@ public class PageEntity extends CompendiumPage<Entity> {
 		GlStateManager.popMatrix();
 
 		String renderString = "Click and drag to rotate";
-		mc.fontRendererObj.drawString(renderString, posX + 72 - (mc.fontRendererObj.getStringWidth(renderString) / 2), posY + 200, 0x000000);
+		mc.fontRenderer.drawString(renderString, posX + 72 - (mc.fontRenderer.getStringWidth(renderString) / 2), posY + 200, 0x000000);
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 {
-	"parent": "arsmagica2:block/archmagePodium",
+	"parent": "arsmagica2:block/archmage_podium",
 	"display": {
         "gui": {
             "rotation": [ 30, 225, 0 ],

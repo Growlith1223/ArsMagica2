@@ -32,8 +32,8 @@ public class AbilitySunlightWeakness extends AbstractAffinityAbility {
 	@Override
 	public void applyTick(EntityPlayer player) {
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		int worldTime = (int)player.worldObj.getWorldTime() % 24000;
-		AffinityAbilityModifiers.instance.applyOrRemoveModifier(attribute, AffinityAbilityModifiers.sunlightWeakness, player.worldObj.canBlockSeeSky(player.getPosition()) && (worldTime > 23000 || worldTime < 12500));
+		int worldTime = (int)player.world.getWorldTime() % 24000;
+		AffinityAbilityModifiers.instance.applyOrRemoveModifier(attribute, AffinityAbilityModifiers.sunlightWeakness, player.world.canBlockSeeSky(player.getPosition()) && (worldTime > 23000 || worldTime < 12500));
 	}
 	
 	@Override

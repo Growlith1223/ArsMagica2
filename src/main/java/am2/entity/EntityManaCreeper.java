@@ -45,7 +45,7 @@ public class EntityManaCreeper extends EntityCreeper{
 			int var1 = this.getCreeperState();
 
 			if (var1 > 0 && this.timeSinceIgnited_Local == 0){
-				this.worldObj.playSound(posX, posY, posZ, SoundEvents.ENTITY_CREEPER_PRIMED, SoundCategory.HOSTILE, 1.0F, 0.5F, false);
+				this.world.playSound(posX, posY, posZ, SoundEvents.ENTITY_CREEPER_PRIMED, SoundCategory.HOSTILE, 1.0F, 0.5F, false);
 			}
 
 			this.timeSinceIgnited_Local += var1;
@@ -57,9 +57,9 @@ public class EntityManaCreeper extends EntityCreeper{
 			if (this.timeSinceIgnited_Local >= 10){
 				this.timeSinceIgnited_Local = 10;
 
-				if (!this.worldObj.isRemote){
+				if (!this.world.isRemote){
 					createManaVortex();
-					this.onDeath(DamageSource.generic);
+					this.onDeath(DamageSource.GENERIC);
 					this.setDead();
 				}
 			}
@@ -69,12 +69,12 @@ public class EntityManaCreeper extends EntityCreeper{
 	}
 
 	private void createManaVortex(){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			return;
 		}
-		EntityManaVortex vortex = new EntityManaVortex(worldObj);
+		EntityManaVortex vortex = new EntityManaVortex(world);
 		vortex.setPosition(this.posX, this.posY + 1, this.posZ);
-		worldObj.spawnEntityInWorld(vortex);
+		world.spawnEntity(vortex);
 	}
 	
 	@Override
@@ -84,7 +84,7 @@ public class EntityManaCreeper extends EntityCreeper{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), worldObj, this))
+		if (!SpawnBlacklists.entityCanSpawnHere(this.getPosition(), world, this))
 			return false;
 		return super.getCanSpawnHere();
 	}

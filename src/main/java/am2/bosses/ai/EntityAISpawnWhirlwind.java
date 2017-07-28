@@ -62,12 +62,12 @@ public class EntityAISpawnWhirlwind extends EntityAIBase{
 				((IArsMagicaBoss)host).setCurrentAction(BossActions.CASTING);
 
 			windTicks++;
-			if (windTicks == 12 && !host.worldObj.isRemote){
-				if (!host.worldObj.isRemote)
-					host.worldObj.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
-				EntityWhirlwind whirlwind = new EntityWhirlwind(host.worldObj);
+			if (windTicks == 12 && !host.world.isRemote){
+				if (!host.world.isRemote)
+					host.world.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+				EntityWhirlwind whirlwind = new EntityWhirlwind(host.world);
 				whirlwind.setPosition(host.posX, host.posY + host.getEyeHeight(), host.posZ);
-				host.worldObj.spawnEntityInWorld(whirlwind);
+				host.world.spawnEntity(whirlwind);
 			}
 		}
 		if (windTicks >= 23){

@@ -34,7 +34,7 @@ public class GuiButtonCompendiumTab extends GuiButton{
 
 	public GuiButtonCompendiumTab(int id, int xPos, int yPos, CompendiumCategory category){
 		super(id, xPos, yPos, sourceWidth, sourceHeight, category.getCategoryName());
-		this.width = category.getTexture() == null ? Minecraft.getMinecraft().fontRendererObj.getStringWidth(category.getCategoryName()) : 20;
+		this.width = category.getTexture() == null ? Minecraft.getMinecraft().fontRenderer.getStringWidth(category.getCategoryName()) : 20;
 		this.categoryID = category.getID();
 		this.displayIcon = category.getTexture();
 		this.category = category;
@@ -69,7 +69,7 @@ public class GuiButtonCompendiumTab extends GuiButton{
 		if (this.visible){
 			boolean isMousedOver = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
 			GL11.glColor4f(0.6f, 0.6f, 0.6f, 1.0f);
-			par1Minecraft.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/ArcaneCompendiumIndexGui.png"));
+			par1Minecraft.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/arcane_compendium_gui_index.png"));
 
 			if (isMousedOver || isActive){
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -90,7 +90,7 @@ public class GuiButtonCompendiumTab extends GuiButton{
 			}else{
 				GL11.glColor4f(0, 0, 0, 1);
 				
-				Minecraft.getMinecraft().fontRendererObj.drawString(this.displayString, this.xPosition + (this.width / 4), this.yPosition + 2, 0x000000);
+				Minecraft.getMinecraft().fontRenderer.drawString(this.displayString, this.xPosition + (this.width / 4), this.yPosition + 2, 0x000000);
 			}
 			GL11.glEnable(GL11.GL_LIGHTING);
 
@@ -98,7 +98,7 @@ public class GuiButtonCompendiumTab extends GuiButton{
 				List<String> list = new ArrayList<String>();
 				list.add(this.displayString);
 
-				drawHoveringText(list, par2, par3, Minecraft.getMinecraft().fontRendererObj);
+				drawHoveringText(list, par2, par3, Minecraft.getMinecraft().fontRenderer);
 			}
 		}
 	}

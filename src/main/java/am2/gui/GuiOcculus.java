@@ -201,7 +201,7 @@ public class GuiOcculus extends GuiScreen {
 			int maxSize = 0;
 			for (SkillPoint point : SkillPointRegistry.getSkillPointMap().values()) {
 				if (!point.canRender()) continue;
-				maxSize = Math.max(maxSize, fontRendererObj.getStringWidth(point.getName() + " : " + SkillData.For(player).getSkillPoint(point)));
+				maxSize = Math.max(maxSize, fontRenderer.getStringWidth(point.getName() + " : " + SkillData.For(player).getSkillPoint(point)));
 			}
 			zLevel = 0F;
 			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/occulus/skill_points.png"));
@@ -209,7 +209,7 @@ public class GuiOcculus extends GuiScreen {
 			int pointOffsetX = 5;
 			for (SkillPoint point : SkillPointRegistry.getSkillPointMap().values()) {
 				if (!point.canRender()) continue;
-				fontRendererObj.drawString(point.getName() + " : " + SkillData.For(player).getSkillPoint(point), posX + 215, posY + pointOffsetX, point.getColor());
+				fontRenderer.drawString(point.getName() + " : " + SkillData.For(player).getSkillPoint(point), posX + 215, posY + pointOffsetX, point.getColor());
 				pointOffsetX+=10;
 			}
 			GlStateManager.color(1f, 1f, 1f);
@@ -234,10 +234,10 @@ public class GuiOcculus extends GuiScreen {
 					int offsetY = calcYOffset(posY, s) + 16;
 					int offsetX2 = calcXOffset(posX, parent) + 16;
 					int offsetY2 = calcYOffset(posY, parent) + 16;
-			        offsetX = MathHelper.clamp_int(offsetX, posX + 7, posX + 203);
-					offsetY = MathHelper.clamp_int(offsetY, posY + 7, posY + 203);
-					offsetX2 = MathHelper.clamp_int(offsetX2, posX + 7, posX + 203);
-					offsetY2 = MathHelper.clamp_int(offsetY2, posY + 7, posY + 203);
+			        offsetX = MathHelper.clamp(offsetX, posX + 7, posX + 203);
+					offsetY = MathHelper.clamp(offsetY, posY + 7, posY + 203);
+					offsetX2 = MathHelper.clamp(offsetX2, posX + 7, posX + 203);
+					offsetY2 = MathHelper.clamp(offsetY2, posY + 7, posY + 203);
 					boolean hasPrereq = data.canLearn(s.getID()) || data.hasSkill(s.getID());
 					int color = (!SkillData.For(player).hasSkill(s.getID()) ? s.getPoint().getColor() & 0x999999 : 0x00ff00);
 					if (!hasPrereq) color = 0x000000;
@@ -365,7 +365,7 @@ public class GuiOcculus extends GuiScreen {
 					else
 						list.add(TextFormatting.DARK_RED.toString() + I18n.translateToLocal("am2.gui.occulus.missingrequirements"));
 					
-					drawHoveringText(list, mouseX, mouseY, Minecraft.getMinecraft().fontRendererObj);
+					drawHoveringText(list, mouseX, mouseY, Minecraft.getMinecraft().fontRenderer);
 					flag = true;
 					hoverItem = s;
 		            RenderHelper.disableStandardItemLighting();
@@ -411,8 +411,8 @@ public class GuiOcculus extends GuiScreen {
 					RenderUtils.line2d((float)affStartX2 + cX, (float)affStartY2 + cY, (float)affEndX + cX, (float)affEndY + cY, zLevel, aff.getColor());
 				}
 				
-				Minecraft.getMinecraft().fontRendererObj.drawString("" + (float)Math.round(depth * 10000) / 100F, (int)((affDrawTextX *0.9) + cX), (int)((affDrawTextY*0.9) + cY), aff.getColor());
-				//Minecraft.getMinecraft().fontRendererObj.drawString("" + (float)Math.round(depth * 10000) / 100F, , aff.getColor());
+				Minecraft.getMinecraft().fontRenderer.drawString("" + (float)Math.round(depth * 10000) / 100F, (int)((affDrawTextX *0.9) + cX), (int)((affDrawTextY*0.9) + cY), aff.getColor());
+				//Minecraft.getMinecraft().fontRenderer.drawString("" + (float)Math.round(depth * 10000) / 100F, , aff.getColor());
 				int xMovement = affDrawTextX > 0 ? 5 : -5;
 				xMovement = affDrawTextX == 0 ? 0 : xMovement;
 				int yMovement = affDrawTextY > 0 ? 5 : -5;
@@ -466,15 +466,15 @@ public class GuiOcculus extends GuiScreen {
 //		int tier4 = SkillData.For(player).getSkillPoint(SkillPoint.SKILL_POINT_5);
 //		int tier5 = SkillData.For(player).getSkillPoint(SkillPoint.SKILL_POINT_6);
 //		GlStateManager.disableDepth();
-//		fontRendererObj.drawString("" + tier0, posX + 191, posY - 19, SkillPointRegistry.getPointForTier(0).getColor());
-//		fontRendererObj.drawString("" + tier1, posX + 203, posY - 19, SkillPointRegistry.getPointForTier(1).getColor());
-//		fontRendererObj.drawString("" + tier2, posX + 197, posY - 9, SkillPointRegistry.getPointForTier(2).getColor());
+//		fontRenderer.drawString("" + tier0, posX + 191, posY - 19, SkillPointRegistry.getPointForTier(0).getColor());
+//		fontRenderer.drawString("" + tier1, posX + 203, posY - 19, SkillPointRegistry.getPointForTier(1).getColor());
+//		fontRenderer.drawString("" + tier2, posX + 197, posY - 9, SkillPointRegistry.getPointForTier(2).getColor());
 //		if (SkillPointRegistry.getPointForTier(3) != null)
-//			fontRendererObj.drawString("" + tier3, posX + 191, posY + 210 + 2, SkillPointRegistry.getPointForTier(3).getColor());
+//			fontRenderer.drawString("" + tier3, posX + 191, posY + 210 + 2, SkillPointRegistry.getPointForTier(3).getColor());
 //		if (SkillPointRegistry.getPointForTier(4) != null)
-//			fontRendererObj.drawString("" + tier4, posX + 203, posY + 210 + 2, SkillPointRegistry.getPointForTier(4).getColor());
+//			fontRenderer.drawString("" + tier4, posX + 203, posY + 210 + 2, SkillPointRegistry.getPointForTier(4).getColor());
 //		if (SkillPointRegistry.getPointForTier(5) != null)
-//			fontRendererObj.drawString("" + tier5, posX + 197, posY + 210 + 12, SkillPointRegistry.getPointForTier(5).getColor());
+//			fontRenderer.drawString("" + tier5, posX + 197, posY + 210 + 12, SkillPointRegistry.getPointForTier(5).getColor());
 		
 		GlStateManager.color(1, 1, 1);
 

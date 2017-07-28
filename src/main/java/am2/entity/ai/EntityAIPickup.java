@@ -51,11 +51,11 @@ public class EntityAIPickup extends EntityAIBase{
 		if (checkStuck()){
 			EntityExtension.For(host).setInanimateTarget(null);
 
-			double x = host.posX + host.worldObj.rand.nextInt(8) - 4;
+			double x = host.posX + host.world.rand.nextInt(8) - 4;
 			double y = host.posY;
-			double z = host.posZ + host.worldObj.rand.nextInt(8) - 4;
+			double z = host.posZ + host.world.rand.nextInt(8) - 4;
 
-			while (host.worldObj.isAirBlock(new BlockPos(x, y, z)) && y > 5){
+			while (host.world.isAirBlock(new BlockPos(x, y, z)) && y > 5){
 				y--;
 			}
 

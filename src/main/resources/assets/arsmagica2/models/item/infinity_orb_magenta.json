@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arsmagica2:items/infinityorb_magenta"
+        "layer0": "arsmagica2:items/infinity_orb_magenta"
     }
 }

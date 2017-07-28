@@ -142,12 +142,12 @@ public abstract class AM2Boss extends EntityMob implements IEntityMultiPart, IAr
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2){
 
-		if (par1DamageSource == DamageSource.inWall){
-			if (!worldObj.isRemote){// dead code? (calling canSnowAt() without using the result) could it be a buggy upgrade to 1.7.10?
+		if (par1DamageSource == DamageSource.IN_WALL){
+			if (!world.isRemote){// dead code? (calling canSnowAt() without using the result) could it be a buggy upgrade to 1.7.10?
 				for (int i = -1; i <= 1; ++i){
 					for (int j = 0; j < 3; ++j){
 						for (int k = -1; k <= 1; ++k){
-							worldObj.destroyBlock(getPosition().add(i, j, k), true);
+							world.destroyBlock(getPosition().add(i, j, k), true);
 						}
 					}
 				}
@@ -160,7 +160,7 @@ public abstract class AM2Boss extends EntityMob implements IEntityMultiPart, IAr
 			if (par1DamageSource.getSourceOfDamage() instanceof EntityPlayer){
 				EntityPlayer player = (EntityPlayer)par1DamageSource.getSourceOfDamage();
 				if (player.capabilities.isCreativeMode && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ItemDefs.woodenLeg){
-					if (!worldObj.isRemote)
+					if (!world.isRemote)
 						this.setDead();
 					return false;
 				}
@@ -205,11 +205,11 @@ public abstract class AM2Boss extends EntityMob implements IEntityMultiPart, IAr
 
 		if (parts != null && parts[0] != null && parts[0].partName == "defaultBody"){
 			parts[0].setPosition(this.posX, this.posY, this.posZ);
-			if (worldObj.isRemote){
+			if (world.isRemote){
 			      parts[0].setVelocity(this.motionX, this.motionY, this.motionZ);
 			}
 			if (!parts[0].addedToChunk){
-				this.worldObj.spawnEntityInWorld(parts[0]);
+				this.world.spawnEntity(parts[0]);
 			}
 		}
 
@@ -218,7 +218,7 @@ public abstract class AM2Boss extends EntityMob implements IEntityMultiPart, IAr
 			setCurrentAction(BossActions.IDLE);
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			playerCanSee = ArsMagica2.proxy.getLocalPlayer().canEntityBeSeen(this);
 			this.ignoreFrustumCheck = ArsMagica2.proxy.getLocalPlayer().getDistanceToEntity(this) < 32;
 		}

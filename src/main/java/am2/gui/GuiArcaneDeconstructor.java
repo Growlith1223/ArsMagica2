@@ -10,7 +10,7 @@ public class GuiArcaneDeconstructor extends GuiContainer{
 
 	private TileEntityArcaneDeconstructor deconstructor;
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/deconstruction_table_GUI.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/deconstruction_table_gui.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

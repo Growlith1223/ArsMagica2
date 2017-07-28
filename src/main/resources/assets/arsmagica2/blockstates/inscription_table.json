@@ -2,118 +2,118 @@
 	"multipart": [
 	{
 		"when": { "AND": [{"left": "false"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight"}
+		"apply": {"model":"arsmagica2:inscription_table_right"}
 	},
 	{
 		"when": { "AND": [{"left": "true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft"}
+		"apply": {"model":"arsmagica2:inscription_table_left"}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_1":"true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft1"}
+		"apply": {"model":"arsmagica2:inscription_table_left1"}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_2":"true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight2"}
+		"apply": {"model":"arsmagica2:inscription_table_right2"}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_2":"true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft2"}
+		"apply": {"model":"arsmagica2:inscription_table_left2"}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_3":"true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight3"}
+		"apply": {"model":"arsmagica2:inscription_table_right3"}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_3":"true"}, {"facing":"west"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft3"}
+		"apply": {"model":"arsmagica2:inscription_table_left3"}
 	},
 	
 	{
 		"when": { "AND": [{"left": "false"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_right", "y":180}
 	},
 	{
 		"when": { "AND": [{"left": "true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_left", "y":180}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_1":"true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft1", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_left1", "y":180}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_2":"true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight2", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_right2", "y":180}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_2":"true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft2", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_left2", "y":180}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_3":"true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight3", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_right3", "y":180}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_3":"true"}, {"facing":"east"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft3", "y":180}
+		"apply": {"model":"arsmagica2:inscription_table_left3", "y":180}
 	},
 	
 	{
 		"when": { "AND": [{"left": "false"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_right", "y":270}
 	},
 	{
 		"when": { "AND": [{"left": "true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_left", "y":270}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_1":"true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft1", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_left1", "y":270}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_2":"true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight2", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_right2", "y":270}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_2":"true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft2", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_left2", "y":270}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_3":"true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight3", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_right3", "y":270}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_3":"true"}, {"facing":"south"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft3", "y":270}
+		"apply": {"model":"arsmagica2:inscription_table_left3", "y":270}
 	},
 	
 	{
 		"when": { "AND": [{"left": "false"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_right", "y":90}
 	},
 	{
 		"when": { "AND": [{"left": "true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_left", "y":90}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_1":"true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft1", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_left1", "y":90}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_2":"true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight2", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_right2", "y":90}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_2":"true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft2", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_left2", "y":90}
 	},
 	{
 		"when": { "AND": [{"left":"false"}, {"tier_3":"true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableRight3", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_right3", "y":90}
 	},
 	{
 		"when": { "AND": [{"left":"true"}, {"tier_3":"true"}, {"facing":"north"}]},
-		"apply": {"model":"arsmagica2:inscriptionTableLeft3", "y":90}
+		"apply": {"model":"arsmagica2:inscription_table_left3", "y":90}
 	}
 	]
 }

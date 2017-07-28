@@ -35,13 +35,13 @@ archivesBaseName = "ArsMagica2"
 
 
 minecraft {
-    version = "1.10.2-12.18.3.2185"
+    version = "1.11.2-13.20.0.2260"
     runDir = "run"
     replace 'GRADLE:BUILD', config.build_number
     replace 'GRADLE:VERSION', config.version
     replaceIn 'ArsMagica2.java'
 	//replace '${version}', project.version
-    mappings = "snapshot_20161111"  //uncomment this line to use newest Forge mappings. Needs a lot of rework.
+    mappings = "snapshot_20170324"  //uncomment this line to use newest Forge mappings. Needs a lot of rework.
 }
 
 jar {

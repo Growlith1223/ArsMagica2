@@ -20,7 +20,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 	/**
 	 * The player that is using the GUI where this slot resides.
 	 */
-	private final EntityPlayer thePlayer;
+	private final EntityPlayer player;
 
 	private final ContainerMagiciansWorkbench workbench;
 
@@ -31,7 +31,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 
 	public SlotMagiciansWorkbenchCrafting(EntityPlayer player, IInventory craftMatrix, IInventory craftResult, ContainerMagiciansWorkbench workbench, int index, int x, int y){
 		super(craftResult, index, x, y);
-		this.thePlayer = player;
+		this.player = player;
 		this.craftMatrix = craftMatrix;
 		this.workbench = workbench;
 	}
@@ -51,7 +51,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 	@Override
 	public ItemStack decrStackSize(int par1){
 		if (this.getHasStack()){
-			this.amountCrafted += Math.min(par1, this.getStack().stackSize);
+			this.amountCrafted += Math.min(par1, this.getStack().getCount());
 		}
 
 		return super.decrStackSize(par1);
@@ -72,7 +72,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 	 */
 	@Override
 	protected void onCrafting(ItemStack itemCrafted){
-		itemCrafted.onCrafting(this.thePlayer.worldObj, this.thePlayer, this.amountCrafted);
+		itemCrafted.onCrafting(this.player.world, this.player, this.amountCrafted);
 		this.amountCrafted = 0;
 
 		ItemStack[] components = new ItemStack[this.craftMatrix.getSizeInventory()];
@@ -90,7 +90,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 	public void onSlotChange(ItemStack par1ItemStack, ItemStack par2ItemStack){
 		if (par1ItemStack != null && par2ItemStack != null){
 			if (par1ItemStack.getItem() == par2ItemStack.getItem()){
-				int i = par2ItemStack.stackSize - par1ItemStack.stackSize;
+				int i = par2ItemStack.getCount() - par1ItemStack.getCount();
 
 				if (i > 0){
 					this.onCrafting(par1ItemStack, i);
@@ -101,11 +101,12 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 	}
 
 	@Override
-	public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack){
+	public ItemStack onTake(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack){
 		this.onCrafting(par2ItemStack);
 		ItemCraftedEvent event = new ItemCraftedEvent(par1EntityPlayer, par2ItemStack, craftMatrix);
 		MinecraftForge.EVENT_BUS.post(event);
 		doComponentDecrements();
+		return par2ItemStack;
 	}
 
 	private void doComponentDecrements(){
@@ -113,7 +114,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 			ItemStack itemstack1 = this.craftMatrix.getStackInSlot(i);
 
 			if (itemstack1 != null){
-				if (itemstack1.stackSize > 1 || !searchAndDecrement(itemstack1)){
+				if (itemstack1.getCount() > 1 || !searchAndDecrement(itemstack1)){
 					doStandardDecrement(this.craftMatrix, itemstack1, i);
 				}else{
 					this.workbench.onCraftMatrixChanged(craftMatrix);
@@ -139,7 +140,7 @@ public class SlotMagiciansWorkbenchCrafting extends Slot{
 			ItemStack itemstack2 = itemstack1.getItem().getContainerItem(itemstack1);
 
 			if (itemstack2.isItemStackDamageable() && itemstack2.getItemDamage() > itemstack2.getMaxDamage()){
-				MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(thePlayer, itemstack2, EnumHand.MAIN_HAND));
+				MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(player, itemstack2, EnumHand.MAIN_HAND));
 				itemstack2 = null;
 			}
 			

@@ -54,7 +54,7 @@ public class Blink extends SpellComponent{
 
 		double d = motionX, d1 = motionY, d2 = motionZ;
 
-		float f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
+		float f2 = MathHelper.sqrt(d * d + d1 * d1 + d2 * d2);
 		d /= f2;
 		d1 /= f2;
 		d2 /= f2;
@@ -106,7 +106,7 @@ public class Blink extends SpellComponent{
 				d1 = motionY;
 				d2 = motionZ;
 
-				f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
+				f2 = MathHelper.sqrt(d * d + d1 * d1 + d2 * d2);
 				d /= f2;
 				d1 /= f2;
 				d2 /= f2;
@@ -212,7 +212,7 @@ public class Blink extends SpellComponent{
 			d1 = motionY;
 			d2 = motionZ;
 
-			f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
+			f2 = MathHelper.sqrt(d * d + d1 * d1 + d2 * d2);
 			d /= f2;
 			d1 /= f2;
 			d2 /= f2;
@@ -222,7 +222,7 @@ public class Blink extends SpellComponent{
 			motionX = d;
 			motionY = d1;
 			motionZ = d2;
-//			f3 = MathHelper.sqrt_double(d * d + d2 * d2);
+//			f3 = MathHelper.sqrt(d * d + d2 * d2);
 
 			newX = target.posX + motionX;
 			newZ = target.posZ + motionZ;
@@ -239,7 +239,7 @@ public class Blink extends SpellComponent{
 
 		if (!world.isRemote){
 			if (!coordsValid && target instanceof EntityPlayer){
-				((EntityPlayer)target).addChatMessage(new TextComponentString("Can't find a place to blink forward to."));
+				((EntityPlayer)target).sendMessage(new TextComponentString("Can't find a place to blink forward to."));
 				return false;
 			}
 		}
@@ -332,7 +332,7 @@ public class Blink extends SpellComponent{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
@@ -340,7 +340,7 @@ public class Blink extends SpellComponent{
 	public boolean applyEffectBlock(ItemStack stack, World world,
 			BlockPos blockPos, EnumFacing blockFace, double impactX,
 			double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 }

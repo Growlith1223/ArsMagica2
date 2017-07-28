@@ -28,13 +28,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityCalefactor extends TileEntityAMPower implements IInventory, ISidedInventory, IKeystoneLockable<TileEntityCalefactor>, ITileEntityAMBase {
+public class TileEntityCalefactor extends TileEntityAMPoweredContainer implements IInventory, ISidedInventory, IKeystoneLockable<TileEntityCalefactor>, ITileEntityAMBase {
 
-	private ItemStack calefactorItemStacks[];
 	private float rotationX, rotationY, rotationZ;
 	private float rotationStepX;
 	private final short baseCookTime = 220; //default to the same as a standard furnace
@@ -50,14 +50,14 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public TileEntityCalefactor(){
 		super(100);
 
-		calefactorItemStacks = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
 
 		isCooking = false;
 	}
 
 	@Override
 	public float particleOffset(int axis){
-		EnumFacing facing = worldObj.getBlockState(pos).getValue(BlockCalefactor.FACING);
+		EnumFacing facing = world.getBlockState(pos).getValue(BlockCalefactor.FACING);
 
 		if (axis == 0){
 			switch (facing){
@@ -118,41 +118,41 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	}
 
 	public ItemStack getItemBeingCooked(){
-		if (calefactorItemStacks[0] != null){
-			return calefactorItemStacks[0];
+		if (!inventory.get(0).isEmpty()){
+			return inventory.get(0);
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	private boolean canSmelt(){
-		if (this.calefactorItemStacks[0] == null){
+		if (this.inventory.get(0).isEmpty()){
 			return false;
 		}else{
-			ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(this.calefactorItemStacks[0]);
-			if (var1 == null) return false;
-			if (this.calefactorItemStacks[1] == null) return true;
-			if (!this.calefactorItemStacks[1].isItemEqual(var1)) return false;
-			int result = calefactorItemStacks[1].stackSize + var1.stackSize;
+			ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(this.inventory.get(0));
+			if (var1.isEmpty()) return false;
+			if (this.inventory.get(1).isEmpty()) return true;
+			if (!this.inventory.get(1).isItemEqual(var1)) return false;
+			int result = inventory.get(1).getCount() + var1.getCount();
 			return (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
 		}
 	}
 
 	public void smeltItem(){
 		if (this.canSmelt()){
-			ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(this.calefactorItemStacks[0]);
+			ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(this.inventory.get(0));
 
 			ItemStack smeltStack = var1.copy();
 
-			if (this.calefactorItemStacks[0].getItem() instanceof ItemFood || this.calefactorItemStacks[0].getItem() instanceof ItemBlock || this.calefactorItemStacks[0].getItem() == ItemDefs.itemOre){
-				if (PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.DARK, getCookTickPowerCost()))
-					if (PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.NEUTRAL, getCookTickPowerCost()))
-						if (PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.LIGHT, getCookTickPowerCost()))
-							smeltStack.stackSize++;
+			if (this.inventory.get(0).getItem() instanceof ItemFood || this.inventory.get(0).getItem() instanceof ItemBlock || this.inventory.get(0).getItem() == ItemDefs.itemOre){
+				if (PowerNodeRegistry.For(world).checkPower(this, PowerTypes.DARK, getCookTickPowerCost()))
+					if (PowerNodeRegistry.For(world).checkPower(this, PowerTypes.NEUTRAL, getCookTickPowerCost()))
+						if (PowerNodeRegistry.For(world).checkPower(this, PowerTypes.LIGHT, getCookTickPowerCost()))
+							smeltStack.grow(1);
 			}
 
-			if (this.calefactorItemStacks[0].getItem() instanceof ItemFood){
-				if (smeltStack.stackSize == var1.stackSize && worldObj.rand.nextDouble() < 0.15f){
-					smeltStack.stackSize++;
+			if (this.inventory.get(0).getItem() instanceof ItemFood){
+				if (smeltStack.getCount() == var1.getCount() && world.rand.nextDouble() < 0.15f){
+					smeltStack.grow(1);
 				}
 			}
 
@@ -160,45 +160,45 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 
 			if (doSmelt){
 
-				if (this.calefactorItemStacks[1] == null){
-					this.calefactorItemStacks[1] = smeltStack.copy();
-				}else if (this.calefactorItemStacks[1].isItemEqual(smeltStack)){
-					calefactorItemStacks[1].stackSize += smeltStack.stackSize;
-					if (calefactorItemStacks[1].stackSize > calefactorItemStacks[1].getMaxStackSize()){
-						calefactorItemStacks[1].stackSize = calefactorItemStacks[1].getMaxStackSize();
+				if (this.inventory.get(1).isEmpty()){
+					this.inventory.set(1, smeltStack.copy());
+				}else if (this.inventory.get(1).isItemEqual(smeltStack)){
+					inventory.get(1).grow(smeltStack.getCount());;
+					if (inventory.get(1).getCount() > inventory.get(1).getMaxStackSize()){
+						inventory.get(1).setCount(inventory.get(1).getMaxStackSize());
 					}
 				}
 
 				if (Math.random() <= 0.25){
-					if (calefactorItemStacks[5] == null){
-						calefactorItemStacks[5] = new ItemStack(ItemDefs.itemOre, 1, ItemOre.META_VINTEUM);
+					if (inventory.get(5).isEmpty()){
+						inventory.set(5, new ItemStack(ItemDefs.itemOre, 1, ItemOre.META_VINTEUM));
 					}else{
-						calefactorItemStacks[5].stackSize++;
-						if (calefactorItemStacks[5].stackSize > calefactorItemStacks[5].getMaxStackSize()){
-							calefactorItemStacks[5].stackSize = calefactorItemStacks[5].getMaxStackSize();
+						inventory.get(5).grow(1);
+						if (inventory.get(5).getCount() > inventory.get(5).getMaxStackSize()){
+							inventory.get(5).setCount(inventory.get(5).getMaxStackSize());
 						}
 					}
 				}
 			}
 
-			--this.calefactorItemStacks[0].stackSize;
+			this.inventory.get(0).shrink(1);
 
-			if (this.calefactorItemStacks[0].stackSize <= 0){
-				this.calefactorItemStacks[0] = null;
+			if (this.inventory.get(0).getCount() <= 0){
+				this.inventory.set(0, ItemStack.EMPTY);
 			}
 		}
 	}
 
 	public void handlePacket(byte[] data){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			AMDataReader rdr = new AMDataReader(data);
 			switch (rdr.ID){
 			case PKT_PRG_UPDATE:
 				isCooking = rdr.getByte() == 1;
 				if (rdr.getByte() == 1){
-					this.calefactorItemStacks[0] = rdr.getItemStack();
+					this.inventory.set(0, rdr.getItemStack());
 				}else{
-					this.calefactorItemStacks[0] = null;
+					this.inventory.set(0, ItemStack.EMPTY);
 				}
 				break;
 			default:
@@ -207,15 +207,15 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	}
 
 	protected void sendCookStatusUpdate(boolean isCooking){
-		if (this.worldObj.isRemote)
+		if (this.world.isRemote)
 			return;
 
 		AMDataWriter writer = new AMDataWriter();
 		writer.add(PKT_PRG_UPDATE);
 		writer.add(isCooking ? (byte)1 : (byte)0);
-		writer.add(this.calefactorItemStacks[0] != null ? (byte)1 : (byte)0);
-		if (this.calefactorItemStacks[0] != null)
-			writer.add(this.calefactorItemStacks[0]);
+		writer.add(this.inventory.get(0).isEmpty() ? (byte)0 : (byte)1);
+		if (!this.inventory.get(0).isEmpty())
+			writer.add(this.inventory.get(0));
 
 		AMNetHandler.INSTANCE.sendCalefactorCookUpdate(this, writer.generate());
 	}
@@ -242,10 +242,10 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public void update(){
 		super.update();
 		if (isFirstTick) {
-			rotationStepX = worldObj.rand.nextFloat() * 0.03f - 0.015f;
+			rotationStepX = world.rand.nextFloat() * 0.03f - 0.015f;
 			isFirstTick = false;
 		}
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			incrementRotations();
 			if (this.isCooking){
 				particleCount--;
@@ -256,24 +256,24 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 					double rStartZ = Math.random() > 0.5 ? this.pos.getZ() + 0.01 : this.pos.getZ() + 1.01;
 
 					double endX = this.pos.getX() + 0.5f;
-					double endY = this.pos.getY() + 0.7f + (worldObj.rand.nextDouble() * 0.5f);
+					double endY = this.pos.getY() + 0.7f + (world.rand.nextDouble() * 0.5f);
 					double endZ = this.pos.getZ() + 0.5f;
 
-					ArsMagica2.proxy.particleManager.BeamFromPointToPoint(worldObj, rStartX, rStartY, rStartZ, endX, endY, endZ, 0xFF8811);
-					if (worldObj.rand.nextBoolean()){
-						AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "smoke", endX, endY, endZ);
+					ArsMagica2.proxy.particleManager.BeamFromPointToPoint(world, rStartX, rStartY, rStartZ, endX, endY, endZ, 0xFF8811);
+					if (world.rand.nextBoolean()){
+						AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "smoke", endX, endY, endZ);
 						if (effect != null){
 							effect.setIgnoreMaxAge(false);
 							effect.setMaxAge(60);
 							effect.AddParticleController(new ParticleFloatUpward(effect, 0.02f, 0.01f, 1, false));
 						}
 					}else{
-						AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "explosion_2", endX, endY, endZ);
+						AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "explosion_2", endX, endY, endZ);
 						if (effect != null){
 							effect.setIgnoreMaxAge(false);
 							effect.setMaxAge(10);
 							effect.setParticleScale(0.04f);
-							effect.addVelocity(worldObj.rand.nextDouble() * 0.2f - 0.1f, 0.2f, worldObj.rand.nextDouble() * 0.2f - 0.1f);
+							effect.addVelocity(world.rand.nextDouble() * 0.2f - 0.1f, 0.2f, world.rand.nextDouble() * 0.2f - 0.1f);
 							effect.setAffectedByGravity();
 							effect.setDontRequireControllers();
 						}
@@ -284,37 +284,37 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 			}
 		}
 		
-		boolean powerCheck = PowerNodeRegistry.For(this.worldObj).checkPower(this, getCookTickPowerCost());
+		boolean powerCheck = PowerNodeRegistry.For(this.world).checkPower(this, getCookTickPowerCost());
 		if (this.canSmelt() && this.isSmelting() && powerCheck){
 			++this.timeSpentCooking;
 			
 			if (this.timeSpentCooking >= getModifiedCookTime()){
-				if (!this.worldObj.isRemote){
+				if (!this.world.isRemote){
 					this.smeltItem();
 				}else{
-					worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), AMSounds.CALEFACTOR_BURN, SoundCategory.BLOCKS, 0.2f, 1.0f, true);
+					world.playSound(pos.getX(), pos.getY(), pos.getZ(), AMSounds.CALEFACTOR_BURN, SoundCategory.BLOCKS, 0.2f, 1.0f, true);
 				}
 				this.timeSpentCooking = 0;
-				if (!worldObj.isRemote){
+				if (!world.isRemote){
 					sendCookStatusUpdate(false);
 				}
 			}
-			if (!worldObj.isRemote){
-				if (PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.DARK, getCookTickPowerCost()) &&
-						PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.NEUTRAL, getCookTickPowerCost()) &&
-						PowerNodeRegistry.For(worldObj).checkPower(this, PowerTypes.LIGHT, getCookTickPowerCost())){
+			if (!world.isRemote){
+				if (PowerNodeRegistry.For(world).checkPower(this, PowerTypes.DARK, getCookTickPowerCost()) &&
+						PowerNodeRegistry.For(world).checkPower(this, PowerTypes.NEUTRAL, getCookTickPowerCost()) &&
+						PowerNodeRegistry.For(world).checkPower(this, PowerTypes.LIGHT, getCookTickPowerCost())){
 
-					PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerTypes.DARK, getCookTickPowerCost());
-					PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerTypes.NEUTRAL, getCookTickPowerCost());
-					PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerTypes.LIGHT, getCookTickPowerCost());
+					PowerNodeRegistry.For(this.world).consumePower(this, PowerTypes.DARK, getCookTickPowerCost());
+					PowerNodeRegistry.For(this.world).consumePower(this, PowerTypes.NEUTRAL, getCookTickPowerCost());
+					PowerNodeRegistry.For(this.world).consumePower(this, PowerTypes.LIGHT, getCookTickPowerCost());
 
 				}else{
-					PowerNodeRegistry.For(this.worldObj).consumePower(this, PowerNodeRegistry.For(this.worldObj).getHighestPowerType(this), getCookTickPowerCost());
+					PowerNodeRegistry.For(this.world).consumePower(this, PowerNodeRegistry.For(this.world).getHighestPowerType(this), getCookTickPowerCost());
 				}
 			}
 		}else if (!this.isSmelting() && this.canSmelt() && powerCheck){
 			this.timeSpentCooking = 1;
-			if (!worldObj.isRemote){
+			if (!world.isRemote){
 				sendCookStatusUpdate(true);
 			}
 		}else if (!this.canSmelt()){
@@ -326,10 +326,10 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public int getCookProgressScaled(int par1){
 		return this.timeSpentCooking * par1 / getModifiedCookTime();
 	}
-
+	
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
@@ -343,7 +343,7 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	private int numFociOfType(Class<?> type){
 		int count = 0;
 		for (int i = 2; i < getSizeInventory(); ++i){
-			if (calefactorItemStacks[i] != null && type.isInstance(calefactorItemStacks[i].getItem())){
+			if (!inventory.get(i).isEmpty() && type.isInstance(inventory.get(i).getItem())){
 				count++;
 			}
 		}
@@ -357,46 +357,46 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 
 	@Override
 	public ItemStack getStackInSlot(int var1){
-		if (var1 >= calefactorItemStacks.length){
-			return null;
+		if (var1 >= inventory.size()){
+			return ItemStack.EMPTY;
 		}
-		return calefactorItemStacks[var1];
+		return inventory.get(var1);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j){
-		if (calefactorItemStacks[i] != null){
-			if (calefactorItemStacks[i].stackSize <= j){
-				ItemStack itemstack = calefactorItemStacks[i];
-				calefactorItemStacks[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			if (inventory.get(i).getCount() <= j){
+				ItemStack itemstack = inventory.get(i);
+				inventory.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = calefactorItemStacks[i].splitStack(j);
-			if (calefactorItemStacks[i].stackSize == 0){
-				calefactorItemStacks[i] = null;
+			ItemStack itemstack1 = inventory.get(i).splitStack(j);
+			if (inventory.get(i).getCount() == 0){
+				inventory.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (calefactorItemStacks[i] != null){
-			ItemStack itemstack = calefactorItemStacks[i];
-			calefactorItemStacks[i] = null;
+		if (!inventory.get(i).isEmpty()){
+			ItemStack itemstack = inventory.get(i);
+			inventory.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		calefactorItemStacks[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		inventory.set(i, itemstack);
+		if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -422,13 +422,13 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public void readFromNBT(NBTTagCompound nbttagcompound){
 		super.readFromNBT(nbttagcompound);
 		NBTTagList nbttaglist = nbttagcompound.getTagList("CasterInventory", Constants.NBT.TAG_COMPOUND);
-		calefactorItemStacks = new ItemStack[getSizeInventory()];
+		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < calefactorItemStacks.length){
-				calefactorItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inventory.size()){
+				inventory.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 	}
@@ -437,12 +437,12 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound){
 		super.writeToNBT(nbttagcompound);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < calefactorItemStacks.length; i++){
-			if (calefactorItemStacks[i] != null){
+		for (int i = 0; i < inventory.size(); i++){
+			if (!inventory.get(i).isEmpty()){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				calefactorItemStacks[i].writeToNBT(nbttagcompound1);
+				inventory.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -494,9 +494,9 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 	@Override
 	public ItemStack[] getRunesInKey(){
 		ItemStack[] runes = new ItemStack[3];
-		runes[0] = calefactorItemStacks[6];
-		runes[1] = calefactorItemStacks[7];
-		runes[2] = calefactorItemStacks[8];
+		runes[0] = inventory.get(6);
+		runes[1] = inventory.get(7);
+		runes[2] = inventory.get(8);
 		return runes;
 	}
 
@@ -522,31 +522,31 @@ public class TileEntityCalefactor extends TileEntityAMPower implements IInventor
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
 

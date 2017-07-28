@@ -20,13 +20,13 @@ public class ItemChalk extends ItemArsMagica{
 	}
 	
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		if (side != EnumFacing.UP || !canBeUsed(world, pos.up())){
 			return EnumActionResult.FAIL;
 		}
 		if (!world.isRemote){
 			world.setBlockState(pos.up(), BlockDefs.wizardChalk.getDefaultState().withProperty(BlockWizardsChalk.VARIANT, world.rand.nextInt(16)));
-			stack.damageItem(1, player);
+			player.getHeldItem(hand).damageItem(1, player);
 		}
 		return EnumActionResult.PASS;
 	}

@@ -159,7 +159,7 @@ public class AMRibbon extends Particle{
 	}
 
 //	private static Vec3d getRelativeViewVector(Vec3d pos){
-//		EntityPlayer renderentity = Minecraft.getMinecraft().thePlayer;
+//		EntityPlayer renderentity = Minecraft.getMinecraft().player;
 //		return new Vec3d((float)renderentity.posX - pos.xCoord, (float)renderentity.posY - pos.yCoord, (float)renderentity.posZ - pos.zCoord);
 //	}
 

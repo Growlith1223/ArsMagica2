@@ -1,6 +1,7 @@
 package am2.entity;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import am2.ArsMagica2;
 import am2.api.ArsMagicaAPI;
@@ -75,7 +76,7 @@ public class EntityFlicker extends EntityAmbientCreature{
 
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2){
-		if (this.worldObj.isRemote)
+		if (this.world.isRemote)
 			return false;
 		flick();
 		return !par1DamageSource.isUnblockable();
@@ -119,8 +120,8 @@ public class EntityFlicker extends EntityAmbientCreature{
 		this.motionY = 0;
 		this.motionZ = 0;
 
-		long time = worldObj.getWorldTime() % 24000;
-		if (!worldObj.isRemote && time >= 18500 && time <= 18600){
+		long time = world.getWorldTime() % 24000;
+		if (!world.isRemote && time >= 18500 && time <= 18600){
 			//this.dataManager.set(WATCHER_AMBIENTFLICK, (byte)1);
 			this.setDead();
 			return;
@@ -128,8 +129,8 @@ public class EntityFlicker extends EntityAmbientCreature{
 
 		boolean playerClose = false;
 		AMVector3 me = new AMVector3(this);
-		if (!worldObj.isRemote){
-			for (Object o : worldObj.playerEntities){
+		if (!world.isRemote){
+			for (Object o : world.playerEntities){
 				if (me.distanceSqTo(new AMVector3((EntityPlayer)o)) < 25){
 
 					ItemStack chestArmor = ((EntityPlayer)o).getItemStackFromSlot(EntityEquipmentSlot.CHEST);
@@ -141,20 +142,20 @@ public class EntityFlicker extends EntityAmbientCreature{
 		}
 
 		if (this.ticksExisted > 100 && playerClose && !this.dataManager.get(WATCHER_AMBIENTFLICK)){
-			if (this.getActivePotionEffects().size() == 0 || (this.getActivePotionEffects().size() == 1 && worldObj.rand.nextDouble() < 0.1f))
+			if (this.getActivePotionEffects().size() == 0 || (this.getActivePotionEffects().size() == 1 && world.rand.nextDouble() < 0.1f))
 				this.dataManager.set(WATCHER_AMBIENTFLICK, true);
 		}else if (this.dataManager.get(WATCHER_AMBIENTFLICK)){
 			flickCount++;
-			if (worldObj.isRemote && flickCount > 7)
+			if (world.isRemote && flickCount > 7)
 				flick(); //client flick
-			else if (!worldObj.isRemote && flickCount > 10)
+			else if (!world.isRemote && flickCount > 10)
 				flick(); //server flick
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			//for (int i = 0; i < + 1; ++i){
 			if (getRNG().nextInt(10) < ArsMagica2.config.getGFXLevel()){
-				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, AMParticleDefs.getParticleForAffinity(getFlickerAffinity()), posX, posY, posZ);
+				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, AMParticleDefs.getParticleForAffinity(getFlickerAffinity()), posX, posY, posZ);
 				if (effect != null){
 					effect.addRandomOffset(this.width, this.height, this.width);
 					effect.setDontRequireControllers();
@@ -177,7 +178,7 @@ public class EntityFlicker extends EntityAmbientCreature{
 		AMVector3 me = new AMVector3(this);
 
 		boolean needsNewPath = targetPosition == null || this.ticksExisted % DIRECTION_CHANGE_TIME == 0;
-		if (needsNewPath && worldObj.rand.nextDouble() < 0.1f)
+		if (needsNewPath && world.rand.nextDouble() < 0.1f)
 			pickNewTargetPosition();
 
 		if (targetPosition == null) //this represents the pause state in between picking new waypoints
@@ -222,20 +223,20 @@ public class EntityFlicker extends EntityAmbientCreature{
 	}
 
 	private void flick(){
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			for (int i = 0; i < 10 * ArsMagica2.config.getGFXLevel(); ++i){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "radiant", posX, posY, posZ);
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "radiant", posX, posY, posZ);
 				if (particle != null){
 					particle.AddParticleController(
 							new ParticleMoveOnHeading(
 									particle,
-									worldObj.rand.nextDouble() * 360,
-									worldObj.rand.nextDouble() * 360,
-									worldObj.rand.nextDouble() * 0.3f + 0.01f,
+									world.rand.nextDouble() * 360,
+									world.rand.nextDouble() * 360,
+									world.rand.nextDouble() * 0.3f + 0.01f,
 									1,
 									false));
 					particle.setRGBColorI(getFlickerAffinity().getColor());
-					particle.AddParticleController(new ParticleFadeOut(particle, 1, false).setFadeSpeed((float)(worldObj.rand.nextDouble() * 0.1 + 0.05)).setKillParticleOnFinish(true));
+					particle.AddParticleController(new ParticleFadeOut(particle, 1, false).setFadeSpeed((float)(world.rand.nextDouble() * 0.1 + 0.05)).setKillParticleOnFinish(true));
 					particle.setIgnoreMaxAge(true);
 					particle.setParticleScale(0.1f);
 				}
@@ -251,10 +252,10 @@ public class EntityFlicker extends EntityAmbientCreature{
 		for (int x = -5; x <= 5; x++) {
 			for (int y = 0; y <= 5; y++) {
 				for (int z = 0; z <= 5; z++) {
-					if (worldObj.getBlockState(getPosition().add(x, y, z)).getBlock() == BlockDefs.flickerLure) {
+					if (world.getBlockState(getPosition().add(x, y, z)).getBlock() == BlockDefs.flickerLure) {
 						BlockPos pos = getPosition().add(x, y, z);
 						groundLevel = getTopBlockNearMe();
-						targetPosition = new AMVector3(pos.getX() + worldObj.rand.nextInt(5) - 2, groundLevel + worldObj.rand.nextInt(3), pos.getY() + worldObj.rand.nextInt(5) - 2);
+						targetPosition = new AMVector3(pos.getX() + world.rand.nextInt(5) - 2, groundLevel + world.rand.nextInt(3), pos.getY() + world.rand.nextInt(5) - 2);
 						return;
 					}
 				}		
@@ -262,21 +263,21 @@ public class EntityFlicker extends EntityAmbientCreature{
 		}
 		if (aff == Affinity.WATER) {
 			for (int i = 0; i < 5; ++i){
-				targetPosition = new AMVector3(this.posX - 5 + worldObj.rand.nextInt(10), this.posY - 5 + worldObj.rand.nextInt(10), this.posZ - 5 + worldObj.rand.nextInt(10));
-				Block block = worldObj.getBlockState(targetPosition.toBlockPos()).getBlock();
+				targetPosition = new AMVector3(this.posX - 5 + world.rand.nextInt(10), this.posY - 5 + world.rand.nextInt(10), this.posZ - 5 + world.rand.nextInt(10));
+				Block block = world.getBlockState(targetPosition.toBlockPos()).getBlock();
 				if (block == Blocks.WATER || block == Blocks.FLOWING_WATER){
 					break;
 				}
 			}
 		} else if (aff == Affinity.AIR) {
 			groundLevel = getTopBlockNearMe();
-			targetPosition = new AMVector3(this.posX - 5 + worldObj.rand.nextInt(10), groundLevel + 10 + worldObj.rand.nextInt(15), this.posZ - 5 + worldObj.rand.nextInt(10));			
+			targetPosition = new AMVector3(this.posX - 5 + world.rand.nextInt(10), groundLevel + 10 + world.rand.nextInt(15), this.posZ - 5 + world.rand.nextInt(10));			
 		} else if (aff == Affinity.EARTH) {
 			groundLevel = getTopBlockNearMe();
-			targetPosition = new AMVector3(this.posX - 5 + worldObj.rand.nextInt(10), groundLevel + worldObj.rand.nextInt(1) + 1, this.posZ - 5 + worldObj.rand.nextInt(10));			
+			targetPosition = new AMVector3(this.posX - 5 + world.rand.nextInt(10), groundLevel + world.rand.nextInt(1) + 1, this.posZ - 5 + world.rand.nextInt(10));			
 		} else {
 			groundLevel = getTopBlockNearMe();
-			targetPosition = new AMVector3(this.posX - 5 + worldObj.rand.nextInt(10), groundLevel + 3 + worldObj.rand.nextInt(5), this.posZ - 5 + worldObj.rand.nextInt(10));
+			targetPosition = new AMVector3(this.posX - 5 + world.rand.nextInt(10), groundLevel + 3 + world.rand.nextInt(5), this.posZ - 5 + world.rand.nextInt(10));
 		}
 	}
 
@@ -284,9 +285,9 @@ public class EntityFlicker extends EntityAmbientCreature{
 		
 		BlockPos checkPos = this.getPosition();
 		
-		while (checkPos.getY() > 0 && worldObj.isAirBlock(checkPos))
+		while (checkPos.getY() > 0 && world.isAirBlock(checkPos))
 			checkPos = checkPos.down();
-		while (checkPos.getY() < worldObj.getActualHeight() && !worldObj.isAirBlock(checkPos))
+		while (checkPos.getY() < world.getActualHeight() && !world.isAirBlock(checkPos))
 			checkPos = checkPos.up();
 
 		return checkPos.getY();
@@ -305,16 +306,17 @@ public class EntityFlicker extends EntityAmbientCreature{
 		ArsMagica2.proxy.incrementFlickerCount();
 	}
 	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 		if (stack != null && stack.getItem() == ItemDefs.flickerJar && !this.isDead){
 			if (stack.getItemDamage() == 0){
-				if (!worldObj.isRemote){
+				if (!world.isRemote){
 					setDead();
 					InventoryUtilities.decrementStackQuantity(player.inventory, player.inventory.currentItem, 1);
 					ItemStack newStack = new ItemStack(ItemDefs.flickerJar);
 					ItemDefs.flickerJar.setFlickerJarTypeFromFlicker(newStack, this);
 					if (!InventoryUtilities.mergeIntoInventory(player.inventory, newStack)){
-						if (!worldObj.isRemote)
+						if (!world.isRemote)
 							player.dropItem(newStack.getItem(), newStack.getItemDamage());
 					}
 				}
@@ -328,76 +330,48 @@ public class EntityFlicker extends EntityAmbientCreature{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (ArsMagica2.proxy.getTotalFlickerCount() > 12 * worldObj.playerEntities.size() || worldObj.rand.nextDouble() > 0.2f){
+		if (ArsMagica2.proxy.getTotalFlickerCount() > 12 * world.playerEntities.size() || world.rand.nextDouble() > 0.2f){
 			return false;
 		}
 		//get the biome we're trying to spawn in
 		Biome biome = this.getEntityWorld().getBiome(this.getPosition());
 		if (biome != null){
 			//get the tags on this biome
-			Type[] biomeTags = BiomeDictionary.getTypesForBiome(biome);
+			Set<Type> biomeTags = BiomeDictionary.getTypes(biome);
+
+			//biome has no types? We probably shouldn't spawn anything here
+			if (biomeTags.size() <=0) return false;
 			//pick a random tag to focus on
-			Type tagType = biomeTags[worldObj.rand.nextInt(biomeTags.length)];
+			Type tagType = biomeTags.iterator().next();
 			//create a list of valid types based on that tag
 			ArrayList<Affinity> validAffinities = new ArrayList<Affinity>();
 			//populate the list
-			//DO NOT USE THIS LIST FOR AIR/EARTH/LIFE - they are handled by special cases.
-			switch (tagType){
-			case DEAD:
-			case END:
+			//DO NOT USE THIS LIST FOR AIR/EARTH/LIFE - they are handled by special cases.	
+			if (tagType == Type.END){
 				validAffinities.add(Affinity.ENDER);
-				break;
-			case PLAINS:
-			case FOREST:
-			case CONIFEROUS:
-			case JUNGLE:
+			}else if(tagType == Type.JUNGLE){
 				validAffinities.add(Affinity.NATURE);
-				break;
-			case COLD:
-			case SNOWY:
+			}else if(tagType == Type.SNOWY || tagType == Type.COLD){
 				validAffinities.add(Affinity.ICE);
-				break;
-			case MAGICAL:
+			}else if(tagType == Type.MAGICAL){
 				validAffinities.add(Affinity.ARCANE);
-				break;
-			case DRY:
-			case HOT:
-			case SAVANNA:
-			case NETHER:
+			}else if(tagType == Type.NETHER){
 				validAffinities.add(Affinity.FIRE);
-				break;
-			case OCEAN:
+			}else if(tagType == Type.OCEAN){
 				validAffinities.add(Affinity.LIGHTNING);
-			case SWAMP:
-			case WATER:
-			case RIVER:
-			case WET:
-			case BEACH:
+			}else if(tagType == Type.BEACH){
 				validAffinities.add(Affinity.WATER);
-				break;
-			case DENSE:
-			case LUSH:
-			case MESA:
-			case SANDY:
-			case SPARSE:
-			case SPOOKY:
-			case WASTELAND:
-			case HILLS:
-			case MOUNTAIN:
-			case MUSHROOM:
-			default:
-				break;
 			}
-
+			
 			//special conditions for air/earth flickers based on y coordinate
 			if (posY < 55){
 				validAffinities.add(Affinity.EARTH);
 			}
 
-			if (worldObj.canBlockSeeSky(getPosition()))
+			if (world.canBlockSeeSky(getPosition()))
 				validAffinities.add(Affinity.AIR);
 
-			if (worldObj.isRaining() && worldObj.rand.nextBoolean()){
+			if (world.isRaining() && world.rand.nextBoolean()){
 				validAffinities.clear();
 				validAffinities.add(Affinity.LIGHTNING);
 			}
@@ -405,20 +379,20 @@ public class EntityFlicker extends EntityAmbientCreature{
 			if (validAffinities.size() <= 0)
 				return false;
 			
-			if (worldObj.provider.getDimension() == 1) {
+			if (world.provider.getDimension() == 1) {
 				validAffinities.clear();
 				validAffinities.add(Affinity.ENDER);
 			}
 
 			//life flickers always have a chance to spawn?
 			MinecraftForge.EVENT_BUS.post(new FlickerAffinityEvent(validAffinities, this, biome));
-			if (worldObj.rand.nextDouble() < 0.1f){
+			if (world.rand.nextDouble() < 0.1f){
 				this.setFlickerType(Affinity.LIFE);
 			}else{
-				this.setFlickerType(validAffinities.get(worldObj.rand.nextInt(validAffinities.size())));
+				this.setFlickerType(validAffinities.get(world.rand.nextInt(validAffinities.size())));
 			}
 
-			if (this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox()) && this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox(), this)){
+			if (this.world.checkNoEntityCollision(this.getEntityBoundingBox()) && this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this)){
 				ArsMagica2.proxy.incrementFlickerCount();
 				return true;
 			}

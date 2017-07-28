@@ -39,7 +39,7 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 		workbenchInventory = tileEntity;
 		workbenchInventory.openInventory(playerInventory.player);
 
-		world = playerInventory.player.worldObj;
+		world = playerInventory.player.world;
 
 		INVENTORY_STORAGE_START = tileEntity.getStorageStart() - 3;
 		if (tileEntity.getUpgradeStatus(TileEntityMagiciansWorkbench.UPG_CRAFT))
@@ -148,7 +148,7 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return workbenchInventory.isUseableByPlayer(entityplayer);
+		return workbenchInventory.isUsableByPlayer(entityplayer);
 	}
 
 	@Override
@@ -159,50 +159,50 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i){
-		ItemStack itemstack = null;
+		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = (Slot)inventorySlots.get(i);
 		if (slot != null && slot.getHasStack()){
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (slot instanceof SlotMagiciansWorkbenchCrafting){
 				if (!mergeItemStack(itemstack1, INVENTORY_STORAGE_START, PLAYER_ACTION_BAR_END, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i < INVENTORY_STORAGE_START){
 				if (!mergeItemStack(itemstack1, INVENTORY_STORAGE_START, PLAYER_ACTION_BAR_END, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= INVENTORY_STORAGE_START && i < PLAYER_INVENTORY_START) //from player inventory
 			{
 				if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= PLAYER_INVENTORY_START && i < PLAYER_ACTION_BAR_START) //from player inventory
 			{
 				if (!mergeItemStack(itemstack1, INVENTORY_STORAGE_START, PLAYER_INVENTORY_START, false)){
 					if (!mergeItemStack(itemstack1, PLAYER_ACTION_BAR_START, PLAYER_ACTION_BAR_END, false)){
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 			}else if (i >= PLAYER_ACTION_BAR_START && i < PLAYER_ACTION_BAR_END){
 				if (!mergeItemStack(itemstack1, INVENTORY_STORAGE_START, PLAYER_ACTION_BAR_START - 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (!mergeItemStack(itemstack1, PLAYER_INVENTORY_START, PLAYER_ACTION_BAR_END, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.stackSize == 0){
+			if (itemstack1.getCount() == 0){
 				slot.putStack((ItemStack)null);
 			}else{
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.stackSize == itemstack.stackSize){
-				return null;
+			if (itemstack1.getCount() == itemstack.getCount()){
+				return ItemStack.EMPTY;
 			}
 
-			slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+			slot.onTake(par1EntityPlayer, itemstack1);
 		}
 		return itemstack;
 	}
@@ -215,7 +215,7 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 		HashMap<ImmutablePair<Item, Integer>, Integer> componentCount = new HashMap<ImmutablePair<Item, Integer>, Integer>();
 		RememberedRecipe recipe = this.workbenchInventory.getRememberedRecipeItems().get(recipeIndex);
 		for (ItemStack stack : recipe.components){
-			if (stack == null) continue;
+			if (stack.isEmpty()) continue;
 			ImmutablePair<Item, Integer> pair = new ImmutablePair<Item, Integer>(stack.getItem(), stack.getItemDamage());
 			if (componentCount.containsKey(pair)){
 				int amt = componentCount.get(pair);
@@ -245,8 +245,8 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 		int matchedQty = 0;
 		for (int i = getWorkbench().getStorageStart() - 3; i < getWorkbench().getStorageStart() - 3 + getWorkbench().getStorageSize(); ++i){
 			ItemStack stack = getWorkbench().getStackInSlot(i);
-			if (stack != null && stack.isItemEqual(component))
-				matchedQty += stack.stackSize;
+			if (!stack.isEmpty() && stack.isItemEqual(component))
+				matchedQty += stack.getCount();
 			if (matchedQty >= qty)
 				return true;
 		}
@@ -268,13 +268,13 @@ public class ContainerMagiciansWorkbench extends AM2Container{
 			Slot slot = ((Slot)this.inventorySlots.get(i));
 			ItemStack stack = slot.getStack();
 			if (stack != null && stack.isItemEqual(component)){
-				if (stack.stackSize > qtyLeft){
-					stack.stackSize -= qtyLeft;
+				if (stack.getCount() > qtyLeft){
+					stack.shrink(qtyLeft);
 					slot.putStack(stack);
 					slot.onSlotChanged();
 					return;
 				}else{
-					qtyLeft -= stack.stackSize;
+					qtyLeft -= stack.getCount();
 					slot.putStack(null);
 					slot.onSlotChanged();
 				}

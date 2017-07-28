@@ -88,7 +88,7 @@ public class Charm extends SpellComponent implements IRitualInteraction{
 			}
 		}else{
 			if (caster instanceof EntityPlayer){
-				((EntityPlayer)caster).addChatMessage(new TextComponentString("You cannot have any more summons."));
+				((EntityPlayer)caster).sendMessage(new TextComponentString("You cannot have any more summons."));
 			}
 			return true;
 		}
@@ -157,14 +157,14 @@ public class Charm extends SpellComponent implements IRitualInteraction{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

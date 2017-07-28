@@ -6,6 +6,7 @@ import am2.bosses.EntityEnderGuardian;
 import am2.bosses.IArsMagicaBoss;
 import am2.utils.MathUtilities;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.MoverType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import thehippomaster.AnimationAPI.AIAnimation;
@@ -62,9 +63,9 @@ public class EntityAIEnderRush extends AIAnimation{
 			if (a.distanceSqTo(b) > 4){
 				AMVector3 movement = MathUtilities.GetMovementVectorBetweenPoints(a, b);
 				float speed = -5f;
-				guardian.moveEntity(movement.x * speed, movement.y * speed, movement.z * speed);
+				guardian.move(MoverType.SELF ,movement.x * speed, movement.y * speed, movement.z * speed);
 			}else{
-				guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, ((IArsMagicaBoss)guardian).getAttackSound(), SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
+				guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, ((IArsMagicaBoss)guardian).getAttackSound(), SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
 				if (guardian.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(guardian), 15) && guardian.getAttackTarget().getHealth() <= 0)
 					guardian.heal(200);
 			}

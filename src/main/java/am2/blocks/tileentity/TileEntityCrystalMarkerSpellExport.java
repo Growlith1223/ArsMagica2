@@ -36,7 +36,7 @@ public class TileEntityCrystalMarkerSpellExport extends TileEntityCrystalMarker{
 		}
 
 		if (this.updateCounter % UPDATE_INTERVAL == 0){
-			if (updateFilter() && worldObj.isRemote){
+			if (updateFilter() && world.isRemote){
 				spawnParticles();
 			}
 		}
@@ -45,9 +45,9 @@ public class TileEntityCrystalMarkerSpellExport extends TileEntityCrystalMarker{
 
 	private void spawnParticles(){
 		for (int i = 0; i < 15; ++i){
-			AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "sparkle2", pos.getX(), pos.getY(), pos.getZ());
+			AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "sparkle2", pos.getX(), pos.getY(), pos.getZ());
 			if (effect != null){
-				effect.AddParticleController(new ParticleFloatUpward(effect, 0, worldObj.rand.nextFloat() * 0.1f, 1, false));
+				effect.AddParticleController(new ParticleFloatUpward(effect, 0, world.rand.nextFloat() * 0.1f, 1, false));
 				effect.AddParticleController(new ParticleFadeOut(effect, 2, false).setFadeSpeed(0.035f).setKillParticleOnFinish(true));
 				effect.addRandomOffset(0.2, 0.2, 0.2);
 				effect.setRGBColorF(0, 0.5f, 1.0f);
@@ -64,7 +64,7 @@ public class TileEntityCrystalMarkerSpellExport extends TileEntityCrystalMarker{
 					if (i == 0 && j == 0 && k == 0)
 						continue;
 
-					Block block = this.worldObj.getBlockState(pos.add(i, j, k)).getBlock();
+					Block block = this.world.getBlockState(pos.add(i, j, k)).getBlock();
 					if (block == BlockDefs.craftingAltar){
 						craftingAltarCache.add(new AMVector3(pos.add(i, j, k)));
 					}
@@ -94,7 +94,7 @@ public class TileEntityCrystalMarkerSpellExport extends TileEntityCrystalMarker{
 	}
 
 	private TileEntityCraftingAltar getCATE(AMVector3 vec){
-		TileEntity te = this.worldObj.getTileEntity(vec.toBlockPos());
+		TileEntity te = this.world.getTileEntity(vec.toBlockPos());
 		if (te != null && te instanceof TileEntityCraftingAltar)
 			return (TileEntityCraftingAltar)te;
 

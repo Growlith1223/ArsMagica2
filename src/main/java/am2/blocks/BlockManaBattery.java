@@ -2,8 +2,6 @@ package am2.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import am2.ArsMagica2;
 import am2.blocks.tileentity.TileEntityManaBattery;
 import am2.power.PowerNodeRegistry;
@@ -36,17 +34,17 @@ public class BlockManaBattery extends BlockAMPowered{
 		this.setResistance(2.0f);
 	}
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
-		if (!super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ))
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+		if (!super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ))
 			return true;
 
 		if (!worldIn.isRemote){
 			TileEntityManaBattery te = getTileEntity(worldIn, pos);
 			if (te != null){
 				if (ArsMagica2.config.colourblindMode()){
-					playerIn.addChatMessage(new TextComponentString(String.format("Charge Level: %.2f %% [%s]", PowerNodeRegistry.For(worldIn).getPower(te, te.getPowerType()) / te.getCapacity() * 100, getColorNameFromPowerType(te.getPowerType()))));
+					playerIn.sendMessage(new TextComponentString(String.format("Charge Level: %.2f %% [%s]", PowerNodeRegistry.For(worldIn).getPower(te, te.getPowerType()) / te.getCapacity() * 100, getColorNameFromPowerType(te.getPowerType()))));
 				}else{
-					playerIn.addChatMessage(new TextComponentString(String.format("Charge Level: %s%.2f \u00A7f%%", te.getPowerType().getChatColor(), PowerNodeRegistry.For(worldIn).getPower(te, te.getPowerType()) / te.getCapacity() * 100)));
+					playerIn.sendMessage(new TextComponentString(String.format("Charge Level: %s%.2f \u00A7f%%", te.getPowerType().getChatColor(), PowerNodeRegistry.For(worldIn).getPower(te, te.getPowerType()) / te.getCapacity() * 100)));
 				}
 			}
 		}
@@ -86,8 +84,6 @@ public class BlockManaBattery extends BlockAMPowered{
 	@Override
 	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
-		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-
 		ItemStack stack = new ItemStack(this, 1);
 		drops.add(stack);
 		TileEntity te = world.getTileEntity(pos);
@@ -132,7 +128,6 @@ public class BlockManaBattery extends BlockAMPowered{
 		return true;
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
 		ItemStack stack = new ItemStack(this);

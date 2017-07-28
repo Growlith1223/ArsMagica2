@@ -21,7 +21,7 @@ public class ParticleMoveOnHeading extends ParticleController{
 		double movementZ = Math.sin(yaw) * speed;
 		double movementY = -Math.sin(pitch) * speed;
 
-		particle.moveEntity(movementX, movementY, movementZ);
+		particle.move(movementX, movementY, movementZ);
 	}
 
 	@Override

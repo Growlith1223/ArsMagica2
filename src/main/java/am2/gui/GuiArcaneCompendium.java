@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiArcaneCompendium extends GuiScreen {
 	
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/ArcaneCompendiumIndexGui.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/arcane_compendium_gui_index.png");
 	private static final int xSize = 360;
 	private static final int ySize = 256;
 	

@@ -14,7 +14,7 @@ public class TileMagiciansWorkbenchRenderer extends TileEntitySpecialRenderer<Ti
 
 	public TileMagiciansWorkbenchRenderer() {
 		model = new ModelMagiciansWorkbench();
-		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/magiciansWorkbench.png");
+		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/magicians_workbench.png");
 	}
 
 	@Override

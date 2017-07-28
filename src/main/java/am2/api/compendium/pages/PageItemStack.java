@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.oredict.OreDictionary;
@@ -51,13 +52,13 @@ public class PageItemStack extends CompendiumPage<ItemStack> {
 			if (mouseX > cx && mouseX < cx + 16){
 				if (mouseY > cy && mouseY < cy + 16){
 					ArrayList<String> tooltip = new ArrayList<>();
-					tooltip.addAll(element.getTooltip(Minecraft.getMinecraft().thePlayer, false));
-					drawHoveringText(tooltip, mouseX, mouseY, mc.fontRendererObj);
+					tooltip.addAll(element.getTooltip(Minecraft.getMinecraft().player, false));
+					drawHoveringText(tooltip, mouseX, mouseY, mc.fontRenderer);
 				}
 			}
 		}
 		RenderRecipe(cx, cy, mouseX, mouseY);
-		mc.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/ArcaneCompendiumGuiExtras.png"));
+		mc.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/arcane_compendium_gui_extras.png"));
 		zLevel++;
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -107,7 +108,7 @@ public class PageItemStack extends CompendiumPage<ItemStack> {
 				int widthSq = (int)Math.ceil(Math.sqrt(recipeWidth));
 		
 				String label = "\247nShapeless";
-				mc.fontRendererObj.drawString(label, cx - (int)(mc.fontRendererObj.getStringWidth(label) / 2.5), cy - step * 3, 0x6600FF);
+				mc.fontRenderer.drawString(label, cx - (int)(mc.fontRenderer.getStringWidth(label) / 2.5), cy - step * 3, 0x6600FF);
 		
 				for (int i = 0; i < recipeWidth; ++i){
 					sx = cx - step + (step * col);
@@ -128,8 +129,8 @@ public class PageItemStack extends CompendiumPage<ItemStack> {
 		if (element != null){
 			AMGuiHelper.DrawItemAtXY(element, sx, sy, this.zLevel);
 	
-			if (element.stackSize > 1)
-				mc.fontRendererObj.drawString("x" + element.stackSize, sx + 16, sy + 8, 0, false);
+			if (element.getCount() > 1)
+				mc.fontRenderer.drawString("x" + element.getCount(), sx + 16, sy + 8, 0, false);
 	
 			if (mousex > sx && mousex < sx + 16){
 				if (mousey > sy && mousey < sy + 16){
@@ -160,7 +161,7 @@ public class PageItemStack extends CompendiumPage<ItemStack> {
 		List<ItemStack> alternates = new ArrayList<ItemStack>();
 		//System.out.println(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE);
 		if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-			stack.getItem().getSubItems(stack.getItem(), stack.getItem().getCreativeTab(), alternates);
+			stack.getItem().getSubItems(stack.getItem(), stack.getItem().getCreativeTab(), (NonNullList<ItemStack>) alternates);
 		}
 //		alternates.addAll(oredict);
 		

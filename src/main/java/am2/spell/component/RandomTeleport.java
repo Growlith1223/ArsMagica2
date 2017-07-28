@@ -69,13 +69,13 @@ public class RandomTeleport extends SpellComponent{
 		BlockPos pos = target.getPosition();
 		Block l;
 
-		if (target.worldObj.getBlockState(pos) != null){
+		if (target.world.getBlockState(pos) != null){
 			boolean targetBlockIsSolid = false;
 
 			while (!targetBlockIsSolid && pos.getY() > 0){
-				l = target.worldObj.getBlockState(pos.down()).getBlock();
+				l = target.world.getBlockState(pos.down()).getBlock();
 
-				if (l != Blocks.AIR && l.isPassable(target.worldObj, pos)){
+				if (l != Blocks.AIR && l.isPassable(target.world, pos)){
 					targetBlockIsSolid = true;
 				}else{
 					--target.posY;
@@ -85,7 +85,7 @@ public class RandomTeleport extends SpellComponent{
 
 			if (targetBlockIsSolid){
 				target.setPosition(target.posX, target.posY, target.posZ);
-				if (target.worldObj.getCollisionBoxes(target, target.getEntityBoundingBox()).isEmpty()){
+				if (target.world.getCollisionBoxes(target, target.getEntityBoundingBox()).isEmpty()){
 					locationValid = true;
 				}
 			}

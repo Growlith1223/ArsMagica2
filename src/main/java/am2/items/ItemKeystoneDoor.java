@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
@@ -50,8 +51,8 @@ public class ItemKeystoneDoor extends Item{
 	 * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
 	 */
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+		ItemStack stack = playerIn.getHeldItem(hand);
 		if (facing != EnumFacing.UP){
 			return EnumActionResult.PASS;
 		}else{
@@ -71,7 +72,7 @@ public class ItemKeystoneDoor extends Item{
 	                int j = enumfacing.getFrontOffsetZ();
 					boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;
 					ItemDoor.placeDoor(worldIn, pos, enumfacing, block, flag);
-					--stack.stackSize;
+					stack.shrink(1);
 					return EnumActionResult.SUCCESS;
 				}
 			}else{
@@ -81,7 +82,7 @@ public class ItemKeystoneDoor extends Item{
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list){
+	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list){
 		list.add(new ItemStack(this, 1, KEYSTONE_DOOR));
 		list.add(new ItemStack(this, 1, SPELL_SEALED_DOOR));
 	}

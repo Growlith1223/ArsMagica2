@@ -20,7 +20,7 @@ public class ModelLibrary{
 	public static final ModelLibrary instance = new ModelLibrary();
 
 	private ModelLibrary(){
-		dummyBroom = new EntityBroom(Minecraft.getMinecraft().theWorld);
+		dummyBroom = new EntityBroom(Minecraft.getMinecraft().world);
 		sickle.setNoSpin();
 
 		dummyArcaneSpellbook = new ModelArcaneGuardianSpellBook();

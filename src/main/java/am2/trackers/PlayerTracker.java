@@ -54,6 +54,7 @@ public class PlayerTracker{
 		if (hasAA(event.player)){
 			AMNetHandler.INSTANCE.requestClientAuras((EntityPlayerMP)event.player);
 		}
+		System.out.println("UUID: " + event.player.getUniqueID());
 		
 		ArsMagica2.disabledSkills.getDisabledSkills(true);
 		int[] disabledSkills = ArsMagica2.disabledSkills.getDisabledSkillIDs();
@@ -71,8 +72,8 @@ public class PlayerTracker{
 	@SubscribeEvent
 	public void onPlayerLogout(PlayerLoggedOutEvent event){
 		//kill any summoned creatures
-		if (!event.player.worldObj.isRemote){
-			List<Entity> list = event.player.worldObj.loadedEntityList;
+		if (!event.player.world.isRemote){
+			List<Entity> list = event.player.world.loadedEntityList;
 			for (Object o : list){
 				if (o instanceof EntityLivingBase && EntityUtils.isSummon((EntityLivingBase)o) && EntityUtils.getOwner((EntityLivingBase)o) == event.player.getEntityId()){
 					((EntityLivingBase)o).setDead();
@@ -131,8 +132,8 @@ public class PlayerTracker{
 		for (ItemStack stack : player.inventory.armorInventory){
 			int soulbound_level = EnchantmentHelper.getEnchantmentLevel(AMEnchantments.soulbound, stack);
 			if (soulbound_level > 0 || ArmorHelper.isInfusionPreset(stack, GenericImbuement.soulbound)){
-				soulboundItems.put(slotCount + player.inventory.mainInventory.length, stack.copy());
-				player.inventory.setInventorySlotContents(slotCount + player.inventory.mainInventory.length, null);
+				soulboundItems.put(slotCount + player.inventory.mainInventory.size() - 1, stack.copy());
+				player.inventory.setInventorySlotContents(slotCount + player.inventory.mainInventory.size() - 1, null);
 			}
 			slotCount++;
 		}
@@ -149,8 +150,8 @@ public class PlayerTracker{
 		int slotTest = 0;
 		while (soulboundItems.containsKey(slotTest)){
 			slotTest++;
-			if (slotTest == player.inventory.mainInventory.length)
-				slotTest += player.inventory.armorInventory.length;
+			if (slotTest == player.inventory.mainInventory.size() - 1)
+				slotTest += player.inventory.armorInventory.size() - 1;
 		}
 
 		soulboundItems.put(slotTest, stack);
@@ -160,35 +161,37 @@ public class PlayerTracker{
 		return getAAL(entity) > 0;
 	}
 
-	public int getAAL(EntityPlayer thePlayer){
+	public int getAAL(EntityPlayer player){
 		try{
-			thePlayer.getDisplayName();
+			player.getDisplayName();
 		}catch (Throwable t){
 			return 0;
 		}
 
 		if (aals == null || clls == null)
 			populateAALList();
-		if (aals.containsKey(thePlayer.getDisplayName().getUnformattedText().toLowerCase()))
-			return aals.get(thePlayer.getDisplayName().getUnformattedText().toLowerCase());
+		if (aals.containsKey(player.getDisplayName().getUnformattedText().toLowerCase()))
+			return aals.get(player.getDisplayName().getUnformattedText().toLowerCase());
 		return 0;
 	}
 	
 	private ArrayList<String> addContributors(ArrayList<String> lines){
 		//Growlith
-		lines.add("95ca1edb-b0d6-46a8-825d-2299763f03f0, :AL,3, :CL,http://i.imgur.com/QBCa5O0.png,6,growlith1223");
+		lines.add("95ca1edb-b0d6-46a8-825d-2299763f03f0,:AL,3,:CL,http://i.imgur.com/QBCa5O0.png,6,growlith1223");
 		//JJT
-		lines.add("6b93546d-100a-403d-b352-f2bf75fd3b0c, :AL,3 :CL,http://i.imgur.com/QBCa5O0.png,6,jjtparadox");
+		lines.add("6b93546d-100a-403d-b352-f2bf75fd3b0c,:AL,3,:CL,http://i.imgur.com/QBCa5O0.png,6,jjtparadox");
+		//Testing
+		lines.add("a08eaa4a-e3df-416d-9ced-d6d4fcd0e88b,:AL,3,:CL,http://i.imgur.com/QBCa5O0.png,6,The_Icy_One");
 		return lines;
 	}
 
 	private void populateAALList(){
-
+		System.out.println("Registering Cloaks.");
 		aals = new TreeMap<String, Integer>();
 		clls = new TreeMap<String, String>();
 		cldm = new TreeMap<String, Integer>();
 
-		String dls = "http://qorconcept.com/mc/AREW0152.txt";
+		String dls = "https://qorconcept.com/mc/AREW0152.txt";
 		char[] dl = dls.toCharArray();
 		
 		
@@ -196,9 +199,9 @@ public class PlayerTracker{
 			String s = WebRequestUtils.sendPost(new String(dl), new HashMap<String, String>());
 			@SuppressWarnings("unchecked")
 			ArrayList<String> lines = new ArrayList<String>(Arrays.asList(s.replace("\r\n", "\n").split("\n")));
-			addContributors(lines);
+			lines = (addContributors(lines));
 			for (String line : lines){
-				
+				System.out.println(line);
 				String[] split = line.split(",");
 				for (int i = 1; i < split.length; ++i){
 					if (split[i].equals(":AL")){
@@ -219,6 +222,7 @@ public class PlayerTracker{
 			}
 		}catch (Throwable t){
 			//well, we tried.
+			System.out.println("Cloak initialization failed.");
 		}
 	}
 

@@ -38,7 +38,7 @@ public class ArmorEventHandler{
 	public void onEntityLiving(LivingUpdateEvent event){
 		if (!(event.getEntityLiving() instanceof EntityPlayer))
 			return;
-		if (!event.getEntityLiving().worldObj.isRemote)
+		if (!event.getEntityLiving().world.isRemote)
 			ArmorHelper.HandleArmorInfusion((EntityPlayer) event.getEntityLiving());
 		doInfusions(ImbuementApplicationTypes.ON_TICK, event, (EntityPlayer)event.getEntityLiving());
 	}
@@ -87,7 +87,7 @@ public class ArmorEventHandler{
 			for (ArmorImbuement inf : infusions){
 				if (inf.getApplicationTypes().contains(type)){
 					if (inf.canApply(player)){
-						if (inf.applyEffect(player, player.worldObj, player.getItemStackFromSlot(slot), type, event)){
+						if (inf.applyEffect(player, player.world, player.getItemStackFromSlot(slot), type, event)){
 							if (inf.getCooldown() > 0){
 								if (props.getCooldown(inf.getRegistryName().toString()) < inf.getCooldown()){
 									props.addCooldown(inf.getRegistryName().toString(), inf.getCooldown());
@@ -103,7 +103,7 @@ public class ArmorEventHandler{
 	}
 
 	private void doXPInfusion(EntityPlayer player, float xpMin, float xpMax){
-		float amt = (float)((player.worldObj.rand.nextFloat() * xpMin + (xpMax - xpMin)) * ArsMagica2.config.getArmorXPInfusionFactor());
+		float amt = (float)((player.world.rand.nextFloat() * xpMin + (xpMax - xpMin)) * ArsMagica2.config.getArmorXPInfusionFactor());
 		ArmorHelper.addXPToArmor(amt, player);
 	}
 	

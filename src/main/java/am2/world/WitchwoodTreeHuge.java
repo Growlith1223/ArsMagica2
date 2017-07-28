@@ -28,7 +28,7 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 	/**
 	 * Reference to the World object.
 	 */
-	World worldObj;
+	World world;
 	int[] basePos = new int[]{0, 0, 0};
 	int heightLimit;
 	int height;
@@ -100,8 +100,8 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 				for (double d0 = 0.5D; j1 < i; ++j1){
 					double d1 = this.scaleWidth * (double)f * ((double)this.rand.nextFloat() + 0.328D);
 					double d2 = (double)this.rand.nextFloat() * 2.0D * Math.PI;
-					int k1 = MathHelper.floor_double(d1 * Math.sin(d2) + (double)this.basePos[0] + d0);
-					int l1 = MathHelper.floor_double(d1 * Math.cos(d2) + (double)this.basePos[2] + d0);
+					int k1 = MathHelper.floor(d1 * Math.sin(d2) + (double)this.basePos[0] + d0);
+					int l1 = MathHelper.floor(d1 * Math.cos(d2) + (double)this.basePos[2] + d0);
 					int[] aint1 = new int[]{k1, j, l1};
 					int[] aint2 = new int[]{k1, j + this.leafDistanceLimit, l1};
 
@@ -155,12 +155,12 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 					++k1;
 				}else{
 					aint1[b2] = aint[b2] + k1;
-					Block l1 = this.worldObj.getBlockState(new BlockPos (aint1[0], aint1[1], aint1[2])).getBlock();
+					Block l1 = this.world.getBlockState(new BlockPos (aint1[0], aint1[1], aint1[2])).getBlock();
 
 					if (l1 != Blocks.AIR && l1 != BlockDefs.witchwoodLeaves){
 						++k1;
 					}else{
-						worldObj.setBlockState(new BlockPos (aint1[0], aint1[1], aint1[2]), par6);
+						world.setBlockState(new BlockPos (aint1[0], aint1[1], aint1[2]), par6);
 						++k1;
 					}
 				}
@@ -241,9 +241,9 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 			int j = 0;
 
 			for (int k = aint2[b1] + b4; j != k; j += b4){
-				aint3[b1] = MathHelper.floor_double((double)(par1ArrayOfInteger[b1] + j) + 0.5D);
-				aint3[b2] = MathHelper.floor_double((double)par1ArrayOfInteger[b2] + (double)j * d0 + 0.5D);
-				aint3[b3] = MathHelper.floor_double((double)par1ArrayOfInteger[b3] + (double)j * d1 + 0.5D);
+				aint3[b1] = MathHelper.floor((double)(par1ArrayOfInteger[b1] + j) + 0.5D);
+				aint3[b2] = MathHelper.floor((double)par1ArrayOfInteger[b2] + (double)j * d0 + 0.5D);
+				aint3[b3] = MathHelper.floor((double)par1ArrayOfInteger[b3] + (double)j * d1 + 0.5D);
 				int l = Math.abs(aint3[0] - par1ArrayOfInteger[0]);
 				int i1 = Math.abs(aint3[2] - par1ArrayOfInteger[2]);
 				int j1 = Math.max(l, i1);
@@ -254,7 +254,7 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 					}
 				}
 
-				worldObj.setBlockState(new BlockPos (aint3[0], aint3[1], aint3[2]), par3);
+				world.setBlockState(new BlockPos (aint3[0], aint3[1], aint3[2]), par3);
 			}
 		}
 	}
@@ -363,9 +363,9 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 
 			for (j = aint2[b1] + b4; i != j; i += b4){
 				aint3[b1] = par1ArrayOfInteger[b1] + i;
-				aint3[b2] = MathHelper.floor_double((double)par1ArrayOfInteger[b2] + (double)i * d0);
-				aint3[b3] = MathHelper.floor_double((double)par1ArrayOfInteger[b3] + (double)i * d1);
-				Block k = this.worldObj.getBlockState(new BlockPos(aint3[0], aint3[1], aint3[2])).getBlock();
+				aint3[b2] = MathHelper.floor((double)par1ArrayOfInteger[b2] + (double)i * d0);
+				aint3[b3] = MathHelper.floor((double)par1ArrayOfInteger[b3] + (double)i * d1);
+				Block k = this.world.getBlockState(new BlockPos(aint3[0], aint3[1], aint3[2])).getBlock();
 
 				if (k != Blocks.AIR && k != BlockDefs.witchwoodLeaves){
 					break;
@@ -383,9 +383,9 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 	boolean validTreeLocation(){
 		int[] aint = new int[]{this.basePos[0], this.basePos[1], this.basePos[2]};
 		int[] aint1 = new int[]{this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
-		IBlockState soil = this.worldObj.getBlockState(new BlockPos (this.basePos[0], this.basePos[1] - 1, this.basePos[2]));
+		IBlockState soil = this.world.getBlockState(new BlockPos (this.basePos[0], this.basePos[1] - 1, this.basePos[2]));
 
-		boolean isValidSoil = (soil != null && soil.getBlock().canSustainPlant(soil, worldObj, new BlockPos (basePos[0], basePos[1] - 1, basePos[2]), EnumFacing.UP, (BlockSapling)Blocks.SAPLING));
+		boolean isValidSoil = (soil != null && soil.getBlock().canSustainPlant(soil, world, new BlockPos (basePos[0], basePos[1] - 1, basePos[2]), EnumFacing.UP, (BlockSapling)Blocks.SAPLING));
 		if (!isValidSoil){
 			return false;
 		}else{
@@ -417,7 +417,7 @@ public class WitchwoodTreeHuge extends WorldGenAbstractTree{
 	}
 
 	public boolean generate(World worldIn, Random rand, BlockPos position){
-		this.worldObj = worldIn;
+		this.world = worldIn;
 		long l = rand.nextLong();
 		this.rand.setSeed(l);
 		this.basePos[0] = position.getX();

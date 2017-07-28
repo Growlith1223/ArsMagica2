@@ -64,7 +64,7 @@ public class TileOtherworldAuraRenderer extends TileEntitySpecialRenderer<TileEn
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.color(1, 0, 0.75f, 1);
 		GlStateManager.translate(0.0f, 0.25f, 0.0f);
-		GlStateManager.rotate((Minecraft.getMinecraft().thePlayer.ticksExisted + smooth) * (scale * 2) * offset, 0, 0, 1);
+		GlStateManager.rotate((Minecraft.getMinecraft().player.ticksExisted + smooth) * (scale * 2) * offset, 0, 0, 1);
 		float scalefactor = (float)Math.abs(Math.sin(System.currentTimeMillis() / 1000.0 * scale)) + 0.01f;
 		GlStateManager.scale(scale * scalefactor, scale * scalefactor, scale * scalefactor);
 		GlStateManager.translate(0.0f, -0.25f, 0.0f);

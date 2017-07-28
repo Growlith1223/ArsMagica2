@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiInertSpawner extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/FlickerHabitat.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/flicker_habitat.png");
 	/**
 	 * @param par1Container
 	 */

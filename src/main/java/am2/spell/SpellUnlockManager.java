@@ -35,7 +35,7 @@ public class SpellUnlockManager{
 				return;
 			for (UnlockEntry entry : entries){
 				//check unlocks
-				if (!event.entityLiving.worldObj.isRemote){
+				if (!event.entityLiving.world.isRemote){
 					if (entry.willSpellUnlock(event.spell)){
 						entry.unlockFor((EntityPlayer)event.entityLiving);
 					}
@@ -143,7 +143,7 @@ public class SpellUnlockManager{
 		}
 
 		public void unlockFor(EntityPlayer player){
-			if (!player.worldObj.isRemote){
+			if (!player.world.isRemote){
 				SkillData.For(player).unlockSkill(unlock.getID());
 			}
 		}

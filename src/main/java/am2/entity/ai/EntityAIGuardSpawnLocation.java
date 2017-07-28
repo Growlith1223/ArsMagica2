@@ -23,7 +23,7 @@ public class EntityAIGuardSpawnLocation extends EntityAIBase{
 
 	public EntityAIGuardSpawnLocation(EntityCreature par1EntityMob, float moveSpeed, float minDist, float maxDist, AMVector3 spawn){
 		theGuard = par1EntityMob;
-		theWorld = par1EntityMob.worldObj;
+		theWorld = par1EntityMob.world;
 		this.moveSpeed = moveSpeed;
 		guardPathfinder = par1EntityMob.getNavigator();
 		this.minDist = minDist;

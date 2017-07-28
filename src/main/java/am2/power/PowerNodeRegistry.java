@@ -340,7 +340,7 @@ public class PowerNodeRegistry{
 			TileEntity te = world.getTileEntity(new BlockPos(vector));
 			if (te == null || !(te instanceof IPowerNode)){
 				//opportune time to remove dead power nodes
-				removePowerNode(chunk.getChunkCoordIntPair(), vector);
+				removePowerNode(chunk.getPos(), vector);
 				deadNodesRemoved++;
 				continue;
 			}
@@ -390,7 +390,7 @@ public class PowerNodeRegistry{
 //			return null;
 //		if (te.getWorld().getChunkFromBlockCoords(te.getPos()) == null)
 		return new ChunkPos(te.getPos().getX() >> 4, te.getPos().getZ() >> 4);
-//		return te.getWorld().getChunkFromBlockCoords(te.getPos()).getChunkCoordIntPair();
+//		return te.getWorld().getChunkFromBlockCoords(te.getPos()).getPos();
 	}
 
 //	private ChunkPos getChunkFromPosition(World world, Vec3d location){
@@ -440,11 +440,11 @@ public class PowerNodeRegistry{
 	}
 
 	public void unloadChunk(Chunk chunk){
-		powerNodes.remove(chunk.getChunkCoordIntPair());
+		powerNodes.remove(chunk.getPos());
 	}
 
 	public boolean hasDataForChunk(Chunk chunk){
-		return powerNodes.containsKey(chunk.getChunkCoordIntPair());
+		return powerNodes.containsKey(chunk.getPos());
 	}
 
 	private class ChunkCoordComparator implements Comparator<ChunkPos>{

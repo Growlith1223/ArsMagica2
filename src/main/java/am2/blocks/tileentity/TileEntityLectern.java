@@ -46,12 +46,12 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 
 	@Override
 	public void update(){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			updateBookRender();
 			if (tooltipStack != null && tickCount % 2 == 0){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "sparkle", pos.getX() + 0.5 + ((worldObj.rand.nextDouble() * 0.2) - 0.1), pos.getY() + 1, pos.getZ() + 0.5 + ((worldObj.rand.nextDouble() * 0.2) - 0.1));
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "sparkle", pos.getX() + 0.5 + ((world.rand.nextDouble() * 0.2) - 0.1), pos.getY() + 1, pos.getZ() + 0.5 + ((world.rand.nextDouble() * 0.2) - 0.1));
 				if (particle != null){
-					particle.AddParticleController(new ParticleMoveOnHeading(particle, worldObj.rand.nextDouble() * 360, -45 - worldObj.rand.nextInt(90), 0.05f, 1, false));
+					particle.AddParticleController(new ParticleMoveOnHeading(particle, world.rand.nextDouble() * 360, -45 - world.rand.nextInt(90), 0.05f, 1, false));
 					particle.AddParticleController(new ParticleFadeOut(particle, 2, false).setFadeSpeed(0.05f).setKillParticleOnFinish(true));
 					particle.setIgnoreMaxAge(true);
 					if (getOverpowered()){
@@ -61,7 +61,7 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 			}
 		}
 		
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	private void updateBookRender() {
@@ -79,11 +79,11 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 
 		this.bookSpread += 0.1F;
 
-		if (this.bookSpread < 0.5F || worldObj.rand.nextInt(40) == 0){
+		if (this.bookSpread < 0.5F || world.rand.nextInt(40) == 0){
 			float f1 = this.flipT;
 
 			do{
-				this.flipT += (float)(worldObj.rand.nextInt(4) - worldObj.rand.nextInt(4));
+				this.flipT += (float)(world.rand.nextInt(4) - world.rand.nextInt(4));
 			}
 			while (f1 == this.flipT);
 		}
@@ -126,7 +126,7 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
         this.pageFlipPrev = this.pageFlip;
         float f = (this.flipT - this.pageFlip) * 0.4F;
 		float f3 = 0.2F;
-		f = MathHelper.clamp_float(f, -f3, f3);
+		f = MathHelper.clamp(f, -f3, f3);
         this.flipA += (f - this.flipA) * 0.9F;
         this.pageFlip += this.flipA;
 	}
@@ -138,9 +138,9 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 	public boolean setStack(ItemStack stack){
 		if (stack == null || getValidItems().contains(stack.getItem())){
 			if (stack != null)
-				stack.stackSize = 1;
+				stack.setCount(1);
 			this.stack = stack;
-			if (!this.worldObj.isRemote){
+			if (!this.world.isRemote){
 				AMDataWriter writer = new AMDataWriter();
 				writer.add(pos.getX());
 				writer.add(pos.getY());
@@ -151,7 +151,7 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 					writer.add(true);
 					writer.add(stack);
 				}
-				AMNetHandler.INSTANCE.sendPacketToAllClientsNear(worldObj.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 32, AMPacketIDs.LECTERN_DATA, writer.generate());
+				AMNetHandler.INSTANCE.sendPacketToAllClientsNear(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 32, AMPacketIDs.LECTERN_DATA, writer.generate());
 			}
 			return true;
 		}
@@ -196,7 +196,7 @@ public class TileEntityLectern extends TileEntityEnchantmentTable implements ITi
 		super.readFromNBT(comp);
 		if (comp.hasKey("placedBook")){
 			NBTTagCompound bewk = comp.getCompoundTag("placedBook");
-			stack = ItemStack.loadItemStackFromNBT(bewk);
+			stack = new ItemStack(bewk);
 		}
 	}
 

@@ -60,8 +60,8 @@ public class EntityAILightningBolt extends AIAnimation{
 			guardian.getLookHelper().setLookPositionWithEntity(guardian.getAttackTarget(), 30, 30);
 			if (guardian.getTicksInCurrentAction() == 7){
 				doStrike();
-				if (!guardian.worldObj.isRemote)
-					guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
+				if (!guardian.world.isRemote)
+					guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class EntityAILightningBolt extends AIAnimation{
 			}
 			guardian.getNavigator().clearPathEntity();
 			if (guardian.getRNG().nextDouble() > 0.2f){
-				ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(guardian.worldObj, guardian, guardian, guardian.getAttackTarget(), 0);
+				ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(guardian.world, guardian, guardian, guardian.getAttackTarget(), 0);
 				guardian.getAttackTarget().attackEntityFrom(DamageSources.causeLightningDamage(guardian), 3);
 				if (guardian.getAttackTarget() instanceof EntityPlayer){
 					EntityPlayer player = (EntityPlayer)guardian.getAttackTarget();
@@ -85,7 +85,7 @@ public class EntityAILightningBolt extends AIAnimation{
 						player.dismountEntity(player.getRidingEntity());
 				}
 			}else{
-				ArsMagica2.proxy.particleManager.BoltFromEntityToPoint(guardian.worldObj, guardian, guardian.getAttackTarget().posX - 0.5 + guardian.getRNG().nextDouble(), guardian.getAttackTarget().posY - 0.5 + guardian.getRNG().nextDouble() + guardian.getAttackTarget().getEyeHeight(), guardian.getAttackTarget().posZ - 0.5 + guardian.getRNG().nextDouble());
+				ArsMagica2.proxy.particleManager.BoltFromEntityToPoint(guardian.world, guardian, guardian.getAttackTarget().posX - 0.5 + guardian.getRNG().nextDouble(), guardian.getAttackTarget().posY - 0.5 + guardian.getRNG().nextDouble() + guardian.getAttackTarget().getEyeHeight(), guardian.getAttackTarget().posZ - 0.5 + guardian.getRNG().nextDouble());
 			}
 		}
 	}

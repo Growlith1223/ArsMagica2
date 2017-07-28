@@ -138,7 +138,7 @@ public class BanishRain extends SpellComponent implements IRitualInteraction{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

@@ -35,44 +35,44 @@ public class FlickerOperatorNaturesBounty extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
-		return DoOperation(worldObj, habitat, powered, new Affinity[0]);
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
+		return DoOperation(world, habitat, powered, new Affinity[0]);
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
 		int radius = 6;
 		int diameter = radius * 2 + 1;
 		boolean updatedOnce = false;
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			for (int i = 0; i < (powered ? 5 : 1); ++i){
-				BlockPos effectPos = ((TileEntity)habitat).getPos().add(- radius + (worldObj.rand.nextInt(diameter)), 0, - radius + (worldObj.rand.nextInt(diameter)));
+				BlockPos effectPos = ((TileEntity)habitat).getPos().add(- radius + (world.rand.nextInt(diameter)), 0, - radius + (world.rand.nextInt(diameter)));
 
-				while (worldObj.isAirBlock(effectPos) && effectPos.getY() > 0){
+				while (world.isAirBlock(effectPos) && effectPos.getY() > 0){
 					effectPos = effectPos.down();
 				}
 
-				while (!worldObj.isAirBlock(effectPos) && effectPos.getY() > 0){
+				while (!world.isAirBlock(effectPos) && effectPos.getY() > 0){
 					effectPos = effectPos.up();
 				}
 
 				effectPos.down();
 
 
-				Block block = worldObj.getBlockState(effectPos).getBlock();
+				Block block = world.getBlockState(effectPos).getBlock();
 				if (block instanceof IPlantable || block instanceof IGrowable){
-					block.updateTick(worldObj, effectPos, worldObj.getBlockState(effectPos), worldObj.rand);
+					block.updateTick(world, effectPos, world.getBlockState(effectPos), world.rand);
 					updatedOnce = true;
 				}
 			}
 		}else{
 			int posY = ((TileEntity)habitat).getPos().getY();
-			while (!worldObj.isAirBlock(new BlockPos(((TileEntity)habitat).getPos().getX(), posY, ((TileEntity)habitat).getPos().getZ()))){
+			while (!world.isAirBlock(new BlockPos(((TileEntity)habitat).getPos().getX(), posY, ((TileEntity)habitat).getPos().getZ()))){
 				posY++;
 			}
 			posY--;
 			for (int i = 0; i < ArsMagica2.config.getGFXLevel() * 2; ++i){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "plant", ((TileEntity)habitat).getPos().getX() + 0.5, posY + 0.5f, ((TileEntity)habitat).getPos().getZ() + 0.5);
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "plant", ((TileEntity)habitat).getPos().getX() + 0.5, posY + 0.5f, ((TileEntity)habitat).getPos().getZ() + 0.5);
 				if (particle != null){
 
 					particle.addRandomOffset(diameter, 0, diameter);
@@ -86,7 +86,7 @@ public class FlickerOperatorNaturesBounty extends AbstractFlickerFunctionality{
 		if (powered){
 			for (Affinity aff : flickers){
 				if (aff == Affinity.WATER)
-					FlickerOperatorGentleRains.instance.DoOperation(worldObj, habitat, powered);
+					FlickerOperatorGentleRains.instance.DoOperation(world, habitat, powered);
 			}
 		}
 
@@ -94,7 +94,7 @@ public class FlickerOperatorNaturesBounty extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered){
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class FlickerOperatorNaturesBounty extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class FlickerOperatorNaturesBounty extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorNaturesBounty");
+		return new ResourceLocation("arsmagica2", "flicker_operator_natures_bounty");
 	}
 
 	@Override

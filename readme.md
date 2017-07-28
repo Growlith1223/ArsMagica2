@@ -1,4 +1,7 @@
-Ars Magica 2 - Reborn 1.10.2
+WARNING - THIS IS AN UNSTABLE VERSION AND MAY DESTROY WORLDS.
+========
+
+Ars Magica 2 - Reborn 1.11.2
 ========
 
 This is a reworked version of the Ars Magica 2 mod by Mithion.

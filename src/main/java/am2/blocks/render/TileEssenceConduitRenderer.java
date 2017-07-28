@@ -33,7 +33,7 @@ public class TileEssenceConduitRenderer extends TileEntitySpecialRenderer<TileEn
 	public TileEssenceConduitRenderer(){
 		model = new ModelEssenceConduit();
 
-		powered = new ResourceLocation("arsmagica2", "textures/blocks/custom/essenceConduit.png");
+		powered = new ResourceLocation("arsmagica2", "textures/blocks/custom/essence_conduit.png");
 		//unPowered = new ResourceLocation("arsmagica2", "textures/blocks/custom/essenceConduitUnpowered.png");
 	}
 	

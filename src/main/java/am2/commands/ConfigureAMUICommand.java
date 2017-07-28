@@ -22,12 +22,12 @@ public class ConfigureAMUICommand extends CommandBase{
 	}
 
 	@Override
-	public String getCommandName(){
+	public String getName(){
 		return "amuicfg";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender icommandsender){
+	public String getUsage(ICommandSender icommandsender){
 		return "/amuicfg";
 	}
 
@@ -37,7 +37,7 @@ public class ConfigureAMUICommand extends CommandBase{
 	}
 
 	@Override
-	public List<String> getCommandAliases(){
+	public List<String> getAliases(){
 		ArrayList<String> aliases = new ArrayList<String>();
 		aliases.add("AMUICFG");
 		return aliases;

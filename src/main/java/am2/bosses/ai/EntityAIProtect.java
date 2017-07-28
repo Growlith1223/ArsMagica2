@@ -48,7 +48,7 @@ public class EntityAIProtect extends AIAnimation{
 		cooldownTicks = 20;
 		EntityLivingBase ent = getEntity();
 		ent.extinguish();
-		SpellUtils.applyStackStage(NPCSpells.instance.dispel, getEntity(), null, ent.posX, ent.posY, ent.posZ, null, ent.worldObj, false, false, 0);
+		SpellUtils.applyStackStage(NPCSpells.instance.dispel, getEntity(), null, ent.posX, ent.posY, ent.posZ, null, ent.world, false, false, 0);
 		super.resetTask();
 	}
 

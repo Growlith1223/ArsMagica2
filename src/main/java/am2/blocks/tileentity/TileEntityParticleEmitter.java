@@ -54,15 +54,15 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 
 	@Override
 	public void update(){
-		if (worldObj.isRemote && spawnTicks++ >= spawnRate){
+		if (world.isRemote && spawnTicks++ >= spawnRate){
 			for (int i = 0; i < particleQuantity; ++i)
 				doSpawn();
 			spawnTicks = 0;
 		}
-		if (!show && !worldObj.isRemote && ((forceShow && showTicks++ > 100) || !forceShow)){
+		if (!show && !world.isRemote && ((forceShow && showTicks++ > 100) || !forceShow)){
 			showTicks = 0;
 			forceShow = false;
-			for (EntityPlayer player : worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expandXyz(8D))) {
+			for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expandXyz(8D))) {
 				if (player != null && player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == ItemDefs.crystalWrench){
 					AMVector3 myLoc = new AMVector3(pos);
 					AMVector3 playerLoc = new AMVector3(player);
@@ -71,9 +71,9 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 					}
 				}
 			}
-			worldObj.setBlockState(getPos(), worldObj.getBlockState(pos).withProperty(BlockParticleEmitter.HIDDEN, !forceShow), 3);
+			world.setBlockState(getPos(), world.getBlockState(pos).withProperty(BlockParticleEmitter.HIDDEN, !forceShow), 3);
 		}
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	private void doSpawn(){
@@ -81,7 +81,7 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 		double x = randomizeCoord(pos.getX() + 0.5);
 		double y = randomizeCoord(pos.getY() + 0.5);
 		double z = randomizeCoord(pos.getZ() + 0.5);
-		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, AMParticle.particleTypes[particleType], x, y, z);
+		AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, AMParticle.particleTypes[particleType], x, y, z);
 		if (particle != null){
 			particle.AddParticleController(ArsMagica2.proxy.particleManager.createDefaultParticleController(particleBehaviour, particle, new AMVector3(x, y, z).toVec3D(), speed, getBlockMetadata()));
 			particle.setParticleAge(Math.min(Math.max(spawnRate, 10), 40));
@@ -92,13 +92,13 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 				if (!randomColor)
 					particle.setRGBColorF(((particleColor >> 16) & 0xFF) / 255f, ((particleColor >> 8) & 0xFF) / 255f, (particleColor & 0xFF) / 255f);
 				else
-					particle.setRGBColorF(worldObj.rand.nextFloat(), worldObj.rand.nextFloat(), worldObj.rand.nextFloat());
+					particle.setRGBColorF(world.rand.nextFloat(), world.rand.nextFloat(), world.rand.nextFloat());
 			}
 		}
 	}
 
 	private double randomizeCoord(double base){
-		return base + worldObj.rand.nextDouble() - 0.5;
+		return base + world.rand.nextDouble() - 0.5;
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 
 	public void setShow(boolean show){
 		this.show = show;
-		if (worldObj.isRemote && show){
+		if (world.isRemote && show){
 			forceShow = false;
 			showTicks = 0;
 			EntityPlayer localPlayer = ArsMagica2.proxy.getLocalPlayer();
@@ -216,7 +216,7 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 
 //		int oldMeta = getBlockMetadata();
 
-		//worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, show ? oldMeta & ~0x8 : oldMeta | 0x8, 2);
+		//world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, show ? oldMeta & ~0x8 : oldMeta | 0x8, 2);
 	}
 	
 	@Override
@@ -282,7 +282,7 @@ public class TileEntityParticleEmitter extends TileEntity implements ITickable{
 	}
 
 	public void syncWithServer(){
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			AMDataWriter writer = new AMDataWriter();
 			writer.add(this.pos.getX());
 			writer.add(this.pos.getY());

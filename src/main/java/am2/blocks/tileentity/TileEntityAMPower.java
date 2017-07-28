@@ -39,22 +39,22 @@ public abstract class TileEntityAMPower extends TileEntity implements IPowerNode
 
 	@Override
 	public void invalidate(){
-		PowerNodeRegistry.For(this.worldObj).removePowerNode(this);
+		PowerNodeRegistry.For(this.world).removePowerNode(this);
 		super.invalidate();
 	}
 
 	@Override
 	public void update(){
-		if (!worldObj.isRemote && this.canRequestPower() && tickCounter++ >= getRequestInterval()){
+		if (!world.isRemote && this.canRequestPower() && tickCounter++ >= getRequestInterval()){
 			tickCounter = 0;
 			List<PowerTypes> powerTypes = this.getValidPowerTypes();
 			for (PowerTypes type : powerTypes){
-				float amtObtained = PowerNodeRegistry.For(worldObj).requestPower(this, type, this.getChargeRate());
+				float amtObtained = PowerNodeRegistry.For(world).requestPower(this, type, this.getChargeRate());
 				if (amtObtained > 0)
-					PowerNodeRegistry.For(worldObj).insertPower(this, type, amtObtained);
+					PowerNodeRegistry.For(world).insertPower(this, type, amtObtained);
 			}
 		}
-		//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		//world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	public int getRequestInterval(){
@@ -72,9 +72,9 @@ public abstract class TileEntityAMPower extends TileEntity implements IPowerNode
 	}
 
 	@Override
-	public void setWorldObj(World par1World){
-		super.setWorldObj(par1World);
-		PowerNodeRegistry.For(this.worldObj).registerPowerNode(this);
+	public void setWorld(World par1World){
+		super.setWorld(par1World);
+		PowerNodeRegistry.For(this.world).registerPowerNode(this);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public abstract class TileEntityAMPower extends TileEntity implements IPowerNode
 	}
 
 	public void setPower(PowerTypes type, float amount){
-		PowerNodeRegistry.For(this.worldObj).setPower(this, type, amount);
+		PowerNodeRegistry.For(this.world).setPower(this, type, amount);
 	}
 
 	@Override

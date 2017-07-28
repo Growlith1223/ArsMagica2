@@ -90,8 +90,8 @@ public class AMBeam extends Particle implements IBeamParticle{
 		float deltaY = (float)(this.posY - this.dY);
 		float deltaZ = (float)(this.posZ - this.dZ);
 
-		this.length = MathHelper.sqrt_float(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-		double hDist = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+		this.length = MathHelper.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+		double hDist = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		this.yaw = ((float)(Math.atan2(deltaX, deltaZ) * 180.0D / 3.141592653589793D));
 		this.pitch = ((float)(Math.atan2(deltaY, hDist) * 180.0D / 3.141592653589793D));
 
@@ -122,7 +122,7 @@ public class AMBeam extends Particle implements IBeamParticle{
 			this.posY = this.updateY;
 			this.posZ = this.updateZ;
 			if (this.fppc){
-				EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+				EntityPlayer player = Minecraft.getMinecraft().player;
 				if (player != null){
 					float yaw = player.rotationYaw;
 					float rotationYaw = (float)(yaw * Math.PI / 180);
@@ -181,8 +181,8 @@ public class AMBeam extends Particle implements IBeamParticle{
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		float scaleFactor = 1.0F;
-//		float slide = this.worldObj.getTotalWorldTime();
-		float rot = this.worldObj.provider.getWorldTime() % (360 / this.rotateSpeed) * this.rotateSpeed + this.rotateSpeed * par2;
+//		float slide = this.world.getTotalWorldTime();
+		float rot = this.world.provider.getWorldTime() % (360 / this.rotateSpeed) * this.rotateSpeed + this.rotateSpeed * par2;
 
 		float size = (float)this.particleAge / (float)this.maxLengthAge;
 		if (size > 1) size = 1;

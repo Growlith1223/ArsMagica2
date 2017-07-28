@@ -17,7 +17,7 @@ public class TileKeystoneChestRenderer extends TileEntitySpecialRenderer<TileEnt
 
 	public TileKeystoneChestRenderer(){
 		model = new ModelChest();
-		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/keystoneChest.png");
+		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/keystone_chest.png");
 	}
 	public void renderTileEntityAt(TileEntityKeystoneChest chest, double d, double d1, double d2, float var8, int destroyStage){
 		int i = 2;

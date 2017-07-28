@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -25,10 +26,13 @@ public class ItemBoundSword extends ItemSword implements IBoundItem {
 			return true;
 		ItemStack copiedStack = SpellUtils.merge(stack.copy());
 		copiedStack.getTagCompound().getCompoundTag("AM2").setInteger("CurrentGroup", SpellUtils.currentStage(stack) + 1);
-		copiedStack.setItem(ItemDefs.spell);
+		ItemStack spell = new ItemStack(ItemDefs.spell);
+		spell.setTagCompound(copiedStack.getTagCompound());
+		spell.getTagCompound().getCompoundTag("AM2").setInteger("CurrentGroup", SpellUtils.currentStage(stack) + 1);
+		copiedStack = spell.copy();
 		int hurtResist = target.hurtResistantTime;
 		target.hurtResistantTime = 0;
-		SpellUtils.applyStackStage(copiedStack, attacker, target, target.posX, target.posY, target.posZ, null, attacker.worldObj, true, true, 0);
+		SpellUtils.applyStackStage(copiedStack, attacker, target, target.posX, target.posY, target.posZ, null, attacker.world, true, true, 0);
 		target.hurtResistantTime = hurtResist;
 		return true;
 	}
@@ -40,7 +44,9 @@ public class ItemBoundSword extends ItemSword implements IBoundItem {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
-		item.setItem(ItemDefs.spell);
+		NBTTagCompound nbt = item.getTagCompound();
+		item = new ItemStack(ItemDefs.spell);
+		item.setTagCompound(nbt);
 		return false;
 	}
 

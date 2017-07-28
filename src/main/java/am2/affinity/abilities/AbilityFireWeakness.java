@@ -32,7 +32,7 @@ public class AbilityFireWeakness extends AbstractAffinityAbility {
 	@Override
 	public void applyTick(EntityPlayer player) {
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		AffinityAbilityModifiers.instance.applyOrRemoveModifier(attribute, AffinityAbilityModifiers.fireWeakness, (player.isBurning() || player.worldObj.provider.getDimension() == -1));
+		AffinityAbilityModifiers.instance.applyOrRemoveModifier(attribute, AffinityAbilityModifiers.fireWeakness, (player.isBurning() || player.world.provider.getDimension() == -1));
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ import net.minecraft.util.text.translation.I18n;
 @SuppressWarnings("deprecation")
 public class GuiSummoner extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/SummonerGui.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/summoner_gui.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){
@@ -40,24 +40,24 @@ public class GuiSummoner extends GuiContainer{
 		float cost = summonerInventory.getSummonCost();
 		float maintainCost = summonerInventory.getMaintainCost() * 20;
 		String essenceCostString = cost >= 0 ? String.format("%.2f/s", maintainCost) : "N/A";
-		int color = cost >= 0 ? cost <= PowerNodeRegistry.For(Minecraft.getMinecraft().theWorld).getHighestPower(summonerInventory) ? 0x007700 : 0x770000 : 0x333333;
+		int color = cost >= 0 ? cost <= PowerNodeRegistry.For(Minecraft.getMinecraft().world).getHighestPower(summonerInventory) ? 0x007700 : 0x770000 : 0x333333;
 
-		int offset = fontRendererObj.getStringWidth(essenceString) + 25;
+		int offset = fontRenderer.getStringWidth(essenceString) + 25;
 
 
-		fontRendererObj.drawString(maintainString, xSize - offset, ySize - 130, 0x777777);
-		fontRendererObj.drawString(essenceCostString, xSize - offset, ySize - 120, color);
+		fontRenderer.drawString(maintainString, xSize - offset, ySize - 130, 0x777777);
+		fontRenderer.drawString(essenceCostString, xSize - offset, ySize - 120, color);
 
 		essenceCostString = cost >= 0 ? String.format("%.2f", cost) : "N/A";
-		color = cost >= 0 ? cost <= PowerNodeRegistry.For(Minecraft.getMinecraft().theWorld).getHighestPower(summonerInventory) ? 0x007700 : 0x770000 : 0x333333;
+		color = cost >= 0 ? cost <= PowerNodeRegistry.For(Minecraft.getMinecraft().world).getHighestPower(summonerInventory) ? 0x007700 : 0x770000 : 0x333333;
 
-		fontRendererObj.drawString(essenceString, 20, ySize - 130, 0x777777);
-		fontRendererObj.drawString(essenceCostString, 20, ySize - 120, color);
+		fontRenderer.drawString(essenceString, 20, ySize - 130, 0x777777);
+		fontRenderer.drawString(essenceCostString, 20, ySize - 120, color);
 
 		String readyString = summonerInventory.canSummon() ? I18n.translateToLocal("am2.gui.summonReady") : I18n.translateToLocal("am2.gui.summonNotReady");
 		color = summonerInventory.canSummon() ? 0x007700 : 0x770000;
 
-		fontRendererObj.drawString(readyString, xSize / 2 - (fontRendererObj.getStringWidth(readyString) / 2), ySize - 107, color);
+		fontRenderer.drawString(readyString, xSize / 2 - (fontRenderer.getStringWidth(readyString) / 2), ySize - 107, color);
 	}
 
 	private final TileEntitySummoner summonerInventory;

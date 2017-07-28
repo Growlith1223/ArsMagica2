@@ -57,10 +57,10 @@ public class EntityAIEndertorrent extends AIAnimation{
 			guardian.getLookHelper().setLookPositionWithEntity(guardian.getAttackTarget(), 30, 30);
 			if (guardian.getTicksInCurrentAction() > 15){
 				if ((guardian.getTicksInCurrentAction() - 15) % 10 == 0)
-					SpellUtils.applyStackStage(NPCSpells.instance.enderGuardian_enderTorrent, guardian, null, guardian.posX, guardian.posY, guardian.posZ, null, guardian.worldObj, false, false, guardian.getTicksInCurrentAction());
+					SpellUtils.applyStackStage(NPCSpells.instance.enderGuardian_enderTorrent, guardian, null, guardian.posX, guardian.posY, guardian.posZ, null, guardian.world, false, false, guardian.getTicksInCurrentAction());
 				guardian.faceEntity(guardian.getAttackTarget(), 15, 180);
 			}else if (guardian.getTicksInCurrentAction() == 15){
-				guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, ((IArsMagicaBoss)guardian).getAttackSound(), SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
+				guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, ((IArsMagicaBoss)guardian).getAttackSound(), SoundCategory.HOSTILE, 1.0f, (float)(0.5 + guardian.getRNG().nextDouble() * 0.5f), false);
 			}else{
 				guardian.faceEntity(guardian.getAttackTarget(), 180, 180);
 			}

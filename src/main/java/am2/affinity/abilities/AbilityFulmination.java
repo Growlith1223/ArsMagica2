@@ -45,24 +45,24 @@ public class AbilityFulmination extends AbstractAffinityAbility {
 	@SuppressWarnings("unchecked")
 	private void applyFulmintion(EntityPlayer ent, double lightningDepth){
 		//chance to light nearby TNT
-		if (!ent.worldObj.isRemote){
+		if (!ent.world.isRemote){
 			if (lightningDepth <= 0.8f){
 				BlockPos offsetPos = new BlockPos(ent.posX - 5 + ent.getRNG().nextInt(11), ent.posY - 5 + ent.getRNG().nextInt(11), ent.posZ - 5 + ent.getRNG().nextInt(11));
-				IBlockState block = ent.worldObj.getBlockState(offsetPos);
+				IBlockState block = ent.world.getBlockState(offsetPos);
 				if (block.getBlock() == Blocks.TNT){
-					ent.worldObj.setBlockToAir(offsetPos);
-					((BlockTNT)Blocks.TNT).explode(ent.worldObj, offsetPos, block.withProperty(BlockTNT.EXPLODE, true), ent);
+					ent.world.setBlockToAir(offsetPos);
+					((BlockTNT)Blocks.TNT).explode(ent.world, offsetPos, block.withProperty(BlockTNT.EXPLODE, true), ent);
 				}
 			}
 			//chance to supercharge nearby creepers
 			if (lightningDepth >= 0.7f && ent.getRNG().nextDouble() < 0.05f){
-				List<EntityCreeper> creepers = ent.worldObj.getEntitiesWithinAABB(EntityCreeper.class, ent.getEntityBoundingBox().expand(5, 5, 5));
+				List<EntityCreeper> creepers = ent.world.getEntitiesWithinAABB(EntityCreeper.class, ent.getEntityBoundingBox().expand(5, 5, 5));
 				for (EntityCreeper creeper : creepers){
 					try {
 						creeper.getDataManager().set((DataParameter<Boolean>)ReflectionHelper.findField(EntityCreeper.class, "POWERED", "field_184714_b").get(creeper), true);
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 					}
-					ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(ent.worldObj, ent, ent, creeper, 0, 1, -1);
+					ArsMagica2.proxy.particleManager.BoltFromEntityToEntity(ent.world, ent, ent, creeper, 0, 1, -1);
 				}
 			}
 		}

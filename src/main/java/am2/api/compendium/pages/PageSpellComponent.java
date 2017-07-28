@@ -68,7 +68,7 @@ public class PageSpellComponent extends CompendiumPage<AbstractSpellPart> {
 			}
 		}
 		{
-			mc.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/ArcaneCompendiumGuiExtras.png"));
+			mc.renderEngine.bindTexture(new ResourceLocation("arsmagica2", "textures/gui/arcane_compendium_gui_extras.png"));
 			zLevel++;
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -104,7 +104,7 @@ public class PageSpellComponent extends CompendiumPage<AbstractSpellPart> {
 		int yOffset = 10;
 		if (!modifiers.isEmpty()) {
 			String shapeName = I18n.translateToLocal(element instanceof SpellComponent ? "am2.gui.modifies" :  "am2.gui.modifiedBy");
-			mc.fontRendererObj.drawString(shapeName, posX + 72 - (mc.fontRendererObj.getStringWidth(shapeName) / 2), posY, 0);
+			mc.fontRenderer.drawString(shapeName, posX + 72 - (mc.fontRenderer.getStringWidth(shapeName) / 2), posY, 0);
 			GlStateManager.color(1.0f, 1.0f, 1.0f);
 		}
 		RenderHelper.enableGUIStandardItemLighting();
@@ -161,17 +161,17 @@ public class PageSpellComponent extends CompendiumPage<AbstractSpellPart> {
 	
 		List<ItemStack> alternates = new ArrayList<ItemStack>();
 		
-		if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-			stack.getItem().getSubItems(stack.getItem(), stack.getItem().getCreativeTab(), alternates);
-		} else {
+		//if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+			//stack.getItem().getSubItems(stack.getItem(), stack.getItem().getCreativeTab(), alternates);
+		//} else {
 			alternates.add(stack);
-		}
+		//}
 	
 		if (alternates.size() > 0){
 			stack = alternates.get(new Random(new Random(AMGuiHelper.instance.getSlowTicker()).nextLong()).nextInt(alternates.size()));
 		}
 		if (forcedMetas.containsKey(stack.getItem()))
-			stack = new ItemStack(stack.getItem(), stack.stackSize, forcedMetas.get(stack.getItem()));
+			stack = new ItemStack(stack.getItem(), stack.getCount(), forcedMetas.get(stack.getItem()));
 	
 		try{
 			AMGuiHelper.DrawItemAtXY(stack, sx, sy, this.zLevel);

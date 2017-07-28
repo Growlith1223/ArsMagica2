@@ -123,7 +123,7 @@ public class Forge extends SpellComponent{
 				item.motionX = (float)world.rand.nextGaussian() * f3;
 				item.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
 				item.motionZ = (float)world.rand.nextGaussian() * f3;
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 				world.setBlockState(pos, Blocks.AIR.getDefaultState());
 			}
 		}

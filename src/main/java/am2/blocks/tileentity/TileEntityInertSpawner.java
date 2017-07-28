@@ -29,6 +29,15 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 	private static final ArrayList<PowerTypes> valid = Lists.newArrayList(PowerTypes.DARK);
 
 	private static final float SUMMON_REQ = 6000;
+	
+	@Override
+	public boolean isEmpty() {
+	if (!phylactery.isEmpty())
+            {
+                return false;
+            }
+        return true;
+	}
 
 	public TileEntityInertSpawner(){
 		super(500);
@@ -81,8 +90,8 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
 		phylactery = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		if (itemstack != null && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 
 	}
@@ -98,8 +107,8 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 
@@ -136,7 +145,7 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 						this.getStackInSlot(0) == null &&
 						stack != null &&
 						stack.getItem() == ItemDefs.crystalPhylactery &&
-						stack.stackSize == 1 &&
+						stack.getCount() == 1 &&
 						((ItemCrystalPhylactery)stack.getItem()).isFull(stack);
 	}
 
@@ -178,7 +187,7 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 
 		if (nbttagcompound.hasKey("phylactery")){
 			NBTTagCompound phy = nbttagcompound.getCompoundTag("phylactery");
-			phylactery = ItemStack.loadItemStackFromNBT(phy);
+			phylactery = new ItemStack(phy);
 		}
 
 		this.powerConsumed = nbttagcompound.getFloat("powerConsumed");
@@ -187,9 +196,9 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 	public void update(){
 		super.update();
 
-		if (!worldObj.isRemote && phylactery != null && phylactery.getItem() instanceof ItemCrystalPhylactery && ((ItemCrystalPhylactery)phylactery.getItem()).isFull(phylactery) && worldObj.isBlockIndirectlyGettingPowered(pos) == 0){
+		if (!world.isRemote && phylactery != null && phylactery.getItem() instanceof ItemCrystalPhylactery && ((ItemCrystalPhylactery)phylactery.getItem()).isFull(phylactery) && world.isBlockIndirectlyGettingPowered(pos) == 0){
 			if (this.powerConsumed < TileEntityInertSpawner.SUMMON_REQ){
-				this.powerConsumed += PowerNodeRegistry.For(worldObj).consumePower(
+				this.powerConsumed += PowerNodeRegistry.For(world).consumePower(
 						this,
 						PowerTypes.DARK,
 						Math.min(this.getCapacity(), TileEntityInertSpawner.SUMMON_REQ - this.powerConsumed)
@@ -198,13 +207,13 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 				this.powerConsumed = 0;
 				ItemCrystalPhylactery item = (ItemCrystalPhylactery)this.phylactery.getItem();
 				if (item.isFull(phylactery)){
-					String clazzName = item.getSpawnClass(phylactery);
-					if (clazzName != null){
-						Class<?> clazz = (Class<?>)EntityList.NAME_TO_CLASS.get(clazzName);
+					Integer entityID = item.getSpawnClass(phylactery);
+					if (entityID != null){
+						Class<?> clazz = (Class<?>)EntityList.getClassFromID(entityID);
 						if (clazz != null){
 							EntityLiving entity = null;
 							try{
-								entity = (EntityLiving)clazz.getConstructor(World.class).newInstance(worldObj);
+								entity = (EntityLiving)clazz.getConstructor(World.class).newInstance(world);
 							}catch (Throwable t){
 								t.printStackTrace();
 								return;
@@ -212,7 +221,7 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 							if (entity == null)
 								return;
 							setEntityPosition(entity);
-							worldObj.spawnEntityInWorld(entity);
+							world.spawnEntity(entity);
 						}
 					}
 				}
@@ -222,7 +231,7 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 
 	private void setEntityPosition(EntityLiving e){
 		for (EnumFacing dir : EnumFacing.values()){
-			if (worldObj.isAirBlock(pos.offset(dir))){
+			if (world.isAirBlock(pos.offset(dir))){
 				e.setPosition(pos.offset(dir).getX(), pos.offset(dir).getY(), pos.offset(dir).getZ());
 				return;
 			}
@@ -237,31 +246,31 @@ public class TileEntityInertSpawner extends TileEntityAMPower implements ISidedI
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 }

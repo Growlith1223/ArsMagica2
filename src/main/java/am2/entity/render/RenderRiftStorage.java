@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderRiftStorage extends Render<EntityRiftStorage> {
 	
-	private static final ResourceLocation TEXTURE_MAIN = new ResourceLocation("arsmagica2", "textures/mobs/Rift.png");
-	private static final ResourceLocation TEXTURE_SECONDARY = new ResourceLocation("arsmagica2", "textures/mobs/Rift2.png");
+	private static final ResourceLocation TEXTURE_MAIN = new ResourceLocation("arsmagica2", "textures/mobs/rift.png");
+	private static final ResourceLocation TEXTURE_SECONDARY = new ResourceLocation("arsmagica2", "textures/mobs/rift2.png");
 	
 	public RenderRiftStorage(RenderManager renderManager) {
 		super(renderManager);

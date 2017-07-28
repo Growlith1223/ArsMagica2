@@ -58,7 +58,7 @@ public abstract class BuffEffect extends PotionEffect{
 		}
 		else if (getDuration() == 1){
 			effectEnding(entityliving);
-		}else if ((getDuration() / 20) < 5 && !HasNotified && shouldNotify() && !entityliving.worldObj.isRemote){
+		}else if ((getDuration() / 20) < 5 && !HasNotified && shouldNotify() && !entityliving.world.isRemote){
 			HasNotified = true;
 		}
 		performEffect(entityliving);

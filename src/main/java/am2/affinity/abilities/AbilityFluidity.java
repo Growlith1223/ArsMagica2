@@ -38,25 +38,25 @@ public class AbilityFluidity extends AbstractAffinityAbility {
 	private void applyReverseWaterMovement(EntityPlayer entity){
 		AxisAlignedBB par1AxisAlignedBB = entity.getEntityBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D);
 
-		int i = MathHelper.floor_double(par1AxisAlignedBB.minX);
-		int j = MathHelper.floor_double(par1AxisAlignedBB.maxX + 1.0D);
-		int k = MathHelper.floor_double(par1AxisAlignedBB.minY);
-		int l = MathHelper.floor_double(par1AxisAlignedBB.maxY + 1.0D);
-		int i1 = MathHelper.floor_double(par1AxisAlignedBB.minZ);
-		int j1 = MathHelper.floor_double(par1AxisAlignedBB.maxZ + 1.0D);
+		int i = MathHelper.floor(par1AxisAlignedBB.minX);
+		int j = MathHelper.floor(par1AxisAlignedBB.maxX + 1.0D);
+		int k = MathHelper.floor(par1AxisAlignedBB.minY);
+		int l = MathHelper.floor(par1AxisAlignedBB.maxY + 1.0D);
+		int i1 = MathHelper.floor(par1AxisAlignedBB.minZ);
+		int j1 = MathHelper.floor(par1AxisAlignedBB.maxZ + 1.0D);
 		
 		Vec3d vec3 = new Vec3d(0.0D, 0.0D, 0.0D);
 
 		for (int k1 = i; k1 < j; ++k1) {
 			for (int l1 = k; l1 < l; ++l1) {
 				for (int i2 = i1; i2 < j1; ++i2) {
-					IBlockState blockState = entity.worldObj.getBlockState(new BlockPos (k1, l1, i2));
+					IBlockState blockState = entity.world.getBlockState(new BlockPos (k1, l1, i2));
 
 					if (blockState != null && blockState.getMaterial() == Material.WATER) {
 						double d0 = l1 + 1 - BlockLiquid.getLiquidHeightPercent(blockState.getBlock().getMetaFromState(blockState));
 
 						if (l >= d0) {
-							blockState.getBlock().modifyAcceleration(entity.worldObj, new BlockPos (k1, l1, i2), entity, vec3);
+							blockState.getBlock().modifyAcceleration(entity.world, new BlockPos (k1, l1, i2), entity, vec3);
 						}
 					}
 				}

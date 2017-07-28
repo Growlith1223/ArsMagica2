@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -67,7 +68,8 @@ public class ItemLostJournal extends ItemWritableBook{
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		if (worldIn.isRemote){
 			AMGuiHelper.OpenBookGUI(itemStackIn);
 		}
@@ -76,7 +78,7 @@ public class ItemLostJournal extends ItemWritableBook{
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
+	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, NonNullList<ItemStack> par3List){
 
 		super.getSubItems(item, par2CreativeTabs, par3List);
 

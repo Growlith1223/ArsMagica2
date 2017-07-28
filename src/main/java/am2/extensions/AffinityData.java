@@ -44,7 +44,7 @@ public class AffinityData implements IAffinityData, ICapabilityProvider, ICapabi
 	}
 	
 	public void setAffinityDepth (Affinity name, double value) {
-		value = MathHelper.clamp_double(value, 0, MAX_DEPTH);
+		value = MathHelper.clamp(value, 0, MAX_DEPTH);
 		HashMap<Affinity, Double> map = DataSyncExtension.For(player).get(DataDefinitions.AFFINITY_DATA);
 		map.put(name, value);
 		DataSyncExtension.For(player).setWithSync(DataDefinitions.AFFINITY_DATA, map);

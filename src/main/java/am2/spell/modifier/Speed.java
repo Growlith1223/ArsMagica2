@@ -44,7 +44,7 @@ public class Speed extends SpellModifier{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 }

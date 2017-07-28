@@ -52,14 +52,14 @@ public class ItemJournal extends ItemArsMagica{
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack journal, World world, EntityPlayer player, EnumHand hand){
-
-		if (!player.worldObj.isRemote){
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+		ItemStack journal = player.getHeldItem(hand);
+		if (!player.world.isRemote){
 			if (getOwner(journal) == null){
 				setOwner(journal, player);
 			}else if (!getOwner(journal).equals(player.getName())){
-			  player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.notYourJournal")));
-				return super.onItemRightClick(journal, world, player, hand);
+			  player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.notYourJournal")));
+				return super.onItemRightClick(world, player, hand);
 			}
 
 			if (player.isSneaking()){
@@ -74,7 +74,7 @@ public class ItemJournal extends ItemArsMagica{
 			}
 		}
 
-		return super.onItemRightClick(journal, world, player, hand);
+		return super.onItemRightClick(world, player, hand);
 	}
 
 	private void addXPToJournal(ItemStack journal, int amount){

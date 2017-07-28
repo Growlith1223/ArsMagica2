@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
 
 public class EntityAIFireballAttack extends EntityAIBase{
-	World worldObj;
+	World world;
 
 	/**
 	 * The entity the AI instance has been applied to
@@ -38,7 +38,7 @@ public class EntityAIFireballAttack extends EntityAIBase{
 		rangedAttackTime = 0;
 		field_48367_f = 0;
 		entityHost = par1EntityLiving;
-		worldObj = par1EntityLiving.worldObj;
+		world = par1EntityLiving.world;
 		field_48370_e = par2;
 		rangedAttackID = par3;
 		maxRangedAttackTime = par4;
@@ -121,6 +121,6 @@ public class EntityAIFireballAttack extends EntityAIBase{
 	 * Performs a ranged attack according to the AI's rangedAttackID.
 	 */
 	private void doRangedAttack(){
-		SpellUtils.applyStackStage(NPCSpells.instance.fireBolt, entityHost, null, entityHost.posX, entityHost.posY, entityHost.posZ, null, worldObj, false, false, 0);
+		SpellUtils.applyStackStage(NPCSpells.instance.fireBolt, entityHost, null, entityHost.posX, entityHost.posY, entityHost.posZ, null, world, false, false, 0);
 	}
 }

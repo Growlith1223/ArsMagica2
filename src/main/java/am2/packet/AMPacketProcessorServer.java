@@ -48,7 +48,7 @@ public class AMPacketProcessorServer{
 			//constant details all packets share:  ID, player, and remaining data
 			packetID = bbis.readByte();
 			NetHandlerPlayServer srv = (NetHandlerPlayServer)event.getPacket().handler();
-			EntityPlayerMP player = srv.playerEntity;
+			EntityPlayerMP player = srv.player;
 			byte[] remaining = new byte[bbis.available()];
 			bbis.readFully(remaining);
 			switch (packetID){
@@ -142,7 +142,7 @@ public class AMPacketProcessorServer{
 		String str = reader.getString();
 		boolean newState = !AffinityData.For(player).getAbilityBoolean(str);
 		String text = String.format(I18n.translateToLocal("am2.chat.activation"), I18n.translateToLocal("am2.chat.ability_" + str), I18n.translateToLocal(newState ? "am2.chat.enabled" : "am2.chat.disabled"));
-		player.addChatComponentMessage(new TextComponentString(text));
+		player.sendMessage(new TextComponentString(text));
 		AffinityData.For(player).addAbilityBoolean(str, newState);
 	}
 
@@ -169,16 +169,16 @@ public class AMPacketProcessorServer{
 		byte nom = rdr.getByte();
 		if (nom == 1){
 			AMVector3 loc = new AMVector3(rdr.getFloat(), rdr.getFloat(), rdr.getFloat());
-			TileEntity te = player.worldObj.getTileEntity(loc.toBlockPos());
+			TileEntity te = player.world.getTileEntity(loc.toBlockPos());
 			if (te != null && te instanceof IPowerNode){
-				AMNetHandler.INSTANCE.sendPowerResponseToClient(PowerNodeRegistry.For(player.worldObj).getDataCompoundForNode((IPowerNode<?>)te), player, te);
+				AMNetHandler.INSTANCE.sendPowerResponseToClient(PowerNodeRegistry.For(player.world).getDataCompoundForNode((IPowerNode<?>)te), player, te);
 			}
 		}
 	}
 
 	private void handleImbueArmor(byte[] data, EntityPlayerMP player){
 		AMDataReader rdr = new AMDataReader(data, false);
-		TileEntity te = player.worldObj.getTileEntity(new BlockPos (rdr.getInt(), rdr.getInt(), rdr.getInt()));
+		TileEntity te = player.world.getTileEntity(new BlockPos (rdr.getInt(), rdr.getInt(), rdr.getInt()));
 		if (te != null && te instanceof TileEntityArmorImbuer){
 			((TileEntityArmorImbuer)te).imbueCurrentArmor(new ResourceLocation(rdr.getString()));
 		}
@@ -190,10 +190,10 @@ public class AMPacketProcessorServer{
 //		int y = rdr.getInt();
 //		int z = rdr.getInt();
 //
-//		TileEntity te = player.worldObj.getTileEntity(x, y, z);
+//		TileEntity te = player.world.getTileEntity(x, y, z);
 //		if (te != null && te instanceof TileEntityMagiciansWorkbench){
 //			((TileEntityMagiciansWorkbench)te).setRecipeLocked(rdr.getInt(), rdr.getBoolean());
-//			te.getWorldObj().markBlockForUpdate(te.xCoord, te.yCoord, te.zCoord);
+//			te.getworld().markBlockForUpdate(te.xCoord, te.yCoord, te.zCoord);
 //		}
 //	}
 //
@@ -206,7 +206,7 @@ public class AMPacketProcessorServer{
 //		}
 //
 //		//open the GUI
-//		player.openGui(AMCore.instance, ArsMagicaGuiIdList.GUI_RUNE_BAG, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+//		player.openGui(AMCore.instance, ArsMagicaGuiIdList.GUI_RUNE_BAG, player.world, (int)player.posX, (int)player.posY, (int)player.posZ);
 //	}
 //
 //	private void handleSetMagiciansWorkbenchRecipe(byte[] data, EntityPlayerMP player){
@@ -236,7 +236,7 @@ public class AMPacketProcessorServer{
 //	}
 //
 	private void handleInscriptionTableUpdate(byte[] data, EntityPlayerMP player){
-		World world = player.worldObj;
+		World world = player.world;
 		AMDataReader rdr = new AMDataReader(data, false);
 		TileEntity te = world.getTileEntity(new BlockPos (rdr.getInt(), rdr.getInt(), rdr.getInt()));
 		if (te == null || !(te instanceof TileEntityInscriptionTable)) return;
@@ -246,7 +246,7 @@ public class AMPacketProcessorServer{
 	}
 
 	private void handleDecoBlockUpdate(byte[] data, EntityPlayerMP player){
-		World world = player.worldObj;
+		World world = player.world;
 		AMDataReader rdr = new AMDataReader(data, false);
 		TileEntity te = world.getTileEntity(new BlockPos (rdr.getInt(), rdr.getInt(), rdr.getInt()));
 		if (te == null || !(te instanceof TileEntityParticleEmitter)) return;
@@ -371,7 +371,7 @@ public class AMPacketProcessorServer{
 //
 //		if (ent == null || !(ent instanceof EntityLiving)) return;
 //
-//		if (AMCore.proxy.IncreaseEntityMagicLevel((EntityLiving)ent, ent.worldObj)){
+//		if (AMCore.proxy.IncreaseEntityMagicLevel((EntityLiving)ent, ent.world)){
 //			if (ent instanceof EntityPlayerMP){
 //				EntityPlayerMP player = (EntityPlayerMP)ent;
 //				AMDataWriter writer = new AMDataWriter();

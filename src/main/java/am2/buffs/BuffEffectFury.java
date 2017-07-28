@@ -17,7 +17,7 @@ public class BuffEffectFury extends BuffEffect{
 
 	@Override
 	public void stopEffect(EntityLivingBase entityliving){
-		if (!entityliving.worldObj.isRemote){
+		if (!entityliving.world.isRemote){
 			entityliving.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 200, 1));
 			entityliving.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 200, 1));
 		}

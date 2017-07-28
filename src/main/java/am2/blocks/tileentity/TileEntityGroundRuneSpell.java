@@ -51,9 +51,9 @@ public class TileEntityGroundRuneSpell extends TileEntity implements ITickable{
 
 	private void prepForActivate(){
 		if (placedByName != null)
-			caster = worldObj.getPlayerEntityByName(placedByName);
+			caster = world.getPlayerEntityByName(placedByName);
 		if (caster == null){
-			caster = DummyEntityPlayer.fromEntityLiving(new EntityDummyCaster(worldObj));
+			caster = DummyEntityPlayer.fromEntityLiving(new EntityDummyCaster(world));
 			EntityExtension.For(caster).setMagicLevelWithMana(99);
 		}
 	}
@@ -69,7 +69,7 @@ public class TileEntityGroundRuneSpell extends TileEntity implements ITickable{
 		if (spellStack == null) return false;
 		if (!canApply(target)) return false;
 		prepForActivate();
-		SpellUtils.applyStackStage(spellStack, caster, target, target.posX, target.posY, target.posZ, null, worldObj, false, false, 0);
+		SpellUtils.applyStackStage(spellStack, caster, target, target.posX, target.posY, target.posZ, null, world, false, false, 0);
 		return true;
 	}
 
@@ -93,7 +93,7 @@ public class TileEntityGroundRuneSpell extends TileEntity implements ITickable{
 		if (compound.hasKey("placedByName"))
 			placedByName = compound.getString("placedByName");
 		if (compound.hasKey("spellStack"))
-			spellStack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("spellStack"));
+			spellStack = new ItemStack(compound.getCompoundTag("spellStack"));
 		numTriggers = compound.getInteger("numTrigger");
 		isPermanent = compound.getBoolean("permanent");
 	}
@@ -110,6 +110,6 @@ public class TileEntityGroundRuneSpell extends TileEntity implements ITickable{
 
 	@Override
 	public void update() {
-		worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 }

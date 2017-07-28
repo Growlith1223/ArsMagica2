@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiKeystoneLockable extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/keystoneLockableGuiGeneric.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/keystone_lockable_gui_generic.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){

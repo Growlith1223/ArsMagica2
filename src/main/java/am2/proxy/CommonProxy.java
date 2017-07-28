@@ -176,8 +176,7 @@ public class CommonProxy implements IGuiHandler{
 		initHandlers();
 		ArsMagica2.config.init();
 		serverTickHandler = new ServerTickHandler();
-		packetHandler = new PacketHandler();
-		packetHandler.registerMessages();
+		PacketHandler.registerMessages();
 		enchantments = new AMEnchantments();
 		AMNetHandler.INSTANCE.init();
 		AMNetHandler.INSTANCE.registerChannels(packetProcessor);
@@ -263,10 +262,10 @@ public class CommonProxy implements IGuiHandler{
 	
 	public void init() {
 		if (ArsMagica2.config.getEnableWitchwoodForest()){
-			BiomeDictionary.registerBiomeType(BiomeWitchwoodForest.instance, Type.FOREST, Type.MAGICAL);
-			BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(BiomeWitchwoodForest.instance, 6));
 			int id = (BiomeWitchwoodForest.getBiomeId() != -1) ? BiomeWitchwoodForest.getBiomeId() : BiomeWitchwoodForest.getNextFreeBiomeId();
 			Biome.registerBiome(id, BiomeWitchwoodForest.instance.getBiomeName(), BiomeWitchwoodForest.instance);
+			BiomeDictionary.addTypes(BiomeWitchwoodForest.instance, Type.FOREST, Type.MAGICAL);
+			BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(BiomeWitchwoodForest.instance, 6));
 		}
 	}
 	

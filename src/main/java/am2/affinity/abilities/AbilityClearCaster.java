@@ -25,7 +25,7 @@ public class AbilityClearCaster extends AbstractAffinityAbility {
 	
 	@Override
 	public void applyPreSpellCast(EntityPlayer player, Pre event) {
-		if (event.entityLiving.worldObj.rand.nextInt(100) < 5 && !event.entityLiving.worldObj.isRemote){
+		if (event.entityLiving.world.rand.nextInt(100) < 5 && !event.entityLiving.world.isRemote){
 			event.entityLiving.addPotionEffect(new BuffEffectClarity(140, 0));
 		}
 	}

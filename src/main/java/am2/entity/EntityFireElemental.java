@@ -109,9 +109,9 @@ public class EntityFireElemental extends EntityMob{
 	@Override
 	public void onLivingUpdate(){
 		if (isWet()){
-			this.attackEntityFrom(DamageSource.drown, 1);
+			this.attackEntityFrom(DamageSource.DROWN, 1);
 		}
-//		if (!this.worldObj.isRemote){
+//		if (!this.world.isRemote){
 //			if (this.getAttackTarget() != null && !this.getAttackTarget().isDead){
 //				if (this.dataManager.getWatchableObjectByte(0) == (byte)0){
 //					this.dataManager.updateObject(0, (byte)1);
@@ -132,7 +132,7 @@ public class EntityFireElemental extends EntityMob{
 	public void onUpdate(){
 		int cookTargetID = dataManager.get(COOK_TARGET_ID);
 		if (cookTargetID != 0){
-			List<EntityItem> items = worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(cookRadius, cookRadius, cookRadius));
+			List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(cookRadius, cookRadius, cookRadius));
 			EntityItem inanimate = null;
 			for (EntityItem item : items){
 				if (item.getEntityId() == cookTargetID){
@@ -140,8 +140,8 @@ public class EntityFireElemental extends EntityMob{
 				}
 			}
 
-			if (inanimate != null && worldObj.isRemote){
-				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "fire", posX, posY + getEyeHeight(), posZ);
+			if (inanimate != null && world.isRemote){
+				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "fire", posX, posY + getEyeHeight(), posZ);
 				if (effect != null){
 					effect.setIgnoreMaxAge(true);
 					effect.AddParticleController(new ParticleApproachPoint(effect, inanimate.posX + (rand.nextFloat() - 0.5), inanimate.posY + (rand.nextFloat() - 0.5), inanimate.posZ + (rand.nextFloat() - 0.5), 0.1f, 0.1f, 1, false).setKillParticleOnFinish(true));
@@ -149,9 +149,9 @@ public class EntityFireElemental extends EntityMob{
 			}
 		}
 
-		if (worldObj.isRemote && rand.nextInt(100) > 75 && !isBurning())
+		if (world.isRemote && rand.nextInt(100) > 75 && !isBurning())
 			for (int i = 0; i < ArsMagica2.config.getGFXLevel(); i++)
-				worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D);
+				world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D);
 		super.onUpdate();
 	}
 
@@ -166,7 +166,7 @@ public class EntityFireElemental extends EntityMob{
 
 	@Override
 	public boolean getCanSpawnHere(){
-		if (!SpawnBlacklists.entityCanSpawnHere(getPosition(), worldObj, this))
+		if (!SpawnBlacklists.entityCanSpawnHere(getPosition(), world, this))
 			return false;
 		return super.getCanSpawnHere();
 	}

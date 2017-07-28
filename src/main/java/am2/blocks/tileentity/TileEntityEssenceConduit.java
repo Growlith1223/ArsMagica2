@@ -27,15 +27,15 @@ public class TileEntityEssenceConduit extends TileEntityAMPower{
 	@Override
 	public void update(){
 		if (isFirstTick) {
-			rotationX = worldObj.rand.nextInt(360);
-			rotationY = worldObj.rand.nextInt(360);
-			rotationZ = worldObj.rand.nextInt(360);
-			rotationIncrementX = worldObj.rand.nextFloat() * 0.002f + 0.005f;
-			rotationIncrementY = worldObj.rand.nextFloat() * 0.002f + 0.005f;
-			rotationIncrementZ = worldObj.rand.nextFloat() * 0.002f + 0.005f;
+			rotationX = world.rand.nextInt(360);
+			rotationY = world.rand.nextInt(360);
+			rotationZ = world.rand.nextInt(360);
+			rotationIncrementX = world.rand.nextFloat() * 0.002f + 0.005f;
+			rotationIncrementY = world.rand.nextFloat() * 0.002f + 0.005f;
+			rotationIncrementZ = world.rand.nextFloat() * 0.002f + 0.005f;
 			isFirstTick = false;
 		}
-		if (worldObj != null && worldObj.isBlockIndirectlyGettingPowered(pos) > 0){
+		if (world != null && world.isBlockIndirectlyGettingPowered(pos) > 0){
 			redstonePowered = true;
 		}else{
 			redstonePowered = false;
@@ -46,7 +46,7 @@ public class TileEntityEssenceConduit extends TileEntityAMPower{
 
 	@Override
 	public float particleOffset(int axis){
-		EnumFacing meta = worldObj.getBlockState(pos).getValue(BlockEssenceConduit.FACING);
+		EnumFacing meta = world.getBlockState(pos).getValue(BlockEssenceConduit.FACING);
 
 		if (axis == 0){
 			switch (meta){

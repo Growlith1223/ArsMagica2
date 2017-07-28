@@ -73,7 +73,7 @@ public class PotionEffectHandler {
 	public void entityDamageEvent(LivingHurtEvent event) {
 		if (event.isCanceled()) return;
 		
-		if (event.getSource().damageType.equals(DamageSource.outOfWorld.damageType)) return;
+		if (event.getSource().damageType.equals(DamageSource.OUT_OF_WORLD.damageType)) return;
 		
 		if (event.getEntityLiving().isPotionActive(PotionEffectsDefs.magicShield))
 			event.setAmount(event.getAmount() * 0.25f);
@@ -186,7 +186,7 @@ public class PotionEffectHandler {
 	@SubscribeEvent
 	public void teleportEvent(EnderTeleportEvent e) {
 		ArrayList<Long> keystoneKeys = KeystoneUtilities.instance.GetKeysInInvenory(e.getEntityLiving());
-		TileEntityAstralBarrier blockingBarrier = DimensionUtilities.GetBlockingAstralBarrier(e.getEntityLiving().worldObj, new BlockPos(e.getTargetX(), e.getTargetY(), e.getTargetZ()), keystoneKeys);
+		TileEntityAstralBarrier blockingBarrier = DimensionUtilities.GetBlockingAstralBarrier(e.getEntityLiving().world, new BlockPos(e.getTargetX(), e.getTargetY(), e.getTargetZ()), keystoneKeys);
 
 		if (e.getEntityLiving().isPotionActive(PotionEffectsDefs.astralDistortion) || blockingBarrier != null){
 			e.setCanceled(true);

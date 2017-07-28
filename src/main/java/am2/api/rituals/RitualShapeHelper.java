@@ -40,7 +40,7 @@ public class RitualShapeHelper {
 			boolean matches = false;
 			for (EntityItem item : items) {
 				ItemStack is = item.getEntityItem();
-				if (is.getItem().equals(stack.getItem()) && (stack.getMetadata() == OreDictionary.WILDCARD_VALUE || is.getMetadata() == stack.getMetadata()) && is.stackSize >= stack.stackSize)
+				if (is.getItem().equals(stack.getItem()) && (stack.getMetadata() == OreDictionary.WILDCARD_VALUE || is.getMetadata() == stack.getMetadata()) && is.getCount() >= stack.getCount())
 					matches = true;
 			}
 			if (!matches)
@@ -64,9 +64,9 @@ public class RitualShapeHelper {
 		for (ItemStack stack : ritual.getReagents()) {
 			for (EntityItem item : items) {
 				ItemStack is = item.getEntityItem();
-				if (is.getItem().equals(stack.getItem()) && is.getMetadata() == stack.getMetadata() && is.stackSize >= stack.stackSize) {
-					is.stackSize -= stack.stackSize;
-					if (is.stackSize <= 0)
+				if (is.getItem().equals(stack.getItem()) && is.getMetadata() == stack.getMetadata() && is.getCount() >= stack.getCount()) {
+					is.setCount(is.getCount() - 1);
+					if (is.getCount() <= 0)
 						item.setDead();
 					else
 						item.setEntityItemStack(is);

@@ -90,9 +90,9 @@ public class EntityWinterGuardian extends AM2Boss{
 
 	@Override
 	public void onUpdate(){
-		if (worldObj.getBiome(getPosition()).getEnableSnow() && worldObj.getWorldInfo().isRaining()){
-			if (worldObj.isRemote){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "ember", posX + (rand.nextFloat() * 6 - 3), posY + 2 + (rand.nextFloat() * 2 - 1), posZ + (rand.nextFloat() * 6 - 3));
+		if (world.getBiome(getPosition()).getEnableSnow() && world.getWorldInfo().isRaining()){
+			if (world.isRemote){
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "ember", posX + (rand.nextFloat() * 6 - 3), posY + 2 + (rand.nextFloat() * 2 - 1), posZ + (rand.nextFloat() * 6 - 3));
 				if (particle != null){
 					particle.AddParticleController(new ParticleApproachEntity(particle, this, 0.15f, 0.1, 1, false));
 					particle.setIgnoreMaxAge(false);
@@ -105,12 +105,12 @@ public class EntityWinterGuardian extends AM2Boss{
 			}
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			updateRotations();
 			spawnParticles();
 		}else{
 			if (this.ticksExisted % 100 == 0){
-				List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(2, 2, 2));
+				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(2, 2, 2));
 				for (EntityLivingBase entity : entities){
 					if (entity == this)
 						continue;
@@ -127,7 +127,7 @@ public class EntityWinterGuardian extends AM2Boss{
 	public void setCurrentAction(BossActions action){
 		super.setCurrentAction(action);
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			AMNetHandler.INSTANCE.sendActionUpdateToAllAround(this);
 		}
 	}
@@ -140,7 +140,7 @@ public class EntityWinterGuardian extends AM2Boss{
 	private void spawnParticles(){
 		for (int i = 0; i < ArsMagica2.config.getGFXLevel() * 4; ++i){
 			int rnd = rand.nextInt(10);
-			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, rnd < 5 ? "snowflakes" : "ember", posX + (rand.nextFloat() * 0.4 - 0.2), posY + 2, posZ + (rand.nextFloat() * 0.4 - 0.2));
+			AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, rnd < 5 ? "snowflakes" : "ember", posX + (rand.nextFloat() * 0.4 - 0.2), posY + 2, posZ + (rand.nextFloat() * 0.4 - 0.2));
 			if (particle != null){
 				if (rnd < 2 || rnd > 8){
 					particle.AddParticleController(new ParticleOrbitEntity(particle, this, 0.2f, 1, false));

@@ -23,7 +23,7 @@ public class AbilityExpandedLungs extends AbstractAffinityAbility {
 
 	@Override
 	public void applyTick(EntityPlayer player) {
-		if (player.isInWater() && player.worldObj.rand.nextInt(20) < 4) {
+		if (player.isInWater() && player.world.rand.nextInt(20) < 4) {
 			player.setAir(player.getAir() + 1);
 		}
 	}

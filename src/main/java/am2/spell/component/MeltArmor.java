@@ -37,7 +37,7 @@ public class MeltArmor extends SpellComponent{
 	@Override
 	public boolean applyEffectEntity(ItemStack stack, World world, EntityLivingBase caster, Entity target){
 		if (target instanceof EntityPlayer && !world.isRemote){
-			doMeltArmor(caster, ((EntityPlayer)target).inventory.armorInventory);
+			doMeltArmor(caster,(ItemStack[])((EntityPlayer)target).inventory.armorInventory.toArray());
 			return true;
 		}
 		return false;
@@ -115,13 +115,13 @@ public class MeltArmor extends SpellComponent{
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

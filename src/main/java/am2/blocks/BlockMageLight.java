@@ -31,6 +31,7 @@ public class BlockMageLight extends BlockAMSpecialRender {
 		super(Material.CIRCUITS);
 		//setBlockBounds(0.35f, 0.35f, 0.35f, 0.65f, 0.65f, 0.65f);
 		this.setTickRandomly(true);
+		this.setLightLevel(15);
 	}
 
 	@Override
@@ -58,8 +59,8 @@ public class BlockMageLight extends BlockAMSpecialRender {
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
-
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+		ItemStack heldItem = player.getHeldItem(hand);
 		if (!world.isRemote && heldItem != null){
 
 			int[] ids = OreDictionary.getOreIDs(heldItem);
@@ -74,7 +75,7 @@ public class BlockMageLight extends BlockAMSpecialRender {
 			}
 		}
 
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
 	}
 	
 	@Override
@@ -87,9 +88,7 @@ public class BlockMageLight extends BlockAMSpecialRender {
 		return 0;
 	}
 	
-	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-		// TODO Auto-generated method stub
 		return new AxisAlignedBB(-0.2, -0.2, -0.2, 0.2, 0.2, 0.2);
 	}
 	
@@ -98,7 +97,6 @@ public class BlockMageLight extends BlockAMSpecialRender {
 		return new AxisAlignedBB(0.35f, 0.35f, 0.35f, 0.65f, 0.65f, 0.65f);
 	}
 	
-	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
 	}
 	

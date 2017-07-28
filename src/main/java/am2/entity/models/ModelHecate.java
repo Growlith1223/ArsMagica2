@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModelHecate extends ModelBase{
 	private ModelSantaHat hat;
 
-	private static final ResourceLocation hatLoc = new ResourceLocation("arsmagica2", "textures/mobs/SantaHat.png");
+	private static final ResourceLocation hatLoc = new ResourceLocation("arsmagica2", "textures/mobs/santa_hat.png");
 
 	//fields
 	ModelRenderer Main;

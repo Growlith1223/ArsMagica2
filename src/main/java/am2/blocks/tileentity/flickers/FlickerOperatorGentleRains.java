@@ -33,34 +33,34 @@ public class FlickerOperatorGentleRains extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		int radius = 6;
 		int diameter = radius * 2 + 1;
-		if (!worldObj.isRemote){
-			int effectX = ((TileEntity)habitat).getPos().getX() - radius + (worldObj.rand.nextInt(diameter));
-			int effectZ = ((TileEntity)habitat).getPos().getZ() - radius + (worldObj.rand.nextInt(diameter));
+		if (!world.isRemote){
+			int effectX = ((TileEntity)habitat).getPos().getX() - radius + (world.rand.nextInt(diameter));
+			int effectZ = ((TileEntity)habitat).getPos().getZ() - radius + (world.rand.nextInt(diameter));
 			int effectY = ((TileEntity)habitat).getPos().getY() - 1;
 			
 			BlockPos effectPos = new BlockPos(effectX, effectY, effectZ);
 
-			while (worldObj.isAirBlock(effectPos) && effectY > 0){
+			while (world.isAirBlock(effectPos) && effectY > 0){
 				effectY--;
 			}
 
-			while (!worldObj.isAirBlock(effectPos) && worldObj.getBlockState(effectPos).getBlock() != Blocks.FARMLAND && effectY > 0){
+			while (!world.isAirBlock(effectPos) && world.getBlockState(effectPos).getBlock() != Blocks.FARMLAND && effectY > 0){
 				effectY++;
 			}
 
 			effectY--;
 
-			IBlockState block = worldObj.getBlockState(effectPos);
+			IBlockState block = world.getBlockState(effectPos);
 			if (block.getBlock() == Blocks.FARMLAND && block.getValue(BlockFarmland.MOISTURE) < 7){
-				worldObj.setBlockState(effectPos, block.withProperty(BlockFarmland.MOISTURE, 7));
+				world.setBlockState(effectPos, block.withProperty(BlockFarmland.MOISTURE, 7));
 				return true;
 			}
 		}else{
 			for (int i = 0; i < ArsMagica2.config.getGFXLevel() * 2; ++i){
-				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "water_ball", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getX() + 3, ((TileEntity)habitat).getPos().getX() + 0.5);
+				AMParticle particle = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "water_ball", ((TileEntity)habitat).getPos().getX() + 0.5, ((TileEntity)habitat).getPos().getX() + 3, ((TileEntity)habitat).getPos().getX() + 0.5);
 				if (particle != null){
 					particle.setAffectedByGravity();
 					particle.setMaxAge(10);
@@ -75,12 +75,12 @@ public class FlickerOperatorGentleRains extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		return DoOperation(worldObj, habitat, powered);
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		return DoOperation(world, habitat, powered);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class FlickerOperatorGentleRains extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class FlickerOperatorGentleRains extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorGentleRains");
+		return new ResourceLocation("arsmagica2", "flicker_operator_gentle_rains");
 	}
 
 	@Override

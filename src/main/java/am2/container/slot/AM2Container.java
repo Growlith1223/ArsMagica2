@@ -1,10 +1,13 @@
 package am2.container.slot;
 
+import am2.ArsMagica2;
 import am2.utils.InventoryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -45,7 +48,7 @@ public abstract class AM2Container extends Container{
 				}
 			}else if (stackHeld == null){
 				adjustGhostSlot(slot, mouseButton, clickTypeIn);
-				slot.onPickupFromSlot(player, playerInv.getItemStack());
+				slot.onTake(player, playerInv.getItemStack());
 			}else if (slot.isItemValid(stackHeld)){
 				if (InventoryUtilities.canStacksMerge(stackSlot, stackHeld)){
 					adjustGhostSlot(slot, mouseButton, clickTypeIn);
@@ -66,18 +69,18 @@ public abstract class AM2Container extends Container{
 		ItemStack stackSlot = slot.getStack();
 		int stackSize;
 		if (clickTypeIn == ClickType.PICKUP){
-			stackSize = mouseButton == 0 ? (stackSlot.stackSize + 1) / 2 : stackSlot.stackSize + 2;
+			stackSize = mouseButton == 0 ? (stackSlot.getCount() + 1) / 2 : stackSlot.getCount() + 2;
 		}else{
-			stackSize = mouseButton == 0 ? stackSlot.stackSize - 1 : stackSlot.stackSize + 1;
+			stackSize = mouseButton == 0 ? stackSlot.getCount() - 1 : stackSlot.getCount() + 1;
 		}
 
 		if (stackSize > slot.getSlotStackLimit()){
 			stackSize = slot.getSlotStackLimit();
 		}
 
-		stackSlot.stackSize = stackSize;
+		stackSlot.setCount(stackSize);
 
-		if (stackSlot.stackSize <= 0){
+		if (stackSlot.getCount() <= 0){
 			slot.putStack((ItemStack)null);
 		}
 	}
@@ -87,12 +90,12 @@ public abstract class AM2Container extends Container{
 			return;
 		}
 
-		int stackSize = mouseButton == 0 ? stackHeld.stackSize : 1;
+		int stackSize = mouseButton == 0 ? stackHeld.getCount() : 1;
 		if (stackSize > slot.getSlotStackLimit()){
 			stackSize = slot.getSlotStackLimit();
 		}
 		ItemStack ghostStack = stackHeld.copy();
-		ghostStack.stackSize = stackSize;
+		ghostStack.setCount(stackSize);
 
 		slot.putStack(ghostStack);
 	}
@@ -119,17 +122,17 @@ public abstract class AM2Container extends Container{
 				return null;
 			}
 			slot.onSlotChange(stackInSlot, originalStack);
-			if (stackInSlot.stackSize <= 0){
+			if (stackInSlot.getCount() <= 0){
 				slot.putStack(null);
 			}else{
 				slot.onSlotChanged();
 			}
 
-			if (stackInSlot.stackSize == originalStack.stackSize){
+			if (stackInSlot.getCount() == originalStack.getCount()){
 				return null;
 			}
 
-			slot.onPickupFromSlot(player, stackInSlot);
+			slot.onTake(player, stackInSlot);
 		}
 		return originalStack;
 	}
@@ -137,20 +140,20 @@ public abstract class AM2Container extends Container{
 	private boolean shiftItemStack(ItemStack stackToShift, int start, int end){
 		boolean changed = false;
 		if (stackToShift.isStackable()){
-			for (int slotIndex = start; stackToShift.stackSize > 0 && slotIndex < end; slotIndex++){
+			for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++){
 				Slot slot = (Slot)inventorySlots.get(slotIndex);
 				ItemStack stackInSlot = slot.getStack();
 				if (stackInSlot != null && InventoryUtilities.canStacksMerge(stackInSlot, stackToShift)){
-					int resultingStackSize = stackInSlot.stackSize + stackToShift.stackSize;
+					int resultingStackSize = stackInSlot.getCount() + stackToShift.getCount();
 					int max = Math.min(stackToShift.getMaxStackSize(), slot.getSlotStackLimit());
 					if (resultingStackSize <= max){
-						stackToShift.stackSize = 0;
-						stackInSlot.stackSize = resultingStackSize;
+						stackToShift.setCount(0);;
+						stackInSlot.setCount(resultingStackSize);
 						slot.onSlotChanged();
 						changed = true;
-					}else if (stackInSlot.stackSize < max){
-						stackToShift.stackSize -= max - stackInSlot.stackSize;
-						stackInSlot.stackSize = max;
+					}else if (stackInSlot.getCount() < max){
+						stackToShift.shrink(max - stackInSlot.getCount());
+						stackInSlot.setCount(max);
 						slot.onSlotChanged();
 						changed = true;
 					}
@@ -158,15 +161,15 @@ public abstract class AM2Container extends Container{
 			}
 		}
 
-		if (stackToShift.stackSize > 0){
-			for (int slotIndex = start; stackToShift.stackSize > 0 && slotIndex < end; slotIndex++){
+		if (stackToShift.getCount() > 0){
+			for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++){
 				Slot slot = (Slot)inventorySlots.get(slotIndex);
 				ItemStack stackInSlot = slot.getStack();
 				if (stackInSlot == null){
 					int max = Math.min(stackToShift.getMaxStackSize(), slot.getSlotStackLimit());
 					stackInSlot = stackToShift.copy();
-					stackInSlot.stackSize = Math.min(stackToShift.stackSize, max);
-					stackToShift.stackSize -= stackInSlot.stackSize;
+					stackInSlot.setCount(Math.min(stackToShift.getCount(), max));
+					stackToShift.shrink(stackInSlot.getCount());
 					slot.putStack(stackInSlot);
 					slot.onSlotChanged();
 					changed = true;
@@ -205,5 +208,25 @@ public abstract class AM2Container extends Container{
 		for (int j1 = 0; j1 < 9; j1++){
 			addSlotToContainer(new Slot(player.inventory, j1, left + j1 * 18, top));
 		}
+	}
+	
+	@Override
+	public void detectAndSendChanges(){
+		for (int i = 0; i < this.inventorySlots.size(); ++i)
+        {
+            ItemStack itemstack = (((Slot)this.inventorySlots.get(i)).getStack() == null) ? ItemStack.EMPTY :((Slot)this.inventorySlots.get(i)).getStack();
+            ItemStack itemstack1 = (ItemStack)this.inventoryItemStacks.get(i);
+
+            if (!ItemStack.areItemStacksEqual(itemstack1, itemstack))
+            {
+                itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+                this.inventoryItemStacks.set(i, itemstack1);
+
+                for (int j = 0; j < this.listeners.size(); ++j)
+                {
+                    ((IContainerListener)this.listeners.get(j)).sendSlotContents(this, i, itemstack1);
+                }
+            }
+        }
 	}
 }

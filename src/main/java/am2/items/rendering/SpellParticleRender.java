@@ -106,13 +106,13 @@ public class SpellParticleRender extends ItemOverrideList{
 	
 	public void renderItem(ItemStack item, EntityLivingBase entity){
 
-		if (mc.thePlayer.isPotionActive(Potion.getPotionFromResourceLocation("invisibility"))) return;
+		if (mc.player.isPotionActive(Potion.getPotionFromResourceLocation("invisibility"))) return;
 
 		ItemStack scrollStack = null;
 		if (item.getItem() instanceof ItemSpellBase){
 			scrollStack = item;
 		}else if (item.getItem() instanceof ItemSpellBook){
-			scrollStack = ((ItemSpellBook)item.getItem()).getActiveScrollInventory(item)[((ItemSpellBook)item.getItem()).GetActiveSlot(item)];
+			scrollStack = ((ItemSpellBook)item.getItem()).getActiveScrollInventory(item).get(((ItemSpellBook)item.getItem()).GetActiveSlot(item));
 		}
 
 
@@ -137,7 +137,7 @@ public class SpellParticleRender extends ItemOverrideList{
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		float scale = 3f;
-		if (entity == mc.thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0){
+		if (entity == mc.player && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0){
 
 			GL11.glPushMatrix();
 
@@ -158,8 +158,8 @@ public class SpellParticleRender extends ItemOverrideList{
 			GL11.glPopMatrix();
 
 			if (includeArm){
-				Minecraft.getMinecraft().renderEngine.bindTexture(mc.thePlayer.getLocationSkin());
-				renderFirstPersonArm(mc.thePlayer);
+				Minecraft.getMinecraft().renderEngine.bindTexture(mc.player.getLocationSkin());
+				renderFirstPersonArm(mc.player);
 			}
 		}
 		else{
@@ -219,16 +219,16 @@ public class SpellParticleRender extends ItemOverrideList{
 	}
 
 	private void renderFirstPersonArm(EntityPlayerSP player) {
-		EnumHandSide hand = EnumHandSide.LEFT;
+		EnumHandSide hand = player.getPrimaryHand();
 		boolean flag = hand != EnumHandSide.LEFT;
 		float f = flag ? 1.0F : -1.0F;
-		float f1 = MathHelper.sqrt_float(0);
+		float f1 = MathHelper.sqrt(0);
 		GlStateManager.rotate(f * 45.0F, 0.0F, 1.0F, 0.0F);
 		float f5 = MathHelper.sin(0 * 0 * (float) Math.PI);
 		float f6 = MathHelper.sin(f1 * (float) Math.PI);
 		GlStateManager.rotate(f * f6 * 70.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(f * f5 * -20.0F, 0.0F, 0.0F, 1.0F);
-		AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
+		AbstractClientPlayer abstractclientplayer = this.mc.player;
 		this.mc.getTextureManager().bindTexture(abstractclientplayer.getLocationSkin());
 		GlStateManager.translate(f * -1.0F, 3.6F, 3.5F);
 		GlStateManager.rotate(f * 120.0F, 0.0F, 0.0F, 1.0F);
@@ -250,7 +250,7 @@ public class SpellParticleRender extends ItemOverrideList{
 		// float par1 = 0.5f;
 		//
 		// float f1 = 1.0F;
-		// EntityPlayerSP entityclientplayermp = this.mc.thePlayer;
+		// EntityPlayerSP entityclientplayermp = this.mc.player;
 		// if (entityclientplayermp == null) return;
 		// float f2 = entityclientplayermp.prevRotationPitch +
 		// (entityclientplayermp.rotationPitch -
@@ -273,8 +273,8 @@ public class SpellParticleRender extends ItemOverrideList{
 		// 1.0F, 0.0F, 0.0F);
 		// GL11.glRotatef((entityclientplayermp.rotationYaw - f4) * 0.1F, 0.0F,
 		// 1.0F, 0.0F);
-		// int i = mc.theWorld.isBlockLoaded(entityclientplayermp.getPosition())
-		// ? mc.theWorld.getCombinedLight(entityclientplayermp.getPosition(), 0)
+		// int i = mc.world.isBlockLoaded(entityclientplayermp.getPosition())
+		// ? mc.world.getCombinedLight(entityclientplayermp.getPosition(), 0)
 		// : 0;
 		// int j = i % 65536;
 		// int k = i / 65536;
@@ -289,9 +289,9 @@ public class SpellParticleRender extends ItemOverrideList{
 		// float f12 = 0.8F;
 		// f7 = entityclientplayermp.getSwingProgress(par1);
 		// f8 = MathHelper.sin(f7 * (float)Math.PI);
-		// f6 = MathHelper.sin(MathHelper.sqrt_float(f7) * (float)Math.PI);
+		// f6 = MathHelper.sin(MathHelper.sqrt(f7) * (float)Math.PI);
 		// GL11.glTranslatef(-f6 * 0.3F,
-		// MathHelper.sin(MathHelper.sqrt_float(f7) * (float)Math.PI * 2.0F) *
+		// MathHelper.sin(MathHelper.sqrt(f7) * (float)Math.PI * 2.0F) *
 		// 0.4F, -f8 * 0.4F);
 		// GL11.glTranslatef(0.8F * f12, -0.75F * f12 - (1.0F - f1) * 0.6F,
 		// -0.9F * f12);
@@ -299,7 +299,7 @@ public class SpellParticleRender extends ItemOverrideList{
 		// GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		// f7 = entityclientplayermp.getSwingProgress(par1);
 		// f8 = MathHelper.sin(f7 * f7 * (float)Math.PI);
-		// f6 = MathHelper.sin(MathHelper.sqrt_float(f7) * (float)Math.PI);
+		// f6 = MathHelper.sin(MathHelper.sqrt(f7) * (float)Math.PI);
 		// GL11.glRotatef(f6 * 70.0F, 0.0F, 1.0F, 0.0F);
 		// GL11.glRotatef(-f8 * 20.0F, 0.0F, 0.0F, 1.0F);
 		// this.mc.getTextureManager().bindTexture(rLoc);//entityclientplayermp.getLocationSkin());

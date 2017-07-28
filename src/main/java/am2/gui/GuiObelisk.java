@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiObelisk extends GuiContainer{
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/ObeliskGUI.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/obelisk_gui.png");
 	private final TileEntityObelisk obelisk;
 
 	public GuiObelisk(TileEntityObelisk obelisk, EntityPlayer player){

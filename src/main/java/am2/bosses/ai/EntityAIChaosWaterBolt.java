@@ -52,11 +52,11 @@ public class EntityAIChaosWaterBolt extends EntityAIBase{
 		if (host.getCurrentAction() != BossActions.CASTING)
 			host.setCurrentAction(BossActions.CASTING);
 
-		if (!host.worldObj.isRemote && host.getCurrentAction() == BossActions.CASTING){
-			float yaw = host.worldObj.rand.nextFloat() * 360;
+		if (!host.world.isRemote && host.getCurrentAction() == BossActions.CASTING){
+			float yaw = host.world.rand.nextFloat() * 360;
 			host.rotationYaw = yaw;
 			host.prevRotationYaw = yaw;
-			SpellUtils.applyStackStage(castStack, host, host, host.posX, host.posY, host.posZ, null, host.worldObj, false, false, 0);
+			SpellUtils.applyStackStage(castStack, host, host, host.posX, host.posY, host.posZ, null, host.world, false, false, 0);
 		}
 	}
 }

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "arsmagica2:blocks/log_witchwood_top",
+        "side": "arsmagica2:blocks/log_witchwood"
+    }
+}

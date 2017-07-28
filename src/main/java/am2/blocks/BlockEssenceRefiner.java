@@ -57,7 +57,7 @@ public class BlockEssenceRefiner extends BlockAMPowered{
 	}
 
 	@Override
-	public boolean onBlockActivated(World par1World, BlockPos pos, IBlockState state, EntityPlayer par5EntityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing par6, float par7, float par8, float par9){
+	public boolean onBlockActivated(World par1World, BlockPos pos, IBlockState state, EntityPlayer par5EntityPlayer, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
 		if (this.HandleSpecialItems(par1World, par5EntityPlayer, pos)){
 			return true;
 		}
@@ -65,16 +65,17 @@ public class BlockEssenceRefiner extends BlockAMPowered{
 			if (KeystoneUtilities.HandleKeystoneRecovery(par5EntityPlayer, ((IKeystoneLockable<?>)par1World.getTileEntity(pos))))
 				return true;
 			if (KeystoneUtilities.instance.canPlayerAccess((IKeystoneLockable<?>)par1World.getTileEntity(pos), par5EntityPlayer, KeystoneAccessType.USE)){
-				super.onBlockActivated(par1World, pos, state, par5EntityPlayer, hand, heldItem, par6, par7, par8, par9);
+				super.onBlockActivated(par1World, pos, state, par5EntityPlayer, hand, par6, par7, par8, par9);
 				FMLNetworkHandler.openGui(par5EntityPlayer, ArsMagica2.instance, IDDefs.GUI_ESSENCE_REFINER, par1World, pos.getX(), pos.getY(), pos.getZ());
 			}
 		}
 		return true;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
 	@Override
@@ -91,14 +92,14 @@ public class BlockEssenceRefiner extends BlockAMPowered{
 				float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
 				float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
 				do{
-					if (itemstack.stackSize <= 0){
+					if (itemstack.getCount() <= 0){
 						break;
 					}
 					int i1 = world.rand.nextInt(21) + 10;
-					if (i1 > itemstack.stackSize){
-						i1 = itemstack.stackSize;
+					if (i1 > itemstack.getCount()){
+						i1 = itemstack.getCount();
 					}
-					itemstack.stackSize -= i1;
+					itemstack.shrink(i1);
 					ItemStack newItem = new ItemStack(itemstack.getItem(), i1, itemstack.getItemDamage());
 					newItem.setTagCompound(itemstack.getTagCompound());
 					EntityItem entityitem = new EntityItem(world, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, newItem);
@@ -106,7 +107,7 @@ public class BlockEssenceRefiner extends BlockAMPowered{
 					entityitem.motionX = (float)world.rand.nextGaussian() * f3;
 					entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
 					entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-					world.spawnEntityInWorld(entityitem);
+					world.spawnEntity(entityitem);
 				}while (true);
 			}
 

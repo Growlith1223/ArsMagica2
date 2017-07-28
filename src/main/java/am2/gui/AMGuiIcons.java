@@ -33,12 +33,12 @@ public class AMGuiIcons{
 	}
 
 	public void init(TextureMap textureMap){
-		manaBar = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/Mana_Bar"));
-		manaLevel = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/Mana_Level"));
+		manaBar = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/mana_bar"));
+		manaLevel = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/mana_level"));
 
-		fatigueIcon = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/Fatigue_Icon"));
-		fatigueBar = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/Fatigue_Bar"));
-		fatigueLevel = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/Fatigue_Level"));
+		fatigueIcon = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/fatigue_icon"));
+		fatigueBar = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/fatigue_bar"));
+		fatigueLevel = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/fatigue_level"));
 
 		padlock = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/padlock"));
 		warning = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/update_available"));
@@ -46,12 +46,12 @@ public class AMGuiIcons{
 
 		newEntry = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/new"));
 
-		evilBook = textureMap.registerSprite(new ResourceLocation("arsmagica2:items/evilBook"));
+		evilBook = textureMap.registerSprite(new ResourceLocation("arsmagica2:items/evil_book"));
 
 		gatewayPortal = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/gateway"));
 
 		selectedRunes = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/rune_selected_aura"));
 		
-		frame = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/spellFrame"));
+		frame = textureMap.registerSprite(new ResourceLocation("arsmagica2:gui_icons/spell_frame"));
 	}
 }

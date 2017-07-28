@@ -64,8 +64,8 @@ public class EntityAIStatic extends AIAnimation{
 		if (guardian.getAttackTarget() != null){
 			guardian.getLookHelper().setLookPositionWithEntity(guardian.getAttackTarget(), 10, 10);
 			if (guardian.getTicksInCurrentAction() == 20){
-				if (!guardian.worldObj.isRemote)
-					guardian.worldObj.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_STATIC, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
+				if (!guardian.world.isRemote)
+					guardian.world.playSound(guardian.posX, guardian.posY, guardian.posZ, AMSounds.LIGHTNING_GUARDIAN_STATIC, SoundCategory.HOSTILE, 1.0f, guardian.getRNG().nextFloat() * 0.5f + 0.5f, false);
 			}
 			if (guardian.getTicksInCurrentAction() > 66 && guardian.getTicksInCurrentAction() % 15 == 0 && guardian.getEntitySenses().canSee(guardian.getAttackTarget())){
 				doStrike();
@@ -75,7 +75,7 @@ public class EntityAIStatic extends AIAnimation{
 
 	private void doStrike(){
 		EntityLightningGuardian guardian = getEntity();
-		List<EntityLivingBase> entities = guardian.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, guardian.getEntityBoundingBox().expand(8, 3, 8));
+		List<EntityLivingBase> entities = guardian.world.getEntitiesWithinAABB(EntityLivingBase.class, guardian.getEntityBoundingBox().expand(8, 3, 8));
 		for (EntityLivingBase e : entities)
 			if (e != guardian)
 				e.attackEntityFrom(DamageSources.causeLightningDamage(guardian), 8);

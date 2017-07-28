@@ -28,15 +28,15 @@ public class ContainerArmorInfuser extends Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return tileEntity.isUseableByPlayer(entityplayer);
+		return tileEntity.isUsableByPlayer(entityplayer);
 	}
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index){
 		Slot slot = (Slot)this.inventorySlots.get(index);
 		ItemStack stack = slot.getStack();
-		if (stack == null)
-			return null;
+		if (stack.isEmpty())
+			return ItemStack.EMPTY;
 		if (stack.getItem() instanceof ItemArmor){
 			ItemArmor armor = (ItemArmor)stack.getItem();
 			if (index == 0){
@@ -44,7 +44,7 @@ public class ContainerArmorInfuser extends Container{
 				if (!playerSlot.getHasStack()){
 					ItemStack clone = stack.copy();
 					playerSlot.putStack(clone);
-					slot.putStack(null);
+					slot.putStack(ItemStack.EMPTY);
 					playerSlot.onSlotChanged();
 					slot.onSlotChanged();
 					return clone;
@@ -54,7 +54,7 @@ public class ContainerArmorInfuser extends Container{
 				if (!armorSlot.getHasStack()){
 					ItemStack clone = stack.copy();
 					armorSlot.putStack(clone);
-					slot.putStack(null);
+					slot.putStack(ItemStack.EMPTY);
 					armorSlot.onSlotChanged();
 					slot.onSlotChanged();
 					return clone;
@@ -62,7 +62,7 @@ public class ContainerArmorInfuser extends Container{
 			}
 		}
 
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 }

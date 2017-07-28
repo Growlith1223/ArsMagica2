@@ -59,7 +59,7 @@ public class Disarm extends SpellComponent{
 				item.setEntityItemStack(dropstack);
 				item.setPosition(target.posX, target.posY, target.posZ);
 				item.setPickupDelay(15);
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 				((EntityDarkMage)target).setItemStackToSlot(EntityMob.getSlotForItemStack(stack), null);
 				((EntityDarkMage)target).disarm();
 
@@ -69,7 +69,7 @@ public class Disarm extends SpellComponent{
 		if (target instanceof EntityPlayer && (!ArsMagica2.config.getDisarmAffectsPlayers() || (!world.isRemote && !FMLCommonHandler.instance().getMinecraftServerInstance().isPVPEnabled())))
 			return false;
 		
-		if (target instanceof EntityPlayer && ((EntityPlayer)target).getHeldItemOffhand() != null && !target.worldObj.isRemote && (rnd.nextInt(9) + 1 <= damage)
+		if (target instanceof EntityPlayer && ((EntityPlayer)target).getHeldItemOffhand() != null && !target.world.isRemote && (rnd.nextInt(9) + 1 <= damage)
 			&& EnchantmentHelper.getEnchantmentLevel(AMEnchantments.soulbound, ((EntityPlayer)target).getHeldItemOffhand()) <= 0){
 			//Drop mainhand item? 1 line. You want to drop the offhand? You'd better like workarounds.
 			EntityItem item = new EntityItem(world);
@@ -77,11 +77,11 @@ public class Disarm extends SpellComponent{
 			item.setEntityItemStack(dropstack);
 			item.setPosition(target.posX, target.posY, target.posZ);
 			item.setDefaultPickupDelay();
-			world.spawnEntityInWorld(item);
-			((EntityPlayer)target).inventory.offHandInventory[0] = null;
+			world.spawnEntity(item);
+			((EntityPlayer)target).inventory.offHandInventory.set(0, null);
 		}
 		
-		if (target instanceof EntityPlayer && ((EntityPlayer)target).getHeldItemMainhand() != null && !target.worldObj.isRemote){
+		if (target instanceof EntityPlayer && ((EntityPlayer)target).getHeldItemMainhand() != null && !target.world.isRemote){
 			if (EnchantmentHelper.getEnchantmentLevel(AMEnchantments.soulbound, ((EntityPlayer)target).getHeldItemMainhand()) > 0)
 				return true;
 			((EntityPlayer)target).dropItem(true);
@@ -96,7 +96,7 @@ public class Disarm extends SpellComponent{
 				EntityItem item = new EntityItem(world);
 				item.setEntityItemStack(dropstack);
 				item.setPosition(target.posX, target.posY, target.posZ);
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 			}
 			((EntityMob)target).setAttackTarget(caster);
 			
@@ -111,7 +111,7 @@ public class Disarm extends SpellComponent{
 				item.setEntityItemStack(dropstack);
 				item.setPosition(target.posX, target.posY, target.posZ);
 				item.setDefaultPickupDelay();
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 			}
 			((EntityMob)target).setItemStackToSlot(EntityMob.getSlotForItemStack(stack), null);;
 
@@ -192,14 +192,14 @@ public class Disarm extends SpellComponent{
 
 	@Override
 	public void encodeBasicData(NBTTagCompound tag, Object[] recipe) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing blockFace,
 			double impactX, double impactY, double impactZ, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 }

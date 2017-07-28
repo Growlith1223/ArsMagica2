@@ -53,7 +53,7 @@ public class TileCraftingAltarRenderer extends TileEntitySpecialRenderer<TileEnt
 			Minecraft.getMinecraft().renderEngine.bindTexture(LOCATION_BLOCKS_TEXTURE);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			Minecraft.getMinecraft().mcProfiler.endStartSection("buffering");
-			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(Minecraft.getMinecraft().theWorld, model, te.getMimicState(), pos, t.getBuffer(), false);
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(Minecraft.getMinecraft().world, model, te.getMimicState(), pos, t.getBuffer(), false);
 			Minecraft.getMinecraft().mcProfiler.endStartSection("drawing");
 			t.draw();
 			GlStateManager.popMatrix();

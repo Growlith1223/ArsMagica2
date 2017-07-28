@@ -15,6 +15,7 @@ import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -29,7 +30,8 @@ public class CreateWater extends SpellComponent{
 
 	@Override
 	public boolean applyEffectBlock(ItemStack stack, World world, BlockPos pos, EnumFacing blockFace, double impactX, double impactY, double impactZ, EntityLivingBase caster){
-
+		if (world.provider.doesWaterVaporize()) return false;
+		
 		Block block = world.getBlockState(pos).getBlock();
 
 		if (block == Blocks.CAULDRON){

@@ -42,6 +42,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -56,7 +57,7 @@ import java.util.*;
 
 public class TileEntityInscriptionTable extends TileEntity implements IInventory, ITickable, ITileEntityAMBase {
 
-	private ItemStack inscriptionTableItemStacks[];
+	private NonNullList<ItemStack> inscriptionTableItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 	private final ArrayList<AbstractSpellPart> currentRecipe;
 	private final ArrayList<ArrayList<AbstractSpellPart>> shapeGroups;
 	private int numStageGroups = 2;
@@ -77,7 +78,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	private static final byte RESET_NAME = 0x4;
 
 	public TileEntityInscriptionTable(){
-		inscriptionTableItemStacks = new ItemStack[getSizeInventory()];
+		inscriptionTableItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 		currentPlayerUsing = null;
 		currentSpellName = "";
 		currentRecipe = new ArrayList<AbstractSpellPart>();
@@ -102,32 +103,32 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	@Override
 	public ItemStack getStackInSlot(int i){
-		return inscriptionTableItemStacks[i];
+		return inscriptionTableItemStacks.get(i);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j){
-		if (inscriptionTableItemStacks[i] != null){
-			if (inscriptionTableItemStacks[i].stackSize <= j){
-				ItemStack itemstack = inscriptionTableItemStacks[i];
-				inscriptionTableItemStacks[i] = null;
+		if (inscriptionTableItemStacks.get(i) != ItemStack.EMPTY){
+			if (inscriptionTableItemStacks.get(i).getCount() <= j){
+				ItemStack itemstack = inscriptionTableItemStacks.get(i);
+				inscriptionTableItemStacks.set(i, ItemStack.EMPTY);
 				return itemstack;
 			}
-			ItemStack itemstack1 = inscriptionTableItemStacks[i].splitStack(j);
-			if (inscriptionTableItemStacks[i].stackSize == 0){
-				inscriptionTableItemStacks[i] = null;
+			ItemStack itemstack1 = inscriptionTableItemStacks.get(i).splitStack(j);
+			if (inscriptionTableItemStacks.get(i).getCount() == 0){
+				inscriptionTableItemStacks.set(i, ItemStack.EMPTY);
 			}
 			return itemstack1;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack){
-		inscriptionTableItemStacks[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
-			itemstack.stackSize = getInventoryStackLimit();
+		inscriptionTableItemStacks.set(i, itemstack);
+		if (itemstack != ItemStack.EMPTY && itemstack.getCount() > getInventoryStackLimit()){
+			itemstack.setCount(getInventoryStackLimit());
 		}
 	}
 
@@ -142,8 +143,8 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
-		if (worldObj.getTileEntity(pos) != this){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
+		if (world.getTileEntity(pos) != this){
 			return false;
 		}
 		return entityplayer.getDistanceSqToCenter(pos) <= 64D;
@@ -155,9 +156,9 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	public void setInUse(EntityPlayer player){
 		this.currentPlayerUsing = player;
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			this.markDirty();
-			//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+			//world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 
@@ -166,22 +167,22 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	private boolean isRenderingLeft(){
-		return worldObj.getBlockState(pos).getValue(BlockInscriptionTable.LEFT);
+		return world.getBlockState(pos).getValue(BlockInscriptionTable.LEFT);
 	}
 
 	@Override
 	public void update(){
-		if (worldObj.getBlockState(pos).getBlock() != BlockDefs.inscriptionTable){
+		if (world.getBlockState(pos).getBlock() != BlockDefs.inscriptionTable){
 			this.invalidate();
 			return;
 		}
-		if (worldObj.isRemote && getUpgradeState() >= 3)
+		if (world.isRemote && getUpgradeState() >= 3)
 			candleUpdate();
 		if (this.numStageGroups > MAX_STAGE_GROUPS)
 			this.numStageGroups = MAX_STAGE_GROUPS;
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			boolean shouldSet = false;
-			IBlockState state = worldObj.getBlockState(pos);
+			IBlockState state = world.getBlockState(pos);
 			if (getUpgradeState() >= 1 && !state.getValue(BlockInscriptionTable.TIER_1)) {
 				shouldSet = true;
 			}
@@ -192,10 +193,10 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 				shouldSet = true;
 			}
 			if (shouldSet)
-				this.worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockInscriptionTable.TIER_1, getUpgradeState() >= 1).withProperty(BlockInscriptionTable.TIER_2, getUpgradeState() >= 2).withProperty(BlockInscriptionTable.TIER_3, getUpgradeState() >= 3), 2);
+				this.world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInscriptionTable.TIER_1, getUpgradeState() >= 1).withProperty(BlockInscriptionTable.TIER_2, getUpgradeState() >= 2).withProperty(BlockInscriptionTable.TIER_3, getUpgradeState() >= 3), 2);
 		}
 		this.markDirty();
-		//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+		//world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	public int getUpgradeState(){
@@ -212,7 +213,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 				double particleX = 0;
 				double particleZ = 0;
 
-				switch (worldObj.getBlockState(pos).getValue(BlockInscriptionTable.FACING)){
+				switch (world.getBlockState(pos).getValue(BlockInscriptionTable.FACING)){
 				case SOUTH:
 					particleX = this.pos.getX() + 0.15;
 					particleZ = this.getPos().getZ() + 0.22;
@@ -232,7 +233,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 				}
 
 				ticksToNextParticle = 30;
-				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "fire", particleX, getPos().getY() + 1.32, particleZ);
+				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "fire", particleX, getPos().getY() + 1.32, particleZ);
 				if (effect != null){
 					effect.setParticleScale(0.025f, 0.1f, 0.025f);
 					effect.AddParticleController(new ParticleHoldPosition(effect, 29, 1, false));
@@ -240,13 +241,13 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 					effect.setMaxAge(400);
 				}
 
-				if (worldObj.rand.nextInt(100) > 80){
-					AMParticle smoke = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "smoke", particleX, getPos().getY() + 1.4, particleZ);
+				if (world.rand.nextInt(100) > 80){
+					AMParticle smoke = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "smoke", particleX, getPos().getY() + 1.4, particleZ);
 					if (smoke != null){
 						smoke.setParticleScale(0.025f);
 						smoke.AddParticleController(new ParticleFloatUpward(smoke, 0.01f, 0.01f, 1, false));
 						smoke.setIgnoreMaxAge(false);
-						smoke.setMaxAge(20 + worldObj.rand.nextInt(10));
+						smoke.setMaxAge(20 + world.rand.nextInt(10));
 					}
 				}
 			}
@@ -256,7 +257,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 				double particleX = 0;
 				double particleZ = 0;
 
-				switch (worldObj.getBlockState(pos).getValue(BlockInscriptionTable.FACING)){
+				switch (world.getBlockState(pos).getValue(BlockInscriptionTable.FACING)){
 				case SOUTH:
 					particleX = this.getPos().getX() + 0.59;
 					particleZ = this.getPos().getZ() - 0.72;
@@ -275,7 +276,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 					break;
 				}
 
-				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "fire", particleX, getPos().getY() + 1.26, particleZ);
+				AMParticle effect = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "fire", particleX, getPos().getY() + 1.26, particleZ);
 				if (effect != null){
 					effect.setParticleScale(0.025f, 0.1f, 0.025f);
 					effect.AddParticleController(new ParticleHoldPosition(effect, 29, 1, false));
@@ -283,13 +284,13 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 					effect.setMaxAge(400);
 				}
 
-				if (worldObj.rand.nextInt(100) > 80){
-					AMParticle smoke = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "smoke", particleX, getPos().getY() + 1.4, particleZ);
+				if (world.rand.nextInt(100) > 80){
+					AMParticle smoke = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "smoke", particleX, getPos().getY() + 1.4, particleZ);
 					if (smoke != null){
 						smoke.setParticleScale(0.025f);
 						smoke.AddParticleController(new ParticleFloatUpward(smoke, 0.01f, 0.01f, 1, false));
 						smoke.setIgnoreMaxAge(false);
-						smoke.setMaxAge(20 + worldObj.rand.nextInt(10));
+						smoke.setMaxAge(20 + world.rand.nextInt(10));
 					}
 				}
 			}
@@ -307,9 +308,9 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inscriptionTableItemStacks[i] != null){
-			ItemStack itemstack = inscriptionTableItemStacks[i];
-			inscriptionTableItemStacks[i] = null;
+		if (inscriptionTableItemStacks.get(i) != ItemStack.EMPTY){
+			ItemStack itemstack = inscriptionTableItemStacks.get(i);
+			inscriptionTableItemStacks.set(i, ItemStack.EMPTY);
 			return itemstack;
 		}else{
 			return null;
@@ -325,13 +326,13 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	private void parseTagCompound(NBTTagCompound par1NBTTagCompound){
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("InscriptionTableInventory", Constants.NBT.TAG_COMPOUND);
-		inscriptionTableItemStacks = new ItemStack[getSizeInventory()];
+		inscriptionTableItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 		for (int i = 0; i < nbttaglist.tagCount(); i++){
 			String tag = String.format("ArrayIndex", i);
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte(tag);
-			if (byte0 >= 0 && byte0 < inscriptionTableItemStacks.length){
-				inscriptionTableItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (byte0 >= 0 && byte0 < inscriptionTableItemStacks.size()){
+				inscriptionTableItemStacks.set(byte0, new ItemStack(nbttagcompound1));
 			}
 		}
 		shapeGroups.clear();
@@ -358,12 +359,12 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	public NBTTagCompound writeToNBT(NBTTagCompound par1NBTTagCompound){
 		super.writeToNBT(par1NBTTagCompound);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inscriptionTableItemStacks.length; i++){
-			if (inscriptionTableItemStacks[i] != null){
+		for (int i = 0; i < inscriptionTableItemStacks.size(); i++){
+			if (inscriptionTableItemStacks.get(i) != null){
 				String tag = String.format("ArrayIndex", i);
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte(tag, (byte)i);
-				inscriptionTableItemStacks[i].writeToNBT(nbttagcompound1);
+				inscriptionTableItemStacks.get(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -409,13 +410,13 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	public void HandleUpdatePacket(byte[] data){
-		if (this.worldObj == null)
+		if (this.world == null)
 			return;
 		AMDataReader rdr = new AMDataReader(data);
 		switch (rdr.ID){
 		case FULL_UPDATE:
 			if (!rdr.getBoolean()){
-				Entity e = this.worldObj.getEntityByID(rdr.getInt());
+				Entity e = this.world.getEntityByID(rdr.getInt());
 				if (e instanceof EntityPlayer){
 					EntityPlayer player = (EntityPlayer)e;
 					this.setInUse(player);
@@ -455,14 +456,14 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 			break;
 		case MAKE_SPELL:
 			int entityID = rdr.getInt();
-			EntityPlayer player = (EntityPlayer)worldObj.getEntityByID(entityID);
+			EntityPlayer player = (EntityPlayer)world.getEntityByID(entityID);
 			if (player != null){
 				createSpellForPlayer(player);
 			}
 			break;
 		case RESET_NAME:
 			entityID = rdr.getInt();
-			player = (EntityPlayer)worldObj.getEntityByID(entityID);
+			player = (EntityPlayer)world.getEntityByID(entityID);
 			if (player != null){
 				((ContainerInscriptionTable)player.openContainer).resetSpellNameAndIcon();
 			}
@@ -523,7 +524,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 		ArrayList<AbstractSpellPart> group = this.shapeGroups.get(groupIndex);
 		if (!currentSpellIsReadOnly && group.size() < 4 && !(part instanceof SpellComponent)){
 			group.add(part);
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 			countModifiers();
 		}
@@ -533,7 +534,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 		ArrayList<AbstractSpellPart> group = this.shapeGroups.get(groupIndex);
 		if (!this.currentSpellIsReadOnly){
 			group.remove(index);
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 			countModifiers();
 		}
@@ -545,7 +546,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 			for (int i = 0; i <= length; ++i)
 				group.remove(startIndex);
 			countModifiers();
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 		}
 	}
@@ -553,7 +554,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	public void addSpellPart(AbstractSpellPart part){
 		if (!currentSpellIsReadOnly && this.currentRecipe.size() < 16){
 			this.currentRecipe.add(part);
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 			countModifiers();
 		}
@@ -562,7 +563,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	public void removeSpellPart(int index){
 		if (!this.currentSpellIsReadOnly){
 			this.currentRecipe.remove(index);
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 			countModifiers();
 		}
@@ -573,7 +574,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 			for (int i = 0; i <= length; ++i)
 				this.getCurrentRecipe().remove(startIndex);
 			countModifiers();
-			if (this.worldObj.isRemote)
+			if (this.world.isRemote)
 				this.sendDataToServer();
 		}
 	}
@@ -624,7 +625,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	public void createSpellForPlayer(EntityPlayer player){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			AMDataWriter writer = new AMDataWriter();
 			writer.add(getPos().getX());
 			writer.add(getPos().getY());
@@ -743,7 +744,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 						materialsList.put(materialkey, qty);
 					}
 
-					if (recipeStack != null)
+					if (recipeStack != ItemStack.EMPTY)
 						componentRecipeList.add(recipeStack);
 				}
 			}
@@ -833,9 +834,9 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 			bookstack.getTagCompound().setBoolean("spellFinalized", true);
 
-			//worldObj.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), "arsmagica2:misc.inscriptiontable.takebook", 1.0f, 1.0f, true);
+			//world.playSound(getPos().getX(), getPos().getY(), getPos().getZ(), "arsmagica2:misc.inscriptiontable.takebook", 1.0f, 1.0f, true);
 			this.markDirty();
-			//worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 2);
+			//world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 2);
 		}
 		return bookstack;
 	}
@@ -978,7 +979,7 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 	}
 
 	public void resetSpellNameAndIcon(ItemStack stack, EntityPlayer player){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			AMDataWriter writer = new AMDataWriter();
 			writer.add(getPos().getX());
 			writer.add(getPos().getY());
@@ -1005,8 +1006,8 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	public void incrementUpgradeState(){
 		this.numStageGroups++;
-		if (!this.worldObj.isRemote){
-			List<EntityPlayerMP> players = this.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(256, 256, 256));
+		if (!this.world.isRemote){
+			List<EntityPlayerMP> players = this.world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(256, 256, 256));
 			for (EntityPlayerMP player : players){
 				player.connection.sendPacket(getUpdatePacket());
 			}
@@ -1020,25 +1021,37 @@ public class TileEntityInscriptionTable extends TileEntity implements IInventory
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.inscriptionTableItemStacks)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
 	}
 }

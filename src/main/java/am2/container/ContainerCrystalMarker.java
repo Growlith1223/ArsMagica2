@@ -38,7 +38,7 @@ public class ContainerCrystalMarker extends AM2Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return this.crystalMarker.isUseableByPlayer(entityplayer);
+		return this.crystalMarker.isUsableByPlayer(entityplayer);
 	}
 
 

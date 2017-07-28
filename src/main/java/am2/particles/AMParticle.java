@@ -237,7 +237,7 @@ public class AMParticle extends Particle {
 		if (isAffectedByGravity)
 			this.motionY -= 0.04D * this.particleGravity;
 		if (doVelocityUpdates)
-			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+			this.move(this.motionX, this.motionY, this.motionZ);
 
 		List<ParticleController> remove = new ArrayList<ParticleController>();
 
@@ -246,7 +246,7 @@ public class AMParticle extends Particle {
 				remove.add(pmc);
 				continue;
 			}
-			pmc.onUpdate(this.worldObj);
+			pmc.onUpdate(this.world);
 			if (pmc.getExclusive()){
 				break;
 			}
@@ -275,7 +275,7 @@ public class AMParticle extends Particle {
 	
 	@Override
 	public void renderParticle(VertexBuffer tessellator, Entity ent, float partialframe, float cosyaw, float cospitch, float sinyaw, float sinsinpitch, float cossinpitch){
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			return;
 		}
 		float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * partialframe - interpPosX);
@@ -383,8 +383,8 @@ public class AMParticle extends Particle {
 		setPrevPos(posX, posY, posZ);
 	}
 	
-	public World getWorldObj() {
-		return worldObj;
+	public World getworld() {
+		return world;
 	}
 
 	public void SetParticleTextureByName(String name) {
@@ -398,9 +398,9 @@ public class AMParticle extends Particle {
 		setPosition(entity.posX, entity.posY, entity.posZ);
 	}
 
-	public boolean isCollided() {
+	/*public boolean isCollided() {
 		return isCollided;
-	}
+	}*/
 
 	public void addVelocity(double d, double e, double f) {
 		this.motionX = d;

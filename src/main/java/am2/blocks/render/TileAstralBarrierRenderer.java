@@ -14,7 +14,7 @@ public class TileAstralBarrierRenderer extends TileEntitySpecialRenderer<TileEnt
 
 	public TileAstralBarrierRenderer(){
 		model = new ModelAstralBarrier();
-		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/blockAstralBarrier.png");
+		rLoc = new ResourceLocation("arsmagica2", "textures/blocks/custom/block_astral_barrier.png");
 	}
 
 	public void renderTileEntityAt(TileEntityAstralBarrier tile, double d, double d1, double d2, float f, int destroyStage){

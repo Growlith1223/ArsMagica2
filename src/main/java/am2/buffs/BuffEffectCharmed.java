@@ -52,7 +52,7 @@ public class BuffEffectCharmed extends BuffEffect{
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
 		try {
-			charmer = (EntityLivingBase) FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0].getEntityFromUuid(UUID.fromString(nbt.getString("Charmer")));
+			charmer = (EntityLivingBase) FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getEntityFromUuid(UUID.fromString(nbt.getString("Charmer")));
 		} catch (Throwable t) {
 		}
 	}

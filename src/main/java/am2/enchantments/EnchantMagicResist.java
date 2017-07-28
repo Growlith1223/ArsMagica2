@@ -23,7 +23,7 @@ public class EnchantMagicResist extends Enchantment{
 		int maxEnchantLevel = EnchantmentHelper.getMaxEnchantmentLevel(AMEnchantments.magicResist, inventory);
 
 		if (maxEnchantLevel > 0){
-			damage -= MathHelper.floor_float((float)damage * (float)maxEnchantLevel * 0.15F);
+			damage -= MathHelper.floor((float)damage * (float)maxEnchantLevel * 0.15F);
 		}
 
 		return damage;

@@ -40,10 +40,9 @@ public class ItemEssenceBag extends ItemArsMagica{
 
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,
-			EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand){
 		FMLNetworkHandler.openGui(playerIn, ArsMagica2.instance, IDDefs.GUI_ESSENCE_BAG, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(hand));
 	}
 
 	private ItemStack[] getMyInventory(ItemStack itemStack){
@@ -61,7 +60,7 @@ public class ItemEssenceBag extends ItemArsMagica{
 				itemStack.getTagCompound().removeTag("essencebagmeta" + i);
 				continue;
 			}else{
-				itemStack.getTagCompound().setInteger("essencebagstacksize" + i, stack.stackSize);
+				itemStack.getTagCompound().setInteger("essencebagstacksize" + i, stack.getCount());
 				itemStack.getTagCompound().setInteger("essencebagmeta" + i, stack.getItemDamage());
 			}
 		}
@@ -76,7 +75,7 @@ public class ItemEssenceBag extends ItemArsMagica{
 			if (stack == null){
 				continue;
 			}else{
-				itemStack.getTagCompound().setInteger("essencebagstacksize" + i, stack.stackSize);
+				itemStack.getTagCompound().setInteger("essencebagstacksize" + i, stack.getCount());
 				itemStack.getTagCompound().setInteger("essencebagmeta" + i, stack.getItemDamage());
 			}
 		}

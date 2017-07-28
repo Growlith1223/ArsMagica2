@@ -82,20 +82,20 @@ public class FlickerOperatorContainment extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered){
 		return false;
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		if (worldObj.isRemote)
+	public boolean DoOperation(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		if (world.isRemote)
 			return true;
 
 		int lastRadius = getLastRadius(habitat);
 		int calcRadius = calculateRadius(flickers);
 
 		if (lastRadius != calcRadius){
-			RemoveOperator(worldObj, habitat, powered, flickers);
+			RemoveOperator(world, habitat, powered, flickers);
 		}
 
 		boolean hasArcaneAugment = false;
@@ -110,22 +110,22 @@ public class FlickerOperatorContainment extends AbstractFlickerFunctionality{
 
 			if (hasArcaneAugment){
 				//-x
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1 - i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1 - i), EnumInvisibleType.COLLISION_ALL);
 				//+x
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius + i), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius + i), EnumInvisibleType.COLLISION_ALL);
 				//-z
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius), EnumInvisibleType.COLLISION_ALL);
 				//+z
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1), EnumInvisibleType.COLLISION_ALL);
 			}else{
 				//-x
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1 - i), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_POSITIVE_X);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1 - i), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_POSITIVE_X);
 				//+x
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius + i), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_NEGATIVE_X);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius + i), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_NEGATIVE_X);
 				//-z
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_POSITIVE_Z);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - calcRadius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - calcRadius), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_POSITIVE_Z);
 				//+z
-				setUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_NEGATIVE_Z);
+				setUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + calcRadius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + calcRadius + 1), i == 0 ? EnumInvisibleType.COLLISION_ALL : EnumInvisibleType.COLLISION_NEGATIVE_Z);
 			}
 		}
 
@@ -135,18 +135,18 @@ public class FlickerOperatorContainment extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered){
 		int radius = getLastRadius(habitat);
 
 		for (int i = 0; i < radius * 2 + 1; ++i){
 			//-x
-			clearUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - radius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + radius + 1 - i));
+			clearUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - radius, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + radius + 1 - i));
 			//+x
-			clearUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + radius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - radius + i));
+			clearUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + radius + 1, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - radius + i));
 			//-z
-			clearUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() - radius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - radius));
+			clearUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() - radius + i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() - radius));
 			//+z
-			clearUtilityBlock(worldObj, new BlockPos(((TileEntity)habitat).getPos().getX() + radius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + radius + 1));
+			clearUtilityBlock(world, new BlockPos(((TileEntity)habitat).getPos().getX() + radius + 1 - i, ((TileEntity)habitat).getPos().getY(), ((TileEntity)habitat).getPos().getZ() + radius + 1));
 		}
 	}
 
@@ -156,8 +156,8 @@ public class FlickerOperatorContainment extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
-		RemoveOperator(worldObj, habitat, powered);
+	public void RemoveOperator(World world, IFlickerController<?> habitat, boolean powered, Affinity[] flickers){
+		RemoveOperator(world, habitat, powered);
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class FlickerOperatorContainment extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorContainment");
+		return new ResourceLocation("arsmagica2", "flicker_operator_containment");
 	}
 
 	@Override

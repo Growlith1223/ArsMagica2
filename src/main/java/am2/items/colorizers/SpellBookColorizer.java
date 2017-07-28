@@ -10,7 +10,7 @@ public class SpellBookColorizer implements IItemColor {
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
 		if (tintIndex == 0) {
-			int meta = MathHelper.clamp_int(stack.getItemDamage(), 0, 15);
+			int meta = MathHelper.clamp(stack.getItemDamage(), 0, 15);
 			if (meta == 0) return EnumDyeColor.BROWN.getMapColor().colorValue;
 			if (meta == 1) return EnumDyeColor.CYAN.getMapColor().colorValue;
 			if (meta == 2) return EnumDyeColor.GRAY.getMapColor().colorValue;

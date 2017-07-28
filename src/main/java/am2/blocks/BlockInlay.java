@@ -7,7 +7,6 @@ import am2.ArsMagica2;
 import am2.api.DamageSources;
 import am2.api.math.AMVector3;
 import am2.blocks.BlockArsMagicaBlock.EnumBlockType;
-import am2.blocks.BlockArsMagicaOre.EnumOreType;
 import am2.bosses.BossSpawnHelper;
 import am2.defs.BlockDefs;
 import am2.defs.CreativeTabsDefs;
@@ -108,7 +107,7 @@ public class BlockInlay extends BlockRailBase {
 	}
 	
 	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (!worldIn.isRemote)
 			this.updateState(state, worldIn, pos, blockIn);
 	}
@@ -308,12 +307,11 @@ public class BlockInlay extends BlockRailBase {
 		return new AxisAlignedBB(0f, 0f, 0f, 1f, 0.01f, 1f);
 	}
 	
-	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+		super.getCollisionBoundingBox(blockState, worldIn, pos);
 		return blockState.getBoundingBox(worldIn, pos);
 	}
 	
-	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
 		if (entityIn instanceof EntityMinecart) return;
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(worldIn, pos));

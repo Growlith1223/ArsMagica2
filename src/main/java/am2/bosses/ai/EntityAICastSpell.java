@@ -91,10 +91,10 @@ public class EntityAICastSpell<T extends EntityLiving & IArsMagicaBoss> extends 
 
 			castTicks++;
 			if (castTicks == castPoint){
-				if (!host.worldObj.isRemote)
-					host.worldObj.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+				if (!host.world.isRemote)
+					host.world.playSound(host.posX, host.posY, host.posZ, ((IArsMagicaBoss)host).getAttackSound(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 				host.faceEntity(host.getAttackTarget(), 180, 180);
-				SpellUtils.applyStackStage(stack, host, host.getAttackTarget(), host.posX, host.posY, host.posZ, null, host.worldObj, false, false, 0);
+				SpellUtils.applyStackStage(stack, host, host.getAttackTarget(), host.posX, host.posY, host.posZ, null, host.world, false, false, 0);
 			}
 		}
 		if (castTicks >= duration){

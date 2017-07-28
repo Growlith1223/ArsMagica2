@@ -28,7 +28,7 @@ public class InventoryRuneBag implements IInventory{
 	@Override
 	public ItemStack getStackInSlot(int i){
 		if (i < 0 || i > inventoryItems.length - 1){
-			return null;
+			return ItemStack.EMPTY;
 		}
 		return inventoryItems[i];
 	}
@@ -37,18 +37,18 @@ public class InventoryRuneBag implements IInventory{
 	public ItemStack decrStackSize(int i, int j){
 
 		if (inventoryItems[i] != null){
-			if (inventoryItems[i].stackSize <= j){
+			if (inventoryItems[i].getCount() <= j){
 				ItemStack itemstack = inventoryItems[i];
 				inventoryItems[i] = null;
 				return itemstack;
 			}
 			ItemStack itemstack1 = inventoryItems[i].splitStack(j);
-			if (inventoryItems[i].stackSize == 0){
+			if (inventoryItems[i].getCount() == 0){
 				inventoryItems[i] = null;
 			}
 			return itemstack1;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
@@ -68,7 +68,7 @@ public class InventoryRuneBag implements IInventory{
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer){
+	public boolean isUsableByPlayer(EntityPlayer entityplayer){
 		return true;
 	}
 
@@ -86,12 +86,12 @@ public class InventoryRuneBag implements IInventory{
 
 	@Override
 	public ItemStack removeStackFromSlot(int i){
-		if (inventoryItems[i] != null){
+		if (inventoryItems[i] != ItemStack.EMPTY){
 			ItemStack itemstack = inventoryItems[i];
-			inventoryItems[i] = null;
+			inventoryItems[i] = ItemStack.EMPTY;
 			return itemstack;
 		}else{
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
@@ -111,31 +111,40 @@ public class InventoryRuneBag implements IInventory{
 
 	@Override
 	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+
 		
 	}
+	
+	@Override
+	public boolean isEmpty(){
+		for(ItemStack item : this.inventoryItems){
+			if (!item.isEmpty()) return false;
+		}
+		return true;
+	}
+	
 }

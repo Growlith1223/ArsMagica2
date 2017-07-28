@@ -15,6 +15,6 @@ public class ItemBlockIllusion extends ItemBlockSubtypes {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return I18n.translateToLocal("tile.arsmagica2:illusion_block_" + EnumIllusionType.values()[MathHelper.clamp_int(stack.getItemDamage(), 0, EnumIllusionType.values().length - 1)].getName().toLowerCase() + ".name");
+		return I18n.translateToLocal("tile.arsmagica2:illusion_block_" + EnumIllusionType.values()[MathHelper.clamp(stack.getItemDamage(), 0, EnumIllusionType.values().length - 1)].getName().toLowerCase() + ".name");
 	}
 }

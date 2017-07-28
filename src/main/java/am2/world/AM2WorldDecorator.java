@@ -4,6 +4,7 @@ import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.Ev
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 import am2.ArsMagica2;
 import am2.blocks.BlockArsMagicaOre;
@@ -111,7 +112,7 @@ public class AM2WorldDecorator implements IWorldGenerator{
 		generateFlowers(tarmaRoot, world, random, chunkX, chunkZ);
 
 		Biome biome = world.getBiome(new BlockPos (chunkX << 4, 0, chunkZ << 4));
-		Type[] biomeTypes = BiomeDictionary.getTypesForBiome(biome);
+		Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
 		boolean typeValid = false;
 		for (Type type : biomeTypes){
 			if (type == Type.BEACH || type == Type.SWAMP || type == Type.JUNGLE || type == Type.PLAINS || type == Type.WATER){
@@ -134,7 +135,7 @@ public class AM2WorldDecorator implements IWorldGenerator{
 			generatePools(world, random, chunkX, chunkZ);
 		}
 
-		if ((BiomeDictionary.isBiomeOfType(biome, Type.MAGICAL) || BiomeDictionary.isBiomeOfType(biome, Type.FOREST)) && random.nextInt(4) == 0 && TerrainGen.populate(chunkGenerator, world, random, chunkX, chunkZ, true, LAKE)){
+		if ((BiomeDictionary.hasType(biome, Type.MAGICAL) || BiomeDictionary.hasType(biome, Type.FOREST)) && random.nextInt(4) == 0 && TerrainGen.populate(chunkGenerator, world, random, chunkX, chunkZ, true, LAKE)){
 			int lakeGenX = (chunkX * 16) + random.nextInt(16) + 8;
 			int lakeGenY = random.nextInt(128);
 			int lakeGenZ = (chunkZ * 16) + random.nextInt(16) + 8;

@@ -23,6 +23,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -78,7 +79,8 @@ public class SpellBase extends ItemSpellBase{
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer caster, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer caster, EnumHand hand){
+		ItemStack stack = caster.getHeldItem(hand);
 		if (!stack.hasTagCompound()) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		if (!stack.hasDisplayName()){
 			if (!world.isRemote)
@@ -112,7 +114,7 @@ public class SpellBase extends ItemSpellBase{
 	public void onUsingTick(ItemStack stack, EntityLivingBase caster, int count) {
 		SpellShape shape = SpellUtils.getShapeForStage(stack, 0);
 		if (shape.isChanneled())
-			SpellUtils.applyStackStage(stack, caster, null, caster.posX, caster.posY, caster.posZ, EnumFacing.UP, caster.worldObj, true, true, count - 1);
+			SpellUtils.applyStackStage(stack, caster, null, caster.posX, caster.posY, caster.posZ, EnumFacing.UP, caster.world, true, true, count - 1);
 		super.onUsingTick(stack, caster, count);
 	}
 	
@@ -155,7 +157,7 @@ public class SpellBase extends ItemSpellBase{
 	}
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
 	}
 
 	@Override
@@ -176,7 +178,7 @@ public class SpellBase extends ItemSpellBase{
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
-	    player.worldObj.destroyBlock(pos, player.canHarvestBlock(player.worldObj.getBlockState(pos)));
+	    player.world.destroyBlock(pos, player.canHarvestBlock(player.world.getBlockState(pos)));
 	    return true;
 	}
 

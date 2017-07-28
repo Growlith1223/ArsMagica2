@@ -72,7 +72,7 @@ public class EntityNatureGuardian extends AM2Boss{
 
 	@Override
 	public void onUpdate(){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			updateMovementAngles();
 			spawnParticles();
 		}
@@ -85,7 +85,7 @@ public class EntityNatureGuardian extends AM2Boss{
 	}
 
 	private void spawnParticles(){
-		AMParticle leaf = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "leaf", posX + (rand.nextDouble() * 3) - 1.5f, posY + (rand.nextDouble() * 5f), posZ + (rand.nextDouble() * 3) - 1.5f);
+		AMParticle leaf = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "leaf", posX + (rand.nextDouble() * 3) - 1.5f, posY + (rand.nextDouble() * 5f), posZ + (rand.nextDouble() * 3) - 1.5f);
 		if (leaf != null){
 			leaf.setMaxAge(20);
 			leaf.setIgnoreMaxAge(false);
@@ -101,7 +101,7 @@ public class EntityNatureGuardian extends AM2Boss{
 		super.setCurrentAction(action);
 		this.spinRotation = 0;
 
-		if (!worldObj.isRemote){
+		if (!world.isRemote){
 			AMNetHandler.INSTANCE.sendActionUpdateToAllAround(this);
 		}
 	}

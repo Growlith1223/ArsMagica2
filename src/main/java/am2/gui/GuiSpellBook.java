@@ -18,8 +18,8 @@ public class GuiSpellBook extends GuiContainer{
 
 	private int bookActiveSlot;
 
-	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/spellBookGui.png");
-	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spellBookGui_2.png");
+	private static final ResourceLocation background = new ResourceLocation("arsmagica2", "textures/gui/spell_book_gui.png");
+	private static final ResourceLocation extras = new ResourceLocation("arsmagica2", "textures/gui/spell_book_gui_2.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j){
@@ -42,7 +42,7 @@ public class GuiSpellBook extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int par1, int par2){
 		for (int i = 0; i < 8; ++i){
 			ItemStack stack = spellBookInventory.getStackInSlot(i);
-			if (stack == null){
+			if (stack.isEmpty()){
 				continue;
 			}
 			String[] nameParts = stack.getDisplayName().split(" ");
@@ -51,14 +51,14 @@ public class GuiSpellBook extends GuiContainer{
 			int maxWidth = 120;
 			int line = 1;
 			for (String s : nameParts){
-				int width = fontRendererObj.getStringWidth(s);
+				int width = fontRenderer.getStringWidth(s);
 				if (X + width > maxWidth && line == 1){
-					Y += fontRendererObj.FONT_HEIGHT;
+					Y += fontRenderer.FONT_HEIGHT;
 					line++;
 					X = 37;
 				}
-				fontRendererObj.drawString(s.replace("\247b", ""), X, Y, 0x404040);
-				X += fontRendererObj.getStringWidth(s + " ");
+				fontRenderer.drawString(s.replace("\247b", ""), X, Y, 0x404040);
+				X += fontRenderer.getStringWidth(s + " ");
 			}
 		}
 

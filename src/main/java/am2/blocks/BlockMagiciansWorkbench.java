@@ -57,8 +57,8 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 	}
 	
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
 	@Override
@@ -73,8 +73,9 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
-
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+		
+		ItemStack heldItem = playerIn.getHeldItem(hand);		
 		TileEntity te = worldIn.getTileEntity(pos);
 		if (te != null && te instanceof TileEntityMagiciansWorkbench){
 
@@ -83,15 +84,15 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 
 			if (KeystoneUtilities.instance.canPlayerAccess((IKeystoneLockable<?>)te, playerIn, KeystoneAccessType.USE)){
 
-				super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+				super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
 
 				if (heldItem != null && heldItem.getItem() == ItemDefs.workbenchUpgrade){
 					((TileEntityMagiciansWorkbench)te).setUpgradeStatus(TileEntityMagiciansWorkbench.UPG_CRAFT, true);
 
 					if (!worldIn.isRemote){
-						heldItem.stackSize--;
+						heldItem.shrink(-1);
 
-						if (heldItem.stackSize <= 0)
+						if (heldItem.getCount() <= 0)
 							heldItem = null;
 
 						playerIn.setItemStackToSlot(hand == EnumHand.MAIN_HAND ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND, heldItem);
@@ -99,7 +100,7 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 					return true;
 				}else{
 					if (!worldIn.isRemote){
-						super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+						super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
 						FMLNetworkHandler.openGui(playerIn, ArsMagica2.instance, IDDefs.GUI_MAGICIANS_WORKBENCH, worldIn, pos.getX(), pos.getY(), pos.getZ());
 					}
 				}
@@ -142,14 +143,14 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 			float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
 			float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
 			do{
-				if (itemstack.stackSize <= 0){
+				if (itemstack.getCount() <= 0){
 					break;
 				}
 				int i1 = world.rand.nextInt(21) + 10;
-				if (i1 > itemstack.stackSize){
-					i1 = itemstack.stackSize;
+				if (i1 > itemstack.getCount()){
+					i1 = itemstack.getCount();
 				}
-				itemstack.stackSize -= i1;
+				itemstack.shrink(i1);
 				ItemStack newItem = new ItemStack(itemstack.getItem(), i1, itemstack.getItemDamage());
 				newItem.setTagCompound(itemstack.getTagCompound());
 				EntityItem entityitem = new EntityItem(world, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, newItem);
@@ -157,7 +158,7 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 				entityitem.motionX = (float)world.rand.nextGaussian() * f3;
 				entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
 				entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-				world.spawnEntityInWorld(entityitem);
+				world.spawnEntity(entityitem);
 			}while (true);
 		}
 
@@ -171,7 +172,7 @@ public class BlockMagiciansWorkbench extends BlockAMSpecialRenderContainer{
 			entityitem.motionX = (float)world.rand.nextGaussian() * f3;
 			entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
 			entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-			world.spawnEntityInWorld(entityitem);
+			world.spawnEntity(entityitem);
 		}
 		
 		super.breakBlock(world, pos, state);

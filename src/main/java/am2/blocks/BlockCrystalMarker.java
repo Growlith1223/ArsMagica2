@@ -93,7 +93,6 @@ public class BlockCrystalMarker extends BlockAMContainer{
 		return 3 + getCrystalTier(getMetaFromState(state));
 	}
 
-	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List){
 		par3List.add(new ItemStack(this, 1, META_IN));
 		par3List.add(new ItemStack(this, 1, META_OUT));
@@ -115,7 +114,8 @@ public class BlockCrystalMarker extends BlockAMContainer{
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
+			EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+		ItemStack heldItem = player.getHeldItem(hand);
 		int operandType = state.getValue(TYPE);
 
 		if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ItemDefs.crystalWrench){
@@ -137,7 +137,7 @@ public class BlockCrystalMarker extends BlockAMContainer{
 
 			//input node?  Nothing more to do here than notify the player.
 			if (operandType == META_IN){
-				player.addChatMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noPriIn")));
+				player.sendMessage(new TextComponentString(I18n.translateToLocal("am2.tooltip.noPriIn")));
 				return false;
 			}
 
@@ -163,7 +163,7 @@ public class BlockCrystalMarker extends BlockAMContainer{
 				}
 
 				//finally, notify the player of the new priority
-				player.addChatMessage(
+				player.sendMessage(
 						new TextComponentString(String.format(
 								I18n.translateToLocal("am2.tooltip.priSet"),
 								String.format("%d", crystalMarkerTE.getPriority()) //need to put this as a string, because for some reason %d doesn't work when used in a localized string, but %s does
@@ -176,12 +176,13 @@ public class BlockCrystalMarker extends BlockAMContainer{
 			return true;
 		}
 
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, facing.getOpposite());
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, facing.getOpposite());
 	}
 	
 	@Override
@@ -316,7 +317,7 @@ public class BlockCrystalMarker extends BlockAMContainer{
 			IBlockState block = world.getBlockState(pos);
 			ItemStack itemStack = new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block));
 			EntityItem entityItem = new EntityItem((World) world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-			((World) world).spawnEntityInWorld(entityItem);
+			((World) world).spawnEntity(entityItem);
 			((World) world).setBlockToAir(pos);
 		}
 	}

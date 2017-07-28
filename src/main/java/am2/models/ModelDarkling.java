@@ -285,7 +285,7 @@ public class ModelDarkling extends ModelBase{
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(0.5f, 0.5f, 0.5f);
 		GlStateManager.translate(0, 1.5f, 0);
-		long boundedTime = Minecraft.getMinecraft().theWorld.provider.getWorldTime() % 24000;
+		long boundedTime = Minecraft.getMinecraft().world.provider.getWorldTime() % 24000;
 		float transparencyFromTime = boundedTime > 12500 && boundedTime < 23500
 				? (float)Math.abs(Math.cos(Math.toRadians(((boundedTime - 12500f) / 11000f) * 180f))) - 0.2f
 				: 1.0f;
@@ -301,7 +301,7 @@ public class ModelDarkling extends ModelBase{
 
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-		if (transparencyFromTime >= 1.0f || Minecraft.getMinecraft().thePlayer.isPotionActive(PotionEffectsDefs.trueSight)){
+		if (transparencyFromTime >= 1.0f || Minecraft.getMinecraft().player.isPotionActive(PotionEffectsDefs.trueSight)){
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		}else{
 			GlStateManager.color(1.0f, 0.6f, 0.6f, transparencyFromTime);

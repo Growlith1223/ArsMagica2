@@ -32,12 +32,12 @@ public class SlotInscriptionTable extends Slot{
 	}
 
 	@Override
-	public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack){
+	public ItemStack onTake(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack){
 		if (par2ItemStack.getItem() == Items.WRITTEN_BOOK)
-			par2ItemStack = ((TileEntityInscriptionTable)this.inventory).writeRecipeAndDataToBook(par2ItemStack, par1EntityPlayer, "Spell Recipe");
+			return ((TileEntityInscriptionTable)this.inventory).writeRecipeAndDataToBook(par2ItemStack, par1EntityPlayer, "Spell Recipe");
 		else
 			((TileEntityInscriptionTable)this.inventory).clearCurrentRecipe();
-		super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
+		return super.onTake(par1EntityPlayer, par2ItemStack);
 	}
 
 	@Override
@@ -54,7 +54,8 @@ public class SlotInscriptionTable extends Slot{
 	@Override
 	public void putStack(ItemStack stack){
 		if (stack != null && stack.getItem() == Items.WRITABLE_BOOK){
-			stack.setItem(Items.WRITTEN_BOOK);
+			stack = new ItemStack(Items.WRITTEN_BOOK);
+			stack.setCount(1);
 			stack.setStackDisplayName(I18n.translateToLocal("am2.tooltip.unfinishedSpellRecipe"));
 		}
 		super.putStack(stack);

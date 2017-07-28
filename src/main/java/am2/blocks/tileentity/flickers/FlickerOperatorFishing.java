@@ -40,19 +40,19 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> controller, boolean powered){
-		return DoOperation(worldObj, controller, powered, new Affinity[0]);
+	public boolean DoOperation(World world, IFlickerController<?> controller, boolean powered){
+		return DoOperation(world, controller, powered, new Affinity[0]);
 	}
 
 	@Override
-	public boolean DoOperation(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
+	public boolean DoOperation(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
 		TileEntity te = (TileEntity)controller;
-		if (!powered || !checkSurroundings(worldObj, te.getPos()) || worldObj.isBlockIndirectlyGettingPowered(te.getPos()) == 0)
+		if (!powered || !checkSurroundings(world, te.getPos()) || world.isBlockIndirectlyGettingPowered(te.getPos()) == 0)
 			return false;
-        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)worldObj);
+        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)world);
 		
-		for (ItemStack itemstack : worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(worldObj.rand, lootcontext$builder.build())) {
-			transferOrEjectItem(worldObj, itemstack, te.getPos());
+		for (ItemStack itemstack : world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(world.rand, lootcontext$builder.build())) {
+			transferOrEjectItem(world, itemstack, te.getPos());
 		}
 
 		return true;
@@ -71,8 +71,8 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 		return true;
 	}
 
-	private void transferOrEjectItem(World worldObj, ItemStack stack, BlockPos pos){
-		if (worldObj.isRemote)
+	private void transferOrEjectItem(World world, ItemStack stack, BlockPos pos){
+		if (world.isRemote)
 			return;
 
 		for (int i = -1; i <= 1; ++i){
@@ -80,10 +80,10 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 				for (int k = -1; k <= 1; ++k){
 					if (i == 0 && j == 0 && k == 0)
 						continue;
-					TileEntity te = worldObj.getTileEntity(pos.add(i, j, k));
+					TileEntity te = world.getTileEntity(pos.add(i, j, k));
 					if (te != null && te instanceof IInventory){
 						for (EnumFacing facing : EnumFacing.values()){
-							if (InventoryUtilities.mergeIntoInventory((IInventory)te, stack, stack.stackSize, facing))
+							if (InventoryUtilities.mergeIntoInventory((IInventory)te, stack, stack.getCount(), facing))
 								return;
 						}
 					}
@@ -92,14 +92,14 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 		}
 
 		//eject the remainder
-		EntityItem item = new EntityItem(worldObj);
+		EntityItem item = new EntityItem(world);
 		item.setPosition(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
 		item.setEntityItemStack(stack);
-		worldObj.spawnEntityInWorld(item);
+		world.spawnEntity(item);
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered){
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 	}
 
 	@Override
-	public void RemoveOperator(World worldObj, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
+	public void RemoveOperator(World world, IFlickerController<?> controller, boolean powered, Affinity[] flickers){
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class FlickerOperatorFishing extends AbstractFlickerFunctionality{
 	
 	@Override
 	public ResourceLocation getTexture() {
-		return new ResourceLocation("arsmagica2", "FlickerOperatorFishing");
+		return new ResourceLocation("arsmagica2", "flicker_operator_fishing");
 	}
 
 	@Override

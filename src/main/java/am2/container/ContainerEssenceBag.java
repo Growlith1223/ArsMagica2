@@ -58,7 +58,7 @@ public class ContainerEssenceBag extends Container{
 
 	@Override
 	public void onContainerClosed(EntityPlayer entityplayer){
-		World world = entityplayer.worldObj;
+		World world = entityplayer.world;
 
 		if (!world.isRemote){
 			ItemStack essenceBagItemStack = bagStack;
@@ -73,12 +73,12 @@ public class ContainerEssenceBag extends Container{
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer){
-		return essBagInventory.isUseableByPlayer(entityplayer);
+		return essBagInventory.isUsableByPlayer(entityplayer);
 	}
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i){
-		ItemStack itemstack = null;
+		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = (Slot)inventorySlots.get(i);
 
 		if (slot != null && slot.getHasStack()){
@@ -86,30 +86,30 @@ public class ContainerEssenceBag extends Container{
 			itemstack = itemstack1.copy();
 			if (i < mainInventoryStart){
 				if (!mergeItemStack(itemstack1, mainInventoryStart, actionBarEnd, true)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= mainInventoryStart && i < actionBarStart) //range 27 - player inventory
 			{
 				if (!mergeItemStack(itemstack1, actionBarStart, actionBarEnd, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (i >= actionBarStart && i < actionBarEnd) //range 9 - player action bar
 			{
 				if (!mergeItemStack(itemstack1, mainInventoryStart, actionBarStart - 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (!mergeItemStack(itemstack1, mainInventoryStart, actionBarEnd, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
-			if (itemstack1.stackSize == 0){
-				slot.putStack(null);
+			if (itemstack1.getCount() == 0){
+				slot.putStack(ItemStack.EMPTY);
 			}else{
 				slot.onSlotChanged();
 			}
-			if (itemstack1.stackSize != itemstack.stackSize){
+			if (itemstack1.getCount() != itemstack.getCount()){
 				slot.onSlotChange(itemstack1, itemstack);
 			}else{
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}
 		return itemstack;

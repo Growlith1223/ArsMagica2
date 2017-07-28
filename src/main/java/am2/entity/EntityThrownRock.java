@@ -48,7 +48,7 @@ public class EntityThrownRock extends EntityLiving{
 
 	private static final DataParameter<Boolean> IS_MOONSTONE_METEOR = EntityDataManager.createKey(EntityThrownRock.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_SHOOTING_STAR = EntityDataManager.createKey(EntityThrownRock.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Optional<ItemStack>> SPELL_STACK = EntityDataManager.createKey(EntityThrownRock.class, DataSerializers.OPTIONAL_ITEM_STACK);
+	private static final DataParameter<ItemStack> SPELL_STACK = EntityDataManager.createKey(EntityThrownRock.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	public EntityThrownRock(World par1World){
 		super(par1World);
@@ -97,7 +97,7 @@ public class EntityThrownRock extends EntityLiving{
 	}
 
 	public void setHeading(double movementX, double movementY, double movementZ, double projectileSpeed, double projectileSpeed2){
-		float f = MathHelper.sqrt_double(movementX * movementX + movementY * movementY + movementZ * movementZ);
+		float f = MathHelper.sqrt(movementX * movementX + movementY * movementY + movementZ * movementZ);
 		movementX /= f;
 		movementY /= f;
 		movementZ /= f;
@@ -110,7 +110,7 @@ public class EntityThrownRock extends EntityLiving{
 		motionX = movementX;
 		motionY = movementY;
 		motionZ = movementZ;
-		float f1 = MathHelper.sqrt_double(movementX * movementX + movementZ * movementZ);
+		float f1 = MathHelper.sqrt(movementX * movementX + movementZ * movementZ);
 		prevRotationYaw = rotationYaw = (float)((Math.atan2(movementX, movementZ) * 180D) / Math.PI);
 		prevRotationPitch = rotationPitch = (float)((Math.atan2(movementY, f1) * 180D) / Math.PI);
 	}
@@ -124,15 +124,15 @@ public class EntityThrownRock extends EntityLiving{
 		super.entityInit();
 		this.dataManager.register(IS_MOONSTONE_METEOR, false);
 		this.dataManager.register(IS_SHOOTING_STAR, false);
-		this.dataManager.register(SPELL_STACK, Optional.fromNullable(new ItemStack(ItemDefs.spell)));
+		this.dataManager.register(SPELL_STACK, (new ItemStack(ItemDefs.spell)));
 	}
 
 	private ItemStack getSpellStack(){
-		return this.dataManager.get(SPELL_STACK).get();
+		return this.dataManager.get(SPELL_STACK);
 	}
 
 	public void setSpellStack(ItemStack spellStack){
-		this.dataManager.set(SPELL_STACK, Optional.fromNullable(spellStack));
+		this.dataManager.set(SPELL_STACK, (spellStack));
 	}
 
 	@Override
@@ -160,12 +160,12 @@ public class EntityThrownRock extends EntityLiving{
 		}
 
 		if (!getIsMoonstoneMeteor() && !getIsShootingStar()){
-			if (!worldObj.isRemote && (throwingEntity == null || throwingEntity.isDead)){
+			if (!world.isRemote && (throwingEntity == null || throwingEntity.isDead)){
 				setDead();
 			}else{
 				ticksExisted++;
 				int maxTicksToLive = maxTicksToExist > -1 ? maxTicksToExist : 100;
-				if (ticksExisted >= maxTicksToLive && !worldObj.isRemote){
+				if (ticksExisted >= maxTicksToLive && !world.isRemote){
 					setDead();
 					return;
 				}
@@ -178,9 +178,9 @@ public class EntityThrownRock extends EntityLiving{
 				motionY = -2f;
 		}
 
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			if (getIsMoonstoneMeteor()){
-				AMParticle fire = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "explosion_2", posX, posY, posZ);
+				AMParticle fire = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "explosion_2", posX, posY, posZ);
 				if (fire != null){
 					fire.setMaxAge(20);
 					fire.setRGBColorF(1, 1, 1);
@@ -203,10 +203,10 @@ public class EntityThrownRock extends EntityLiving{
 				}
 
 				for (float i = 0; i < Math.abs(motionY); i += 0.1f){
-					AMParticle star = (AMParticle)ArsMagica2.proxy.particleManager.spawn(worldObj, "ember", posX + motionX * i, posY + motionY * i, posZ + motionZ * i);
+					AMParticle star = (AMParticle)ArsMagica2.proxy.particleManager.spawn(world, "ember", posX + motionX * i, posY + motionY * i, posZ + motionZ * i);
 					if (star != null){
 						star.setMaxAge(22);
-						float clrMod = Minecraft.getMinecraft().theWorld.rand.nextFloat();
+						float clrMod = Minecraft.getMinecraft().world.rand.nextFloat();
 						int finalColor = -1;
 						if (color == -1)
 							finalColor = MathUtilities.colorFloatsToInt(0.24f * clrMod, 0.58f * clrMod, 0.71f * clrMod);
@@ -226,14 +226,14 @@ public class EntityThrownRock extends EntityLiving{
 
 		Vec3d vec3d = new Vec3d(posX, posY, posZ);
 		Vec3d vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
-		RayTraceResult movingobjectposition = worldObj.rayTraceBlocks(vec3d, vec3d1);
+		RayTraceResult movingobjectposition = world.rayTraceBlocks(vec3d, vec3d1);
 		vec3d = new Vec3d(posX, posY, posZ);
 		vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
 		if (movingobjectposition != null){
 			vec3d1 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
 		}
 		Entity entity = null;
-		List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
 		double d = 0.0D;
 		for (int j = 0; j < list.size(); j++){
 			Entity entity1 = (Entity)list.get(j);
@@ -263,7 +263,7 @@ public class EntityThrownRock extends EntityLiving{
 		posX += motionX;
 		posY += motionY;
 		posZ += motionZ;
-		float f = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+		float f = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
 		rotationYaw = (float)((Math.atan2(motionX, motionZ) * 180D) / 3.1415927410125732D);
 		for (rotationPitch = (float)((Math.atan2(motionY, f) * 180D) / 3.1415927410125732D); rotationPitch - prevRotationPitch < -180F; prevRotationPitch -= 360F){
 		}
@@ -281,14 +281,14 @@ public class EntityThrownRock extends EntityLiving{
 	
 	
 	protected void HitObject(RayTraceResult movingobjectposition){
-		if (worldObj.isRemote){
+		if (world.isRemote){
 			return;
 		}
 		
 		
 		if (getIsShootingStar()){
-			AMNetHandler.INSTANCE.sendStarImpactToClients(posX, posY + ((movingobjectposition.typeOfHit == RayTraceResult.Type.ENTITY) ? -movingobjectposition.entityHit.getEyeHeight() : 1.5f), posZ, worldObj, this.getSpellStack());
-			List<EntityLivingBase> ents = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().expand(12, 5, 12));
+			AMNetHandler.INSTANCE.sendStarImpactToClients(posX, posY + ((movingobjectposition.typeOfHit == RayTraceResult.Type.ENTITY) ? -movingobjectposition.entityHit.getEyeHeight() : 1.5f), posZ, world, this.getSpellStack());
+			List<EntityLivingBase> ents = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().expand(12, 5, 12));
 			this.posY++;
 			for (EntityLivingBase e : ents){
 				if (e == throwingEntity) continue;
@@ -308,16 +308,16 @@ public class EntityThrownRock extends EntityLiving{
 					if (this.target == null){
 						this.target = movingobjectposition.hitVec;
 					}
-					this.worldObj.newExplosion(this, this.target.xCoord, this.target.yCoord, this.target.zCoord, 0.8f, false, ArsMagica2.config.moonstoneMeteorsDestroyTerrain());
+					this.world.newExplosion(this, this.target.xCoord, this.target.yCoord, this.target.zCoord, 0.8f, false, ArsMagica2.config.moonstoneMeteorsDestroyTerrain());
 
 					int numOres = rand.nextInt(4) + 1;
 
 					for (int i = 0; i < numOres; ++i){
-						generateSurfaceOreAtOffset(worldObj, new BlockPos(target), i == 0);
+						generateSurfaceOreAtOffset(world, new BlockPos(target), i == 0);
 					}
 
-//					if (this.worldObj.isRemote){
-//						for (Object player : worldObj.playerEntities)
+//					if (this.world.isRemote){
+//						for (Object player : world.playerEntities)
 //							if (((EntityPlayer)player).getDistanceSqToEntity(this) < 4096)
 //								CompendiumUnlockHandler.unlockEntry("moonstone_meteors");
 //					}

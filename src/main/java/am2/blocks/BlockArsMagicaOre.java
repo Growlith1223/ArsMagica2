@@ -1,6 +1,5 @@
 package am2.blocks;
 
-import java.util.List;
 import java.util.Random;
 
 import am2.defs.ItemDefs;
@@ -11,9 +10,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -45,12 +42,12 @@ public class BlockArsMagicaOre extends BlockAM {
 		return drop + (isChimerite ? 1 : 2) * fortuneBonus;
 	}
 	
-	@Override
+	/*@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
 		for (int i = 0; i < EnumOreType.values().length; i++) {
 			list.add(new ItemStack(this, 1, i));
 		}
-	}
+	}*/
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
@@ -80,7 +77,7 @@ public class BlockArsMagicaOre extends BlockAM {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(ORE_TYPE, EnumOreType.values()[MathHelper.clamp_int(meta, 0, EnumOreType.values().length - 1)]);
+		return getDefaultState().withProperty(ORE_TYPE, EnumOreType.values()[MathHelper.clamp(meta, 0, EnumOreType.values().length - 1)]);
 	}
 	
 	@Override
