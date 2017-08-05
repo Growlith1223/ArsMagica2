@@ -2,6 +2,8 @@ package am2.handler;
 
 import java.util.ArrayList;
 
+import ibxm.Player;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
 import am2.api.event.PotionEvent.EventPotionAdded;
@@ -186,14 +188,17 @@ public class PotionEffectHandler {
 	@SubscribeEvent
 	public void teleportEvent(EnderTeleportEvent e) {
 		ArrayList<Long> keystoneKeys = KeystoneUtilities.instance.GetKeysInInvenory(e.getEntityLiving());
-		TileEntityAstralBarrier blockingBarrier = DimensionUtilities.GetBlockingAstralBarrier(e.getEntityLiving().worldObj, new BlockPos(e.getTargetX(), e.getTargetY(), e.getTargetZ()), keystoneKeys);
+		//Adds a check to see if the entity being teleported is a player. Prevents mob grinders from lagging. The barrier lookup is very expensive.
+		if(e.getEntityLiving() instanceof EntityPlayer) {
+			TileEntityAstralBarrier blockingBarrier = DimensionUtilities.GetBlockingAstralBarrier(e.getEntityLiving().worldObj, new BlockPos(e.getTargetX(), e.getTargetY(), e.getTargetZ()), keystoneKeys);
 
-		if (e.getEntityLiving().isPotionActive(PotionEffectsDefs.astralDistortion) || blockingBarrier != null){
-			e.setCanceled(true);
-			if (blockingBarrier != null){
-				blockingBarrier.onEntityBlocked(e.getEntityLiving());
+			if (e.getEntityLiving().isPotionActive(PotionEffectsDefs.astralDistortion) || blockingBarrier != null) {
+				e.setCanceled(true);
+				if (blockingBarrier != null) {
+					blockingBarrier.onEntityBlocked(e.getEntityLiving());
+				}
+				return;
 			}
-			return;
 		}
 	}
 	
