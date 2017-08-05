@@ -2,7 +2,7 @@ package am2.handler;
 
 import java.util.ArrayList;
 
-import ibxm.Player;
+
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
