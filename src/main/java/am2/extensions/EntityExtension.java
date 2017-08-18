@@ -39,6 +39,7 @@ import am2.armor.ArsMagicaArmorMaterial;
 import am2.armor.infusions.GenericImbuement;
 import am2.armor.infusions.ImbuementRegistry;
 import am2.bosses.EntityLifeGuardian;
+import am2.config.AMConfig;
 import am2.defs.ItemDefs;
 import am2.defs.PotionEffectsDefs;
 import am2.defs.SkillDefs;
@@ -632,6 +633,7 @@ public class EntityExtension implements IEntityExtension, ICapabilityProvider, I
 	
 	@Override
 	public void manaBurnoutTick(){
+		boolean willForceRegen = false;
 		if (isGravityDisabled()){
 			this.entity.motionY = 0;
 		}
@@ -650,6 +652,7 @@ public class EntityExtension implements IEntityExtension, ICapabilityProvider, I
 				if (entity.isPotionActive(PotionEffectsDefs.manaRegen)) {
 					PotionEffect pe = entity.getActivePotionEffect(PotionEffectsDefs.manaRegen);
 					regenTicks *= Math.max(0.01, 1.0f - ((pe.getAmplifier() + 1) * 0.25f));
+					willForceRegen = ArsMagica2.config.forceManaRegen();
 				}
 
 				if (entity instanceof EntityPlayer) {
@@ -680,8 +683,11 @@ public class EntityExtension implements IEntityExtension, ICapabilityProvider, I
 					regenTicks *= 1.0f - (0.15f * numArmorPieces);
 				}
 
-				float manaToAdd = (actualMaxMana / regenTicks);
-
+				float manaToAdd = (float) (actualMaxMana / regenTicks);
+				
+				if (!willForceRegen)
+					manaToAdd *= ArsMagica2.config.getManaRegenModifier();
+				
 				setCurrentMana(getCurrentMana() + manaToAdd);
 				if (getCurrentMana() > getMaxMana())
 					setCurrentMana(getMaxMana());

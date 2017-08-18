@@ -81,6 +81,10 @@ public class AMConfig extends Configuration{
 	private final String KEY_EnableWitchwoodForest = "Enable_Witchwood_Forests";
 
 	private final String KEY_allowCreativeTargets = "Allow_Creative_Targets";
+	
+	private final String KEY_manaRegenMod = "Mana_Regeneration_Modifier";
+	private final String KEY_regenIgnoresModifier = "Potion_Ignore_Modifier";
+	private final String KEY_wakingRegen = "Waking_Mana_Regen";
 
 	/**
 	 * Beta Particles
@@ -183,6 +187,7 @@ public class AMConfig extends Configuration{
 	private int witchwoodForestRarity;
 	
 	private boolean allowCreativeTargets;
+	private double manaRegenModifier;
 
 	private String[] appropriationBlockBlacklist;
 	private Class<? extends Entity>[] appropriationMobBlacklist;
@@ -236,6 +241,8 @@ public class AMConfig extends Configuration{
 	private boolean allowCompendiumUpdates;
 	private boolean allowVersionChecks;
 	private boolean canDryadsDespawn;
+	private boolean forceManaRegen;
+	private boolean wakingManaRegen;
 
 	public static final String DEFAULT_LANGUAGE = "en_US";
 
@@ -303,7 +310,13 @@ public class AMConfig extends Configuration{
 		witchwoodForestRarity = get(CATEGORY_GENERAL, KEY_WitchwoodForestRarity, 6, "Sets how rare witchwood forests are.  Lower is more rare.").getInt();
 
 		allowCreativeTargets = get(CATEGORY_GENERAL, KEY_allowCreativeTargets, true, "Disable this to prevent spell effects on creative players").getBoolean(true);
-
+		
+		manaRegenModifier = get(CATEGORY_GENERAL, KEY_manaRegenMod, 1, "Mana Regeneration Modifier, set to 0 to disable.").getDouble(1);
+		
+		forceManaRegen = get(CATEGORY_GENERAL, KEY_regenIgnoresModifier, true, "If true, entities affected by the mana regeneration potion effect will ignore the mana regeneration modifier.").getBoolean(true);
+		
+		wakingManaRegen = get(CATEGORY_GENERAL, KEY_wakingRegen, true, "If true, players return to full mana upon sleeping.").getBoolean(true);
+		
 		moonstoneMeteorsDestroyTerrain = get(CATEGORY_GENERAL, KEY_moonstoneMeteorsDestroyTerrain, true, "Should moonstone meteors destroy terrain when landing?  Keep in mind they will never land on anything other than grass.").getBoolean(true);
 
 		suggestSpellNames = get(CATEGORY_GENERAL, KEY_moonstoneMeteorsDestroyTerrain, true, "Set this to true to allow AM2 to get random spell names from Seventh Sanctum, and suggest them when naming spells.  Naturally, an internet connection is required.  Keep in mind, while I try to keep things family friendly, it's possible that not all names generated are so.").getBoolean(true);
@@ -662,7 +675,18 @@ public class AMConfig extends Configuration{
 	public boolean getAllowCreativeTargets(){
 		return this.allowCreativeTargets;
 	}
-
+	
+	public double getManaRegenModifier(){
+		return this.manaRegenModifier;
+	}
+	
+	public boolean forceManaRegen(){
+		return this.forceManaRegen;
+	}
+	
+	public boolean getWakingRegen(){
+		return this.wakingManaRegen;
+	}
 	//====================================================================================
 	// Getters - Aura
 	//====================================================================================
