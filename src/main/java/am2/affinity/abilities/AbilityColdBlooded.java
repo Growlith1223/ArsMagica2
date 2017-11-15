@@ -46,8 +46,10 @@ public class AbilityColdBlooded extends AbstractAffinityAbility {
 			}else if (iceDepth >= 0.5f){
 				effect = new BuffEffectFrostSlowed(100, 1);
 			}
-			if (effect != null){
-				((EntityLivingBase)event.getSource().getEntity()).addPotionEffect(effect);
+			if (effect != null && event.getSource() != null && event.getSource().getEntity() != null){
+				try {
+					((EntityLivingBase)event.getSource().getEntity()).addPotionEffect(effect);
+				} catch (Exception ignored) {}
 			}
 		}
 	}
