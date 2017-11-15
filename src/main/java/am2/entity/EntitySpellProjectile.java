@@ -138,13 +138,13 @@ public class EntitySpellProjectile extends Entity {
 				List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(0.25D, 0.25D, 0.25D));
 				int effSize = list.size();
 				for (Entity entity : list) {
+					if (entity instanceof EntityDragonPart && ((EntityDragonPart)entity).entityDragonObj instanceof EntityLivingBase)
+						entity = (EntityLivingBase)((EntityDragonPart)entity).entityDragonObj;
 					if (entity instanceof EntityLivingBase) {
 						if (entity.equals(getShooter())) {
 							effSize--;
 							continue;
 						}
-						if (entity instanceof EntityDragonPart && ((EntityDragonPart)entity).entityDragonObj instanceof EntityLivingBase)
-							entity = (EntityLivingBase)((EntityDragonPart)entity).entityDragonObj;
 						SpellUtils.applyStageToEntity(getSpell(), getShooter(), worldObj, entity, true);
 						SpellUtils.applyStackStage(getSpell(), getShooter(), (EntityLivingBase) entity, entity.posX, entity.posY, entity.posZ, null, worldObj, false, true, 0);
 						break;
