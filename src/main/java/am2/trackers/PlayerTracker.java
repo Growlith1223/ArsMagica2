@@ -1,6 +1,7 @@
 package am2.trackers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
@@ -27,7 +28,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import scala.actors.threadpool.Arrays;
 
 public class PlayerTracker{
 
@@ -161,24 +161,22 @@ public class PlayerTracker{
 	}
 
 	public int getAAL(EntityPlayer thePlayer){
-		try{
-			thePlayer.getDisplayName();
-		}catch (Throwable t){
-			return 0;
-		}
-
 		if (aals == null || clls == null)
 			populateAALList();
-		if (aals.containsKey(thePlayer.getDisplayName().getUnformattedText().toLowerCase()))
-			return aals.get(thePlayer.getDisplayName().getUnformattedText().toLowerCase());
+		if (aals.containsKey(thePlayer.getUniqueID().toString().toLowerCase()))
+			return aals.get(thePlayer.getUniqueID().toString().toLowerCase());
 		return 0;
 	}
 	
 	private ArrayList<String> addContributors(ArrayList<String> lines){
 		//Growlith
-		lines.add("95ca1edb-b0d6-46a8-825d-2299763f03f0, :AL,3, :CL,http://i.imgur.com/QBCa5O0.png,6,growlith1223");
+		lines.add("95ca1edb-b0d6-46a8-825d-2299763f03f0,:AL,3,:CL,http://i.imgur.com/QBCa5O0.png,6,growlith1223");
+		//EdwinMindcraft
+		lines.add("2c809085-de5b-4580-9b5e-64bc33dcebee,:AL,3,:CL,http://i.imgur.com/QBCa5O0.png,6,edwinmindcraft");
 		//JJT
-		lines.add("6b93546d-100a-403d-b352-f2bf75fd3b0c, :AL,3 :CL,http://i.imgur.com/QBCa5O0.png,6,jjtparadox");
+		lines.add("6b93546d-100a-403d-b352-f2bf75fd3b0c,:CL,http://i.imgur.com/QBCa5O0.png,6,jjtparadox");
+		//The_Icy_One
+		lines.add("a08eaa4a-e3df-416d-9ced-d6d4fcd0e88b,:CL,http://i.imgur.com/QBCa5O0.png,6,the_icy_one");
 		return lines;
 	}
 
@@ -188,7 +186,7 @@ public class PlayerTracker{
 		clls = new TreeMap<String, String>();
 		cldm = new TreeMap<String, Integer>();
 
-		String dls = "http://qorconcept.com/mc/AREW0152.txt";
+		String dls = "https://qorconcept.com/mc/AREW0152.txt";
 		char[] dl = dls.toCharArray();
 		
 		

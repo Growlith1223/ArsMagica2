@@ -394,32 +394,32 @@ public class ParticleManagerClient extends ParticleManagerServer{
 		}
 	}
 
-//	@Override
-//	public void spawnAuraParticles(EntityLivingBase ent){
-//		if (!ent.worldObj.isRemote) return;
-//
-//		int particleIndex = 15;
-//		int particleBehaviour = 0;
-//		float particleScale = 0;
-//		float particleAlpha = 0;
-//		boolean particleDefaultColor = true;
-//		boolean particleRandomColor = true;
-//		int particleColor = 0xFFFFFF;
-//		int particleQuantity = 2;
-//		float particleSpeed = 0.02f;
-//
-//		if (Minecraft.getMinecraft().thePlayer == ent){
-//			particleIndex = AMCore.config.getAuraIndex();
-//			particleBehaviour = AMCore.config.getAuraBehaviour();
-//			particleScale = AMCore.config.getAuraScale() / 10;
-//			particleAlpha = AMCore.config.getAuraAlpha();
-//			particleDefaultColor = AMCore.config.getAuraColorDefault();
-//			particleRandomColor = AMCore.config.getAuraColorRandom();
-//			particleColor = AMCore.config.getAuraColor();
-//			particleQuantity = AMCore.config.getAuraQuantity();
-//			particleSpeed = AMCore.config.getAuraSpeed() / 10;
+	@Override
+	public void spawnAuraParticles(EntityLivingBase ent){
+		if (!ent.worldObj.isRemote) return;
+
+		int particleIndex = 15;
+		int particleBehaviour = 0;
+		float particleScale = 0;
+		float particleAlpha = 0;
+		boolean particleDefaultColor = true;
+		boolean particleRandomColor = true;
+		int particleColor = 0xFFFFFF;
+		int particleQuantity = 2;
+		float particleSpeed = 0.02f;
+
+		if (Minecraft.getMinecraft().thePlayer == ent){
+			particleIndex = ArsMagica2.config.getAuraIndex();
+			particleBehaviour = ArsMagica2.config.getAuraBehaviour();
+			particleScale = ArsMagica2.config.getAuraScale() / 10;
+			particleAlpha = ArsMagica2.config.getAuraAlpha();
+			particleDefaultColor = ArsMagica2.config.getAuraColorDefault();
+			particleRandomColor = ArsMagica2.config.getAuraColorRandom();
+			particleColor = ArsMagica2.config.getAuraColor();
+			particleQuantity = ArsMagica2.config.getAuraQuantity();
+			particleSpeed = ArsMagica2.config.getAuraSpeed() / 10;
 //		}else{
-//			ExtendedProperties entProperties = ExtendedProperties.For(ent);
+//			EntityExtension entProperties = EntityExtension.For(ent);
 //			particleIndex        = entProperties.getAuraIndex();
 //			particleBehaviour    = entProperties.getAuraBehaviour();
 //			particleScale        = entProperties.getAuraScale() / 10;
@@ -429,89 +429,88 @@ public class ParticleManagerClient extends ParticleManagerServer{
 //			particleColor        = entProperties.getAuraColor();
 //			particleQuantity     = entProperties.getAuraQuantity();
 //			particleSpeed        = entProperties.getAuraSpeed() / 10;
-//		}
-//
-//		if (particleIndex == 31) //fix radiant particle's scaling issues...
-//			particleScale /= 10;
-//
-//		if (ent.worldObj.isRemote && ent instanceof EntityPlayer && AMCore.proxy.playerTracker.hasAA((EntityPlayer)ent)){
-//			if (Minecraft.getMinecraft().thePlayer != ent || Minecraft.getMinecraft().gameSettings.thirdPersonView > 0){
-//				if (AMParticle.particleTypes[particleIndex].startsWith("lightning_bolts")){
-//					int type = Integer.parseInt(new String(new char[]{AMParticle.particleTypes[particleIndex].charAt(AMParticle.particleTypes[particleIndex].length() - 1)}));
-//					if (ent.worldObj.rand.nextInt(100) < 90){
-//						BoltFromPointToPoint(ent.worldObj,
-//								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
-//								ent.posY + ent.getEyeHeight() - ent.height + (ent.worldObj.rand.nextFloat() * ent.height),
-//								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f),
-//								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
-//								ent.posY + ent.getEyeHeight() - ent.height + (ent.worldObj.rand.nextFloat() * ent.height),
-//								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f),
-//								type, -1);
-//					}else{
-//						BoltFromPointToPoint(ent.worldObj,
-//								ent.posX,
-//								ent.posY + ent.getEyeHeight() - 0.4,
-//								ent.posZ,
-//								ent.posX + (ent.worldObj.rand.nextFloat() * 10 - 5),
-//								ent.posY + (ent.worldObj.rand.nextFloat() * 10 - 5),
-//								ent.posZ + (ent.worldObj.rand.nextFloat() * 10 - 5),
-//								type, -1);
-//					}
-//				}else{
-//					int offset = 0;
-//					for (int i = 0; i < particleQuantity; ++i){
-//						AMParticle effect = spawn(ent.worldObj, AMParticle.particleTypes[particleIndex],
-//								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
-//								ent.posY + ent.getEyeHeight() - 0.5f + offset - (ent.worldObj.rand.nextFloat() * 0.5),
-//								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f));
-//						if (effect != null){
-//							effect.setIgnoreMaxAge(false);
-//							effect.setMaxAge(40);
-//							effect.setParticleScale(particleScale);
-//							effect.SetParticleAlpha(particleAlpha);
-//							effect.noClip = false;
-//							if (!particleDefaultColor){
-//								if (particleRandomColor){
-//									effect.setRGBColorF(ent.worldObj.rand.nextFloat(), ent.worldObj.rand.nextFloat(), ent.worldObj.rand.nextFloat());
-//								}else{
-//									effect.setRGBColorI(particleColor);
-//								}
-//							}
-//							switch (particleBehaviour){
-//							case 0: //fade
-//								effect.AddParticleController(new ParticleFadeOut(effect, 1, false).setFadeSpeed(particleSpeed));
-//								break;
-//							case 1: //float
-//								effect.AddParticleController(new ParticleFloatUpward(effect, 0.2f, particleSpeed, 1, false));
-//								break;
-//							case 2: //sink
-//								effect.AddParticleController(new ParticleFloatUpward(effect, 0.2f, -particleSpeed, 1, false));
-//								break;
-//							case 3: //orbit
-//								effect.AddParticleController(new ParticleOrbitEntity(effect, ent, particleSpeed, 1, false));
-//								break;
-//							case 4: //arc
-//								effect.AddParticleController(new ParticleArcToEntity(effect, 1, ent, false).generateControlPoints().SetSpeed(particleSpeed));
-//								break;
-//							case 5: //flee
-//								effect.AddParticleController(new ParticleFleeEntity(effect, ent, particleSpeed, 2D, 1, false));
-//								break;
-//							case 6: //forward
-//								effect.AddParticleController(new ParticleMoveOnHeading(effect, ent.rotationYaw + 90, ent.rotationPitch, particleSpeed, 1, false));
-//								break;
-//							case 7: //pendulum
-//								effect.AddParticleController(new ParticlePendulum(effect, 0.2f, particleSpeed, 1, false));
-//								break;
-//							case 8: //grow
-//								effect.AddParticleController(new ParticleGrow(effect, particleSpeed, 1, false));
-//								break;
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
+		}
+
+		if (particleIndex == 31) //fix radiant particle's scaling issues...
+			particleScale /= 10;
+
+		if (ent.worldObj.isRemote && ent instanceof EntityPlayer && ArsMagica2.proxy.playerTracker.hasAA((EntityPlayer)ent)){
+			if (Minecraft.getMinecraft().thePlayer != ent || Minecraft.getMinecraft().gameSettings.thirdPersonView > 0){
+				if (AMParticle.particleTypes[particleIndex].startsWith("lightning_bolts")){
+					int type = Integer.parseInt(new String(new char[]{AMParticle.particleTypes[particleIndex].charAt(AMParticle.particleTypes[particleIndex].length() - 1)}));
+					if (ent.worldObj.rand.nextInt(100) < 90){
+						BoltFromPointToPoint(ent.worldObj,
+								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
+								ent.posY + ent.getEyeHeight() - ent.height + (ent.worldObj.rand.nextFloat() * ent.height),
+								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f),
+								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
+								ent.posY + ent.getEyeHeight() - ent.height + (ent.worldObj.rand.nextFloat() * ent.height),
+								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f),
+								type, -1);
+					}else{
+						BoltFromPointToPoint(ent.worldObj,
+								ent.posX,
+								ent.posY + ent.getEyeHeight() - 0.4,
+								ent.posZ,
+								ent.posX + (ent.worldObj.rand.nextFloat() * 10 - 5),
+								ent.posY + (ent.worldObj.rand.nextFloat() * 10 - 5),
+								ent.posZ + (ent.worldObj.rand.nextFloat() * 10 - 5),
+								type, -1);
+					}
+				}else{
+					int offset = 0;
+					for (int i = 0; i < particleQuantity; ++i){
+						AMParticle effect = spawn(ent.worldObj, AMParticle.particleTypes[particleIndex],
+								ent.posX + (ent.worldObj.rand.nextFloat() - 0.5f),
+								ent.posY + ent.getEyeHeight() - 0.5f + offset - (ent.worldObj.rand.nextFloat() * 0.5),
+								ent.posZ + (ent.worldObj.rand.nextFloat() - 0.5f));
+						if (effect != null){
+							effect.setIgnoreMaxAge(false);
+							effect.setMaxAge(40);
+							effect.setParticleScale(particleScale);
+							effect.SetParticleAlpha(particleAlpha);
+							if (!particleDefaultColor){
+								if (particleRandomColor){
+									effect.setRGBColorF(ent.worldObj.rand.nextFloat(), ent.worldObj.rand.nextFloat(), ent.worldObj.rand.nextFloat());
+								}else{
+									effect.setRGBColorI(particleColor);
+								}
+							}
+							switch (particleBehaviour){
+							case 0: //fade
+								effect.AddParticleController(new ParticleFadeOut(effect, 1, false).setFadeSpeed(particleSpeed));
+								break;
+							case 1: //float
+								effect.AddParticleController(new ParticleFloatUpward(effect, 0.2f, particleSpeed, 1, false));
+								break;
+							case 2: //sink
+								effect.AddParticleController(new ParticleFloatUpward(effect, 0.2f, -particleSpeed, 1, false));
+								break;
+							case 3: //orbit
+								effect.AddParticleController(new ParticleOrbitEntity(effect, ent, particleSpeed, 1, false));
+								break;
+							case 4: //arc
+								effect.AddParticleController(new ParticleArcToEntity(effect, 1, ent, false).generateControlPoints().SetSpeed(particleSpeed));
+								break;
+							case 5: //flee
+								effect.AddParticleController(new ParticleFleeEntity(effect, ent, particleSpeed, 2D, 1, false));
+								break;
+							case 6: //forward
+								effect.AddParticleController(new ParticleMoveOnHeading(effect, ent.rotationYaw + 90, ent.rotationPitch, particleSpeed, 1, false));
+								break;
+							case 7: //pendulum
+								effect.AddParticleController(new ParticlePendulum(effect, 0.2f, particleSpeed, 1, false));
+								break;
+							case 8: //grow
+								effect.AddParticleController(new ParticleGrow(effect, particleSpeed, 1, false));
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void spawnBuffParticles(EntityLivingBase entityliving){
