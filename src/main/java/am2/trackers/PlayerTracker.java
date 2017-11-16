@@ -51,9 +51,9 @@ public class PlayerTracker{
 
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerLoggedInEvent event){
-		if (hasAA(event.player)){
-			AMNetHandler.INSTANCE.requestClientAuras((EntityPlayerMP)event.player);
-		}
+//		if (hasAA(event.player)){
+//			AMNetHandler.INSTANCE.requestClientAuras((EntityPlayerMP)event.player);
+//		}
 		
 		ArsMagica2.disabledSkills.getDisabledSkills(true);
 		int[] disabledSkills = ArsMagica2.disabledSkills.getDisabledSkillIDs();

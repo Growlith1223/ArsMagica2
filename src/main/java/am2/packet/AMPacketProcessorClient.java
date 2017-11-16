@@ -7,6 +7,7 @@ import am2.LogHelper;
 import am2.api.power.IPowerNode;
 import am2.api.spell.SpellModifier;
 import am2.api.spell.SpellModifiers;
+import am2.blocks.tileentity.TileEntityCalefactor;
 import am2.blocks.tileentity.TileEntityCraftingAltar;
 import am2.blocks.tileentity.TileEntityLectern;
 import am2.blocks.tileentity.TileEntityObelisk;
@@ -67,9 +68,9 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 			case AMPacketIDs.PARTICLE_SPAWN_SPECIAL:
 				ArsMagica2.proxy.particleManager.handleClientPacketData(Minecraft.getMinecraft().theWorld, remaining);
 				break;
-//			case AMPacketIDs.PLAYER_VELOCITY_ADD:
-//				handleVelocityAdd(remaining);
-//				break;
+			case AMPacketIDs.PLAYER_VELOCITY_ADD:
+				handleVelocityAdd(remaining);
+				break;
 			case AMPacketIDs.FLASH_ARMOR_PIECE:
 				handleFlashArmor(remaining);
 				break;
@@ -133,9 +134,9 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 			case AMPacketIDs.LECTERN_DATA:
 				handleLecternData(remaining);
 				break;
-//			case AMPacketIDs.CALEFACTOR_DATA:
-//				handleCalefactorData(remaining);
-//				break;
+			case AMPacketIDs.CALEFACTOR_DATA:
+				handleCalefactorData(remaining);
+				break;
 			case AMPacketIDs.OBELISK_DATA:
 				handleObeliskData(remaining);
 				break;
@@ -180,14 +181,14 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 		if (te == null || !(te instanceof TileEntityObelisk)) return;
 		((TileEntityObelisk)te).handlePacket(rdr.getRemainingBytes());
 	}
-//
-//	private void handleCalefactorData(byte[] remaining){
-//		AMDataReader rdr = new AMDataReader(remaining, false);
-//		TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(rdr.getInt(), rdr.getInt(), rdr.getInt());
-//		if (te == null || !(te instanceof TileEntityCalefactor)) return;
-//		((TileEntityCalefactor)te).handlePacket(rdr.getRemainingBytes());
-//	}
-//
+
+	private void handleCalefactorData(byte[] remaining){
+		AMDataReader rdr = new AMDataReader(remaining, false);
+		TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(new BlockPos (rdr.getInt(), rdr.getInt(), rdr.getInt()));
+		if (te == null || !(te instanceof TileEntityCalefactor)) return;
+		((TileEntityCalefactor)te).handlePacket(rdr.getRemainingBytes());
+	}
+
 	private void handleLecternData(byte[] data){
 		AMDataReader rdr = new AMDataReader(data, false);
 		TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(new BlockPos(rdr.getInt(), rdr.getInt(), rdr.getInt()));
@@ -433,10 +434,10 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //		int entityID = rdr.getInt();
 //		byte[] expropData = rdr.getRemainingBytes();
 //
-//		EntityLivingBase ent = AMCore.proxy.getEntityByID(entityID);
+//		EntityLivingBase ent = getEntityByID(entityID);
 //		if (ent == null) return;
 //
-//		ExtendedProperties.For(ent).readAuraData(expropData);
+//		EntityExtension.For(ent).readAuraData(expropData);
 //	}
 //
 //	private void handleKeystoneGuiOpen(byte[] data){
@@ -467,10 +468,10 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 //
 //	private void handleSyncBetaParticles(byte[] data){
 //		EntityPlayer localPlayer = Minecraft.getMinecraft().thePlayer;
-//		if (!AMCore.proxy.playerTracker.hasAA(localPlayer))
+//		if (!ArsMagica2.proxy.playerTracker.hasAA(localPlayer))
 //			return;
 //
-//		ExtendedProperties e = ExtendedProperties.For(localPlayer);
+//		EntityExtension e = EntityExtension.For(localPlayer);
 //
 //		AMDataWriter writer = new AMDataWriter();
 //		writer.add(e.getAuraIndex());
@@ -518,24 +519,24 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 		AMDataReader rdr = new AMDataReader(data, false);
 		AMGuiHelper.instance.blackoutArmorPiece(rdr.getInt(), rdr.getInt());
 	}
-//
-//	private void handleVelocityAdd(byte[] data){
-//		AMDataReader rdr = new AMDataReader(data, false);
-//		int entityID = rdr.getInt();
-//		double velX = rdr.getDouble();
-//		double velY = rdr.getDouble();
-//		double velZ = rdr.getDouble();
-//
-//		Entity ent = AMCore.proxy.getEntityByID(entityID);
-//		EntityLivingBase localPlayer = Minecraft.getMinecraft().thePlayer;
-//		//this is only really required for the local player, as other entities seem to work across the network.
-//		if (ent.getEntityId() != localPlayer.getEntityId()){
-//			return;
-//		}
-//		if (localPlayer.motionY > 0) return;
-//
-//		localPlayer.addVelocity(velX, velY, velZ);
-//	}
+
+	private void handleVelocityAdd(byte[] data){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int entityID = rdr.getInt();
+		double velX = rdr.getDouble();
+		double velY = rdr.getDouble();
+		double velZ = rdr.getDouble();
+
+		Entity ent = getEntityByID(entityID);
+		EntityLivingBase localPlayer = Minecraft.getMinecraft().thePlayer;
+		//this is only really required for the local player, as other entities seem to work across the network.
+		if (ent.getEntityId() != localPlayer.getEntityId()){
+			return;
+		}
+		if (localPlayer.motionY > 0) return;
+
+		localPlayer.addVelocity(velX, velY, velZ);
+	}
 //
 //	private void handleMagicLevelUpResponse(byte[] data){
 //		AMDataReader rdr = new AMDataReader(data, false);

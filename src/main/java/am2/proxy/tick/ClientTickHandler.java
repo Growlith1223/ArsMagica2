@@ -62,7 +62,6 @@ public class ClientTickHandler{
 	public static String worldName;
 
 	private boolean firstTick = true;
-	private boolean compendiumLoad;
 
 	private ArrayList<AMLineArc> arcs = new ArrayList<AMLineArc>();
 	private int arcSpawnCounter = 0;
@@ -90,13 +89,8 @@ public class ClientTickHandler{
 		}
 
 		if (firstTick){
-//			ItemDefs.crystalPhylactery.getSpawnableEntities(Minecraft.getMinecraft().theWorld);
-			compendiumLoad = true;
+			ItemDefs.crystalPhylactery.getSpawnableEntities(Minecraft.getMinecraft().theWorld);
 			firstTick = false;
-		}
-
-		if (compendiumLoad){
-			compendiumLoad = false;
 		}
 		ArsMagica2.proxy.itemFrameWatcher.checkWatchedFrames();
 	}

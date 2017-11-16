@@ -111,20 +111,20 @@ public class AMNetHandler{
 		sendPacketToAllClientsNear(world.provider.getDimension(), target.posX, target.posY, target.posZ, 50, AMPacketIDs.PLAYER_VELOCITY_ADD, data);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void requestAuras(EntityPlayer player){
-		AMDataWriter writer = new AMDataWriter();
-		EntityPlayer localPlayer = Minecraft.getMinecraft().thePlayer;
-		if (localPlayer == null) return;
-		writer.add(localPlayer.getEntityId());
-		writer.add(player.getEntityId());
-
-		sendPacketToServer(AMPacketIDs.REQUEST_BETA_PARTICLES, writer.generate());
-	}
-
-	public void requestClientAuras(EntityPlayerMP player){
-		sendPacketToClientPlayer((EntityPlayerMP)player, AMPacketIDs.SYNC_BETA_PARTICLES, new byte[0]);
-	}
+//	@SideOnly(Side.CLIENT)
+//	public void requestAuras(EntityPlayer player){
+//		AMDataWriter writer = new AMDataWriter();
+//		EntityPlayer localPlayer = Minecraft.getMinecraft().thePlayer;
+//		if (localPlayer == null) return;
+//		writer.add(localPlayer.getEntityId());
+//		writer.add(player.getEntityId());
+//
+//		sendPacketToServer(AMPacketIDs.REQUEST_BETA_PARTICLES, writer.generate());
+//	}
+//
+//	public void requestClientAuras(EntityPlayerMP player){
+//		sendPacketToClientPlayer((EntityPlayerMP)player, AMPacketIDs.SYNC_BETA_PARTICLES, new byte[0]);
+//	}
 
 	public void syncWorldName(EntityPlayerMP player, String name){
 		sendPacketToClientPlayer((EntityPlayerMP)player, AMPacketIDs.SYNC_WORLD_NAME, new AMDataWriter().add(name).generate());
@@ -158,21 +158,21 @@ public class AMNetHandler{
 		sendPacketToAllClientsNear(world.provider.getDimension(), x, y, z, 64, AMPacketIDs.STAR_FALL, writer.generate());
 	}
 
-	public void sendSilverSkillPointPacket(EntityPlayerMP player){
-		sendPacketToClientPlayer(player, AMPacketIDs.HIDDEN_COMPONENT_UNLOCK, new byte[0]);
-	}
+//	public void sendSilverSkillPointPacket(EntityPlayerMP player){
+//		sendPacketToClientPlayer(player, AMPacketIDs.HIDDEN_COMPONENT_UNLOCK, new byte[0]);
+//	}
 
-	public void sendSpellApplyEffectToAllAround(EntityLivingBase caster, Entity target, double x, double y, double z, World world, ItemStack spellStack){
-		AMDataWriter writer = new AMDataWriter().add(x).add(y).add(z);
-		if (spellStack != null)
-			writer.add(true).add(spellStack);
-		else
-			writer.add(false);
-		writer.add(caster.getEntityId());
-		writer.add(target.getEntityId());
-
-		sendPacketToAllClientsNear(world.provider.getDimension(), x, y, z, 64, AMPacketIDs.SPELL_APPLY_EFFECT, writer.generate());
-	}
+//	public void sendSpellApplyEffectToAllAround(EntityLivingBase caster, Entity target, double x, double y, double z, World world, ItemStack spellStack){
+//		AMDataWriter writer = new AMDataWriter().add(x).add(y).add(z);
+//		if (spellStack != null)
+//			writer.add(true).add(spellStack);
+//		else
+//			writer.add(false);
+//		writer.add(caster.getEntityId());
+//		writer.add(target.getEntityId());
+//
+//		sendPacketToAllClientsNear(world.provider.getDimension(), x, y, z, 64, AMPacketIDs.SPELL_APPLY_EFFECT, writer.generate());
+//	}
 
 	public void sendHecateDeathToAllAround(EntityHecate hecate){
 		AMDataWriter writer = new AMDataWriter();
@@ -233,34 +233,34 @@ public class AMNetHandler{
 		sendPacketToClientPlayer(player, AMPacketIDs.REQUEST_PWR_PATHS, writer.generate());
 	}
 
-	/**
-	 * Sets a property remotely for capabilities
-	 *
-	 * @param player     The player
-	 * @param capability The capability.  1 == AllowFlying, 2 == IsFlying
-	 * @param state      True or False
-	 */
-	public void sendCapabilityChangePacket(EntityPlayerMP player, int capability, boolean state){
-		AMDataWriter writer = new AMDataWriter();
-		writer.add(capability);
-		writer.add(state);
+//	/**
+//	 * Sets a property remotely for capabilities
+//	 *
+//	 * @param player     The player
+//	 * @param capability The capability.  1 == AllowFlying, 2 == IsFlying
+//	 * @param state      True or False
+//	 */
+//	public void sendCapabilityChangePacket(EntityPlayerMP player, int capability, boolean state){
+//		AMDataWriter writer = new AMDataWriter();
+//		writer.add(capability);
+//		writer.add(state);
+//
+//		sendPacketToClientPlayer(player, AMPacketIDs.CAPABILITY_CHANGE, writer.generate());
+//	}
+//
+//	public void sendExPropCommandToServer(int flag){
+//		AMDataWriter writer = new AMDataWriter();
+//		writer.add(flag);
+//		sendPacketToServer(AMPacketIDs.SYNC_EXTENDED_PROPS, writer.generate());
+//	}
 
-		sendPacketToClientPlayer(player, AMPacketIDs.CAPABILITY_CHANGE, writer.generate());
-	}
-
-	public void sendExPropCommandToServer(int flag){
-		AMDataWriter writer = new AMDataWriter();
-		writer.add(flag);
-		sendPacketToServer(AMPacketIDs.SYNC_EXTENDED_PROPS, writer.generate());
-	}
-
-	public void sendCompendiumUnlockPacket(EntityPlayerMP player, String id, boolean isCategory){
-		AMDataWriter writer = new AMDataWriter();
-		writer.add(id);
-		writer.add(isCategory);
-
-		sendPacketToClientPlayer(player, AMPacketIDs.COMPENDIUM_UNLOCK, writer.generate());
-	}
+//	public void sendCompendiumUnlockPacket(EntityPlayerMP player, String id, boolean isCategory){
+//		AMDataWriter writer = new AMDataWriter();
+//		writer.add(id);
+//		writer.add(isCategory);
+//
+//		sendPacketToClientPlayer(player, AMPacketIDs.COMPENDIUM_UNLOCK, writer.generate());
+//	}
 
 	public void sendCalefactorCookUpdate(TileEntityCalefactor calefactor, byte[] data){
 		AMDataWriter writer = new AMDataWriter();
@@ -280,9 +280,9 @@ public class AMNetHandler{
 		sendPacketToAllClientsNear(obelisk.getWorld().provider.getDimension(), obelisk.getPos().getX(), obelisk.getPos().getY(), obelisk.getPos().getZ(), 32, AMPacketIDs.OBELISK_DATA, writer.generate());
 	}
 
-	public void sendAffinityActivate(){
-		sendPacketToServer(AMPacketIDs.AFFINITY_ACTIVATE, new byte[0]);
-	}
+//	public void sendAffinityActivate(){
+//		sendPacketToServer(AMPacketIDs.AFFINITY_ACTIVATE, new byte[0]);
+//	}
 	
 	public void sendAbilityToggle(String str){
 		sendPacketToServer(AMPacketIDs.TOGGLE_ABILITY, new AMDataWriter().add(str).generate());

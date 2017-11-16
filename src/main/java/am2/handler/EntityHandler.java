@@ -294,7 +294,7 @@ public class EntityHandler {
 			}
 		}
 		if (player.worldObj.isRemote)
-			AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.PLAYER_FLIP, new AMDataWriter().add(ext.getIsFlipped()).generate());
+			AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.PLAYER_FLIP, new AMDataWriter().add(ext.getIsFlipped()).generate()); // This needs optimizing
 		if (ext.getIsFlipped()){
 			if ((player).motionY < 2 && !player.capabilities.isFlying)
 				(player).motionY += 0.15f;
@@ -493,9 +493,10 @@ public class EntityHandler {
 
 		if (!event.player.worldObj.isRemote && EntityExtension.For(event.player).getCurrentLevel() <= 0 && event.pickedUp.getEntityItem().getItem() == ItemDefs.arcaneCompendium){
 			event.player.addChatMessage(new TextComponentString("You have unlocked the secrets of the arcane!"));
-			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "shapes", true);
-			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "components", true);
-			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "modifiers", true);
+			// Not implemented client side
+//			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "shapes", true);
+//			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "components", true);
+//			AMNetHandler.INSTANCE.sendCompendiumUnlockPacket((EntityPlayerMP)event.player, "modifiers", true);
 			EntityExtension.For(event.player).setMagicLevelWithMana(1);
 			return;
 		}

@@ -211,7 +211,7 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 		byte[] data = writer.generate();
 
-		AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.SYNC_BETA_PARTICLES, data);
+//		AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.SYNC_BETA_PARTICLES, data);
 
 		ArsMagica2.config.save();
 

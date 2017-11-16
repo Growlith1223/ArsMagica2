@@ -5,7 +5,10 @@ import am2.api.math.AMVector3;
 import am2.api.power.IPowerNode;
 import am2.blocks.tileentity.TileEntityArmorImbuer;
 import am2.blocks.tileentity.TileEntityInscriptionTable;
+import am2.blocks.tileentity.TileEntityMagiciansWorkbench;
 import am2.blocks.tileentity.TileEntityParticleEmitter;
+import am2.container.ContainerKeystone;
+import am2.container.ContainerMagiciansWorkbench;
 import am2.container.ContainerSpellCustomization;
 import am2.defs.ItemDefs;
 import am2.extensions.AffinityData;
@@ -86,21 +89,21 @@ public class AMPacketProcessorServer{
 				float TK_Distance = new AMDataReader(remaining, false).getFloat();
 				EntityExtension.For((EntityPlayerMP)player).setTKDistance(TK_Distance);
 				break;
-//			case AMPacketIDs.SAVE_KEYSTONE_COMBO:
-//				handleSaveKeystoneCombo(remaining, (EntityPlayerMP)player);
-//				break;
-//			case AMPacketIDs.SET_KEYSTONE_COMBO:
-//				handleSetKeystoneCombo(remaining, (EntityPlayerMP)player);
-//				break;
-//			case AMPacketIDs.SET_MAG_WORK_REC:
-//				handleSetMagiciansWorkbenchRecipe(remaining, (EntityPlayerMP)player);
-//				break;
+			case AMPacketIDs.SAVE_KEYSTONE_COMBO:
+				handleSaveKeystoneCombo(remaining, (EntityPlayerMP)player);
+				break;
+			case AMPacketIDs.SET_KEYSTONE_COMBO:
+				handleSetKeystoneCombo(remaining, (EntityPlayerMP)player);
+				break;
+			case AMPacketIDs.SET_MAG_WORK_REC:
+				handleSetMagiciansWorkbenchRecipe(remaining, (EntityPlayerMP)player);
+				break;
 //			case AMPacketIDs.RUNE_BAG_GUI_OPEN:
 //				handleRuneBagGUIOpen(remaining, (EntityPlayerMP)player);
 //				break;
-//			case AMPacketIDs.M_BENCH_LOCK_RECIPE:
-//				handleMBenchLockRecipe(remaining, (EntityPlayerMP)player);
-//				break;
+			case AMPacketIDs.M_BENCH_LOCK_RECIPE:
+				handleMBenchLockRecipe(remaining, (EntityPlayerMP)player);
+				break;
 			case AMPacketIDs.IMBUE_ARMOR:
 				handleImbueArmor(remaining, (EntityPlayerMP)player);
 				break;
@@ -183,19 +186,19 @@ public class AMPacketProcessorServer{
 			((TileEntityArmorImbuer)te).imbueCurrentArmor(new ResourceLocation(rdr.getString()));
 		}
 	}
-//
-//	private void handleMBenchLockRecipe(byte[] data, EntityPlayerMP player){
-//		AMDataReader rdr = new AMDataReader(data, false);
-//		int x = rdr.getInt();
-//		int y = rdr.getInt();
-//		int z = rdr.getInt();
-//
-//		TileEntity te = player.worldObj.getTileEntity(x, y, z);
-//		if (te != null && te instanceof TileEntityMagiciansWorkbench){
-//			((TileEntityMagiciansWorkbench)te).setRecipeLocked(rdr.getInt(), rdr.getBoolean());
-//			te.getWorldObj().markBlockForUpdate(te.xCoord, te.yCoord, te.zCoord);
-//		}
-//	}
+
+	private void handleMBenchLockRecipe(byte[] data, EntityPlayerMP player){
+		AMDataReader rdr = new AMDataReader(data, false);
+		int x = rdr.getInt();
+		int y = rdr.getInt();
+		int z = rdr.getInt();
+
+		TileEntity te = player.worldObj.getTileEntity(new BlockPos(x, y, z));
+		if (te != null && te instanceof TileEntityMagiciansWorkbench){
+			((TileEntityMagiciansWorkbench)te).setRecipeLocked(rdr.getInt(), rdr.getBoolean());
+			te.getWorld().markAndNotifyBlock(te.getPos(), te.getWorld().getChunkFromBlockCoords(te.getPos()), te.getWorld().getBlockState(te.getPos()), te.getWorld().getBlockState(te.getPos()), 2);
+		}
+	}
 //
 //	private void handleRuneBagGUIOpen(byte[] data, EntityPlayerMP player){
 //		AMDataReader rdr = new AMDataReader(data, false);
@@ -209,32 +212,32 @@ public class AMPacketProcessorServer{
 //		player.openGui(AMCore.instance, ArsMagicaGuiIdList.GUI_RUNE_BAG, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
 //	}
 //
-//	private void handleSetMagiciansWorkbenchRecipe(byte[] data, EntityPlayerMP player){
-//		if (player.openContainer != null && player.openContainer instanceof ContainerMagiciansWorkbench){
-//			((ContainerMagiciansWorkbench)player.openContainer).moveRecipeToCraftingGrid(new AMDataReader(data, false).getInt());
-//		}
-//	}
-//
-//	private void handleSetKeystoneCombo(byte[] data, EntityPlayerMP player){
-//		if (player.openContainer instanceof ContainerKeystone){
-//			AMDataReader rdr = new AMDataReader(data, false);
-//			((ContainerKeystone)player.openContainer).setInventoryToCombination(rdr.getInt());
-//		}
-//	}
-//
-//	private void handleSaveKeystoneCombo(byte[] data, EntityPlayerMP player){
-//		if (player.openContainer instanceof ContainerKeystone){
-//			AMDataReader rdr = new AMDataReader(data, false);
-//			boolean add = rdr.getBoolean();
-//			String name = rdr.getString();
-//			int[] metas = new int[]{rdr.getInt(), rdr.getInt(), rdr.getInt()};
-//			if (add)
-//				ItemsCommonProxy.keystone.addCombination(((ContainerKeystone)player.openContainer).getKeystoneStack(), name, metas);
-//			else
-//				ItemsCommonProxy.keystone.removeCombination(((ContainerKeystone)player.openContainer).getKeystoneStack(), name);
-//		}
-//	}
-//
+	private void handleSetMagiciansWorkbenchRecipe(byte[] data, EntityPlayerMP player){
+		if (player.openContainer != null && player.openContainer instanceof ContainerMagiciansWorkbench){
+			((ContainerMagiciansWorkbench)player.openContainer).moveRecipeToCraftingGrid(new AMDataReader(data, false).getInt());
+		}
+	}
+
+	private void handleSetKeystoneCombo(byte[] data, EntityPlayerMP player){
+		if (player.openContainer instanceof ContainerKeystone){
+			AMDataReader rdr = new AMDataReader(data, false);
+			((ContainerKeystone)player.openContainer).setInventoryToCombination(rdr.getInt());
+		}
+	}
+
+	private void handleSaveKeystoneCombo(byte[] data, EntityPlayerMP player){
+		if (player.openContainer instanceof ContainerKeystone){
+			AMDataReader rdr = new AMDataReader(data, false);
+			boolean add = rdr.getBoolean();
+			String name = rdr.getString();
+			int[] metas = new int[]{rdr.getInt(), rdr.getInt(), rdr.getInt()};
+			if (add)
+				ItemDefs.keystone.addCombination(((ContainerKeystone)player.openContainer).getKeystoneStack(), name, metas);
+			else
+				ItemDefs.keystone.removeCombination(((ContainerKeystone)player.openContainer).getKeystoneStack(), name);
+		}
+	}
+
 	private void handleInscriptionTableUpdate(byte[] data, EntityPlayerMP player){
 		World world = player.worldObj;
 		AMDataReader rdr = new AMDataReader(data, false);
@@ -275,7 +278,7 @@ public class AMPacketProcessorServer{
 		else
 			return;
 	}
-//
+
 	private void handleSpellCustomize(byte[] data, EntityPlayerMP player){
 		AMDataReader rdr = new AMDataReader(data, false);
 
@@ -290,7 +293,7 @@ public class AMPacketProcessorServer{
 			((ContainerSpellCustomization)player.openContainer).setNameAndIndex(name, IIconIndex);
 		}
 	}
-//
+
 //	private void handleRequestBetaParticles(byte[] data, EntityPlayerMP player){
 //		AMDataReader rdr = new AMDataReader(data, false);
 //		int requesterID = rdr.getInt();
@@ -299,9 +302,9 @@ public class AMPacketProcessorServer{
 //
 //		if (player == null || entity == null || !(entity instanceof EntityPlayer)) return;
 //
-//		if (!AMCore.proxy.playerTracker.hasAA((EntityPlayer)entity)) return;
+//		if (!ArsMagica2.proxy.playerTracker.hasAA((EntityPlayer)entity)) return;
 //
-//		byte[] expropData = ExtendedProperties.For(entity).getAuraData();
+//		byte[] expropData = EntityExtension.For(entity).getAuraData();
 //
 //		AMDataWriter writer = new AMDataWriter();
 //		writer.add(entity.getEntityId());
@@ -328,7 +331,7 @@ public class AMPacketProcessorServer{
 //	private void handleSyncBetaParticles(byte[] data, EntityPlayerMP player){
 //		AMDataReader rdr = new AMDataReader(data, false);
 //
-//		if (player == null || !AMCore.proxy.playerTracker.hasAA(player)){
+//		if (player == null || !ArsMagica2.proxy.playerTracker.hasAA(player)){
 //			return;
 //		}
 //
@@ -343,7 +346,7 @@ public class AMPacketProcessorServer{
 //		int quantity = rdr.getInt();
 //		float speed = rdr.getFloat();
 //
-//		ExtendedProperties.For(player).updateAuraData(index, behaviour, scale, alpha, randomColor, defaultColor, color, delay, quantity, speed);
+//		EntityExtension.For(player).updateAuraData(index, behaviour, scale, alpha, randomColor, defaultColor, color, delay, quantity, speed);
 //	}
 //
 	private void handleCastingModeChange(byte[] data, EntityPlayerMP player){
