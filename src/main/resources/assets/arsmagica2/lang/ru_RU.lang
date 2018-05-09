@@ -1,0 +1,1875 @@
+# suppress inspection "WrongPropertyKeyValueDelimiter" for whole file
+affinity.air=Воздух
+affinity.fire=Огонь
+affinity.arcane=Магия
+affinity.life=Жизнь
+affinity.nature=Природа
+affinity.lightning=Молния
+affinity.water=Вода
+affinity.none=Пусто
+affinity.earth=Земля
+affinity.ice=Лед
+affinity.ender=Край
+
+fluid.liquid_essence=Жидкий эфир
+
+#region Item names
+item.arsmagica2:tome.name=§eТом родства: %s§f
+item.arsmagica2:essence.name=Эссенция %s
+item.arsmagica2:ore.vinteum.name=Винтеумная пыль
+item.arsmagica2:ore.purified_vinteum.name=Очищенная винтеумная пыль
+item.arsmagica2:ore.chimerite.name=Химерит
+item.arsmagica2:ore.moonstone.name=Лунный камень
+item.arsmagica2:ore.sunstone.name=Солнечный камень
+item.arsmagica2:ore.animal_fat.name=Свиной жир
+item.arsmagica2:ore.bluetopaz.name=Синий топаз
+item.arsmagica2:ore.arcaneash.name=Тайная пыль
+item.arsmagica2:ore.arcane_compound.name=Тайная смесь
+item.arsmagica2:spell_parchment.name=Пергамент заклинания
+item.arsmagica2:etherium.name=Этериум
+
+item.arsmagica2:bindingCatalyst.name=Катализатор связывания
+item.arsmagica2:bindingCatalystAxe.name=: Топор
+item.arsmagica2:bindingCatalystBow.name=: Лук
+item.arsmagica2:bindingCatalystHoe.name=: Мотыга
+item.arsmagica2:bindingCatalystPick.name=: Кирка
+item.arsmagica2:bindingCatalystShovel.name=: Лопата
+item.arsmagica2:bindingCatalystSword.name=: Меч
+item.arsmagica2:bindingCatalystShield.name=: Щит
+
+item.arsmagica2:rune.white.name=Белая руна
+item.arsmagica2:rune.orange.name=Оранжевая руна
+item.arsmagica2:rune.magenta.name=Сиреневая руна
+item.arsmagica2:rune.lightBlue.name=Светло-синяя руна
+item.arsmagica2:rune.yellow.name=Желтая руна
+item.arsmagica2:rune.lime.name=Лаймовая руна
+item.arsmagica2:rune.pink.name=Розовая руна
+item.arsmagica2:rune.gray.name=Серая руна
+item.arsmagica2:rune.silver.name=Светло-серая руна
+item.arsmagica2:rune.cyan.name=Бирюзовая руна
+item.arsmagica2:rune.purple.name=Фиолетовая руна
+item.arsmagica2:rune.blue.name=Синяя руна
+item.arsmagica2:rune.brown.name=Коричневая руна
+item.arsmagica2:rune.green.name=Зеленая руна
+item.arsmagica2:rune.red.name=Красная руна
+item.arsmagica2:rune.black.name=Черная руна
+
+item.arsmagica2:chalk.name=Магический мел
+
+am2.spell.validate.compMiss=Необходим хотя бы один компонент.
+am2.spell.validate.principum= - начальная форма. Для ее работы требуется наличие функциональной формы после нее.  Больше информации в тайном компендиуме.
+am2.spell.validate.terminus= - завершающая форма. Формы, поставленные после нее, не будут работать.  Больше информации в тайном компендиуме.
+
+item.arsmagica2:FlickerFocusPrefix=Фокус: %s
+item.arsmagica2:FlickerOperatorButchery.name=Бойня
+item.arsmagica2:FlickerOperatorContainment.name=Сдерживание
+item.arsmagica2:FlickerOperatorFelledOak.name=Лесоповал
+item.arsmagica2:FlickerOperatorFishing.name=Рыбалка
+item.arsmagica2:FlickerOperatorFlatLands.name=Плоскоземье
+item.arsmagica2:FlickerOperatorGentleRains.name=Орошение
+item.arsmagica2:FlickerOperatorInterdiction.name=Ограждение
+item.arsmagica2:FlickerOperatorItemTransport.name=Перемещение предметов
+item.arsmagica2:FlickerOperatorLight.name=Освещение
+item.arsmagica2:FlickerOperatorMoonstoneAttractor.name=Лунный прилив
+item.arsmagica2:FlickerOperatorNaturesBounty.name=Природная щедрость
+item.arsmagica2:FlickerOperatorPackedEarth.name=Уплотненная земля
+item.arsmagica2:FlickerOperatorProgeny.name=Размножение
+item.arsmagica2:flickerJar.name=Банка для светлячка: %s
+
+item.arsmagica2:deficit_crystal.name=Кристалл недостатка
+item.arsmagica2:warding_candle.name=Свеча оберега
+item.arsmagica2:epic_mana_potion.name=Эпичное зелье маны
+item.arsmagica2:greater_mana_potion.name=Большое зелье маны
+item.arsmagica2:legendary_mana_potion.name=Легендарное зелье маны
+item.arsmagica2:lesser_mana_potion.name=Малое зелье маны
+item.arsmagica2:standard_mana_potion.name=Обычное зелье маны
+item.arsmagica2:inf_orb_blue.name=Синяя сфера бесконечности
+item.arsmagica2:inf_orb_green.name=Зеленая сфера бесконечности
+item.arsmagica2:inf_orb_red.name=Красная сфера бесконечности
+item.arsmagica2:inf_orb_magenta.name=Сиреневая сфера бесконечности
+item.arsmagica2:inf_orb_yellow.name=Желтая сфера бесконечности
+item.arsmagica2:inf_orb_cyan.name=Бирюзовая сфера бесконечности
+item.arsmagica2:greater_focus.name=Большой фокус
+item.arsmagica2:mob_focus.name=Фокус на монстра
+item.arsmagica2:arcane_compendium.name=Тайный компендиум
+item.arsmagica2:evil_book.name=Книга зла
+item.arsmagica2:charge_focus.name=Фокус на энергию
+item.arsmagica2:item_focus.name=Фокус на предмет
+item.arsmagica2:magitech_goggles.name=Очки техномага
+item.arsmagica2:crystal_phylactery.name=Кристальный талисман
+item.arsmagica2:spell_staff_magitech.name=Посох техномага
+item.arsmagica2:lesser_focus.name=Малый фокус
+item.arsmagica2:standard_focus.name=Обычный фокус
+item.arsmagica2:mana_focus.name=Фокус на ману
+item.arsmagica2:inscup_1.name=Улучшение стола начертания 1 уровня
+item.arsmagica2:inscup_2.name=Улучшение стола начертания 2 уровня
+item.arsmagica2:inscup_3.name=Улучшение стола начертания 3 уровня
+item.arsmagica2:player_focus.name=Фокус на игрока
+item.arsmagica2:nature_scythe.name=§6Коса природы§f
+item.arsmagica2:winter_arm.name=§6Хватка зимы§f
+item.arsmagica2:air_sled.name=§6Воздушные сани§f
+item.arsmagica2:arcane_spellbook.name=§6Тайная книга заклинаний§f
+item.arsmagica2:earth_armor.name=§6Земляные доспехи§f
+item.arsmagica2:ender_boots.name=§6Боты края§f
+item.arsmagica2:fire_ears.name=§6Щупальцы Хранителя Огня§f
+item.arsmagica2:life_ward.name=§6Оберег жизни§f
+item.arsmagica2:lightning_charm.name=§6Талисман молний§f
+item.arsmagica2:water_orbs.name=§6Водные сферы§f
+item.arsmagica2:spellbook.name=Книга заклинаний
+item.arsmagica2:magic_broom.name=Магическая метла
+item.arsmagica2:keystone.name=Ключевой камень
+item.arsmagica2:keystone_door.name=Дверь ключевого камня
+item.arsmagica2:spell_sealed_door.name=Зачарованная дверь
+item.arsmagica2:rune_bag.name=Рюкзак для рун
+item.arsmagica2:crystal_wrench.name=Кристальный ключ
+item.arsmagica2:core.base.name=Базовое ядро эссенции
+item.arsmagica2:core.high.name=Улучшенное ядро эссенции
+item.arsmagica2:core.pure.name=Очищенная эссенция
+item.arsmagica2:workbench_upgrade.name=Улучшение верстака мага: Крафт
+item.arsmagica2:potion_bundle.name=Связка
+item.arsmagica2:essence_bag.name=Рюкзак для эссенций
+item.arsmagica2:blank_rune.name=Пустая руна
+item.arsmagica2:hell_cow_horn.name=Hell Cow's Horn
+item.arsmagica2:creature_focus.name=Фокус на существ
+item.arsmagica2:boots_archmage.name=Боты архимага
+item.arsmagica2:boots_battlemage.name=Боты боевого мага
+item.arsmagica2:boots_mage.name=Боты мага
+item.arsmagica2:chest_archmage.name=Мантия архимага
+item.arsmagica2:chest_battlemage.name=Доспехи боевого мага
+item.arsmagica2:chest_mage.name=Мантия мага
+item.arsmagica2:helmet_archmage.name=Капюшон архимага
+item.arsmagica2:helmet_battlemage.name=Браслет боевого мага
+item.arsmagica2:helmet_mage.name=Капюшон мага
+item.arsmagica2:legs_archmage.name=Поножи архимага
+item.arsmagica2:legs_battlemage.name=Поножи боевого мага
+item.arsmagica2:legs_mage.name=Поножи мага
+item.arsmagica2:mana_cake.name=Торт маны
+item.arsmagica2:mana_martini.name=Мартини маны
+item.arsmagica2:wooden_leg.name=Деревянная нога
+item.arsmagica2:liquid_essence_bottle.name=Эфирное зелье
+item.arsmagica2:journal.name=Журнал
+item.arsmagica2:lost_journal.name=Потерянный журнал
+item.arsmagica2:bound_axe.name=Связанный топор
+item.arsmagica2:bound_hoe.name=Связанная мотыга
+item.arsmagica2:bound_pickaxe.name=Связанная кирка
+item.arsmagica2:bound_shovel.name=Связанная лопата
+item.arsmagica2:bound_sword.name=Связанный меч
+item.arsmagica2:bound_bow.name=Связанный лук
+item.arsmagica2:bound_shield.name=Связанный щит
+#endregion
+
+#region Block names
+tile.arsmagica2:frost.name=Мороз
+tile.arsmagica2:desert_nova.name=Пустынная звездка
+tile.arsmagica2:magic_wall.name=Магическая стена
+tile.arsmagica2:occulus.name=Магическое око
+tile.arsmagica2:ore_vinteum.name=Винтеумная руда
+tile.arsmagica2:ore_chimerite.name=Химеритовая руда
+tile.arsmagica2:ore_bluetopaz.name=Руда синего топаза
+tile.arsmagica2:ore_moonstone.name=Руда лунного камня
+tile.arsmagica2:ore_sunstone.name=Руда солнечного камня
+tile.arsmagica2:block_vinteum.name=Блок винтеума
+tile.arsmagica2:block_chimerite.name=Блок химерита
+tile.arsmagica2:block_bluetopaz.name=Блок синего топаза
+tile.arsmagica2:block_moonstone.name=Блок лунного камня
+tile.arsmagica2:block_sunstone.name=Блок солнечного камня
+tile.arsmagica2:inert_spawner.name=Неактивный спаунер
+tile.arsmagica2:tarma_root.name=Корень тармы
+tile.arsmagica2:cerublossom.name=Лазурноцвет
+tile.arsmagica2:wakebloom.name=Цветок пробуждения
+tile.arsmagica2:aum.name=Аум
+tile.arsmagica2:essence_refiner.name=Очиститель эссенции
+tile.arsmagica2:arcane_reconstructor.name=Тайный реконструктор
+tile.arsmagica2:obelisk.name=Обелиск
+tile.arsmagica2:arcane_deconstructor.name=Тайный деконструктор
+tile.arsmagica2:witchwood_planks.name=Доски ведьминого дерева
+tile.arsmagica2:illusion_block_default.name=Блок иллюзий
+tile.arsmagica2:illusion_block_non_collide.name=Эфирный блок иллюзий
+tile.arsmagica2:slipstream_generator.name=Генератор воздушного потока
+tile.arsmagica2:lectern.name=Аналой
+tile.arsmagica2:essence_conduit.name=Проводник энергии
+tile.arsmagica2:mana_battery.name=Батарея маны
+tile.arsmagica2:armor_imbuer.name=Стол наполнения доспехов
+tile.arsmagica2:inscription_table.name=Стол начертания
+tile.arsmagica2:black_aurem.name=Черный аурем
+tile.arsmagica2:keystone_recepticle.name=Приемник ключевого камня
+tile.arsmagica2:keystone_trapdoor.name=Люк ключевого камня
+tile.arsmagica2:keystone_chest.name=Сундук ключевого камня
+tile.arsmagica2:celestial_prism.name=Небесная призма
+tile.arsmagica2:flicker_lure.name=Приманка для светлячков
+tile.arsmagica2:cm_export.name=Кристалл экспорта
+tile.arsmagica2:cm_final.name=Конечный кристалл экспорта
+tile.arsmagica2:cm_import.name=Кристалл импорта
+tile.arsmagica2:cm_likeexport.name=Имитирующий кристалл экспорта
+tile.arsmagica2:cm_regulateexport.name=Регулирующий кристалл экспорта
+tile.arsmagica2:cm_regulatemulti.name=Регулирующий двунаправленный кристалл
+tile.arsmagica2:cm_setexport.name=Фильтрующий кристалл экспорта
+tile.arsmagica2:cm_setimport.name=Фильтрующий кристалл импорта
+tile.arsmagica2:cm_spellexport.name=Заклинающий кристалл экспорта
+tile.arsmagica2:witchwood_sapling.name=Саженец ведьминого дерева
+tile.arsmagica2:witchwood_leaves.name=Листва ведьминого дерева
+tile.arsmagica2:witchwood_log.name=Древесина ведьминого дерева
+tile.arsmagica2:magicians_workbench.name=Верстак мага
+tile.arsmagica2:crafting_altar.name=Алтарь создания
+tile.arsmagica2:everstone.name=Камень бесконечности
+tile.arsmagica2:calefactor.name=Печка
+tile.arsmagica2:summoner.name=Призыватель
+tile.arsmagica2:seer_stone.name=Камень ясновидения
+tile.arsmagica2:broken_power_link.name=Сломанная энерголиния
+tile.arsmagica2:otherworld_aura.name=Потусторонняя аура
+tile.arsmagica2:particle_emitter.name=Испускатель частиц
+tile.arsmagica2:vinteum_torch.name=Винтеумный факел
+tile.arsmagica2:lightning_effigy.name=Lightning Effigy
+tile.arsmagica2:ice_effigy.name=Winter Effigy
+tile.arsmagica2:gold_inlay.name=Золотая инкрустрация
+tile.arsmagica2:iron_inlay.name=Железная инкрустрация
+tile.arsmagica2:redstone_inlay.name=Красная инкрустрация
+tile.arsmagica2:flicker_habitat.name=Клетка для светлячков
+tile.arsmagica2:witchwood_stairs.name=Лестница из ведьминого дерева
+tile.arsmagica2:astral_barrier.name=Астральный барьер
+tile.arsmagica2:mana_drain.name=Иссушатель маны
+tile.arsmagica2:witchwood_slab.name=Плита из ведьминого дерева
+tile.arsmagica2:fluid_block_liquid_essence=Жидкая эссенция
+#endregion
+
+#region Mobs
+entity.arsmagica2.DarkMage.name=Темный маг
+entity.arsmagica2.Dryad.name=Дриада
+entity.arsmagica2.EarthElemental.name=Элементаль земли
+entity.arsmagica2.FireElemental.name=Элементаль огня
+entity.arsmagica2.LightMage.name=Светлый маг
+entity.arsmagica2.ManaElemental.name=Элементаль маны
+entity.arsmagica2.WaterElemental.name=Элементаль воды
+entity.arsmagica2.ManaCreeper.name=Крипер маны
+entity.arsmagica2.Hecate.name=Геката
+entity.arsmagica2.Broom.name=Метла
+entity.arsmagica2.Darkling.name=Дарклинг
+entity.arsmagica2.HellCow.name=Hell Cow
+
+entity.arsmagica2.WinterGuardian.name=Хранитель зимы
+entity.arsmagica2.LightningGuardian.name=Хранитель молний
+entity.arsmagica2.WaterGuardian.name=Хранитель воды
+entity.arsmagica2.EarthGuardian.name=Хранитель земли
+entity.arsmagica2.LifeGuardian.name=Хранитель жизни
+entity.arsmagica2.ArcaneGuardian.name=Хранитель тайны
+entity.arsmagica2.EnderGuardian.name=Хранитель края
+entity.arsmagica2.NatureGuardian.name=Хранитель природы
+entity.arsmagica2.FireGuardian.name=Хранитель огня
+entity.arsmagica2.AirGuardian.name=Хранитель воздуха
+#endregion
+
+itemGroup.am2.blocks=Ars Magica 2 Блоки
+itemGroup.am2.items=Ars Magica 2 Предметы
+
+etherium.any.name=Любой
+etherium.light.name=Светлый
+etherium.dark.name=Темный
+etherium.neutral.name=Нейтральный
+
+enchantment.magicresist=Магическая защита
+enchantment.soulbound=Привязка к душе
+
+keybindings.am2=Ars Magica 2
+key.bridge=Переключить обледенение воды под ногами
+
+skill.arsmagica2:manaregen1.name=Регенерация маны I
+skill.arsmagica2:manaregen2.name=Регенерация маны II
+skill.arsmagica2:manaregen3.name=Регенерация маны III
+
+#Death Messages
+death.attack.am2.backfire.player=Заклинание %1$s обернулось к нему же при сражении с %2$s
+death.attack.am2.backfire=Заклинание %s обернулось к нему же
+death.attack.am2.darkNexus.player=%1$s истратил свои жизненные силы при сражении с %2$s
+death.attack.am2.darkNexus=%s истратил свои жизненные силы
+death.attack.am2.fire=%2$s сжег %1$s дотла
+death.attack.am2.frost=%2$s заморозил %1$s
+death.attack.am2.holy=%1$s разлагался на месте из-за истинного света %2$s
+death.attack.am2.lightning=%2$s поразил %1$s электричеством
+death.attack.am2.wind=%2$s сдул %1$s ветром
+death.attack.am2.wtfboom.player=%1$s закололся кактусом и взорвался в лаве из-за %2$s
+death.attack.am2.wtfboom=%s закололся кактусом и взорвался в лаве
+
+#npc messages
+am2.npc.nopartyskill=Я знаю тебя?
+am2.npc.partyfull=Кажется, твоя команда уже заполнена.
+am2.npc.partyjoin=Я буду защищать твою спину!
+am2.npc.partyleave=Удачи, друг.
+am2.npc.partyrefuse=Ты слишком слаб, приходи ко мне когда станешь сильнее.
+
+#region Affinity
+##air
+affinityability.agile.name=Подвижность (высокий прыжок)
+affinityability.lightasafeather.name=Легкий как перышко (слабость к дождю)
+
+##arcane
+affinityability.clearcaster.name=Хороший заклинатель (шанс не потратить ману на заклинание)
+affinityability.magicweakness.name=Магическая слабость (больше урона от магии)
+affinityability.onewithmagic.name=Магическая концентрация (заклинания на 5% дешевле)
+
+##earth
+affinityability.solidbones.name=Твердые кости (быстрое утопание и больше урон от падений)
+affinityability.stoneskin.name=Каменная внешность (уменьшение урона до 10%)
+
+##ender
+affinityability.nightvision.name=Темное зрение (постоянное ночное зрение в темных местах)
+affinityability.relocation.name=Перемещение (Relocation)
+affinityability.poisonresistance.name=Защита от отравления (нет урона от отравления)
+affinityability.sunlightweakness.name=Слабость к дневному свету (уменьшение макс. здоровья)
+affinityability.waterweakness_ender.name=Слабость к воде (уменьшение макс. здоровья)
+
+##fire
+affinityability.firepunch.name=Огненный удар (поджигание существ голыми руками)
+affinityability.fireresistance.name=Защита от огня (нет урона от огня)
+affinityability.waterweakness_fire.name=Слабость к воде (урон от воды до 75% здоровья)
+
+##ice
+affinityability.coldblooded.name=Ледяная кровь (замедленное движение вне льда или воды)
+affinityability.lavafreeze.name=Замораживающие шаги - лава (превращение лавы в обсидиан)
+affinityability.waterfreeze.name=Замораживающие шаги - вода (превращение воды в лед)
+
+##life
+affinityability.fasthealing.name=Быстрое лечение (регенерация даже без сытости)
+affinityability.pacifist.name=Пацифист (тошнота при уничтожении мобов)
+
+##water
+affinityability.antiendermen.name=Гроза эндерменов (сильнее атаки на эндерменов)
+affinityability.expandedlungs.name=Увеличенные легкие (больше запас воздуха под водой)
+affinityability.fireweakness.name=Слабость к огню
+affinityability.fluidity.name=Текучесть (не подверженность водному течению)
+affinityability.swiftswim.name=Быстрый плывец
+
+##nature
+affinityability.harvester.name=Жнец (больше семян и саженцев)
+affinityability.leaflike.name=Лист на ветру (Leaf on the Wind)
+affinityability.photosynthesis.name=Фотосинтез (медленная регенерация голода при солнце)
+affinityability.rooted.name=Корни (замедленное движение из-за корней)
+affinityability.thorns.name=Аура шипов (дает зачарование "шипы" навсегда)
+
+##lightning
+affinityability.fulmination.name=Взрывоопасность (поджиг ближних ТНТ и заряд криперов)
+affinityability.reflexes.name=Молниеносные рефлексы (увеличение скорости)
+affinityability.lightningstep.name=Молниеносный шаг (автоподъем на 1 блок в высоту)
+affinityability.shortcircuit.name=Короткое замыкание (потеря маны при дожде или в воде)
+affinityability.thunderpunch.name=Грозовой кулак (удар молнией в существ голыми руками)
+affinityability.waterweakness_lightning.name=Слабость к воде (см. Короткое замыкание)
+#endregion
+
+#region Rituals
+ritual.arsmagica2:absorption.name=Ритуал продолжительности
+ritual.arsmagica2:astral_distortion.name=Ритуал искажения
+ritual.arsmagica2:banish_rain.name=Ритуал подавления дождя
+ritual.arsmagica2:blind.name=Ритуал продолжительности
+ritual.arsmagica2:watery_grave.name=Ритуал продолжительности
+ritual.arsmagica2:water_breathing.name=Ритуал продолжительности
+ritual.arsmagica2:true_sight.name=Ритуал продолжительности
+ritual.arsmagica2:transplace.name=Смена позиций
+ritual.arsmagica2:swift_swim.name=Ритуал продолжительности
+ritual.arsmagica2:slowfall.name=Ритуал продолжительности
+ritual.arsmagica2:slow.name=Ритуал продолжительности
+ritual.arsmagica2:shrink.name=Ритуал продолжительности
+ritual.arsmagica2:shield.name=Ритуал продолжительности
+ritual.arsmagica2:rift.name=Ритуал искажения
+ritual.arsmagica2:recall.name=Ритуал возврата
+ritual.arsmagica2:night_vision.name=Ритуал продолжительности
+ritual.arsmagica2:light.name=Ритуал очищения
+ritual.arsmagica2:life_tap.name=Ритуал искажения
+ritual.arsmagica2:levitate.name=Ритуал продолжительности
+ritual.arsmagica2:leap.name=Ритуал продолжительности
+ritual.arsmagica2:invisibility.name=Ритуал продолжительности
+ritual.arsmagica2:haste.name=Ритуал продолжительности
+ritual.arsmagica2:gravity_well.name=Ритуал продолжительности
+ritual.arsmagica2:fury.name=Ритуал продолжительности
+ritual.arsmagica2:freeze.name=Ритуал продолжительности
+ritual.arsmagica2:flight.name=Ритуал продолжительности
+ritual.arsmagica2:fire_damage.name=Ритуал искажения
+ritual.arsmagica2:entangle.name=Ритуал продолжительности
+ritual.arsmagica2:charm.name=Ритуал продолжительности
+
+ritualshape.hourglass.name=Песочные часы
+ritualshape.corruption.name=Искажение
+ritualshape.celestialPurification.name=Очищение небесной призмы
+ritualshape.purification.name=Очищение
+ritualshape.ringedCross.name=Перекрестные кольца
+#endregion
+
+#region Skills
+skill.arsmagica2:projectile.name=Снаряд
+skill.arsmagica2:bounce.name=Отскок
+skill.arsmagica2:gravity.name=Гравитация
+skill.arsmagica2:physical_damage.name=Физический урон
+skill.arsmagica2:magic_damage.name=Урон магией
+skill.arsmagica2:drown.name=Утопление
+skill.arsmagica2:watery_grave.name=Подводная могила
+skill.arsmagica2:knockback.name=Отдача
+skill.arsmagica2:fling.name=Бросок
+skill.arsmagica2:velocity_added.name=Усиление эффектов скорости
+skill.arsmagica2:astral_distortion.name=Астральное искажение
+skill.arsmagica2:wave.name=Волна
+skill.arsmagica2:frost_damage.name=Урон холодом
+skill.arsmagica2:freeze.name=Заморозка
+skill.arsmagica2:piercing.name=Пробивание
+skill.arsmagica2:aoe.name=Радиус эффекта (АоЕ)
+skill.arsmagica2:beam.name=Луч
+skill.arsmagica2:damage.name=Усиление урона
+skill.arsmagica2:lightning_damage.name=Урон молнией
+skill.arsmagica2:storm.name=Гроза
+skill.arsmagica2:fury.name=Ярость
+skill.arsmagica2:blind.name=Ослепление
+skill.arsmagica2:solar.name=Солнце
+skill.arsmagica2:fire_damage.name=Урон огнем
+skill.arsmagica2:ignition.name=Поджигание
+skill.arsmagica2:contingency_fire.name=Привязка к обстоятельству: Горение в огне
+skill.arsmagica2:forge.name=Плавка
+skill.arsmagica2:silence.name=Тишина
+
+skill.arsmagica2:wall.name=Стена
+skill.arsmagica2:appropriation.name=Присвоение
+skill.arsmagica2:slow.name=Замедление
+skill.arsmagica2:repel.name=Отталкивание
+skill.arsmagica2:entangle.name=Запутывание
+skill.arsmagica2:rune.name=Руна
+skill.arsmagica2:rune_procs.name=Дополнительное срабатывание
+skill.arsmagica2:haste.name=Спешка
+skill.arsmagica2:swift_swim.name=Быстрое плавание
+skill.arsmagica2:accelerate.name=Ускорение
+skill.arsmagica2:speed.name=Ускорение заклинаний
+skill.arsmagica2:leap.name=Прыжок
+skill.arsmagica2:slowfall.name=Замедленное падение
+skill.arsmagica2:gravity_well.name=Гравитационная воронка
+skill.arsmagica2:levitate.name=Левитация
+skill.arsmagica2:flight.name=Полет
+skill.arsmagica2:self.name=На себя
+skill.arsmagica2:summon.name=Призыв
+skill.arsmagica2:contingency_fall.name=Привязка к обстоятельству: Падение
+skill.arsmagica2:life_tap.name=Отнятие жизни
+skill.arsmagica2:life_drain.name=Иссушение жизни
+skill.arsmagica2:mana_drain.name=Иссушение маны
+skill.arsmagica2:regeneration.name=Регенерация
+skill.arsmagica2:heal.name=Исцеление
+skill.arsmagica2:dispel.name=Рассеивание
+skill.arsmagica2:zone.name=Зона
+skill.arsmagica2:shield.name=Щит
+skill.arsmagica2:reflect.name=Отражение
+skill.arsmagica2:chrono_anchor.name=Хронологический якорь
+skill.arsmagica2:duration.name=Увеличение продолжительности
+skill.arsmagica2:shrink.name=Уменьшение
+skill.arsmagica2:healing.name=Усиление лечения
+skill.arsmagica2:absorption.name=Поглощение
+skill.arsmagica2:contingency_health.name=Привязка к обстоятельству: Низкое здоровье
+skill.arsmagica2:contingency_damage.name=Привязка к обстоятельству: Получение урона
+
+skill.arsmagica2:touch.name=Прикосновение
+skill.arsmagica2:dig.name=Копание
+skill.arsmagica2:wizards_autumn.name=Осень мага
+skill.arsmagica2:target_non_solid.name=Фокус на нетвердые блоки
+skill.arsmagica2:place_block.name=Установка блока
+skill.arsmagica2:feather_touch.name=Перьевое касание
+skill.arsmagica2:mining_power.name=Сила добычи
+skill.arsmagica2:light.name=Свет
+skill.arsmagica2:night_vision.name=Ночное зрение
+skill.arsmagica2:binding.name=Привязка
+skill.arsmagica2:disarm.name=Разоружение
+skill.arsmagica2:charm.name=Очарование
+skill.arsmagica2:true_sight.name=Ясновидение
+skill.arsmagica2:lunar.name=Луна
+skill.arsmagica2:harvest_plants.name=Сбор
+skill.arsmagica2:plow.name=Вспахивание
+skill.arsmagica2:plant.name=Посадка
+skill.arsmagica2:create_water.name=Создание воды
+skill.arsmagica2:drought.name=Засуха
+skill.arsmagica2:banish_rain.name=Подавление дождя
+skill.arsmagica2:water_breathing.name=Подводное дыхание
+skill.arsmagica2:grow.name=Рост
+skill.arsmagica2:chain.name=Цепь
+skill.arsmagica2:rift.name=Межпространственное хранилище
+skill.arsmagica2:invisibility.name=Невидимость
+skill.arsmagica2:random_teleport.name=Случайный телепорт
+skill.arsmagica2:attract.name=Притяжение
+skill.arsmagica2:telekinesis.name=Телекинез
+skill.arsmagica2:blink.name=Скачек
+skill.arsmagica2:range.name=Увеличение дальности
+skill.arsmagica2:channel.name=Канал
+skill.arsmagica2:toggle.name=Повторение
+skill.arsmagica2:radius.name=Увеличение радиуса
+skill.arsmagica2:transplace.name=Обмен позициями
+skill.arsmagica2:mark.name=Установка метки
+skill.arsmagica2:recall.name=Телепортация на метку
+skill.arsmagica2:divine_intervention.name=Небесное вмешательство
+skill.arsmagica2:ender_intervention.name=Вмешательство края
+skill.arsmagica2:contingency_death.name=Привязка на обстоятельство: Гибель
+
+skill.arsmagica2:blizzard.name=Метель
+skill.arsmagica2:falling_star.name=Звездный удар
+skill.arsmagica2:fire_rain.name=Огненный дождь
+skill.arsmagica2:dismembering.name=Расчленение
+skill.arsmagica2:mana_blast.name=Взрыв маны
+
+skill.arsmagica2:mana_link.name=Связь маны
+skill.arsmagica2:mana_shield.name=Щит маны
+skill.arsmagica2:buff_power.name=Усиление эффектов
+
+skill.arsmagica2:daylight.name=Рассвет
+skill.arsmagica2:moonrise.name=Восход луны
+skill.arsmagica2:prosperity.name=Удача
+
+skill.arsmagica2:mana_regen1.name=Ускорение регенерации маны I
+skill.arsmagica2:mana_regen2.name=Ускорение регенерации маны II
+skill.arsmagica2:mana_regen3.name=Ускорение регенерации маны III
+skill.arsmagica2:mage_posse1.name=Увеличение команды I
+skill.arsmagica2:mage_posse2.name=Увеличение команды II
+skill.arsmagica2:extra_summons.name=Дополнительный призыв
+skill.arsmagica2:colour.name=Цвет
+skill.arsmagica2:spell_motion.name=Чтение заклинаний в движении
+skill.arsmagica2:shield_overload.name=Магический щит
+skill.arsmagica2:augmented_casting.name=Улучшенное чтение заклинаний
+skill.arsmagica2:affinity_gains.name=Ускорение набора родства (за счет маг. опыта)
+
+skill.arsmagica2:projectile.occulusdesc=Снежок!
+skill.arsmagica2:physical_damage.occulusdesc=Меч дальнего боя... почему бы и нет?
+skill.arsmagica2:gravity.occulusdesc=Падает...
+skill.arsmagica2:bounce.occulusdesc=Хей! Иди обратно!
+skill.arsmagica2:fire_damage.occulusdesc=Ты должен сгореть!
+skill.arsmagica2:ignition.occulusdesc=Гори лучше!
+skill.arsmagica2:forge.occulusdesc=Портативная печка!
+skill.arsmagica2:contingency_fire.occulusdesc=Ты должен сгореть! (нет)
+skill.arsmagica2:lightning_damage.occulusdesc=Пыщ!
+skill.arsmagica2:blind.occulusdesc=Кто-нибудь может включить свет? Нет?
+skill.arsmagica2:solar.occulusdesc=Сила солнца!
+skill.arsmagica2:storm.occulusdesc=Дождь...
+skill.arsmagica2:fury.occulusdesc=Ярость берсеркера!
+skill.arsmagica2:aoe.occulusdesc=Контроль зоны.
+skill.arsmagica2:beam.occulusdesc=Полезнее, чем маяк.
+skill.arsmagica2:damage.occulusdesc=Сейчас будет больно...
+skill.arsmagica2:piercing.occulusdesc=Броня, я пришел!
+skill.arsmagica2:frost_damage.occulusdesc=Холодно...
+skill.arsmagica2:freeze.occulusdesc=Заморозка!
+skill.arsmagica2:silence.occulusdesc=Молчать! (или не заклинать в данном случае...)
+skill.arsmagica2:astral_distortion.occulusdesc=Путешествие... В никуда...
+skill.arsmagica2:wave.occulusdesc=Скорее всего вы не захотите серфить на ней...
+skill.arsmagica2:magic_damage.occulusdesc=Удар из пустоты!
+skill.arsmagica2:knockback.occulusdesc=Дистанционный удар!
+skill.arsmagica2:fling.occulusdesc=Готов к воздушному сражению?
+skill.arsmagica2:velocity_added.occulusdesc=Быстрее! БЫСТРЕЕ!
+skill.arsmagica2:drown.occulusdesc=Как ты можешь тонуть? Здесь нет воды.
+skill.arsmagica2:watery_grave.occulusdesc=Днище океана.
+
+skill.arsmagica2:wall.occulusdesc=Ты не пройдешь.
+skill.arsmagica2:appropriation.occulusdesc=Это мое.
+skill.arsmagica2:slow.occulusdesc=Не бегать!
+skill.arsmagica2:repel.occulusdesc=Уйдите от меня!
+skill.arsmagica2:entangle.occulusdesc=Остановитесь прямо здесь.
+skill.arsmagica2:rune.occulusdesc=Встраиваемая магия.
+skill.arsmagica2:rune_procs.occulusdesc=Я хочу больше!
+skill.arsmagica2:haste.occulusdesc=Я ухожу отсюда...
+skill.arsmagica2:swift_swim.occulusdesc=Больше не будет часовых плаваний.
+skill.arsmagica2:accelerate.occulusdesc=Похоже, что вы не сможете поймать меня в ближайшее время.
+skill.arsmagica2:speed.occulusdesc=Снаряды летят очень медленно. Кажется, я нашел решение.
+skill.arsmagica2:leap.occulusdesc=Не лягушка? А какая разница?
+skill.arsmagica2:slowfall.occulusdesc=Как курица...
+skill.arsmagica2:gravity_well.occulusdesc=НЕ Как курица. Обратный эффект.
+skill.arsmagica2:levitate.occulusdesc=Используй силу.
+skill.arsmagica2:flight.occulusdesc=Я лучше выберу самолет.
+skill.arsmagica2:self.occulusdesc=Это все про меня.
+skill.arsmagica2:summon.occulusdesc=Восстань! О, ты похож на других...
+skill.arsmagica2:contingency_fall.occulusdesc=Снова падение... По крайней мере это теперь имеет смысл.
+skill.arsmagica2:life_tap.occulusdesc=Я рою дыру в этом.
+skill.arsmagica2:life_drain.occulusdesc=Гм... Я беру все это. И тебя тоже.
+skill.arsmagica2:mana_drain.occulusdesc=Так много источников маны в моем распоряжении!
+skill.arsmagica2:regeneration.occulusdesc=Немного здоровья.
+skill.arsmagica2:heal.occulusdesc=Мгновенное здоровье.
+skill.arsmagica2:dispel.occulusdesc=Очистка беспорядка.
+skill.arsmagica2:zone.occulusdesc=Никто не сможет одолеть меня в моем святилище!
+skill.arsmagica2:shield.occulusdesc=Не волнуйся насчет веса, это магия
+skill.arsmagica2:reflect.occulusdesc=Оно возвращается обратно к тебе
+skill.arsmagica2:chrono_anchor.occulusdesc=Давайте посмотрим на время... О, нет! Оно пошло назад!
+skill.arsmagica2:duration.occulusdesc=Приемы для манипулирования временем.
+skill.arsmagica2:shrink.occulusdesc=Кажется я стал маленьким...
+skill.arsmagica2:healing.occulusdesc=Эффективность против количества.
+skill.arsmagica2:contingency_health.occulusdesc=Я не упаду... Не сейчас.
+skill.arsmagica2:contingency_damage.occulusdesc=Причиняешь мне урон? Тебе же хуже будет...
+
+skill.arsmagica2:touch.occulusdesc=Есть кто-нибудь здесь?
+skill.arsmagica2:dig.occulusdesc=В кроличью нору.
+skill.arsmagica2:wizards_autumn.occulusdesc=Листва опадает осенью. Но я не могу столько ждать...
+skill.arsmagica2:target_non_solid.occulusdesc=И тогда я решил, что буду сражаться с водой.
+skill.arsmagica2:place_block.occulusdesc=Не обращай внимания на меня, я просто кидаю наковальню.
+skill.arsmagica2:feather_touch.occulusdesc=Чувствую себя очень мягким...
+skill.arsmagica2:mining_power.occulusdesc=Кому нужны алмазы?
+skill.arsmagica2:light.occulusdesc=Конец тоннеля
+skill.arsmagica2:night_vision.occulusdesc=Что? Тут был тоннель?
+skill.arsmagica2:binding.occulusdesc=Меч, топор, лопата... Кому нужны инструменты?
+skill.arsmagica2:disarm.occulusdesc=Упс, у тебя что-то упало
+skill.arsmagica2:charm.occulusdesc=Друзья! Много друзей! И они все взрываются...
+skill.arsmagica2:true_sight.occulusdesc=Открой все, что скрыто.
+skill.arsmagica2:lunar.occulusdesc=Я буду оборотнем!
+skill.arsmagica2:harvest_plants.occulusdesc=Скажем так, вы все выросли.
+skill.arsmagica2:plow.occulusdesc=Мотыги бесполезны. Все это знают.
+skill.arsmagica2:plant.occulusdesc=Зачем использовать руки, когда магия может сделать все за вас?
+skill.arsmagica2:create_water.occulusdesc=Полностью предназначенный для превращения моего снега в воду...
+skill.arsmagica2:drought.occulusdesc=Земля = Песок. Кто этого не знает?
+skill.arsmagica2:banish_rain.occulusdesc=Уйди и вернись позже. Или нет. Но было бы мило
+skill.arsmagica2:water_breathing.occulusdesc=Создание воздуха прямо в моих легких? Круто!
+skill.arsmagica2:grow.occulusdesc=Я не буду ждать целый день.
+skill.arsmagica2:chain.occulusdesc=О, ты привел друзей? Не беспокойся, вы все погибнете.
+skill.arsmagica2:rift.occulusdesc=Однажды я пройду через нее, а пока она просто будет хранить предметы.
+skill.arsmagica2:invisibility.occulusdesc=Хочешь поиграть в прятки?
+skill.arsmagica2:random_teleport.occulusdesc=Я иду туда... Упс, не то место.
+skill.arsmagica2:attract.occulusdesc=Подойди ближе... Или нет, просто оставайся на своем месте
+skill.arsmagica2:telekinesis.occulusdesc=Вверх, Вниз, Вверх, Вниз, я думаю вы поняли.
+skill.arsmagica2:blink.occulusdesc=Ну, я ухожу.
+skill.arsmagica2:range.occulusdesc=Думаешь, ты достаточно далеко? Спойлер: нет
+skill.arsmagica2:channel.occulusdesc=Вы можете сосредоточиться.
+skill.arsmagica2:toggle.occulusdesc=Эй, выключи свою магию!
+skill.arsmagica2:radius.occulusdesc=Я пропустил? Ой, подождите, эта штука расширилась на километр.
+skill.arsmagica2:transplace.occulusdesc=Из точки А в точку Б.
+skill.arsmagica2:mark.occulusdesc=Дом, милый дом.
+skill.arsmagica2:recall.occulusdesc=Может кто-нибудь скажет мне, кто поставил метку в мусорном бочке?
+skill.arsmagica2:divine_intervention.occulusdesc=Помощь со всего космоса.
+skill.arsmagica2:ender_intervention.occulusdesc=Кому там было холодно?
+skill.arsmagica2:contingency_death.occulusdesc=Ты пойдешь со мной.
+skill.arsmagica2:absorption.occulusdesc=Сойдет за немного более мерзкий щит.
+
+skill.arsmagica2:blizzard.occulusdesc=Снег. Много снега. ОЧЕНЬ МНОГО СНЕГА!
+skill.arsmagica2:falling_star.occulusdesc=Как оно блестит! Подождите, оно падает в мою сторону?
+skill.arsmagica2:fire_rain.occulusdesc=Чтож, по крайней мере я не собираюсь простужаться.
+skill.arsmagica2:dismembering.occulusdesc=Это не я. Клянусь, у него не было головы, когда я вошел.
+skill.arsmagica2:mana_blast.occulusdesc=Я ЛЮБЛЮ ману, особенно когда она взрывается обо чье-то лицо.
+
+skill.arsmagica2:mana_link.occulusdesc=Устал? Продолжай.
+skill.arsmagica2:mana_shield.occulusdesc=Ну, теперь я знаю, как выглядит скука.
+skill.arsmagica2:buff_power.occulusdesc=Быстрее, выше, сильнее... и моя мана иссякла...
+
+skill.arsmagica2:daylight.occulusdesc=Так... Значит ли это, что я могу управлять временем?
+skill.arsmagica2:moonrise.occulusdesc=Полная луна.
+skill.arsmagica2:prosperity.occulusdesc=Золото. Много золота.
+
+skill.arsmagica2:mana_regen1.occulusdesc=Вы чувствуете, как мана течет вокруг Вас.
+skill.arsmagica2:mana_regen2.occulusdesc=Вся эта энергия... Почему мы теряем ее?
+skill.arsmagica2:mana_regen3.occulusdesc=Ваш контроль над маной достиг высшего уровня.
+skill.arsmagica2:mage_posse1.occulusdesc=Круто, мой магический друг!
+skill.arsmagica2:mage_posse2.occulusdesc=Делись!
+skill.arsmagica2:extra_summons.occulusdesc=Восстань! И еще восстань...
+skill.arsmagica2:colour.occulusdesc=Радуга
+skill.arsmagica2:spell_motion.occulusdesc=Мобильная магия
+skill.arsmagica2:shield_overload.occulusdesc=Слишком много маны? Ну, это всегда хороший щит...
+skill.arsmagica2:augmented_casting.occulusdesc=Улучшенная магия.
+skill.arsmagica2:affinity_gains.occulusdesc=Давай пропустим все до той части, где у меня уже есть суперсилы.
+#endregion
+
+#region Potions
+arsmagica2:agility=Подвижность
+arsmagica2:astral_distortion=Астральное искажение
+arsmagica2:burnout_reduction=Снижение выгорания
+arsmagica2:charme=Очарован
+arsmagica2:clarity=Ясность
+arsmagica2:entangle=Запутывание
+arsmagica2:flight=Полет
+arsmagica2:frost_slow=Морозное замедление
+arsmagica2:fury=Ярость
+arsmagica2:gravity_well=Гравитационная воронка
+arsmagica2:haste=Спешка
+arsmagica2:illumination=Освещение
+arsmagica2:instant_mana=Мгновенная мана
+arsmagica2:leap=Прыжок
+arsmagica2:levitation=Левитация
+arsmagica2:magic_shield=Магический щит
+arsmagica2:mana_regen=Регенерация маны
+arsmagica2:regeneration=Регенерация
+arsmagica2:scramble_synapses=Scramble Synapses
+arsmagica2:shield=Щит
+arsmagica2:shrink=Уменьшение
+arsmagica2:silence=Тишина
+arsmagica2:slowfall=Замедленное падение
+arsmagica2:spell_reflect=Отражение заклинаний
+arsmagica2:swift_swim=Быстрое плавание
+arsmagica2:temporal_anchor=Хронологический якорь
+arsmagica2:true_sight=Ясновидение
+arsmagica2:water_breathing=Подводное дыхание
+arsmagica2:watery_grave=Подводная могила
+arsmagica2:mana_boost=Усиление маны
+
+potion.potency.3=IV
+potion.potency.4=V
+potion.potency.5=VI
+potion.potency.6=VII
+potion.potency.7=VIII
+potion.potency.8=IX
+#endregion
+
+#region Gui
+am2.tooltip.air_sled=§3Летите по воздуху с максимальной легкостью...§f
+am2.tooltip.approError=Что-то пошло не так при восстановлении блока. Скорее всего это заклинание со старой версии. Блок был удален для того, чтобы избежать ошибок. Извините!
+am2.tooltip.arcanespellbook=§3Получите мощь древних магов.§f
+am2.tooltip.armorlevel=Уровень опыта брони: %d
+am2.tooltip.armorxp=Наполненный опыт: %s
+am2.tooltip.bn_red=Бонус уменьшения перегорания
+am2.tooltip.candlecantplace=Вы не можете установить настроенную свечу.
+am2.tooltip.cantSummonSelf=Вы не можете призвать ритуалом самого себя.
+am2.tooltip.cantTeleport=Искажение вокруг вас предотвращает все телепортации!
+am2.tooltip.charge=Заряд
+am2.tooltip.clearKey=Очистите комбинацию рун в этом блоке прежде чем ломать его!
+am2.tooltip.compEntryNotFound=Запись "%s" не найдена в тайном компендиуме.
+am2.tooltip.containedXP=Содержащийся опыт: %d
+am2.tooltip.det_eth=Detected %s%s§f etherium: %s
+am2.tooltip.diffDimMark=Ваша метка в другом измерении
+am2.tooltip.disconnectPower=Все источники энергии отсоединились от этого блока.
+am2.tooltip.dispel=Рассеивание
+am2.tooltip.dr_drn=Защита от утопления
+am2.tooltip.dr_exp=Защита от взрывов
+am2.tooltip.dr_fall=Защита от падения
+am2.tooltip.dr_fire=Защита от огня
+am2.tooltip.dr_frst=Защита от холода
+am2.tooltip.dr_litn=Защита от молний
+am2.tooltip.dr_mage=Защита от магии
+am2.tooltip.dr_phy=Защита от физического урона
+am2.tooltip.earth_armor=§3Стань таким же упругим как сама земля§f
+am2.tooltip.empty=Пусто
+am2.tooltip.ender_boots=§3Я отвергаю вашу реальность и заменяю своей собственной!§f
+am2.tooltip.fallprot=Защита от падения
+am2.tooltip.fire_ears=§3Обними пламя§f
+am2.tooltip.fireprot=Защита от огня/лавы
+am2.tooltip.fl_lure=Приманка для светлячков
+am2.tooltip.freedom=Свобода передвижения
+am2.tooltip.healing=Лечение
+am2.tooltip.highjump=Усиление прыжка
+am2.tooltip.hungerup=Регенерация голода
+am2.tooltip.infOrbBlue=Вы получили §9синее§f очко исследований!
+am2.tooltip.infOrbFail0=Вы усердно пытаетесь сконцентрироваться на сфере, но у вас получается только скрестить глаза.
+am2.tooltip.infOrbFail1=Вы больше не чувствуете свой мозг.
+am2.tooltip.infOrbFail2=Судорожность.
+am2.tooltip.infOrbFail3=...тогда я понял, что я пару недель был лимоном.
+am2.tooltip.infOrbFail4=We have now left Reason and Sanity Junction. Next stop, Looneyville.
+am2.tooltip.infOrbFail5=Во имя лорда пиццы, ЗАРЯДИТЕСЬ!
+am2.tooltip.infOrbFail6=Мне кажется, или все вещи только что на секунду стали сиреневого вкуса?
+am2.tooltip.infOrbFail7=Вафли похожи на блины, но с ловушкой из сиропа.
+am2.tooltip.infOrbFail8=Вы никогда никому не скажете, что вы только что снова увидели.
+am2.tooltip.infOrbFail9=Вы убеждены, что тыквы придут за вами.
+am2.tooltip.infOrbGreen=Вы получили §2зеленое§f очко исследований!
+am2.tooltip.infOrbRed=Вы получили §4красное§f очко исследований!
+am2.tooltip.journalOwner2=Владелец: %s
+am2.tooltip.journalOwner=Инструкция на первой странице гласит:
+am2.tooltip.journalUse=ПКМ для получения опыта и Shift + ПКМ для сохранения опыта
+am2.tooltip.life_ward2=§3Ты не имеешь тут силы!§f
+am2.tooltip.life_ward=§3Gray Walker, уходи отсюда.§f
+am2.tooltip.lifesave=Спасение жизни
+am2.tooltip.lightning_charm=§3Возможны мышечные спазмы и вьющиеся волосы в качестве побочных эффектов§f
+am2.tooltip.lightstep=Освещающий шаг
+am2.tooltip.mg_gog=Интеграция очков техномага
+am2.tooltip.mg_xp=Бонус магического опыта
+am2.tooltip.minespd=Бонус скорости копания
+am2.tooltip.mn_reg=Бонус регенерации маны
+am2.tooltip.mwLock=Левый SHIFT + ПКМ для блокировки рецепта
+am2.tooltip.mwUnlock=Левый SHIFT + ПКМ для разблокировки рецепта
+am2.tooltip.nature_scythe=§3Я победил твоего хозяина. На колени передо мной!§f
+am2.tooltip.noKeyPresent=There is no keystone lock present here.
+am2.tooltip.noMark=Нет метки для телепортации
+am2.tooltip.noMatchingGate=Не найден подходящий портал
+am2.tooltip.noMatchingPlayer=Не найден подходящий игрок
+am2.tooltip.noMoreSummons=Вы достигли лимита призванных существ
+am2.tooltip.noPathFound=Не найдено пути между выбранными узлами
+am2.tooltip.noPriIn=Input Markers cannot have a priority level set.
+am2.tooltip.noSupportedPowertypes=Приемник не поддерживает те типы энергии, что предоставляет источник!
+am2.tooltip.nodePairToSelf=Вы не можете привязать узел к самому себе!
+am2.tooltip.nodesTooFar=Узлы находятся слишком далеко друг от друга.  Невозможно соединить их!
+am2.tooltip.none=Пусто
+am2.tooltip.notYourJournal=Это не ваш журнал! Не подглядывать!
+am2.tooltip.open=Открывается с помощью приседания с ПКМ
+am2.tooltip.partialSuccess=Были найдены пути только для части из доступных типов энергии.
+am2.tooltip.pctFull=Заполнено на %.2f процентов
+am2.tooltip.phyEss=Душа §b%s
+am2.tooltip.placeBlockSpell=Установка блока поставит: %s
+am2.tooltip.pp_ore=Поиск руд (с помощью свечи оберега)
+am2.tooltip.priSet=Приоритет изменен на %s.
+am2.tooltip.priority=Приоритет: %s
+am2.tooltip.recoil=Отдача
+am2.tooltip.regen=Увеличивает регенерацию маны для бета-тестеров AM2
+am2.tooltip.run_spd=Бонус скорости бега
+am2.tooltip.runes=Активные руны
+am2.tooltip.rupees=Также вмещает рупии!
+am2.tooltip.scroll=Используйте колесико с зажатым SHIFT для смены заклинаний
+am2.tooltip.shaken=Встряхнутый, не перемешанный.
+am2.tooltip.shiftForAffinity=Зажмите левый SHIFT для показа деталей родства
+am2.tooltip.shiftForDetails=Зажмите левый SHIFT для показа деталей
+am2.tooltip.soulbnd=Привязка к душе
+am2.tooltip.spellbookWarning1=ПРЕДУПРЕЖДЕНИЕ: Перед перекраской книги
+am2.tooltip.spellbookWarning2=достаньте из нее свои заклинания!
+am2.tooltip.step_up=Высокий шаг
+am2.tooltip.success=Узлы связаны!
+am2.tooltip.swimspd=Бонус скорости плавания
+am2.tooltip.tc_nrv=Таумическое зрение (Требуется Thaumcraft)
+am2.tooltip.unattuned=Не привязана
+am2.tooltip.unfinishedSpellRecipe=Не завершенный рецепт заклинания
+am2.tooltip.unlockSuccess=Записка разблокирована.
+am2.tooltip.unowned=Страницы журнала пусты.
+am2.tooltip.upToDate=Вы используете последнюю версию Ars Magica 2.
+am2.tooltip.updateAvailable=Доступно обновление мода.  ЛКМ, чтобы перейти к загрузке.  ПКМ, чтобы перейти к списку изменений.
+am2.tooltip.uses=использований осталось
+am2.tooltip.water_orbs=§3Вода становится вашим другом.§f
+am2.tooltip.winter_arm=§3Холодно.§f
+am2.tooltip.wrongKeystoneBreak=У вас нет верного ключевого камня, чтобы разрушить этот блок.
+am2.tooltip.wrongKeystoneUse=У вас нет верного ключевого камня, чтобы использовать этот блок.
+am2.tooltip.wrongWrenchMode=Ключ находится в неверном режиме, чтобы взаимодействовать с этим.
+am2.tooltip.wtrbrth=Подводное дыхание
+am2.tooltip.wtrwalk=Ходьба по воде
+am2.tooltip.infusions=Наполнения:
+am2.tooltip.missingReagents=Вы пропустили некоторые реагенты: 
+
+am2.gui.XPNumeric=Значение магического опыта
+am2.gui.action=Анимация
+am2.gui.affinity=Родство
+am2.gui.airAffinity=Воздух
+am2.gui.all=Все
+am2.gui.alpha=Прозрачность
+am2.gui.arcaneAffinity=Магия
+am2.gui.armorUI=Показывать статус брони
+am2.gui.back=Назад
+am2.gui.blue=Синий
+am2.gui.bluePoint=Синяя точка
+am2.gui.bookOut=Рецепт будет завершен при взятии книги.
+am2.gui.boots=Боты
+am2.gui.border=Границы
+am2.gui.buffTimers=Отображать время действия эффектов
+am2.gui.burnout=Выгорание
+am2.gui.burnoutNumeric=Значение выгорания
+am2.gui.castCost=Затраты маны/использование
+am2.gui.catalysts=Дополнительный материал
+am2.gui.cfgDisabled=Отключено в конфиге
+am2.gui.chestplate=Нагрудник
+am2.gui.color=Цвет
+am2.gui.comboMissingRunes=Combination requires runes that are not in the keystone
+am2.gui.comboNotSaved=Текущая комбинация не сохранена
+am2.gui.comboRemoved=Комбинация удалена
+am2.gui.comboStored=Комбинация сохранена
+am2.gui.componentsMissing=Отсутствуют компоненты рецепта
+am2.gui.contingency=Текущая привязка к обстоятельству
+am2.gui.custom=Пользовательский
+am2.gui.cycle=Зациклить
+am2.gui.darkPower=Темный эфир
+am2.gui.default=По умолчанию
+am2.gui.delay=Интервал
+am2.gui.done=Готово
+am2.gui.earthAffinity=Земля
+am2.gui.enderAffinity=Край
+am2.gui.fireAffinity=Огонь
+am2.gui.flicker_doesntneedpower=Не требует энергии, но может использовать ее для ускорения.
+am2.gui.flicker_needspower=Требует энергию для работы
+am2.gui.flicker_optime=Время операции: %s секунд
+am2.gui.flicker_powerperop=%s эфира за операцию
+am2.gui.green=Зеленый
+am2.gui.greenPoint=Зеленая точка
+am2.gui.gridInUse1=Все возможные сетки крафта используются.
+am2.gui.gridInUse2=Сначала очистите компоненты
+am2.gui.headwear=Шлем
+am2.gui.hidden=Скрыт
+am2.gui.hudBars=Показывать индикаторы маны/выгорания
+am2.gui.iceAffinity=Лед
+am2.gui.keystoneComboClick2=для этой комбинации.
+am2.gui.keystoneComboClick=Нажмите, чтобы переключить
+am2.gui.known=известные
+am2.gui.layer=Текущий слой
+am2.gui.leggings=Поножи
+am2.gui.lifeAffinity=Жизнь
+am2.gui.lightPower=Светлый эфир
+am2.gui.lightningAffinity=Молния
+am2.gui.lockWarning=ПРЕДУПРЕЖДЕНИЕ: При трата очков в Нападение, Защиту или Полезности, они станут основными и ограничат ваш выбор в оставшихся двух вкладках.  Выбирайте с умом!
+am2.gui.maintainCost=Утвержденная
+am2.gui.makeSpell=Создать заклинание
+am2.gui.mana=Мана
+am2.gui.manaNumeric=Значение маны
+am2.gui.mbb=Display Behaviour
+am2.gui.minimalHud=Минимальный интерфейс
+am2.gui.minimalHudDesc=Если активно, то интерфейс AM будет показан только\nпри удерживании заклинания, книги заклинаний или посохов.
+am2.gui.modifiedBy=Модифицируется с помощью
+am2.gui.modifies=Модификаторы
+am2.gui.name=Имя
+am2.gui.nameRequired=Требуется имя
+am2.gui.nautreAffinity=Природа
+am2.gui.negativeBuffs=Негативные эффекты
+am2.gui.neutralPower=Нейтральный эфир
+am2.gui.next=Далее
+am2.gui.no=Нет
+am2.gui.noneAffinity=Ничто
+am2.gui.notLearned=не изучено
+am2.gui.numericValues=Отображать числовые значения
+am2.gui.options=Опции
+am2.gui.or= или 
+am2.gui.particleEmitter=Настройки испускателя частиц
+am2.gui.pause=Пауза
+am2.gui.positiveBuffs=Положительные эффекты
+am2.gui.prev=Назад
+am2.gui.qty=Количество
+am2.gui.random=Случайный
+am2.gui.red=Красный
+am2.gui.redPoint=Красная точка
+am2.gui.relatedItems=Также смотрите:
+am2.gui.requiredLevel=Требуемый уровень: %d
+am2.gui.resetSpell=Сбросить
+am2.gui.ritual=Ритуальные реагенты
+am2.gui.scale=Масштаб
+am2.gui.search=Поиск
+am2.gui.silverPoint=Серебряные умения (специальные условия разблокировки)
+am2.gui.speed=Скорость
+am2.gui.structuremat=Основной материал
+am2.gui.summonCost=Призыв
+am2.gui.summonNotReady=Не готово для призыва
+am2.gui.summonReady=Готово для призыва
+am2.gui.type=Тип
+am2.gui.visible=Видим
+am2.gui.waterAffinity=Вода
+am2.gui.wrenchWarning=ПРЕДУПРЕЖДЕНИЕ! После закрытия интерфейса вам потребуется кристальный ключ, чтобы открыть его снова!
+am2.gui.xp=Магический опыт
+am2.gui.xpAlways=Магический опыт всегда видим
+am2.gui.xpBar=Полоска магического опыта
+am2.gui.yes=Да
+am2.gui.occulus.disabled=Отключено через конфиг
+am2.gui.occulus.missingrequirements=Пропущены требования
+am2.gui.ritualshape=Форма ритуала:
+am2.gui.ritualreagents=Реагенты:
+am2.gui.ritualresult=Результат:
+
+am2.chat.relocation_cooldown=Перемещение в кулдауне!
+am2.chat.relocation_out_of_range=Цель вне диапазона!
+am2.chat.relocation_failed=Перемещение не удалось...
+am2.chat.activation=%s§r : %s
+am2.chat.enabled=§aВключено
+am2.chat.disabled=§cОтключено
+am2.chat.ability_ice_bridge=§bЛедяные шаги
+am2.chat.ability_night_vision=§dТемное зрение
+#endregion
+
+#region Components
+compendium.category.component.name=Компоненты
+
+compendium.component.absorption.name=Поглощение
+compendium.component.accelerate.name=Ускорение
+compendium.component.appropriation.name=Присвоение
+compendium.component.astral_distortion.name=Астральное искажение
+compendium.component.attract.name=Притяжение
+compendium.component.banish_rain.name=Подавление дождя
+compendium.component.blind.name=Ослепление
+compendium.component.blink.name=Скачек
+compendium.component.blizzard.name=Метель
+compendium.component.charm.name=Очарование
+compendium.component.chrono_anchor.name=Хронологический якорь
+compendium.component.create_water.name=Создание воды
+compendium.component.daylight.name=Рассвет
+compendium.component.dig.name=Копание
+compendium.component.disarm.name=Разоружение
+compendium.component.dispel.name=Рассеивание
+compendium.component.divine_intervention.name=Небесное вмешательство
+compendium.component.drought.name=Засуха
+compendium.component.drown.name=Утопление
+compendium.component.ender_intervention.name=Вмешательство края
+compendium.component.entangle.name=Запутывание
+compendium.component.falling_star.name=Звездный удар
+compendium.component.fire_damage.name=Урон огнем
+compendium.component.fire_rain.name=Огненный дождь
+compendium.component.flight.name=Полет
+compendium.component.fling.name=Бросок
+compendium.component.forge.name=Плавка
+compendium.component.freeze.name=Заморозка
+compendium.component.frost_damage.name=Урон холодом
+compendium.component.fury.name=Ярость
+compendium.component.gravity_well.name=Гравитационная воронка
+compendium.component.grow.name=Рост
+compendium.component.harvest_plants.name=Сбор
+compendium.component.haste.name=Спешка
+compendium.component.heal.name=Исцеление
+compendium.component.ignition.name=Поджигание
+compendium.component.invisibility.name=Невидимость
+compendium.component.knockback.name=Отдача
+compendium.component.leap.name=Прыжок
+compendium.component.levitate.name=Левитация
+compendium.component.life_drain.name=Иссушение жизни
+compendium.component.life_tap.name=Отнятие жизни
+compendium.component.light.name=Свет
+compendium.component.lightning_damage.name=Урон молнией
+compendium.component.magic_damage.name=Урон магией
+compendium.component.mana_drain.name=Иссушение маны
+compendium.component.mana_link.name=Связь маны
+compendium.component.mana_shield.name=Щит маны
+compendium.component.mana_blast.name=Взрыв маны
+compendium.component.mark.name=Установка метки
+compendium.component.moonrise.name=Восход луны
+compendium.component.night_vision.name=Ночное зрение
+compendium.component.physical_damage.name=Физический урон
+compendium.component.place_block.name=Установка блока
+compendium.component.plant.name=Посадка
+compendium.component.plow.name=Вспахивание
+compendium.component.random_teleport.name=Случайный телепорт
+compendium.component.recall.name=Телепортация на метку
+compendium.component.reflect.name=Отражение
+compendium.component.regeneration.name=Регенерация
+compendium.component.repel.name=Отталкивание
+compendium.component.rift.name=Межпространственное хранилище
+compendium.component.shield.name=Щит
+compendium.component.shrink.name=Уменьшение
+compendium.component.silence.name=Тишина
+compendium.component.slow.name=Замедление
+compendium.component.slowfall.name=Замедленное падение
+compendium.component.storm.name=Гроза
+compendium.component.summon.name=Призыв
+compendium.component.swift_swim.name=Быстрое плавание
+compendium.component.telekinesis.name=Телекинез
+compendium.component.transplace.name=Обмен позициями
+compendium.component.true_sight.name=Ясновидение
+compendium.component.water_breathing.name=Подводное дыхание
+compendium.component.watery_grave.name=Подводная могила
+compendium.component.wizards_autumn.name=Осень мага
+
+compendium.absorption.page1=Когда слабый свет мерцал по коже мага, он чувствовал, что он становился более упругим на короткое время
+compendium.accelerate.page1=Это заклинание заставляет выбранные блоки быстрее тикать. Заметьте, что от этого их TileEntity не ускоряются. Лучше всего использовать это заклинание с формами вроде луча, стены или зоны из-за необходимости использовать его множество раз для достижения реального эффекта
+compendium.appropriation.page1=Вы можете заключить один блок или существо в заклинание. Повторное использование установит заключенный блок или существо на выбранную позицию
+compendium.astral_distortion.page1=Когда я пытался шагнуть в пустоту, искажение мерцало и, кажется, затвердевало. Сначала я пытался идти лицом к лицу на удовольствие своих учеников. Этот эффект предотвращал мои способности к телепортации. Мне пришлось обратить его против эндермена
+compendium.attract.page1=Вы создаете область отрицательного давления вокруг вас, притягивая всех существ к себе.
+compendium.banish_rain.page1=Дождик, дождик, уходи. В другой день ты к нам приди! Кто бы мог подумать, что это слова заклинания? Если использовать в соответствующем ритуале, это заклинание может также и призывать дождь. Для подробностей см. страницу #5Ритуалы#0.
+compendium.blind.page1=Хорошо кидаться огненными шарами в темных магов. Но еще лучше, если они не будут видеть, кому отвечать.
+compendium.blink.page1=Вы можете телепортироваться на короткую дистанцию в направлении вашего взгляда. Скачек может провести вас через твердые стены, но позаботьтесь о том, чтобы не застрять в одной из них.
+compendium.blizzard.page1=Вы научились призывать страшную метель, которая будет замедлять и наносить урон всем существам в радиусе действия. Метель имеет встроенный AoE внутри себя. Метель не может быть вызвана в 5 блоках возле другой метели. Изначально метель наносит меньше урона, чем другие атаки, но легче усиляется с помощью модификаторов. Также она имеет уникальную особенность наносить урон чаще обычных атак. Метель наносит урон всем сущностям в своем радиусе, но никогда не навредит ее заклинателю.
+compendium.charm.page1=Вы можете очаровывать существ для сражения за вас. Некоторые существа при очаровании могут делать особенные вещи. Очарование также заставляет существ размножаться (если они способны делать это обычными способами).
+compendium.chrono_anchor.page1=Вы можете закрепить себя во времени. Когда таймер подходит к концу, вы телепортируетесь обратно на место, где было использовано заклинание, с тем же здоровьем, маной, выгоранием и сытостью.
+compendium.create_water.page1=Вы можете концентрировать влагу с воздуха, создавая воду там, где ее не было. Это не сработает в нижнем мире. Это заклинание также можно использовать для наполнения котла.
+compendium.daylight.page1=Вы получили способность управлять временем. Это заклинание заставит стрелки часов сдвинуться к рассвету.
+compendium.dig.page1=Земля разбивается щелчком ваших пальцев. Более твердые блоки требуют большего количества маны. Копание изначально равноценно по уровню добычи железной кирке, но может быть усилено с помощью модификатора #5Усиление добычи#0.
+compendium.disarm.page1=Теперь, когда вы научились призывать инструменты в руках, вам потребовалось немного усилий, чтобы заставить других отказаться от того, что они держат.
+compendium.dispel.page1=Создавая локализованное поле дефицита, вы можете очистить вашу цель от ряда эффектов. Рассеивание также наносит урон призванным существам, изгоняя их обратно в эфир
+compendium.divine_intervention.page1=Ваш уровень знаний магии телепортации позволил вам пересечь межпространственные барьеры и телепортироваться в обычный мир из почти любого измерения. Если использовать это заклинание в обычном мире, то вы вернетесь в свою кровать или на спаун, если кровать отсутствует.
+compendium.drought.page1=Вы взяли все свои знания о создании воды и обратили процесс. Это заклинание будет иссушать воду везде, куда будет нацелено, удаляя блоки воды, превращая землю, траву, песчанник и мицелий в песок, камень в булыжник и иссушая грядки с растениями.
+compendium.drown.page1=Вы можете создавать воду прямо в легких противника, создавая таким образом эффект утопления.
+compendium.ender_intervention.page1=Ваш уровень знаний магии телепортации позволил вам пересечь межпространственные барьеры и телепортироваться в нижний мир откуда угодно.
+compendium.entangle.page1=По вашей команде с земли могут вырасти лианы и поймать вашу цель, полностью обездвижив ее.
+compendium.falling_star.page1=Вы можете заставить звезду с неба упасть и ударить по всем существам в радиусе взрыва. Звезда может нанести урон дружественным целям, но не заклинателю. Звезда падает с небольшой задержкой после чтения заклинания. Это заклинание не будет работать под землей (звезда упадет на поверхность).
+compendium.fire_damage.page1=Словом, я выпустил мою волю и огонь вспыхнул передо мной, обжигая все на своем пути... Урон огнем может быть очень полезен в бою, но большинство существ нижнего мира имеют иммунитет к нему.
+compendium.fire_rain.page1=Вы научились вызывать страшный огненный шторм, который наносит большой урон любым существам в радиусе действия. У огненного шторма есть встроенный AoE. Огненный шторм не может быть вызван в 5 блоках возле другого огненного шторма. Изначально он наносит меньше урона, чем другие атаки, но легче усиляется с помощью модификаторов. Он также обладает уникальной способностью наносить урон чаще обычных атак. Огненный шторм не поджигает землю. Огненный шторм наносит урон всем сущностям в своем радиусе, но никогда не навредит его заклинателю.
+compendium.flight.page1=Одним словом, я поднялся в воздух и смешался с облаками и небом. Я летал легко, быстро и подвижно. Небо было только моим.
+compendium.fling.page1=Ветер внезапно закружил вокруг крипера, и подкинул того высоко в облака.
+compendium.forge.page1=Вы получили прекрасный контроль над огнем и можете использовать его для того, чтобы магически плавить блоки там, где они находятся, без превращения их в пыль.
+compendium.freeze.page1=Эйра глубоко вздохнула и открыла глаза. Шапки гор теперь блестели белым снегом, а пробирающий до костей холод охватывал все. Вода стала льдом. Враги двинулись в обход. Превосходно.
+compendium.frost_damage.page1=Многие недооценивают силы, которые таит в себе холод. От пассивного, ползучего мороза можно защититься множеством доспехов, но ничто не защитит обитателей нижнего мира от разрушительного эффекта льда.
+compendium.fury.page1=Вы можете войти в состояние абсолютной ярости, получив увеличенный урон, скорость, пассивную регенерацию и копание на нечеловеческой скорости. Когда эффект закончится, вы будете некоторое время измучены и должны будете восстановиться.
+compendium.gravity_well.page1=Вы научились размещать небольшие гравитационные воронки прямо под вашими врагами,  которые могут увеличить скорость их падения.
+compendium.grow.page1=Вливание магической энергии в растения эквивалентно месяцу ухаживания за ними.
+compendium.harvest_plants.page1=Теперь вы можете собрать все растения, их цветы и листья магией.
+compendium.haste.page1=Маг в состоянии "зачаровать" ноги цели, что может сильно ускорить их.
+compendium.heal.page1=Увеличивая силу, подаваемую в регенеративные эффекты, маг может заживить почти любую травму. Однако, эффект имеет также и штрафы.
+compendium.ignition.page1=Многие маги видят огонь как мощную, разрушительную силу, это верно. Но много ли людей при слове огонь представляют себе освещение печи, костер или свечку?
+compendium.invisibility.page1=Вы можете изгибать свет вокруг себя для того, чтобы сделать себя полностью невидимыми.
+compendium.knockback.page1=Не многие маги хотят быть близко к своему врагу. Ситуация должна быть исправлена.
+compendium.leap.page1=Собрав ветер прямо под ногами, я подкинул себя в воздух, после чего еще раз выпустил воздух вниз для мягкого приземления.
+compendium.levitate.page1=Благодаря постоянным занятиям Магией Воздуха, вы научились держать себя в подвешенном состоянии. С помощью небольших потоков ветра вы можете медленно передвигаться, пока находитесь в воздухе.
+compendium.life_drain.page1=Вы можете создать зловещую связь с жизненной силой жертвы для того, чтобы выкачать ее себе и укрепить с помощью нее свое здоровье.
+compendium.life_tap.page1=Если маг в отчаянии и маны катастрофически не хватает, он может подпитывать свои заклинания ценой своей собственной жизненной силы.
+compendium.light.page1=Теперь вы способны создавать магический свет. Созданный свет можно покрасить, нажав ПКМ на него нужным красителем..
+compendium.lightning_damage.page1=Я держал руку перед собой, и с громким треском белая сверкающая молния пронеслась по небу... Его металлические доспехи работали как молниеотвод, притягивая каждый разряд молнии к нему. Молния несет в себе колоссальный урон, но плата за нее тоже большая.
+compendium.magic_damage.page1=Магический урон, в отличии от физического, поражает напряму ауру жертвы, обходя таким образом большую часть брони. Это делает призванных и очарованных существ особенно уязвимыми, нанося им тройной урон.
+compendium.mana_blast.page1=Вы нашли способ агрессивно выплескивать свою ману в цель, нанося ей урон.
+compendium.mana_drain.page1=Вы можете создать паразитическую связь с аурой жертвы, вытягиваю ее ману для пополнения своей.
+compendium.mana_link.page1=Вы открыли секрет связывания своей и чужой маны. Когда вы используете это заклинание, каждый из вас сможет использовать ману друг друга как свою. !d Сначала каждый будет использовать свою ману до ее опустошения и только потом ману другого.
+compendium.mana_link.page2=Это заклинание имеет ограниченный радиус, который можно увеличить с помощью модификаторов радиуса. Если цель выходит из радиуса действия, связь не разрывается, но вместо этого она будет временно отключена. Когда цель снова возвратится в радиус действия, связь снова возобновится. Чтобы разорвать связь, просто используйте это заклинание еще раз на цели. !d Вы можете связать свою ману с несколькими целями и также вы можете быть связаны с множеством целей с другой стороны.
+compendium.mana_shield.page1=Вы можете создать магический щит на цели за счет вашей маны.
+compendium.mark.page1=Вы можете магически отметить позицию, в которую будет происходить телепортация при использовании заклинания "Телепортация на метку".
+compendium.moonrise.page1=Вы получили способность управлять временем. Это заклинание заставит стрелки часов сдвинуться к сумеркам.
+compendium.night_vision.page1=Знание света позволило вам разработать заклинание, которое позволяет вам видеть в темноте путем повышения уровня освещения.
+compendium.physical_damage.page1=Часто молодые маги начинают свои исследования с обычной физической силы. Часто они продолжаются подзатыльниками своим коллегам с большей физической силой. Физический урон не пробивает броню.
+compendium.place_block.page1=Вы можете использовать это заклинание для того, чтобы устанавливать блоки! Может быть очень полезно в комбинации с различными формами. Для того, чтобы установить блок, вы должны сначала установить тип блока, который заклинание будет устанавливать и в вашем инвентаре должен быть по крайней мере один блок выбранного типа. Не получится создавать их из воздуха, извините!
+compendium.place_block.page2=Для того, чтобы выбрать тип блока для установки, присядьте и используйте заклинание на нужном блоке. Вы должны сидеть именно в момент активации заклинания, поэтому будьте осторожнее с использованием форм вроде снаряда. Рекомендуется не использовать AoE для установки блока, потому что это может привести к неожиданным последствиям (заклинание будет применено ко всему в радиусе, устанавливая блок за блоком). Чтобы увидеть, какой блок заклинание будет устанавливать, наведите на него курсор мыши в инвентаре и зажмите SHIFT.
+compendium.plant.page1=Вы можете задействовать семена с вашего инвентаря для засеивания. Лучше всего сочетается с формой AoE.
+compendium.plow.page1=Теперь вы можете создавать на земле неглубокие бороздки, отлично подходящие для засеивания.
+compendium.random_teleport.page1=Вы можете случайно телепортировать вашу цель на короткую дистанцию.
+compendium.recall.page1=Вы можете настроить свою магию телепортации на оставленную вами раннее метку с помощью заклинания "Установка метки" и телепортировать на нее себя или свою цель.
+compendium.reflect.page1=Вы изменили состав вашего щита, теперь заклинания отражаются, а не поглощаются. Однако, это не может быть активировано вместе с щитом.
+compendium.regeneration.page1=Я обернул свою руку исцеляющим светом и наблюдал за тем, как все мои повреждения вплоть до последнего синяка исчезали у меня на глазах.
+compendium.repel.page1=Вы можете создать сингулярность в пространстве, которая будет отталкивать врагов и отклонять стрелы пока вы будете ее поддерживать.
+compendium.rift.page1=Вы можете открыть щель в пространстве, получив доступ к небольшому измерению, в котором можно хранить свои вещи. Щель закрывается автоматически по истечении минуты. Размер хранилища может быть увеличен модификатором "поглощение силы". SHIFT + ПКМ закрывает щель после того, как она была открыта.
+compendium.shield.page1=Вы можете вызвать магическую энергию для собственной защиты. Этот магический щит будет уменьшать весь получаемый урон. Не может быть активирован вместе с отражением.
+compendium.shrink.page1=Вы можете сделать себя маленькими! Когда этот эффект активен, ваша физическая форма уменьшается и вы умещаетесь в проемы 1х1. Из-за своего малого веса, вы так медленно падаете, что это не причиняет вам урона. Однако, весь урон, который вы наносите другим, будет уменьшен.
+compendium.silence.page1=Вы можете заставить замолчать другого мага, не дав ему произнести ни единого заклинания. Продолжительность эффекта нельзя увеличить.
+compendium.slow.page1=Применяя эквивалент магического шара и цепи, маг может сильно замедлить свою цель.
+compendium.slowfall.page1=Стань легким как перышко и падай без страха.
+compendium.storm.page1=Тучи потемнели и начался дождь. Ветер выл и вспышка молнии прошла сквозь небо, оставляя яркие вспышки в моих глазах. Гром был оглушительный. Молния поражала всех врагов вокруг меня. Напряжение шторма было невероятным.
+compendium.summon.page1=Вы научились собирать души созданий, которых вы побеждаете в бою. Эти души можно использовать для создания заклинания, которое призовет это существо для вашей защиты. !d Чтобы вызвать существо, сначала создайте #5Кристальный талисман#0. Когда вы уничтожите какое-либо существо, держа в инвентаре пустой талисман, этот талисман будет #9attuned (привязан)#0 к этому существу. Уничтожьте достаточное количество одного и того же существа и талисман заполнится. !d При создании заклинания бросьте любой заполненный талисман тогда, когда Аналой запросит его. Брошенный талисман определит, какое существо будет призывать заклинание.
+compendium.summon.page2=Призванные существа не оставляют за собой вещей и опыта, но с ними можно нормально взаимодействовать. Например, заниматься разведением, доить коров или ездить на лошадях. Лошади - исключение к правилу. Они оставляют за собой седла и броню, которая им дана. !l Приручаемые существа (например, волки и коты) автоматически будут приручены к своему призывателю после призыва. !d Боссы не могут быть захвачены в талисманы в режиме выживания/приключения.
+compendium.swift_swim.page1=Манипулируя потоками воды, вы можете гораздо быстрее продвигать себя вперед.
+compendium.telekinesis.page1=Вы можете использовать вашу магию  для усиления своих мозговых волн, придавая им физическую форму. Эти волны можно использовать для того, чтобы перетаскивать предметы и сферы опыта в точку перед вами. Колесико мыши может изменять расстояние от вас до этой точки.
+compendium.transplace.page1=Ваши знания магии телепортации выросли. Теперь вы можете обмениваться позициями с вашей целью.
+compendium.true_sight.page1=Ваше магическое зрение позволяет вам видеть вещи так, как они на самом деле выглядят. Кто знает, какие неожиданности... и ужасы вы откроете.
+compendium.water_breathing.page1=Вашей магии достаточно, чтобы вытащить кислород с воды. Этого вполне хватит, чтоб не утонуть.
+compendium.watery_grave.page1=Казалось, что вода ожила и она затягивала мага глубоко к темному дну. Его друг стоял на берегу и лишь беспомощно смотрел, ведь прыжок в воду означал такую же участь и для него.
+compendium.wizards_autumn.page1=Вы научились фокусировать вашу магию копания в небольшом радиусе, который непосредственно влияет на листву. Это заклинание имеет встроенный AoE, который может быть улучшен модификатором радиуса. Вы можете использовать это заклинание для того, чтобы очищать эти надоедливые недостижимые блоки листвы.
+#endregion
+
+#region Shapes
+compendium.category.shape.name=Формы
+
+compendium.shape.projectile.name=Снаряд
+compendium.shape.channel.name=Канал
+compendium.shape.beam.name=Луч
+compendium.shape.self.name=На себя
+compendium.shape.touch.name=Прикосновение
+compendium.shape.zone.name=Зона
+compendium.shape.aoe.name=Радиус эффекта (АоЕ)
+compendium.shape.chain.name=Цепь
+compendium.shape.rune.name=Руна
+compendium.shape.contingency_fall.name=Привязка к обстоятельству: Падение
+compendium.shape.contingency_damage.name=Привязка к обстоятельству: Получение урона
+compendium.shape.contingency_fire.name=Привязка к обстоятельству: Горение в огне
+compendium.shape.contingency_health.name=Привязка к обстоятельству: Низкое здоровье
+compendium.shape.contingency_death.name=Привязка на обстоятельство: Гибель
+compendium.shape.binding.name=Привязка
+compendium.shape.wall.name=Стена
+compendium.shape.wave.name=Волна
+compendium.shape.toggle.name=Повторение
+
+compendium.projectile.page1=Вы смогли сфокусировать свою магию в концентрированный шар, который двигается вперед от вас. Снаряд будет лететь 5 секунд пока не ударит что-нибудь. По умолчанию он будет проходить через воду и другие не твердые блоки, но вы можете применить на него модификатор #5Фокус на нетвердые блоки#0
+compendium.channel.page1=Благодаря интенсивной концентрации, маг может направлять поток магии на самого себя. Полезно в комбинации с заклинаниями вроде телекинеза, лечения, притяжения и шторма.
+compendium.beam.page1=Требуется лишь небольшой ментальный сдвиг для того, чтобы превратить канал, нацеленный на самого себя, в луч, но испытываемое при этом напряжение - это уже совсем другая история. Луч - это более контролируемая версия канала.
+compendium.self.page1=Применить магию на самого себя проще простого. Дистанция минимальная и цель не движется. Вы только надеетесь, что случайно не подожжете сами себя.
+compendium.touch.page1=Просто оберните свою руку магией и протяните ее. Прикосновение работает на малой дальности. Оно не учитывает подсветку блока при наведении курсора, вы должны находиться очень близко к блоку для достижения эффекта.
+compendium.zone.page1=Вы научились фокусировать свою магию на площадь, внутри которой некоторое время будет сохраняться эффект заклинания.
+compendium.aoe.page1=После зарядки заклинания вы можете превратить его во взрыв, излучающийся из точки применения заклинания. При применении модификатора гравитации AoE будет искать блоки вниз от точки применения. С помощью такого подхода вы можете опустить холм без изменения его естественной формы и т.д. AoE заклинание не задевает заклинателя.
+compendium.chain.page1=Вы можете превратить вашу магию во всплеск, который скачет от одной целии к другой, поражая всех по очереди. Цепь по умолчанию содержит 8-и блоковый аналог формы Прикосновения (с расширенным диапазоном - около 8-и блоков), поэтому нет необходимости добавлять дополнительные формы; Хотя вы можете при желании начать цепочку где-то еще при помощи снаряда. Цепочка не задевает заклинателя. Диапазон между целями в цепочке может быть увеличен при помощи модификатора #5Радиус#0, а количество целей при помощи модификатора #5Дополнительное срабатывание#0.
+compendium.rune.page1=Вы можете устанавливать на поверхности руны, зачарованные магией, которые при активации выплеснут мощные позитивные эффекты... или ловушки.
+compendium.contingency_fall.page1=Вы нашли форму заклинания, которая срабатывает за мгновение до вашего падения. !d О, гравитация, ты бессердечна... !d Вы можете иметь только одну привязку к обстоятельству.
+compendium.contingency_damage.page1=Вам удалось создать заклинание, которое срабатывает только тогда, когда вы получаете урон. !d Давай поиграем в зуб за зуб. !d Вы можете иметь только одну привязку к обстоятельству.
+compendium.contingency_fire.page1=Вам не сильно нравится гореть, поэтому вы создаете заклинание, срабатывающее тогда, когда вы загоратесь (нет, не идеей). !d Вы можете иметь только одну привязку к обстоятельству.
+compendium.contingency_health.page1=Независимо от того, насколько хитер волшебник, атака в спину серьезно помешает его стилю. Вы думаете, что нашли способ заставить их сожалеть об этом. Или по крайней мере атаковать дважды. !d Эта привязка к обстоятельству срабатывает тогда, когда ваше здоровье меньше или равно 25% от максимального. !d Вы можете иметь только одну привязку к обстоятельству.
+compendium.contingency_death.page1=Вы можете взять меня, но в это время оно возьмет вас. !d Эта привязка к обстоятельству срабатывает тогда, когда противник одолевает вас !d Вы можете иметь только одну привязку к обстоятельству.
+compendium.binding.page1=Вы можете создавать твердые объекты из ничего! Форма привязки позволяет вам привязать инструменты к себе. Привязанный инструмент будет потреблять постоянное количество маны все время пока привязан и также дополнительно потреблять ману при использовании вместо снижения прочности инструмента. При выбросе инструмента из инвентаря горячей клавишей (по умолчанию на Q) он будет автоматически отвязан
+compendium.wall.page1=Вы можете создать стену прямо перед собой. Стена будет проходить перпендикулярно к вашему взгляду. Стены функционируют аналогично зонам, но с другим форм-фактором. Стены также применяют свой эффект намного быстрее.
+compendium.wave.page1=Запускает волну из магии перед вашим лицом в направлении взгляда, применяя свой эффект ко всему на своем пути.
+compendium.toggle.page1=А что, если заставить заклинание циклически читать самого себя? У вас не может быть одновременно более одного такого заклинания, поэтому сразу же убедитесь, что для него будет какое-либо применение...
+#endregion
+
+#region Modifiers
+compendium.category.modifier.name=Модификаторы
+
+compendium.modifier.gravity.name=Гравитация
+compendium.modifier.bounce.name=Отскок
+compendium.modifier.damage.name=Усиление урона
+compendium.modifier.healing.name=Усиление лечения
+compendium.modifier.speed.name=Ускорение заклинаний
+compendium.modifier.duration.name=Увеличение продолжительности
+compendium.modifier.range.name=Увеличение дальности
+compendium.modifier.radius.name=Увеличение радиуса
+compendium.modifier.rune_procs.name=Дополнительное срабатывание
+compendium.modifier.velocity_added.name=Усиление эффектов скорости
+compendium.modifier.target_non_solid.name=Фокус на нетвердые блоки
+compendium.modifier.lunar.name=Луна
+compendium.modifier.solar.name=Солнце
+compendium.modifier.piercing.name=Пробивание
+compendium.modifier.mining_power.name=Сила добычи
+compendium.modifier.prosperity.name=Удача
+compendium.modifier.buff_power.name=Усиление эффектов
+compendium.modifier.dismembering.name=Расчленение
+compendium.modifier.feather_touch.name=Перьевое касание
+compendium.modifier.colour.name=Цвет
+
+compendium.gravity.page1=Усиливает гравитацию определенных форм заклинаний. Зоны и Снаряды будут подвержены гравитации. AoE заклинания будут искать цели вниз (это может быть полезно, т.к. они буквально "обнимают" ландшафт).
+compendium.bounce.page1=Заставляет снаряды заклинаний с формой снаряда отскакивать от поверхностей.
+compendium.damage.page1=Усиливает урон, наносимый заклинаниями.
+compendium.healing.page1=Усиливает лечение, производимое заклинаниями или урон, наносимый нежити лечащими заклинаниями
+compendium.speed.page1=Увеличивает скорость формы Снаряда и скорость изменения эффектов заклинаний.
+compendium.duration.page1=Увеличивает продолжительность всех положительных/негативных эффектов и увеличивает время действия Зоны.
+compendium.range.page1=Увеличивает дальность форм Снаряд и Луч
+compendium.radius.page1=Увеличивает радиус действия форм Зона и AoE
+compendium.rune_procs.page1=Увеличивает количество срабатываний руны или количество целей цепи.
+compendium.velocity_added.page1=Увеличивает количество добавляемой скорости такими заклинаниями, как #5Полет#0.
+compendium.target_non_solid.page1=Позволяет заклинанию целиться на нетвердые блоки (трава, вода, лава) вместо того, чтобы проходить сквозь него.
+compendium.lunar.page1=Усиливает ваши заклинания ночью. Чем ближе полночь (начиная с сумерков), тем больше урона и лечения заклинание будет производить. После полуночи, как начнется рассвет, заклинание будет становиться слабее. Дальность, продолжительность и радиус увеличиваются там, где возможно, в зависимости от фазы луны (больше всего мощности при полной луне). Мощнее солнца из-за ночей, длящихся меньше дней
+compendium.solar.page1=Усиливает ваши заклинания днем. Чем ближе полдень (начиная с рассвета), тем больше урона и лечения заклинание будет производить. После полудня, как начнутся сумерки, заклинание будет становиться слабее. Дальность, продолжительность и радиус увеличиваются там, где возможно, в зависимости от фазы луны (больше всего мощности при новолунии).
+compendium.piercing.page1=Позволяет вашему заклинанию пробиваться через существ или блоков. Добавляет 2 пробития за один модификатор. Максимально 6
+compendium.mining_power.page1=Вы научились применять больше силы в ваши копательные заклинания. Это позволяет им копать более твердые блоки, что потребовали бы улучшенную кирку. Каждый модификатор усиливает заклинание на 1 уровень добычи вверх. По умолчанию заклинание Копания копает на уровне железной кирки. (Прим. переводчика: усиление копания выше алмазного уровня позволяет, к примеру, копать манулин, кобальт и ардит из TinkersConstruct)
+compendium.prosperity.page1=Фортуна повернулась лицом к вам! С этим модификатором ваши копательные заклинания будут добывать больше руд, а атакующие заклинания больше вещей с существ. Каждый добавленный модификатор Удачи эквивалентен одному уровню зачарования Удачи/Мародерства на заклинании.
+compendium.buff_power.page1=Вы можете вложить больше мощи в ваши эффекты. Каждый добавленный модификатор увеличивает уровень добавляемого эффекта. Это не затрагивает их продолжительность.
+compendium.dismembering.page1=Вы решили, что вы любите сувениры. Настолько, что вы открываете способ заставить ваши атакующие заклинания оставлять целыми некоторые части. Каждый модификатор добавляет 5% шанс выпадения головы поверженного противника.
+compendium.feather_touch.page1=С большой силой ломаются ценные вещи. Вы становитесь более аккуратными при использовании копательных заклинаний и ломаете вещи намного реже. Каждый модификатор эквивалентен одному уровню шелкового касания на заклинании.
+compendium.colour.page1=Этот модификатор позволит вам изменить цвет частиц на вашем заклинании. Хотите зеленые огненные шары? Получите их! Цвет определяется красителем, что вы бросите при создании заклинания. Любой краситель будет принят не смотря на то, что просит Аналой.
+#endregion
+
+#region Talents
+compendium.category.talent.name=Таланты
+
+compendium.talent.affinity_gains.name=Ускорение набора родства
+compendium.talent.augmented_casting.name=Улучшенное чтение заклинаний
+compendium.talent.extra_summon.name=Увеличение команды I
+compendium.talent.mage_posse_i.name=Увеличение команды II
+compendium.talent.mage_posse_ii.name=Увеличение команды III
+compendium.talent.mana_regen_i.name=Ускорение регенерации маны I
+compendium.talent.mana_regen_ii.name=Ускорение регенерации маны II
+compendium.talent.mana_regen_iii.name=Ускорение регенерации маны III
+compendium.talent.spell_motion.name=Чтение заклинаний в движении
+
+compendium.affinity_gains.page1=Вы решили, что родство со стихиями важнее, чем тайные знания. Вы можете ускорить рост родства за счет замедления магического опыта. Это постоянный эффект.
+compendium.augmented_casting.page1=Вы поняли, как вложить все, что у вас есть, в заклинание. Все ваши заклинания становятся мощнее. Длительность, радиус и урон увеличены.
+compendium.extra_summon.page1=Почему вы делаете все сами, если можно заставить других делать это за вас? Теперь вы можете призвать или очаровать еще одно дополнительное существо или принять мага в команду (если у вас есть талант #5Увеличение команды#0)
+compendium.mage_posse_i.page1=Ваши магические таланты впечатлили других и ваша репутация увеличилась. Вы можете попросить светлого мага следовать защищать вас. Маги в команде занимают место как призванные существа.
+compendium.mage_posse_ii.page1=Вы получили такое доверие у других магов, что они чувствуют себя в безопасности, связывая свою магию с вашей. Теперь маги в вашей команде будут связываться с вами маной.
+compendium.mana_regen_i.page1=Вы больше настроены на энергию, проходящую через вас. Ваша мана восстанавливается немного быстрее, чем обычно.
+compendium.mana_regen_ii.page1=Вы больше настроены на энергию, проходящую через вас. Ваша мана восстанавливается быстрее, чем обычно. Это заменяет бонус Ускорение регенерации маны I.
+compendium.mana_regen_iii.page1=Вы больше настроены на энергию, проходящую через вас. Ваша мана восстанавливается намного быстрее, чем обычно. Это заменяет бонус Ускорение регенерации маны II.
+compendium.spell_motion.page1=Вы поняли, что маневренность очень важна при чтении заклинаний. С этой целью вы научились передвигаться с нормальной скоростью при чтении
+#endregion
+
+#region Guides
+compendium.category.guide.name=Гайды
+
+compendium.guide.your_first_spell.name=Ваше первое заклинание
+compendium.your_first_spell.page1=Ваше первое заклинание !d Создайте #5Магическое око#0 и разблокируйте в нем хотя бы одну форму (квадрат) и один компонент (восьмиугольник) заклинания. Для этого вам изначально дается три синих очка умений.
+compendium.your_first_spell.page2=!d Далее создайте книгу с пером и положите ее в #5Стол начертания#0. !d Стол имеет три секции. Сверху находятся все изученные вами части заклинаний. Ниже находятся коричневые квадраты для групп форм. Таких квадратов несколько, поэтому в заклинании может быть несколько различных групп форм. И еще ниже находится серый прямоугольник для грамматики заклинания.
+compendium.your_first_spell.page3=Перетащите изученную вами форму в первый коричневый квадрат, создав тем самым первую группу. В одно заклинание вы можете установить до 5 различных групп форм (на улучшенном столе начертания). Также группы вмещают в себе модификаторы (ромбы). Каждая группа вмещает в себя до 4-х форм/модификаторов и группы не могут содержать компонентов. !d Проще говоря, группы форм определяют, на что и как будет целиться заклинание. А грамматика - это то, что заклинание производит с целевым объектом.
+compendium.your_first_spell.page4=После этого перетащите изученный вами компонент в поле для грамматики заклинания. Поле для грамматики может содержать в себе формы, компоненты и модификаторы в дополнение к группам форм. !d Когда вы завершите свою комбинацию заклинания, подойдите к #5алтарю создания#0 и положите созданную книгу с рецептом заклинания на Аналой.
+compendium.your_first_spell.page5=Бросьте #5пустую руну#0 в центр алтаря создания, чтобы начать процесс и следуйте последующим запросам книги. Саму книгу тоже стоит прочесть, т.к. она содержит краткое описание рецепта заклинания, списка материалов и родства заклинания со стихиями. Обратите внимание, что не все алтари создания могут создавать заклинания, состоящие из большого количества частей. С большей силой приходит и большая ответственность. Смотрите запись про #5Алтарь создания#0 для дополнительной информации.
+#endregion
+
+#region Mechanics
+compendium.category.mechanic.name=Механика
+compendium.category.mechanic.affinity.name=Родство со стихиями
+compendium.category.mechanic.enchants.name=Зачарования
+compendium.category.mechanic.infusions.name=Наполнения
+
+compendium.mechanic.spell_creation.name=Создание заклинаний
+compendium.mechanic.infusion.name=Восстановление брони
+compendium.mechanic.mana.name=Мана
+compendium.mechanic.magic_level.name=Магический уровень
+compendium.mechanic.burnout.name=Выгорание
+compendium.mechanic.rituals.name=Ритуалы
+compendium.mechanic.moonstone_meteor.name=Метеор лунного камня
+compendium.mechanic.armor_xp_infusion.name=Наполнение брони за опыт
+compendium.mechanic.silver_skills.name=Серебряные умения
+
+compendium.mechanic.affinity.affinities.name=Родство со стихиями
+compendium.mechanic.affinity.earth_affinity.name=Земля
+compendium.mechanic.affinity.water_affinity.name=Вода
+compendium.mechanic.affinity.air_affinity.name=Воздух
+compendium.mechanic.affinity.fire_affinity.name=Огонь
+compendium.mechanic.affinity.nature_affinity.name=Природа
+compendium.mechanic.affinity.ice_affinity.name=Лед
+compendium.mechanic.affinity.lightning_affinity.name=Молния
+compendium.mechanic.affinity.life_affinity.name=Жизнь
+compendium.mechanic.affinity.arcane_affinity.name=Магия
+compendium.mechanic.affinity.ender_affinity.name=Край
+
+compendium.mechanic.enchants.magic_resistance.name=Зачарование: Защита от магии
+compendium.mechanic.enchants.soulbound.name=Зачарование: Привязка к душе
+
+compendium.affinities.page1=#5Родство со стихиями#0 представляет собой связь с определенными областями магии. Вы начинаете без родства. Ваше родство отображается в виде небольшой диаграммы в нижнем-правом углу интерфейса, а детально его можно просмотреть в магическом оке (крафтящийся блок).
+compendium.affinities.page2=Ваше родство со стихиями будет меняться в зависимости от того, какие заклинания вы чаще всего используете. Постепенно вы станете лучше читать эти заклинания, а ваше родство сместится в сторону стихий этого заклинания. Когда вы достигнете 100% родства с какой-либо стихией, ваше родство заблокируется на ней и для того, чтобы отменить этот эффект, вам придется прочесть Том родства с противоположной стихией. После этого родство начнет копиться так же, как и раньше.
+compendium.affinities.page3=При отмене блокировки родства вы возвратитесь к 80%-ному родству с этой стихией. Каждый компонент заклинания имеет родство. Компоненты ваших стихий будут стоить меньше маны и в зависимости от вашего родства со стихией могут даже не требовать реагенты.
+compendium.affinities.page4=Однако, компоненты противоположной стихии будут стоить вам больше маны и опять же, в зависимости от вашего родства со стихией могут требовать дополнительные реагенты. Каждая стихия имеет свои плюсы и минусы, описанные на странице родства в магическом оке.
+
+compendium.earth_affinity.page1=Родство с землей дает небольшой бонус защиты из-за каменной кожи. При максимальном родстве вы получите снижение урона на 10%, применяемое до брони. Этот процент зависит от глубины вашего родства с землей и начинает расти с 25%. !d Маги земли тяжелее и потому быстрее погружаются в воду (хотя и не настолько, чтобы не смогли плавать) и любое падение доставляет им урон.
+compendium.water_affinity.page1=Родство с водой дает вам бонус к скорости плавания и замедление потери воздуха под водой. Также потоки воды больше не толкают вас. Эндермены, которые попытаются атаковать мага с полным родством к воде, получат урон так, как если бы они коснулись воды. !d Маги воды периодически получают урон при воздействии огня, что делает нижний мир частично опасным для них. Этот урон не снизит ваше здоровье меньше 75% от максимального и вообще не будет возникать, если оно ниже.
+compendium.air_affinity.page1=Родство с воздухом дает бонус к высоте прыжка и позволяет вам падать с большей высоты без вреда. Эти бонусы зависят от глубины родства: прыжок и падение на 1 блок выше начиная с 50%, 2 блока с 75% и 3 блока при 100%. !d Маги воздуха подвержены действию дождя и шторма; если на вас дует ветер, то вы должны двигаться медленнее. #5Приседание#0 или заклинание #5Гравитационной воронки#0 может убрать этот эффект и позволить вам двигаться при шторме, хотя и медленно.
+compendium.fire_affinity.page1=Родство с огнем уменьшает урон, получаемый от огня и лавы, хотя и не обеспечивает полного иммунитета. Защита напрямую связана с глубиной родства и достигает 60% уменьшения урона при полном родстве. Удар пустыми руками противника при полном родстве подожжет его. !d Как только ваше родство с огнем достигнет 50%, вы начнете приодически получать урон при контакте с водой. Этот урон не снизит ваше здоровье меньше 75% от максимального и вообще не будет возникать, если оно ниже.
+compendium.nature_affinity.page1=Родство с природой даст вам дополнительные семена и саженцы при собирании растений во всем мире. На 50%-ной глубине родства вы получите эффект шипов, который будет наносить урон всем атакующим вас в ближнем бою (подобно заклинанию шипов на броне). Этот урон увеличивается с 75% родством и с полным родством. При полном родстве с природой вы также медленно восстанавливаете голод под прямым солнечным светом. При полном родстве вы можете пустить свои корни в землю, что позволит вам подниматься на поверхности как паук.
+compendium.nature_affinity.page2=Природное родство заставляет вас двигаться намного медленнее из-за корней. При полном родстве с природой вы теряете голод быстрее ночью или в темных местах.
+compendium.nature_affinity.page3=При полном родстве с природой вы становитесь похожим на лист на ветру, не получаете никакого урона от падения и падаете намного медленнее. Вы можете присесть, чтобы падать быстрее, но это все равно не приведет к урону от падения.
+compendium.ice_affinity.page1=Родство со льдом замедлит всех, кто вас атакует. На 50%-ной глубине родства вы сможете замораживать воду в лед под собой, позволяя строить ледяные мосты во время движения. При полном родстве вы сможете замораживать лаву в обсидиан. !d Все ледяные маги перемещаются немного медленнее из-за холодной крови, если только не стоят на льду или воде.
+compendium.lightning_affinity.page1=Родство с молнией позволяет вам бегать быстрее. Увеличение скорости бега напрямую зависит от глубины родства и растет с 1 до 30%. На 50%-ной глубине вы получаете возможность шагать в один полный блок. !d К сожалению, из-за вашего родства с молнией вы также получаете небольшое короткое замыкание в воде. Вы также можете поджечь рядом стоящие ТНТ и зарядить ближайших криперов! Не волнуйтесь, когда вы получите полный контроль над электрической стихией, вы сможете уменьшить эти негативные эффекты.
+compendium.life_affinity.page1=Родство с жизнью позволяет вам очень медленно восстанавливать дополнительные сердца. Скорость регенерации напрямую зависит от глубины родства. Эта регенерация происходит независимо от уровня голода. !d Из-за ваших тесных связей с жизнью, в любое время, когда вы кого-то уничтожаете, вы получаете тошноту и болезнь на некоторое время.
+compendium.arcane_affinity.page1=Родство с магией делает все ваши заклинания на 5% дешевле по мане в дополнение к другим "скидкам". При полном родстве есть шанс, что при чтении заклинания вы получите эффект ясности и следующее заклинание будет стоить 0 маны. !d Минус родства с магией в том, что любой магический источник урона наносит больше вреда Вам.
+compendium.ender_affinity.page1=Родство с краем на 50%-ной глубине родства дает вам сопротивление к отравлению, а на глубине 75% вы автоматически получаете ночное зрение в темных местах. При полном родстве эндермены вас не будут атаковать, если вы не нападаете на них первыми. !d Из-за вашей темной природы ваше максимальное здоровье уменьшается при свете, а при более высоком родстве уменьшается и в воде. Ходят слухи, что мастера края нашли способ избавиться от этих слабостей.
+
+compendium.spell_creation.page1=Создание заклинаний занимает достаточно много времени, но это очень просто. Для начала изучите некоторые части заклинаний, используя #5Магическое око#0. Затем выложите заклинание, которое вы хотите создать, в #5Столе начертания#0. Поместите книгу из стола начертиния на Аналой вашего алтаря создания и бросьте #5Пустую руну#0.
+compendium.spell_creation.page2=Книга подскажет вам все оставшиеся ингридиенты. Если в крафте требуется эфир (книга показывает голубую "вспышку"), то используйте #5Кристальный ключ#0, чтобы привязать источник эфира нужного типа к алтарю. Для того, чтобы алтарь "впитал" в себя эфир, дерните за рычаг на алтаре. Затем рычаг автоматически вернется в исходное положение.
+compendium.spell_creation.page3=Когда заклинание будет создано, возьмите его и щелкните ПКМ, чтобы назвать его и установить значок. После этого вы сможете использовать его!
+compendium.infusion.page1=#5Восстановление брони#0 - это процесс, при котором броня Ars Magica забирает вашу ману, чтобы регенерировать себя. Благодаря этой механике вся броня Ars Magica имеет низкую прочность и не продержится в длительном сражении. При снятии брони эта механика перестает работать. Для восстановления броня должна быть надета. Если броня полностью целая, то мана не тратится.
+compendium.mana.page1=Мана - это ваш магический энергетический уровень. При увеличении магического уровня вы получаете больше маны. !d Мана восстанавливается с течением времени, но вы можете ускорить этот процесс, съев #9Торт маны#0 или стоя рядом с обелиском, небесной призмой или черным ауремом с более чем 10% заряда. #9Зелья маны#0 и #9связки зелий маны#0 также могут быть использованы для мгновенного пополнения маны. Мана отображается синей полоской на вашем экране снизу-справа. Вы можете использовать команду "#2/amuicfg#0", чтобы включить отображение числового значения маны.
+compendium.magic_level.page1=Магический уровень описывает вашу силу, как мага. По мере увеличения вашего магического уровня ваши максимальные запасы маны и выгорания увеличиваются. Магический уровень может быть увеличен с помощью правильного использования заклинаний. Правильное использование - это то, для чего оно предназначено. Например, чтение огненных шаров в стену не приведет вас ни к чему. Некоторые компоненты, которые требуют реальных целей, реже приносят много магического опыта. Магический уровень отображается синим числом на вашем экране снизу. Вы можете использовать команду "#2/amuicfg#0", чтобы включить отображение числового значения магического опыта.
+compendium.burnout.page1=Выгорание - это ваш уровень напряжения при произнесении заклинаний. Чем больше выгорания, тем больше маны будет стоить каждое заклинание. Чем сложнее заклинание, тем больше выгорания оно вам доставит. Выгорание восстанавливается с течением времени. Новые магические уровни дают вам более высокую магическую выносливость, позволяя вам использовать больше заклинаний перед полным утомлением. Уровень выгорания отображается красной полоской на вашем экране снизе-слева. Вы можете использовать команду "#2/amuicfg#0", чтобы включить отображение числового значения выгорания.
+compendium.rituals.page1=Боссы ArsMagica призываются с помощью специальных призывающих ритуалов. Смотрите раздел #5Боссы#0, чтобы узнать ритуал, характерный для каждого босса.
+compendium.moonstone_meteor.page1=Иногда ночью мелкие метеоры могут внезапно врезаться в землю. Это единственный способ получить лунный камень. Полная луна увеличивает шанс спауна. Метеор всегда находится в пределах 32 блоков от игрока и они всегда будут падать только на границе биома. Если у вас нет дома из травы, то он даже не пострадает. Если у вас уже есть дом из травы, то почему вы его не замените? Разве вы не читали трех поросят?
+compendium.magic_resistance.page1=Как следует из названия, это зачарование дает вам защиту от магического урона. Есть 4 уровня заклинания и оно применимо только к броне.
+compendium.soulbound.page1=Вам когда-нибудь надоедало терять все свои вещи при гибели? Вы можете исправить это прямо сейчас. Зачарование Привязка к душе может быть применено почти к любому предмету, способному к зачарованию, и заставит этот предмет остаться в вашем инвентаре при гибели. Вы будете возрождаться вместе с этим предметом в том же слоте в вашем инвентаре после гибели. Максимальный уровень зачарования 1.
+compendium.armor_xp_infusion.page1=Всякий раз, когда вы получаете опыт, вся надетая на вас броня также будет получать опыт. Полученное количество опыта распределяется равномерно по всей броне. Любая броня может получить опыт. Опыт, накопленный в броне, можно использовать в #9Столе наполнения доспехов#0.
+compendium.silver_skills.page1=Серебряные умения - это умения, из магического ока, которые невозможно получить обычными способами. Чтобы разблокировать серебряное умение, необходимо создать определенную комбинацию заклинаний, а затем прочесть ее. Есть несколько правил, которые помогут вам расшифровать необходимые комбинации заклинаний.
+compendium.silver_skills.page2= 1.) Все части комбинации, необходимой для разблокировки серебряного умения, будут в той же вкладке, #9что и само серебряное умение#0. !d 2.) Все серебряные навыки для разблокировки требуют комбинацию из #92-4 компонентов и/или модификаторов#0. !d 3.) Формы заклинаний не имеют значения для разблокировки серебряного умения. #9Может быть использована любая форма#0. !d 4.) Комбинация #9не обязательно должна быть в нужном порядке#0. Главное лишь подобрать верные компоненты комбинации
+compendium.silver_skills.page3= 5.) Все компоненты/модификаторы #9находятся на одном и том же уровне#0. !d 6.) Компоненты и модификаторы #9должны иметь связь с серебряным умением#0. Например, Огненный шторм никогда не потребует заклинание утопления. !d 7.) Заклинание разблокировки серебряного умения может быть не самым практичным для типичного использования.
+
+compendium.mechanic.infusions.imbuement_burnout_reduction.name=Наполнение: Бонус уменьшения выгорания
+compendium.mechanic.infusions.imbuement_fall_damage.name=Наполнение: Защита от падения
+compendium.mechanic.infusions.imbuement_drown_damage.name=Наполнение: Защита от утопления
+compendium.mechanic.infusions.imbuement_explosive_damage.name=Наполнение: Защита от взрывов
+compendium.mechanic.infusions.imbuement_phys_damage.name=Наполнение: Защита от физического урона
+compendium.mechanic.infusions.imbuement_fire_damage.name=Наполнение: Защита от огня
+compendium.mechanic.infusions.imbuement_frost_damage.name=Наполнение: Защита от холода
+compendium.mechanic.infusions.imbuement_lightning_damage.name=Наполнение: Защита от молний
+compendium.mechanic.infusions.imbuement_magic_damage.name=Наполнение: Защита от магии
+compendium.mechanic.infusions.imbuement_mana_regeneration.name=Наполнение: Бонус регенерации маны
+compendium.mechanic.infusions.imbuement_magitech.name=Наполнение: Интеграция очков техномага
+compendium.mechanic.infusions.imbuement_pinpoint_ores.name=Наполнение: Поиск руд (с помощью свечи оберега)
+compendium.mechanic.infusions.imbuement_hunger_regen.name=Наполнение: Регенерация голода
+compendium.mechanic.infusions.imbuement_mining_speed.name=Наполнение: Бонус скорости копания
+compendium.mechanic.infusions.imbuement_thaumic_vision.name=Наполнение: Таумическое зрение (Требуется Thaumcraft)
+compendium.mechanic.infusions.imbuement_water_breathing.name=Наполнение: Подводное дыхание
+compendium.mechanic.infusions.imbuement_flicker_lure.name=Наполнение: Приманка для светлячков
+compendium.mechanic.infusions.imbuement_soulbound.name=Наполнение: Привязка к душе
+compendium.mechanic.infusions.imbuement_healing.name=Наполнение: Лечение
+compendium.mechanic.infusions.imbuement_life_saving.name=Наполнение: Спасение жизни
+compendium.mechanic.infusions.imbuement_bonus_xp.name=Наполнение: Бонус магического опыта
+compendium.mechanic.infusions.imbuement_recoil.name=Наполнение: Отдача
+compendium.mechanic.infusions.imbuement_stepassist.name=Наполнение: Высокий шаг
+compendium.mechanic.infusions.imbuement_dispelling.name=Наполнение: Рассеивание
+compendium.mechanic.infusions.imbuement_lava_prot.name=Наполнение: Защита от лавы
+compendium.mechanic.infusions.imbuement_jump_boost.name=Наполнение: Усиление прыжка
+compendium.mechanic.infusions.imbuement_swim_boost.name=Наполнение: Бонус скорости плавания
+compendium.mechanic.infusions.imbuement_run_speed.name=Наполнение: Бонус скорости бега
+compendium.mechanic.infusions.imbuement_fall_protection.name=Наполнение: Безопасное падение
+compendium.mechanic.infusions.imbuement_freedom.name=Наполнение: Свобода передвижения
+compendium.mechanic.infusions.imbuement_water_walking.name=Наполнение: Ходьба по воде
+compendium.mechanic.infusions.imbuement_light_step.name=Наполнение: Освещающий шаг
+
+compendium.imbuement_burnout_reduction.page1=Бонус уменьшения выгорания увеличивает скорость уменьшения выгорания в 1.5 раз. Бонус складывается со всех частей надетой брони, максимально можно ускорить в 6 раз. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_fall_damage.page1=Защита от падения снижает весь получаемый урон от падения на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_drown_damage.page1=Защита от утопления снижает весь получаемый урон от утопления на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_explosive_damage.page1=Защита от взрывов снижает весь получаемый урон от взрывов на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_phys_damage.page1=Защита от физического урона снижает весь получаемый физический урон на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_fire_damage.page1=Защит от огня снижает весь получаемый урон от огня на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_frost_damage.page1=Защита от холода снижает весь получаемый урон от холода на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_lightning_damage.page1=Защита от молний снижает весь получаемый урон от молний на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_magic_damage.page1=Защита от магии снижает весь получаемый урон от магии на 15%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_mana_regeneration.page1=Бонус регенерации маны увеличивает скорость регенерации маны на 10%. !d Доступно для: Шлем, Нагрудник, Поножи, Ботинки
+compendium.imbuement_magitech.page1=Интеграция очков техномага наделяет любой шлем свойствами #5Очков техномага#0. !d Доступно для: Шлем
+compendium.imbuement_pinpoint_ores.page1=Поиск руд наделяет любой шлем дополнительной точностью при использовании #5Свечи оберега#0. Пламя свечи будет становиться черным при нахождении в пределах двух блоков от искомого блока. !d Доступно для: Шлем
+compendium.imbuement_hunger_regen.page1=Регенерация голода наделяет вас пассивной регенерацией голода. !d Доступно для: Шлем
+compendium.imbuement_mining_speed.page1=Бонус скорости копания позволяет вам копать на 50% быстрее. !d Доступно для: Шлем
+compendium.imbuement_thaumic_vision.page1=#9ТРЕБУЕТ НАЛИЧИЯ МОДА THAUMCRAFT#0 !d Таумическое зрение позволяет вам видеть вещи так, словно на вас надеты очки откровения Thaumcraft. !d Доступно для: Шлем
+compendium.imbuement_water_breathing.page1=Подводное дыхание позволит вам дышать в течении короткого времени под водой, если воздух в ваших легких почти закончится. !d Доступно для: Шлем
+compendium.imbuement_flicker_lure.page1=Приманка для светлячков заставит #9Светлячков#0 не пропадать когда вы к ним приближаетесь. !d Доступно для: Нагрудник
+compendium.imbuement_soulbound.page1=Привязка к душе не позволит этой части брони выпасть при гибели. Вместо этого вы возродитесь с ней же, надетой на вас. !d Доступно для: Нагрудник, Поножи, Ботинки
+compendium.imbuement_healing.page1=Лечение наделит вас мощным эффектом регенерации если ваше здоровье будет подходить к концу. !d Доступно для: Нагрудник
+compendium.imbuement_life_saving.page1=Спасение жизни спасет вас от гибели, не дав ей произойти, и восстановит вам 50% здоровья. Причиняет большие повреждения броне и долго перезаряжается. !d Доступно для: Нагрудник
+compendium.imbuement_bonus_xp.page1=Бонус магического опыта увеличит на 50% получаемый с заклинаний магический опыт. !d Доступно для: Нагрудник
+compendium.imbuement_recoil.page1=Отдача не позволит никому атаковать вас в ближнем бою. Противник просто напросто будет отброшен далеко от вас. !d Доступно для: Нагрудник
+compendium.imbuement_stepassist.page1=Высокий шаг позволит вам автоматически взбираться на препятствия в 1 блок. !d Доступно для: Поножи
+compendium.imbuement_dispelling.page1=Рассеивание будет очищать вас от всех негативных эффектов. Имеет небольшую перезарядку. !d Доступно для: Поножи
+compendium.imbuement_lava_prot.page1=Как только вы упадете в лаву, Защита от лавы защитит вас, превратив всю лаву вокруг в блоки булыжника и обсидиана. !d Доступно для: Поножи
+compendium.imbuement_jump_boost.page1=Усиление прыжка позволит вам прыгать существенно выше. !d Доступно для: Поножи
+compendium.imbuement_swim_boost.page1=Бонус скорости плавания позволит вам плавать значительно быстрее. !d Доступно для: Поножи
+compendium.imbuement_run_speed.page1=Бонус скорости бега позволит вам бегать значительно быстрее. !d Доступно для: Ботинки
+compendium.imbuement_fall_protection.page1=Безопасное падение автоматически применит к вам эффект замедленного падения перед самым столкновением с поверхностью, предотвращая абсолютно весь урон от падения. Имеет небольшую перезарядку. !d Доступно для: Ботинки
+compendium.imbuement_freedom.page1=Свобода передвижения препятствует действию всех эффектов ограничения движения, приложенных к вам. !d Доступно для: Ботинки
+compendium.imbuement_water_walking.page1=Ходьба по воде позволит вам ходить по воде как ниндзя! !d Хождение по воде срабатывает только тогда, когда вы находитесь на ее поверхности. Есди вы находитесь под водой, то вы будете плавать как обычно. Просто всплывите на поверхность воды, чтобы начать хождение по поверхности. Для того, чтобы спуститься с поверхности воды, просто присядьте. !d Доступно для: Ботинки
+compendium.imbuement_light_step.page1=Освещающий шаг будет автоматически устанавливать под вашими ногами магический свет (если это возможно) там, где уровень освещения достаточно низкий для спауна враждебных монстров. !d Доступно для: Ботинки
+#endregion
+
+#region Structures
+compendium.category.structure.name=Структуры
+
+compendium.structure.crafting_altar_structure.name=Алтарь создания
+compendium.structure.gateway.name=Портал
+
+compendium.crafting_altar_structure.page1=Используя силы созидания, алтарь позволяет магам творить чудеса. На алтаре вы будете создавать все свои заклинания Ars Magica. Структура алтаря состоит из двух материалов: основной (почти вся структура) и дополнительный (в общей сложности 5 блоков). Оба материала по отдельности увеличивают мощность алтаря, позволяя ему создавать более сложные заклинания.
+compendium.crafting_altar_structure.page2=Эти бонусы складываются друг с другом. Так, например, деревянные доски в основе и стекло в качестве дополнительного материала дадут максимум 2 эффекта. Тогда как каменные кирпичи в основе и блоки редстоуна в качестве дополнительного материала дадут максимум 4 эффекта.
+compendium.gateway.page1=Порталы очень эффективны на коротких дистанциях, но на длинных расстояниях они требуют значительно больше эфира. Максимальное расстояние между порталами примерно равняется 12км, хотя для прохождения через такой портал потребуется очень много эфира. Вы можете вставить ключевой камень в приемник ключевого камня для того, чтобы привязать этот портал к комбинации рун ключевого камня.
+compendium.gateway.page2=Только при активации второго портала соответствующим ключевым камнем он свяжется с первым. Не соответствие ключевого камня или его отсутствие приравнивается к отсутствию второго портала. С помощью этого способа вы можете управлять направлениями порталов.
+#endregion
+
+#region Blocks
+compendium.category.block.name=Блоки
+compendium.category.block.illusionblocks.name=Блоки иллюзий
+compendium.category.block.crystalmarker.name=Кристальный маркер
+compendium.category.block.inlays.name=Инкрустрации
+
+compendium.block.obelisk.name=Обелиск
+compendium.block.mana_drain_block.name=Иссушатель маны
+compendium.block.essence_refiner.name=Очиститель эссенции
+compendium.block.essence_conduit.name=Проводник эфира
+compendium.block.seer_stone.name=Камень ясновидения
+compendium.block.astral_barrier.name=Астральный барьер
+compendium.block.keystone_recepticle.name=Приемник ключевого камня
+compendium.block.vinteum_ore.name=Винтеумная руда
+compendium.block.mana_battery.name=Батарея маны
+compendium.block.cerublossom.name=Лазурноцвет
+compendium.block.desert_nova.name=Пустынная звездка
+compendium.block.keystone_chest.name=Сундук ключевого камня
+compendium.block.magic_wall.name=Магическая стена
+compendium.block.arcane_reconstructor.name=Тайный реконструктор
+compendium.block.lectern.name=Аналой
+compendium.block.occulus.name=Магическое око
+compendium.block.calefactor.name=Печка
+compendium.block.inscription_table.name=Стол начертания
+compendium.block.particle_emmiter.name=Испускатель частиц
+compendium.block.aum.name=Аум
+compendium.block.tarma_root.name=Корень тармы
+compendium.block.wakebloom.name=Цветок пробуждения
+compendium.block.summoner.name=Призыватель
+compendium.block.witchwood_sapling.name=Саженец ведьминого дерева
+compendium.block.crafting_altar.name=Алтарь создания
+compendium.block.magicians_workbench.name=Верстак мага
+compendium.block.everstone.name=Камень бесконечности
+compendium.block.vinteum_torch.name=Винтеумный факел
+compendium.block.slipstream_generator.name=Генератор воздушного потока
+compendium.block.broken_power_link.name=Сломанная линия энергии
+compendium.block.flicker_habitat.name=Клетка для светлячков
+compendium.block.flicker_lure.name=Приманка для светлячков
+compendium.block.arcane_deconstructor.name=Тайный деконструктор
+compendium.block.otherworld_aura.name=Потусторонняя аура
+compendium.block.inert_spawner.name=Неактивный спаунер
+
+compendium.obelisk.page1=Обелиск - это рунический блок, использующийся для генерации #5Эфира#0 (энергия Ars Magica 2). Он работает подобно магической печке и сжигает Винтеумную пыль или Жидкий эфир в ведрах для генерации энергии. Обелиск генерирует #5Нейтральный эфир#0. !d Обелиск можно превратить при помощи #9Ритуалов#0 в #4Черный аурем#0 или #9Кристальную призму#0.
+compendium.obelisk.page2=Обелиск можно усилить при помощи улучшений. Кольцо вокруг обелиска, нарисованное при помощи #9Магического мелка#0, увеличит выход энергии обелиска. Также в дополнение к кольцу вы можете установить #9Колонны#0 на 4 углах вне кольца. Каждая колонна должна состоять из 2 блоков каменных кирпичей и 1 блока резных каменных кирпичей поверх них. !d Эти усиления не обязательны для работы обелиска. Если для вас важнее свободное место, не устанавливайте их.
+compendium.mana_drain_block.page1=Иссушатель маны помогает магам конвертировать их ману в эфир. К сожалению, из-за природы маны, возможно получить только нейтральный эфир. При использовании красного камня можно наоборот превратить эфир в ману. !d Для работы иссушателя маны требуется многоблочная структура, приведенная на следующей странице.
+compendium.essence_refiner.page1=Очиститель эссенции принимает обычные предметы и при помощи #5Тайного пепла#0 превращает их в очищенную субстанцию, называемую #5эссенцией#0. Рецепты конкретных эссенций можно найти в разделе #9Предметы -> Эссенции#0. Очиститель эссенции требует наличие эфира для работы. Нейтральный эфир можно получить из #9Обелиска#0. Он не дает никаких дополнительных эффектов. Темный эфир можно получить из #9Черного аурема#0. При работе от него процесс очистки сильно ускоряется.
+compendium.essence_refiner.page2=Вращающееся кольцо в интерфейсе очистителя будет постепенно менять свой цвет с синего на фиолетовый, отображая прогресс очистки. Мигающее красное кольцо означает недостаток эфира для работы.
+compendium.essence_conduit.page1=Винтеумная пыль в его составе позволяет ему проводить эфир по воздуху. Проводник эфира стал широко применяться магами сразу же после его изобретения, т.к. ими можно соединять устройства на много бОльших расстояниях, чем они сами покрывают. Каждый проводник покрывает дистанцию в 10 блоков и из них можно составлять цепочку до 100 блоков в длину от источника.
+compendium.seer_stone.page1=Его принцип работы похож на астральный барьер. Камень ясновидения использует ауру эфира, проецируемую через фокус для обнаружения ближайших объектов. Его можно контроллировать, проецируя эфир на конкретный тип объекта, а резонансную частоту эфира можно задать при помощи комбинации рун. Без комбинации рун резонансная частота непредсказуема (принимает все). Камень ясновидения хоть и не останавливает цель, но излучает небольшой сигнал, который может активировать любую, даже самую мощную ловушку. !d Различные #5фокусы#0 могут изменять дистанцию обнаружения объектов. #5Малый, Обычный и Большой фокусы#0 - 5, 10 и 15 блоков соответственно. Фокусы на #5Предмет, Игрока, Монстра или Существо#0 задают конкретный тип объекта обнаружения. Без фокуса дальности и фокуса типа камень ясновидения не будет работать. !d Игроки, имеющие в инвентаре ключевой камень с подходящей комбинацией рун внутри, не будут обнаруживаться камнем ясновидения.
+compendium.astral_barrier.page1=При ходьбе в пустоте нужно опасаться барьеров. При проецировании ауры эфира через фокус эти барьеры резонируют на определенной магической частоте, заданной комбинацией рун. Без ключевого камня с подходящей комбинацией рун эти барьеры дестабилизируют вашу магию и вытолкнут вас из пустоты. Если астральный барьер не имеет ключевого камня, то его резонансная частота будет непредсказуемо истощаться и никакие комбинации рун не защитят вас от его эффекта. Несколько рейдов темных магов были провалены и несколько светлых магов были схвачены из-за того, что они не смогли вовремя обнаружить барьеры. !d Различные #5фокусы#0 могут изменять дистанцию барьера. #5Малый, Обычный и Большой фокусы#0 - 5, 10 и 15 блоков соответственно. Без фокуса дальности барьер не будет работать. !d Барьер будет предотвращать любые телепортации в радиусе, включая жемчуги края, эндерменов, метку/возврат и скачек.
+compendium.keystone_recepticle.page1=Не все маги способны путешествовать через пустоту и не желают этого. Пустота обнаруживается и блокируется. Порталы были разработаны темными магами на ранней стадии войны и это позволило им застать множество лагерей светлых магов врасплох, т.к. порталы используют альтернативный метод путешествия до точки назначения. Астральные барьеры не смогли должным образом предотвратить наступление темных магов. От порталов назначения не требовалось никаких усилий для телепортации в них. Светлые маги уничтожили столько порталов, сколько смогли найти, однако, темным магам было достаточно даже одного. Единственная надежда появилась тогда, когда молодой светлый маг Дамиен Каллитри обнаружил, что порталы можно заблокировать, просто вставив ключевой камень в слабом месте конструкции портала. Это фактически заставит портал отправить темных магов в другой портал (или никуда, если подходящий не был найден). Это полностью остановило рейды и позволило белым магам повернуть ситуацию на свою сторону, так как они могли использовать порталы для возврата к их собственным порталам. Недостаток этой конструкции вскоре стал в шутку называться среди белых магов "Приемником ключевого камня".
+compendium.vinteum_ore.page1=Винтеум был открыт во время ожесточенной битвы между Светлыми и Темными магами, когда случайный магический разряд столкнулся с разрядом магии края. В результате взрыва появился кратер глубинов в несколько метров, внутри которого в свете дня сверкала синяя руда. Похоже, что в чистом виде винтеум не имеет никаких собственных магических свойств, но после обжарки он превращается в пыль с необыкновенной способностью проводить эфир. Таким образом, он стал широко применяться во всех магических устройствах.
+compendium.mana_battery.page1=Опираясь на проводимость эфира винтеумной пылью, небольшая группа прекрасных магов создала рамку из железа и золота, способную хранить огромное количество эфира. Батарея маны всегда будет обеспечивать питанием подключенные устройства, но она также может запросить эфир из сети, если на нее будет подан сигнал красного камня.
+compendium.cerublossom.page1=Лазурноцвет растет в пышной, зеленой среде. Лазурноцветы стали первыми волшебными растениями, которые использовались в зельях и бальзамах. Лазурноцвет излучает слабое, мерцающее свечение вокруг себя и используется для украшения как алхимический ингридиент. Через некоторое время после его открытия было также отмечено, что Лазурноцвет может очищать винтеумную пыль (при участии других ингридиентов).
+compendium.desert_nova.page1=Пустынная звездка растет в сухих условиях. Они получили свое имя за свою особенность периодически испускать всплески магии вокруг себя. Звездка обладает необычайными магическими свойствами для пустынного растения и пользуется большим спросом у магов. Это одно из двух растений, используемых в процессе очистки винтеумной пыли.
+compendium.keystone_chest.page1=Сундук ключевого камня был разработан для защиты нужных вещей от чужих рук. После вставки ключевого камня во внутренний слот сундук заблокируется и его можно будет открыть только с подходящей комбинацией на ключевом камне в руке. На внешней части сундука висит замок, соединенный с внутренним. Для открытия достаточно вставить в него такой же ключевой камень (просто нажать пкм с ним в руке).
+compendium.magic_wall.page1=Ранняя версия блока иллюзий, которая все еще не могла сливаться с окружением или хотя бы закрывать собой вид от чужих глаз. Но ценность этого блока мы осознали в тот момент, когда мастер-маг Леонидус, критикуя наши усилия над этим блоком, ударился лицом об один из них. По крайней мере этот блок мог останавливать врагов. После этого он запустил огненный шар в этот блок, но шар отскочил от него прямо в бороду Леонидуса и сжег его бороду. Это был потрясающий блок.
+compendium.arcane_reconstructor.page1=При правильном применении магия может творить потрясающие вещи. Направляя эфир прямо в поврежденные места любых предметов, можно восстановить даже самые большие повреждения в них. Предметы будут как новые.
+compendium.lectern.page1=Каждый организованный маг должен иметь аналой. Это идеальное место для хранения книг, компендиумов и таумономиконов для быстрого доступа. Книга располагается так, что ее можно читать, не снимая с аналоя. Также аналой - это очень важная часть алтаря создания, потому что создание заклинаний требует организованности.
+compendium.occulus.page1=Око может связать вас со звездами для того, чтобы они раскрыли вам ваше сокровенное "я". Именно в нем вы можете потратить очки навыков для того, чтобы разблокировать новые формы, компоненты и модификаторы.
+compendium.calefactor.page1=Улучшенная версия обычной печи. В качестве побочного предмета при обжарке может давать вам винтеумную пыль, а при запитывании печки при помощи светлого, нейтрального или темного эфира, может удваивать руды. Также она всегда имеет маленький шанс удваивать пищу.
+compendium.inscription_table.page1=Организация нужна любому магу, желающему быть успешным. При использовании этого стола вместе с книгой с пером вы можете создавать заклинания невероятной мощи. Большинство магов выкладывают свои изученные части заклинаний в верхней части стола. Для построения заклинания они переносят формы и модификаторы в коричневые квадраты (для создания групп форм), а компоненты в раздел грамматики внизу стола. После создания задуманного заклинания вы можете записать его в книжке с пером (вы же не забыли взять ее, да?). Эту книгу с заклинанием нужно установить на аналой в алтаре создания и она будет указывать вам на текущий предмет, необходимый для крафта заклинания. Книгу так же стоит прочесть, потому что она содержит описание заклинания, спиоск материалов и привязку заклинания к родству со стихиями. Для получения подробной информации смотрите #5Гайды -> ваше первое заклинание#0.
+compendium.particle_emmiter.page1=Испускатель частиц представляет собой чисто декоративный блок и может быть использован для создания ощущения магии в любом месте. Испускатель можно настроить или даже скрыть, щелкнув ПКМ по нему. Чтобы увидеть испускатель частиц в скрытом состоянии, просто возьмите в руку кристальный ключ возле него. Вы можете скопировать настройки испускателя. Для этого переведите кристальный ключ в режим разъединения и кликните ПКМ по блоку. Для того, чтобы установить эти настройки на другой блок, так же кликните по нему ПКМ.
+compendium.aum.page1=Аум имеет целительные свойства и используется во многих заклинаниях. Встречается только под ведьмиными деревьями.
+compendium.tarma_root.page1=Корень тармы легче, чем кажется на первый взгляд. Используется в заклинаниях и воздушной эссенции. Встречается в пещерах и всех темных местах.
+compendium.wakebloom.page1=Цветок пробуждения растет на поверхности воды в теплых климатических условиях. Часто используется в водных заклинаниях и при создании водной эссенции.
+compendium.summoner.page1=Призыватель питается эфиром и использует его для того, чтобы призывать существ по вашему приказанию при помощи сигнала красного камня. Он тратит большое количество эфира на призыв, а после еще и на поддержание существ в живом состоянии. Если сигнал красного камня пропадет или закончится энергия, то существа возвратятся обратно в небытие. Между призывами имеется небольшая задержка. Заметьте, что призыватель требует полноценное заклинание призыва, а не просто заполненный кристальный талисман.
+compendium.witchwood_sapling.page1=Саженец ведьминого дерева можно с редким шансом выбить с листвы ведьминого дерева. Его можно посадить, но для роста он требует источник жидкого эфира на площадке прямо под ним не далее, чем на 1 блок по x/z. Чем больше источников жидкого эфира находится под саженцем (максимум 8), тем быстрее он растет. Однако, даже с 8 источниками время роста может быть очень большим. Полностью вырасшее ведьмино дерево может также создать аум вокруг себя.
+compendium.crafting_altar.page1=Используя силы созидания, алтарь позволяет магам творить чудеса. На алтаре вы будете создавать все свои заклинания Ars Magica. Алтарь создания - это компонент #9многоблочной структуры#0 алтаря создания.
+compendium.magicians_workbench.page1=Магический верстак появился из-за необходимости магов создавать большое количество вещей. Один из магов устал очищать сетку крафта каждый раз, когда он забывал об одном мелком компоненте крафта. Каждый раз он был вынужден бежать к сундуку, обычно бросая предметы по пути. Этот стол #5имеет несколько сеток крафта#0, которые вы можете использовать одновременно для создания предметов. Он так же запоминает 8 последних рецептов крафта и может восстанавливать их при условии, что компоненты рецепта находятся во #5внутреннем хранилище#0. Магический верстак можно улучшить при помощи Улучшения верстака мага, что увеличит размер второй сетки крафта с 2х2 до 3х3.
+compendium.everstone.page1=Камень бесконечности - блок, наполненный магией, который может имитировать другие блоки почти как #5Блок иллюзий#0. При разрушении камень бесконечности #9не будет выпадать, вместо этого он будет временно становиться бестелесным#0. По истечении этого времени он снова затвердевает и возвращается в исходное состояние. Во время его затвердевания через камень бесконечности можно ходить так, словно его там нет. Чтобы указать ему, какой блок он должен имитировать, кликните ПКМ по нему с нужным блоком в руке. Если камень бесконечности чист, он примет все свойства нового блока. Для того, чтобы очистить камень бесконечности, щелкните по нему ПКМ с помощью #5кристального ключа#0. Чистый камень бесконечности можно удалить, кликнув по нему ПКМ.
+compendium.vinteum_torch.page1=Винтеумный факел крафтится очень просто и светится приблизительно так же, как обычный факел. Это лишь эстетическая альтернатива.
+compendium.slipstream_generator.page1=Вам удалось создать устройство, которое испускает потом воздуха вокруг вас, чтобы вы смогли летать или плавно опускаться к земле. Это работает только на магах над ней (#5только игроки#0), но имеет большой диапазон по высоте. При тестировании вы обнаружили, что этому блоку нужно время, чтобы полностью поймать вас в падении при вхождении в его радиус действия. Вы также смогли заставить его работать #9в направлении вашего взгляда#0. Смотрите вверх - летите вверх. Смотрите вниз - летите вниз. Смотрите вперед - парите на месте. Кроме того, вы можете #9присесть, чтобы оставаться на месте вне зависимости от того, куда вы смотрите#0.
+compendium.broken_power_link.page1=Если энерголиния между источником и приемником создана, но в какой-то ломается повторитель (проводник эфира и т.д.) или генератор (обелиск, кристальная призма, черный аурем и т.д.), система пытается сообщить вам, что там что-то произошло и что-то не так. Эти блоки будут автоматически устанавливаться сетью энергии, когда она обнаружит неисправную связь. Блок будет размещен в точке, где раньше был повторитель или генератор. !d Эти блоки будут устанавливаться только в том случае, если на нужном месте не стоит никакой другой блок. Их нельзя уничтожить руками, но можно заменить при помощи любого другого блока. Блоки сломанных энерголиний видны только через #9очки техномага#0.
+compendium.flicker_habitat.page1=Клетка для светлячков представляет собой группу кристаллов, спроектированную для того, чтобы позволить светлячкам оставаться в нашем мире. При вставке #9Светлячкового фокуса#0 светлячки внутри него будут использовать среду клетки для того, чтобы выполнять различные задачи вокруг клетки. Например, выращивание растений, сортировка предметов, рыбалка, создание магических барьеров и многое другое. !d Вы можете установить #9Банку для светлячка#0 внутри клетки и он будет изменять функциональность фокусов внутри клетов, поставленных вплотную к этой. !d Больше информации о том, как модифицируются светлячковые фокусы, можете найти в соответствующих записях.
+compendium.flicker_lure.page1=Светлячки обычно не могут нормально входить в наш мир, но с небольшой помощью и стимулом вы можете это сделать. После установки этого блока и запитывания его эфиром он сможет притягивать светлячков в наш мир! Когда вам понадобится сделать это, активируйте этот блок при помощи сигнала красного камня. Стихия светлячка будет зависеть от того, где находится приманка. Для получения информации о каждом светлячке смотрите запись #9Светлячки#0.
+compendium.arcane_deconstructor.page1=Тайный деконструктор при запитывании #5темным эфиром#0 может разбирать предметы на составляющие. !d Да, он также может разбирать заклинания. Вы получите большую часть составляющих заклинания, однако такие предметы, как начальная пустая руна, эфир и завершающий пергамент заклинания, не будут возвращены. !d Деконструктор попытается выбросить предметы в соседние инвентари, если его собственный заполнится во время разборки. В противном случае он просто будет выбрасывать предметы в мир.
+compendium.otherworld_aura.page1=Потусторонняя аура используется для автоматизации создания заклинаний. Она призывает призрачную копию того, кто создал ее для того, чтобы завершить заклинание. !d Для ее использования вам необходимо: !l -Ее нахождение в 10 блоках от #5Алтаря создания#0 !l -Источник #4Темного#0 или #9Нейтрального#0 эфира (вы должны иметь достаточное количество эфира, потому что межпространственные путешествия стоят дорого!) !l -Как минимум один блок с инвентарем (сундук, воронка и т.д.) в радиусе 8 блоков от ауры. В этих инвентарях должны лежать реагенты для заклинаний. !d Аура будет поддерживать призрачную копию так долго, как это нужно, если энергии будет достаточно. При недостатке энергии призрачная копия рассеится и, несмотря на неудобства, может забрать с собой любой реагент, который она несла в данный момент! Только одна аура может помогать алтарю в одно время, поэтому несколько аур бесполезны. !d Чтобы создать потустороннюю ауру, проведите #5Потусторонний ритуал#0 (ритуал перекрестных колец) вокруг #5Неактивного спаунера#0 с #5Смена позиций#0 в качестве катализатора.
+compendium.inert_spawner.page1=Вы нашли способ подобрать спаунер монстров. К сожалению, он больше не спаунит существ. Поищите другие приложения под это устройство или же попытайтесь вновь активировать его основную способность. !d Возможно, что #5темный эфир#0 и #5кристальный талисман#0 могут чем-то помочь...
+
+compendium.block.inlays.inlays.name=Инкрустрации
+compendium.block.inlays.redstone_inlay.name=Красная инкрустрация
+compendium.block.inlays.iron_inlay.name=Железная инкрустрация
+compendium.block.inlays.gold_inlay.name=Золотая инкрустрация
+
+compendium.inlays.page1=Инкрустрации представляют собой руны, используемые как в декоративных целях, так и для призыва боссов при правильном расположении (смотрите раздел Боссы). Существует несколько видов инкрустраций.
+compendium.redstone_inlay.page1=Самая простая инкрустрация из всех. Используется для призыва некоторых начальных боссов, а также в качестве рельс для вагонеток. Ускоряет вагонетки при проезде через нее. Будьте осторожны с ускорением, т.к. вагонетка может сойти с инкрустрации на поворотах.
+compendium.iron_inlay.page1=Средняя по стоимости инкрустрация. Используется для призыва некоторых средних боссов, а также в качестве рельс для вагонеток. Изменяет направление движения вагонеток при проезде через нее. Часть скорости при этом теряется.
+compendium.gold_inlay.page1=Самая продвинутая инкрустрация из всех. Используется для призыва некоторых сильных боссов, а также в качестве рельс для вагонеток. Золотая инкрустрация может телепортировать вагонетки при движении по ней на следующую золотую инкрустрацию в направлении движения на расстоянии не более 8-ми блоков. Таким образом можно телепортировать вагонетки (и пассажиров в них) через любые препятствия. Телепортация имеет небольшой кулдаун перед повторным срабатыванием.
+
+compendium.block.keystone_doors.name=Двери ключевого камня
+
+compendium.keystone_doors.page1=Двери ключевого камня могут быть заблокированы при помощи комбинации рун. В заблокированном состоянии они будут открываться игроку только при наличии ключевого камня с подходящей комбинацией в его инвентаре. В не заблокированном состоянии они работают как обычные двери. Зомби так же не могут ломать их.
+
+compendium.block.crystalmarker.crystal_markers.name=Кристальные маркеры
+compendium.block.crystalmarker.crystal_marker_import.name=Кристалл импорта
+compendium.block.crystalmarker.crystal_marker_export.name=Кристалл экспорта
+compendium.block.crystalmarker.crystal_marker_mimic_export.name=Повторяющий кристалл экспорта
+compendium.block.crystalmarker.crystal_marker_set_export.name=Фильтрующий кристалл экспорта
+compendium.block.crystalmarker.crystal_marker_regulate_export.name=Регулирующий кристалл экспорта
+compendium.block.crystalmarker.crystal_marker_regulate_bidirectional.name=Регулирующий двунаправленный кристалл
+compendium.block.crystalmarker.crystal_marker_set_import.name=Фильтрующий кристалл импорта
+compendium.block.crystalmarker.crystal_marker_final_export.name=Конечный кристалл экспорта
+compendium.block.crystalmarker.crystal_marker_spell_export.name=Заклинающий кристалл экспорта
+
+compendium.crystal_markers.page1=Кристальные маркеры помечают светлячкам точки инвентарей и дают им инструкции по взаимодействию с ними. #9Очки техномага#0 покажут вам приоритет различных кристаллов. Приоритет отображает порядок, в котором светлячки будут перемещать предметы. Первым делом светлячки ищут кристаллы с низким приоритетом. Вы можете изменить приоритет любого кристалла кликом ПКМ по нему с #9Посохом техномага#0 в руках.
+compendium.crystal_marker_import.page1=Этот кристалл говорит светлячкам забирать предметы из присоединенного инвентаря в транспортную сеть. Кристаллы импорта не имеют приоритета.
+compendium.crystal_marker_export.page1=Этот кристалл говорит светлячкам складывать предметы из транспортной сети в присоединенный инвентарь.
+compendium.crystal_marker_mimic_export.page1=Этот кристалл говорит светлячкам складывать предметы из транспортной сети в присоединенный инвентарь до тех пор, пока в этом инвентаре находится такой же предмет.
+compendium.crystal_marker_set_export.page1=Этот кристалл говорит светлячкам складывать определенный список предметов из транспортной сети в присоединенный инвентарь. Список настраивается в интерфейсе кристалла.
+compendium.crystal_marker_regulate_export.page1=Этот кристалл говорит светлячкам складывать определенный список предметов из транспортной сети в присоединенный инвентарь до тех пор, пока их количество в инвентаре меньше установленного в списке. Список предметов и их пределы настраиваются в интерфейсе кристалла.
+compendium.crystal_marker_regulate_bidirectional.page1=Этот кристалл говорит светлячкам как складывать, так и забирать предметы из присоединенного инвентаря в транспортную сеть. !d Импорт: !l Светлячки будут забирать определенный список предметов из присоединенного инвентаря до тех пор, пока их количество больше установленных пределов. !d Экспорт: !l Светлячки будут складывать определенный список предметов из транспортной сети в присоединенный инвентарь до тех пор, пока их количество в инвентаре меньше установленного предела. !d Список предметов и их пределы настраиваются в интерфейсе кристалла.
+compendium.crystal_marker_set_import.page1=Этот кристалл говорит светлячкам забирать определенный список предметов из присоединенного инвентаря в транспортную сеть. Список настраивается в интерфейсе кристалла.
+compendium.crystal_marker_final_export.page1=Этот кристалл говорит светлячкам складывать предметы из транспортной сети в присоединенный инвентарь, если для них больше нигде не нашлось места. Эти кристаллы всегда имеют наивысший приоритет, то есть светлячки будут приносить им предметы в последнюю очередь.
+compendium.crystal_marker_spell_export.page1=Этот кристалл говорит светлячкам искать любой алтарь создания в радиусе 10 блоков. Если алтарь найден и он в данный момент создает заклинание, то светлячки будут пытаться положить следующий необходимый для заклинания предмет из транспортной сети в присоединенный инвентарь.
+#endregion
+
+#region Items
+compendium.category.item.name=Предметы
+compendium.category.item.ore.name=Руды Ars Magica
+compendium.category.item.essence.name=Эссенции
+compendium.category.item.rune.name=Руны
+compendium.category.item.armor.name=Броня Ars Magica
+compendium.category.item.affinity_tomes.name=Томы родства
+compendium.category.item.foci.name=Фокусы
+compendium.category.item.mana_potion.name=Зелья маны
+compendium.category.item.binding_catalyst.name=Катализаторы связывания
+compendium.category.item.flickerfocus.name=Светлячковый фокус
+compendium.category.item.inscription_upgrades.name=Улучшения стола начертания
+
+compendium.item.keystone.name=Ключевой камень
+compendium.item.mana_cake.name=Торт маны
+compendium.item.crystal_wrench.name=Кристальный ключ
+compendium.item.spell_parchment.name=Пергамент заклинания
+compendium.item.crystal_phylactery.name=Кристальный талисман
+compendium.item.spell_staff_magitech.name=Посох техномага
+compendium.item.spell_book.name=Книга заклинаний
+compendium.item.magic_broom.name=Магическая метла
+compendium.item.nature_scythe.name=Коса природы
+compendium.item.arcane_spellbook.name=Тайная книга заклинаний
+compendium.item.winter_arm.name=Хватка зимы
+compendium.item.air_sled.name=Воздушные сани
+compendium.item.earth_armor.name=Земляные доспехи
+compendium.item.water_orbs.name=Водные сферы
+compendium.item.fire_ears.name=Щупальцы Хранителя Огня
+compendium.item.workbench_upgrade.name=Улучшение верстака мага
+compendium.item.warding_candle.name=Свеча оберега
+compendium.item.flicker_jar.name=Банка для светлячка
+compendium.item.ender_boots.name=Боты края
+compendium.item.lightning_charm.name=Талисман молний
+compendium.item.lifeward.name=Оберег жизни
+compendium.item.magitech_goggles.name=Очки техномага
+compendium.item.chalk.name=Магический мел
+compendium.item.journal.name=Журнал
+compendium.item.deficit_crystal.name=Кристалл недостатка
+
+compendium.keystone.page1=Ключевые камни используются как для связывания порталов, так и для блокировки механизмов Ars Magica. Интерфейс этих блоков не откроется до тех пор, пока комбинация рун в ключевом камне не станет верной.
+compendium.mana_cake.page1=Торты маны одновременно восстанавливают голод и дают бонус регенерации маны. А еще это печенька!
+compendium.crystal_wrench.page1=Кристальный ключ имеет несколько предназначений. Его можно использовать для направления энергии между узлами. Чтобы это сделать, сначала отметьте источник энергии, #9щелкнув ПКМ ключем по нему#0. Далее #9кликните ПКМ ключем по приемнику энергии#0. #5Заметьте, что вы не должны кликать по проводникам энергии на всем пути - достаточно кликнуть на источник и на приемник, путь найдется сам#0. Если по каким-либо причинам путь не может найтись, вы будете уведомлены об этом. Эта процедура приведет к связыванию узлов и гарантирует, что энергия будет там, где вы хотите.
+compendium.crystal_wrench.page2=Если вы #9присядете, кликнув ПКМ по источнику#0, то ключ станет зеленым. Это означает, что ключ запомнил позицию источника и вы можете отметить несколько приемников без возврата к источнику. Каждый приемник при клике ПКМ будет связываться с сохраненным источником, если это возможно.
+compendium.crystal_wrench.page3=Вы также можете разъединить узлы. #9Присядьте и кликните ПКМ#0 на #5не заряженном блоке#0. Кристальный ключ переключится в режим разъединения. Вы увидите, как кристалл на кристальном ключе станет красным. Для того, чтобы переключить его обратно, просто повторите операцию и он снова станет фиолетовым. Если у вас есть сохраненная позиция, ее нужно будет очистить для переключения режима (что также делается при помощи приседания и клика ПКМ по не заряженному блоку).
+compendium.crystal_wrench.page4=Кристальный ключ также может отобразить вам скрытые испускатели частиц и может копировать их настройки с помощью клика ПКМ в режиме разъединения. Настройки могут быть применены к любому другому испускателю с помощью клика ПКМ. Каждый раз при применении настроек вы должны скопировать их снова, если хотите применить их на другие испускатели частиц.
+compendium.spell_parchment.page1=Любой маг хотел бы читать заклинания без каких-либо инструментов или посохов, но ведь их тексты должны быть где-то написаны. За тысячи лет никто не придумал ничего лучше, чем обычный пергамент.
+compendium.crystal_phylactery.page1=Кристальный талисман служит для заключения внутри себя жизненной силы. Удерживая в своем инвентаре такой талисман, маг может заключать поверженных противников в него. Когда талисман будет заполнен, его можно будет использовать при создании заклинания призыва заключенного в нем существа.
+compendium.spell_staff_magitech.page1=Посох техномага - это улучшенная версия Spell staff, что привязана к окружающей мане. Он может чувствовать уровень энергии в заряженных блоках. Для этого нажмите им ПКМ по выбранному блоку. Надетые #9очки техномага#0 дают посоху дополнительные возможности. !d Также посох техномага может поднимать #9Магическую метлу#0. Для этого нажмите ПКМ по ней с помохом в руках.
+compendium.spell_book.page1=Книга заклинаний позволяет магам удобно упорядочивать свои заклинания, при этом сохраняя свободное место в инвентаре. Переключать текущее заклинание в книге заклинаний можно с помощью клавиш z/x или при помощи колесика мыши с приседанием. Книги заклинаний могут быть покрашены в различные цвета. Также они могут быть #5зачарованы#0.
+compendium.magic_broom.page1=Вы взяли магические свойства тайной пыли и соединили их с метлой. Почему? Вы сами этого не знаете. Единственное, что вы знаете - эта метла очень любит поддерживать чистоту вокруг себя, собирая все предметы вокруг и укладывая их в привязанный сундук. Чтобы установить метлу, нажмите ПКМ на #5любом блоке с инвентарем#0. Это не будет работать иначе. Пока что метла будет собирать все потерянные вещи, хотя, в будущем вы найдете способ настраивать ее. !d При помощи ПКМ #9Посохом техномага#0 можно открепить метлу от блока.
+compendium.nature_scythe.page1=Эта коса, вырванная из рук самого Хранителя Природы, обладает великой силой. Она может невероятно эффективно срезать растения и листья в деревьев. Ее можно выбросить как бумеранг с помощью ПКМ, но это стоит 250 маны. Все эффекты срезки растений применяются во время броска, а урон увеличивается.
+compendium.arcane_spellbook.page1=Тайная книга заклинаний, наполненная неизвестными чарами древних магов, #9усилит любые заклинания, прочитанные из нее#0. Заклинания будут наносить больше урона и требовать меньше маны, однако радиус и продолжительность эффектов не изменятся.
+compendium.winter_arm.page1=Эта рука самого Хранителя Зимы может отлично дробить врагов. Внеземной холод, заключенный в ней, наложит на противника замедление и ослабление. За 250 маны вы можете запустить ее и притянуть с помощью нее любую сущность к себе, наложив на нее еще более сильные эффекты ослабления и замедления.
+compendium.air_sled.page1=Воздушные сани могут с легкостью поднять вас высоко к небу. Они летают намного быстрее, чем игрок в творческом режиме, но не так хорошо контролируются.
+compendium.earth_armor.page1=Земляные доспехи представляют собой нагрудник Хранителя Земли. Занимая лишь один слот для брони, они обеспечивают значительную прибавку к защите от физического урона. Также они дают вам прибавку к урону (+4) от невооруженных ударов (с пустыми руками).
+compendium.water_orbs.page1=При помощи водных сфер вы можете подсознательно контролировать воду. Наденьте их в слот для понож и вы сможете бесконечно дышать под водой, а потоки воды не будут выталкивать вас.
+compendium.fire_ears.page1=Щупальцы Хранителя Огня при ношении на голове дают вам полный иммунитет к огню и лаве.
+compendium.workbench_upgrade.page1=Вы поняли, как улучшить свой магический верстак и увеличить вторую сетку крафта с 2х2 до 3х3. Просто создайте это улучшение и кликните ПКМ им на верстаке мага, чтобы улучшить его. Имейте в виду, что улучшения очень хрупкие и будут сломаны при разрушении магического верстака.
+compendium.warding_candle.page1=Свечи оберега при удерживании в руках освещают территорию вокруг. Они также могут #9привязываться#0 к выбранным блокам #9при помощи ПКМ на блоке с приседанием#0. Пламя свечи будет менять цвет в зависимости от расстояния до ближайшего такого же блока. Синий цвет в пределах 15 блоков, а красный в пределах 5 блоков. Свеча оберега горит 15 минут, но может быть временно погашена, если убрать ее из рук. !d Свечи оберега также используются в #5Ритуалах#0 как часть формы ритуала. Привязанная свеча оберега не может быть установлена и использована в ритуале.
+compendium.flicker_jar.page1=Банки для светлячков могут ловить светлячков. Просто щелкните ПКМ на светлячке для того, чтобы поймать его в банку. Звучит просто, не так ли? Веселитесь...
+compendium.ender_boots.page1=Боты края - это редкий дроп с #5Хранителя Края#0. При ношении этих ботинок, #9присядьте и прыгните для того, чтобы инвертировать гравитацию#0! Этот эффект применится только к вам и заставляет падать вверх. Урон от падения применяется нормально. Вы не можете инвертировать гравитацию в воздухе.
+compendium.lightning_charm.page1=Талисман молний - это редкий дроп с #5Хранителя Молний#0. Присядьте и кликните ПКМ для того, чтобы включить или выключить талисман. Во включенном состоянии статическое электричество из талисмана заставляет соседние предметы автоматически притягиваться к игроку.
+compendium.lifeward.page1=Оберег жизни - это редкий дроп с #5Хранителя Жизни#0. При нахождении на панели быстрого доступа будет медленно создавать щит вокруг вас, который поглотит входящий урон. Оберег будет генерировать до 20 дополнительных временных очков здоровья. Без оберега накопленные дополнительные очки здоровья останутся, но не будут восполняться.
+compendium.magitech_goggles.page1=Очки техномага дополняют #9посох техномага#0. При их ношении вы можете присесть и нажать ПКМ по заряженным блокам с помощью посоха техномага для того, чтобы увидеть все входящие типы энергии к данному блоку и откуда они приходят.  Очки техномага также позволят вам увидеть разорванные энерголинии; Где раньше была энерголиния, но что-то пошло не так (например, проводник был сломан). Разорванные энерголинии не могут быть сломаны руками, но могут быть заменены другими блоками.
+compendium.chalk.page1=Магический мел используется при создании #9ритуалов#0 для отрисовки нужных форм на земле.
+compendium.journal.page1=Журнал используется для #9сохранения опыта#0 для дальнейшего использования. Этот опыт может быть #9восстановлен позднее при чтении журнала#0.
+compendium.deficit_crystal.page1=Часто называемый антиматерией в магии, кристалл недостатка представляет собой пустоту в ткани реальности. Вам удалось создать ее утонченную и кристаллизированную версию. Такие кристаллы чаще всего используются для деконструкции вещей.
+
+##Ores
+
+compendium.item.ore.vinteum_dust.name=Винтеумная пыль
+compendium.item.ore.arcane_compound.name=Тайная смесь
+compendium.item.ore.arcane_ash.name=Тайный пепел
+compendium.item.ore.purified_vinteum_dust.name=Очищенная винтеумная пыль
+compendium.item.ore.chimerite.name=Химерит
+compendium.item.ore.blue_topaz.name=Синий топаз
+compendium.item.ore.sunstone.name=Солнечный камень
+compendium.item.ore.moonstone.name=Лунный камень
+
+compendium.vinteum_dust.page1=В одной небольшой деревушке, осушенные колодцы которой заросли лианами, я нашел винтеумную руду и решил сразу же приготовить ее в печи. В результате я получил ценный магический порошок.
+compendium.arcane_compound.page1=Тайная смесь создается путем смешивания материалов, добытых из нескольких измерений и используется для создания тайного пепла
+compendium.arcane_ash.page1=Энергоемкость тайной пыли, создаваемой при обжиге #5тайной смеси#0 в печи, делает ее важным ингридиентом для всех улучшенных магических устройств.
+compendium.purified_vinteum_dust.page1=Добавляя #5тайный пепел#0 для усиления ее магических свойств, #5лазурноцвет#0 в качестве катализатора и #5пустынную звездку#0 для высвобождения нестабильности, вы можете очистить винтеумную пыль, сильно увеличив ее энергоемкость.
+compendium.chimerite.page1=Благодаря своей способности переливаться всеми цветами радуги, химерит используется в заклинаниях, где требуются иллюзии или значительные изменения реальности.
+compendium.blue_topaz.page1=Синий топаз достаточно распространен по всему миру и часто используется магами в качестве кристалла начального уровня для сосредоточения в нем эфира.
+compendium.sunstone.page1=Солнечный камень встречается только в самых жарких местах в мире и за его пределами. Требует очень интенсивного тепла и очень низкого давления. Обычно встречается в лавовых озерах нижнего мира, но может попасться и в лавовых водоемах обычного мира, если вам повезет.
+compendium.moonstone.page1=Иногда в ночном небе можно увидеть метеор, падающий с неба. Метеоры содержат редкий минерал - Лунный камень. Откуда точно летят эти метеоры никто пока не знает, но магические свойства лунного камня сильно превосходят свойства всех остальных камней в мире. Исследования показали, что метеоры падают чаще всего ближе к полной луне.
+
+##Essence
+
+compendium.item.essence.essence.name=Эссенция
+compendium.item.essence.essence_arcane.name=Магия
+compendium.item.essence.essence_earth.name=Земля
+compendium.item.essence.essence_air.name=Воздух
+compendium.item.essence.essence_fire.name=Огонь
+compendium.item.essence.essence_water.name=Вода
+compendium.item.essence.essence_nature.name=Природа
+compendium.item.essence.essence_ice.name=Лед
+compendium.item.essence.essence_lightning.name=Молния
+compendium.item.essence.essence_life.name=Жизнь
+compendium.item.essence.essence_ender.name=Край
+compendium.item.essence.pure_essence.name=Чистая эссенция
+compendium.item.essence.base_essence_core.name=Базовое ядро эссенции
+compendium.item.essence.high_essence_core.name=Улучшенное ядро эссенции
+compendium.item.essence.essence_bag.name=Сумка для эссенций
+
+compendium.essence.page1=Эссенции используются как в крафтах магических вещей, так и в качестве реагентов для заклинаний.  Стихийные эссенции можно получить с соответствующих хранителей стихий, но также их можно создать в #5Очистителе эссенции#0.
+compendium.essence_bag.page1=Сумка для эссенций вмещает в себе 12 дополнительных слотов для всех видов эссенций для длительных путешествий.
+
+##Runes
+
+compendium.item.rune.runes.name=Руны
+compendium.item.rune.rune_blank.name=Пустая руна
+compendium.item.rune.rune_black.name=Черная руна
+compendium.item.rune.rune_brown.name=Коричневая руна
+compendium.item.rune.rune_cyan.name=Бирюзовая руна
+compendium.item.rune.rune_gray.name=Серая руна
+compendium.item.rune.rune_green.name=Зеленая руна
+compendium.item.rune.rune_light_blue.name=Светло-синяя руна
+compendium.item.rune.rune_light_gray.name=Светло-серая руна
+compendium.item.rune.rune_lime.name=Лаймовая руна
+compendium.item.rune.rune_magenta.name=Сиреневая руна
+compendium.item.rune.rune_orange.name=Оранжевая руна
+compendium.item.rune.rune_pink.name=Розовая руна
+compendium.item.rune.rune_yellow.name=Желтая руна
+compendium.item.rune.rune_purple.name=Фиолетовая руна
+compendium.item.rune.rune_red.name=Красная руна
+compendium.item.rune.rune_white.name=Белая руна
+compendium.item.rune.rune_bag.name=Сумка для рун
+
+compendium.runes.page1=Руны - это "строительные блоки" для заклинаний. При соединении рун с различными предметами в правильной комбинации можно получить свиток магического заклинания.
+compendium.rune_bag.page1=Сумка для рун может хранить в себе немного рун, помогая сохранить место в инвентаре. При наличии рун в сумке ключевые камни смогут взаимодействовать с ними для того, чтобы менять текущую выбранную комбинацию.
+
+##Armor
+
+###Mage Armor
+
+compendium.item.armor.mage.mage_armor.name=Броня мага
+compendium.item.armor.mage.helmet_mage.name=Капюшон мага
+compendium.item.armor.mage.chest_mage.name=Мантия мага
+compendium.item.armor.mage.legs_mage.name=Поножи мага
+compendium.item.armor.mage.boots_mage.name=Боты мага
+
+compendium.mage_armor.page1=Улучшенная версия обычной мантии. Имеет чуть больше прочности и защиты. Броня мага легко поддается зачарованию за счет магических рун, а также самовосстанавливается с помощью маны ее носителя. Полный комплект брони мага дает носителю бонус регенерации маны и немного усиляет все заклинания.
+
+###Mage Armor
+
+compendium.item.armor.battlemage.battlemage_armor.name=Броня боевого мага
+compendium.item.armor.battlemage.helmet_battlemage.name=Браслет боевого мага
+compendium.item.armor.battlemage.chest_battlemage.name=Доспехи боевого мага
+compendium.item.armor.battlemage.legs_battlemage.name=Поножи боевого мага
+compendium.item.armor.battlemage.boots_battlemage.name=Боты боевого мага
+
+compendium.battlemage_armor.page1=Дается только магам, доказавшим свое непревзойденное мастерство. Имеет больше прочности и защиты, чем броня мага, но дает меньше магических бонусов, медленнее самовосстанавливается и имеет меньший потенциал к зачарованиям. Броня боевого мага также может получать опыт, за который откроются защитные заклинания на помощь носителю, которые будут расходовать некоторое количество запаса магии из брони. Запас будет постепенно восстанавливаться при помощи вашей маны.
+
+##Affinity Tomes
+
+compendium.item.affinity_tomes.affinity_tome.name=Том родства
+compendium.item.affinity_tomes.tome_none.name=Том родства: Пусто
+compendium.item.affinity_tomes.tome_arcane.name=Том родства: Магия
+compendium.item.affinity_tomes.tome_earth.name=Том родства: Земля
+compendium.item.affinity_tomes.tome_air.name=Том родства: Воздух
+compendium.item.affinity_tomes.tome_fire.name=Том родства: Огонь
+compendium.item.affinity_tomes.tome_water.name=Том родства: Вода
+compendium.item.affinity_tomes.tome_nature.name=Том родства: Природа
+compendium.item.affinity_tomes.tome_ice.name=Том родства: Лед
+compendium.item.affinity_tomes.tome_lightning.name=Том родства: Молния
+compendium.item.affinity_tomes.tome_life.name=Том родства: Жизнь
+compendium.item.affinity_tomes.tome_ender.name=Том родства: Край
+
+compendium.affinity_tome.page1=Томы родства содержат большое количество информации, собираемой магами разных стихий в течении многих лет. За исключением пустого тома, все они будут давать вам после прочтения 20%-ное повышение родства со стихией тома. А также будут снижать прогресс родства со всеми другими стихиями на 5/10/15% в зависимости от противоположности этой стихии.
+compendium.tome_none.page1=Пустой том родства - это специальный том, который может разблокировать заблокированное родство. Он уменьшит прогресс родства с каждой стихией на 20% без усиления какой-либо из них.
+
+##Foci
+
+compendium.item.foci.foci.name=Фокусы
+compendium.item.foci.charge_focus.name=Фокус на энергию
+compendium.item.foci.mana_focus.name=Фокус на ману
+compendium.item.foci.lesser_focus.name=Малый фокус
+compendium.item.foci.standard_focus.name=Обычный фокус
+compendium.item.foci.greater_focus.name=Большой фокус
+compendium.item.foci.item_focus.name=Фокус на предмет
+compendium.item.foci.player_focus.name=Фокус на игрока
+compendium.item.foci.monster_focus.name=Фокус на монстра
+compendium.item.foci.creature_focus.name=Фокус на существ
+
+compendium.foci.page1=Фокусы в Ars Magica используются в устройствах для того, чтобы изменять их функциональность.
+compendium.charge_focus.page1=Фокус на энергию используется для того, чтобы увеличивать скорость зарядки устройств Ars Magica. При использовании в #9печке#0 и #9тайном реконструкторе#0 будет увеличена также их скорость работы.
+compendium.mana_focus.page1=Фокус на ману используется для того, чтобы уменьшить стоимость операций устройств Ars Magica.
+compendium.lesser_focus.page1=Малый фокус используется в различных устройствах AM2 и заставляет их работать по-разному.
+compendium.standard_focus.page1=Обычный фокус используется в различных устройствах AM2 и заставляет их работать по-разному.
+compendium.greater_focus.page1=Большой фокус используется в различных устройствах AM2 и заставляет их работать по-разному.
+compendium.item_focus.page1=Фокус на предметы исполльзуется в #9камне ясновидения#0 и заставляет его искать близлежайшие предметы на земле.
+compendium.player_focus.page1=Фокус на игрока исполльзуется в #9камне ясновидения#0 и заставляет его искать ближайших игроков.
+compendium.monster_focus.page1=Фокус на монстра исполльзуется в #9камне ясновидения#0 и заставляет его искать ближайших монстров (Зомби, Скелет и т.д.).
+compendium.creature_focus.page1=Фокус на существ исполльзуется в #9камне ясновидения#0 и заставляет его искать ближайших существ (Овцы, Коровы и т.д.).
+
+##Mana Potions
+
+compendium.item.mana_potion.mana_potion.name=Зелья маны
+compendium.item.mana_potion.mana_potion_lesser.name=Малое зелье маны
+compendium.item.mana_potion.mana_potion_standard.name=Обычное зелье маны
+compendium.item.mana_potion.mana_potion_greater.name=Большое зелье маны
+compendium.item.mana_potion.mana_potion_epic.name=Эпичное зелье маны
+compendium.item.mana_potion.mana_potion_legendary.name=Легендарное зелье маны
+compendium.item.mana_potion.mana_boost_potion.name=Эфирное зелье
+compendium.item.mana_potion.mana_martini.name=Мартини маны
+
+compendium.mana_potion.page1=Зелья маны восстанавливают ману мгновенно при использовании. После использования вы получите назад пустые пузырьки. Кроме того, 3 зелья можно соединить в связку с помощью нитки. Связка может использоваться 3 раза и также вернет по пузырьку за каждое выпитое зелье, а после последнего еще и нитку.
+compendium.mana_potion_lesser.page1=Малое зелье маны - это магический эквивалент к кружке кофе: короткий заряд силы, который не продержится на весь день. При использовании восстанавливает 100 маны.
+compendium.mana_potion_standard.page1=Обычное зелье маны восстанавливает приличное количество маны в сравнении с малым зельем за не очень большую материальную стоимость. При использовании восстанавливает 250 маны.
+compendium.mana_potion_greater.page1=Большое зелье маны использует силу #5винтеума#0 в сочетании с #9Неловким зельем#0 на варочной стойке, чтобы восстановить значительное количество маны. При использовании восстанавливает 2000 маны.
+compendium.mana_potion_epic.page1=Эпичное зелье маны создается путем смешивания #5тайного пепла#0 с #9Неловким зельем#0 на варочной стойке и восстанавливает 5000 маны за зелье.
+compendium.mana_potion_legendary.page1=Легендарное зелье маны создается путем смешивания #5очищенной винтеумной пыли#0 с #9Неловким зельем#0 на варочной стойке. Одно зелье будет восстанавливать чудовищные 10000 маны!
+compendium.mana_boost_potion.page1=Взяв #5ведро жидкого эфира#0 и смешав его с #5химеритом#0 и #5корнем тармы#0, маг может создать зелье, дающее временное увеличение максимального количества маны. К сожалению, процесс очень не эффективный и большая часть жидкого эфира теряется.
+compendium.mana_martini.page1=В честь финального релиза AM2 от Mithion, #9версия которого равна 007#0, вы теперь можете создавать мартини маны. При использовании оно даст вам 25%-ное снижение выгорания при использовании заклинаний.
+
+##Binding Catalysts
+
+compendium.item.binding_catalyst.binding_catalysts.name=Катализаторы связывания
+compendium.item.binding_catalyst.binding_catalyst_pickaxe.name=Катализатор связывания: Кирка
+compendium.item.binding_catalyst.binding_catalyst_axe.name=Катализатор связывания: Топор
+compendium.item.binding_catalyst.binding_catalyst_sword.name=Катализатор связывания: Меч
+compendium.item.binding_catalyst.binding_catalyst_shovel.name=Катализатор связывания: Лопата
+compendium.item.binding_catalyst.binding_catalyst_hoe.name=Катализатор связывания: Мотыга
+compendium.item.binding_catalyst.binding_catalyst_bow.name=Катализатор связывания: Лук
+compendium.item.binding_catalyst.binding_catalyst_shield.name=Катализатор связывания: Щит
+
+compendium.binding_catalysts.page1=Катализаторы связывания используются формой #5Привязка#0 для того, чтобы определять тип инструмента, который будет привязываться.
+
+##Flicker Focus
+
+compendium.item.flickerfocus.flicker_focus.name=Светлячковый фокус
+compendium.item.flickerfocus.flicker_focus_itemtransport.name=Светлячковый фокус: Перемещение предметов
+compendium.item.flickerfocus.flicker_focus_interdiction.name=Светлячковый фокус: Ограждение
+compendium.item.flickerfocus.flicker_focus_containment.name=Светлячковый фокус: Сдерживание
+compendium.item.flickerfocus.flicker_focus_packed_earth.name=Светлячковый фокус: Уплотненная земля
+compendium.item.flickerfocus.flicker_focus_flatlands.name=Светлячковый фокус: Плоскоземье
+compendium.item.flickerfocus.flicker_focus_progeny.name=Светлячковый фокус: Размножение
+compendium.item.flickerfocus.flicker_focus_butchery.name=Светлячковый фокус: Бойня
+compendium.item.flickerfocus.flicker_focus_lunartides.name=Светлячковый фокус: Лунный прилив
+compendium.item.flickerfocus.flicker_focus_light.name=Светлячковый фокус: Освещение
+compendium.item.flickerfocus.flicker_focus_felled_oak.name=Светлячковый фокус: Лесоповал
+compendium.item.flickerfocus.flicker_focus_gentle_rains.name=Светлячковый фокус: Орошение
+compendium.item.flickerfocus.flicker_focus_natures_bounty.name=Светлячковый фокус: Природная щедрость
+compendium.item.flickerfocus.flicker_focus_fishing.name=Светлячковый фокус: Рыбалка
+
+compendium.flicker_focus.page1=Светлячковые фокусы создают пригодные условия обитания для светлячков внутри #9Клеток для светлячков#0 и заставляют их выполнять различные задачи. При работе от энергии фокусы можно улучшить, установив вплотную клетку со светлячками нужных типов.
+
+compendium.flicker_focus_itemtransport.page1=Воздушные светлячки в этом фокусе настраиваются на передвижение предметов. #9Кристаллы импорта и экспорта#0 при привязке к #9Клетке для светлячков#0 укажут инвентари, с которыми светлячки должны взаимодействовать. Чтобы привязать клетку к кристаллу, просто кликните #9кристальным ключем#0 ПКМ на клетке, а после на кристалле. Фокус может работать без энергии, но очень медленно.
+compendium.flicker_focus_itemtransport.page2=!dУлучшения: !d Магия: !l Увеличивает размер перемещаемого стека за раз на 32 предмета (максимум 64 для обычного сундука) !d Молния: !l Увеличивает скорость работы фокуса (задержку между перемещениями). Каждый новый светлячок так же оказывает эффект, но слабее, чем предыдущий. Большинство магов считают, что ставить больше трех бессмысленно.
+
+compendium.flicker_focus_interdiction.page1=Магические и воздушные светлячки при совместной работе и достаточным количеством энергии могут создавать невидимое ограждение вокруг своей клетки в радиусе 6 блоков.
+compendium.flicker_focus_interdiction.page2=!dУлучшения: !d Край: !l Добавляет эффект #9Сдерживания#0. !d Лед: !l Увеличивает радиус на 1 блок.
+
+compendium.flicker_focus_containment.page1=Магические и воздушные светлячки при совместной работе и достаточным количеством энергии могут создавать невидимое ограждение вокруг своей клетки в радиусе 6 блоков, которое будет сдерживать всех существ, кроме игрока.
+compendium.flicker_focus_containment.page2=!dУлучшения: !d Магия: !l Добавляет эффект #9Ограждения#0. !d Лед: !l Увеличивает радиус на 1 блок.
+
+compendium.flicker_focus_packed_earth.page1=Земляные светлячки в этом фокусе могут сглаживать поверхность в радиусе 6 блоков возле клетки, используя материалы (блоки) из инвентаря под клеткой. Фокус может работать без энергии, но очень медленно.
+
+compendium.flicker_focus_flatlands.page1=Земляные и ледяные светлячки в этом фокусе могут сглаживать поверхность в радиусе 6 блоков возле клетки. Фокус может работать без энергии, но очень медленно.
+
+compendium.flicker_focus_progeny.page1=Светлячки природы в этом фокусе с помощью любого типа энергии могут пронизывать атмосферу любовью, заставляя животных в радиусе 8 блоков размножаться. По умолчанию время одной операции равно 2000 тиков (100 секунд).
+compendium.flicker_focus_progeny.page2=!dУлучшения: !d Молния: !l Уменьшает время одной операции (нет смысла ставить больше 4, т.к. минимум равен 600 тикам или же 30 секундам). Каждое улучшение умножает продолжительность эффекта в 0.75 раз.
+
+compendium.flicker_focus_butchery.page1=Светлячки в этом фокусе постоянно конфликтуют. Огненный хочет поглотить жизнь вокруг себя, а жизненный защищает ее. Баланс этого конфликта уничтожает всех животных в радиусе 6 блоков, оставляя минимум по 2 животных каждого типа. Конечно же при условии, что огненный светлячок имеет доступ к энергии для выполнения своей ужасной работы.
+
+compendium.flicker_focus_lunartides.page1=Три светлячка в этом фокусе используют общую силу для того, чтобы перемещать все упавшие метеоры в радиусе 128 блоков к себе в радиусе 8 блоков. Требуется достаточно много энергии, чтобы держать светлячков в готовности и наблюдении за метеорами.
+
+compendium.flicker_focus_light.page1=Светлячки огня и молнии в этом фокусе могут подсвечивать территорию в радиусе 16 блоков вокруг клетки при помощи силы солнечного камня в составе их фокуса.
+
+compendium.flicker_focus_felled_oak.page1=Светлячок природы в этом фокусе занимается поиском деревьев в радиусе 6 блоков от клетки. После нахождения подходящей цели он передает очередь светлячку молний, который срубает это дерево по блоку за раз. Фокус может работать без энергии, но очень медленно.
+compendium.flicker_focus_felled_oak.page2=!dУлучшения: !d Молния: !l Ускоряет процесс срубки деревьев. !d Природа: !l Светлячки будут пытаться повторно сажать саженцы из соседнего сундука.
+
+compendium.flicker_focus_gentle_rains.page1=Водный светлячок в этом фокусе будет увлажнять поверхность в радиусе 6 блоков от клетки.
+
+compendium.flicker_focus_natures_bounty.page1=Светлячки природы, жизни и воды в этом фокусе используют общую силу для того, чтобы помогать всем растениям в радиусе 6 блоков расти быстрее. Фокус может работать без энергии, но очень медленно.
+compendium.flicker_focus_natures_bounty.page2=!dУлучшения: !d Вода: !l Так же будет применяться эффект #9Орошение#0.
+
+compendium.flicker_focus_fishing.page1=Светлячки воды и природы в этом фокусе сообща ищут существ, живущих в воде. Для работы фокус требует наличия квадрата 3х3 из воды под клеткой с глубиной как минимум в 2 блока. Рыба будет выводиться в соседний инвентарь или выбрасываться в виде предмета, если никакой инвентарь не присоединен. !d Для работы также должен быть подключен сигнал красного камня. Фокус может работать без энергии, но очень медленно.
+compendium.flicker_focus_fishing.page2=!dУлучшения: !d Молния: !l Увеличивает скорость работы и также энергопотребление
+
+##Inscription Upgrades
+
+compendium.item.inscription_upgrades.inscription_upgrades.name=Улучшения стола начертания
+compendium.item.inscription_upgrades.inscription_tier_1_upgrade.name=Улучшение стола начертания 1 уровня
+compendium.item.inscription_upgrades.inscription_tier_2_upgrade.name=Улучшение стола начертания 2 уровня
+compendium.item.inscription_upgrades.inscription_tier_3_upgrade.name=Улучшение стола начертания 3 уровня
+
+compendium.inscription_upgrades.page1=Эти улучшения расширяют #9Стол начертания#0, увеличивая число групп форм, которые вы можете использовать.
+#endregion
+
+#region Mobs
+compendium.category.mob.name=Мобы
+compendium.category.mob.flicker.name=Светлячки
+
+compendium.mob.hecate.name=Геката
+compendium.mob.mana_elemental.name=Элементаль маны
+compendium.mob.mana_creeper.name=Крипер маны
+compendium.mob.light_mage.name=Светлый маг
+compendium.mob.dark_mage.name=Темный маг
+compendium.mob.fire_elemental.name=Элементаль огня
+compendium.mob.water_elemental.name=Элементаль воды
+compendium.mob.earth_elemental.name=Элементаль земли
+compendium.mob.dryad.name=Дриада
+compendium.mob.darkling.name=Дарклинг
+compendium.mob.hellcow.name=Hell Cow
+
+compendium.hecate.page1=Геката - темный дух с нижнего мира. Иногда грань между нижним и обычным мирами ослабевает, позволяя гекатам проходить сквозь нее в обычный мир. Гекаты похожи на ассасинов - они передвигаются очень быстро и могут ненадолго становиться невидимыми при атаке. Они наносят большой урон, но, к счастью, не имеют достаточной устойчивости. Ходят слухи, что если вы будете двигаться медленно и достаточно тихо, то они вас не заметят, пока вы не приблизитесь к ним очень близко.
+compendium.mana_elemental.page1=Элементаль маны состоит осколков винтеума, удерживаемых вместе со стержнями эфира. Это высокие существа, часто достигающие 3м в высоту. Они атакуют лучами сырой маны, которые набрасываются и наносят небольшой урон, но после этого крадут ману и возвращаются к элементалю маны, исцеляя его при помощи похищенной маны. Они очень устойчивы к физическим атакам. Если иссушить всю ману из элементаля, он погибнет.
+compendium.mana_creeper.page1=Крипер маны представляет собой разновидность обычного крипера, который вместо сильного взрыва расщепляется в вихрь маны, который иссушает ману отовсюду поблизости. Вихрь растет дольше, чем живет, но, к счастью, все это длится не более нескольких секунд. Вихрь иссушает больше маны, чем у вас есть, поэтому это угрожает даже самым могущественным магам.
+compendium.light_mage.page1=Светлые маги - участники белого совета. Это мощные маги, которые посвятили себя силам света. Они лечат дружелюбных игроков и помогают им в борьбе с различными монстрами, что населяют мир Minecraft. Они особенно недолюбливают Темных магов.
+compendium.dark_mage.page1=Темные маги - участники темного совета. Это ужасные заклинатели, способные на ужасающие магические подвиги. Эти подвиги требуют жертв, тем не менее, темные маги - это оскорбленные и извращенные существа. Они будут сражаться со всеми живыми существами, кроме нежити (которые, технически, все равно "не живут") и криперов. Они уйдут с дороги, чтобы сразиться со Светлым магом.
+compendium.fire_elemental.page1=Огненные элементали представляют собой существ из чистого огня. Они разрушительны и поджигают все на своем пути. Огненные элементали встречаются только в нижнем мире.
+compendium.water_elemental.page1=Водные элементали представляют собой существ из чистой воды. Их можно встретить там, где вода в изобилии. Они атакуют группами, используя воду, чтобы отталкивать и притягивать свою цель. Они могут накладывать на свои цели эффект "Подводная могила", который затягивает ничего не подозревающие цели в ужасающие черные глубины.
+compendium.earth_elemental.page1=Земные элементали встречаются в глубоких пещерах. Они пассивны по своей природе и обладают высокой устойчивостью к физическим атакам. В сочетании со своим большим объемом здоровья, они могли бы стать настоящими танками, если бы кто-то научился их призывать. Их атаки заставляют заставляют цель сосредоточиться на них и они скачут от цели к цели.
+compendium.dryad.page1=Дриады - это мирные существа, часто встречающиеся в лесах и лугах. Их можно приманить саженцем дерева и они будут периодически ускорять рост ближайших растений.
+compendium.darkling.page1=Дарклинги - это маленькие собакоподобные существа, встречающиеся в нижнем мире. Их тела становятся менее видимыми в течении ночи, исчезая почти полностью в полночь. По мере приближения рассвета Дарклинги начнут постепенно появляться снова, пока не станут полностью видимыми в течении дня.
+compendium.hellcow.page1=Му? Му му му, му му му му. Му. Му му му му му, му му му? Му! Му му му му му - му му му. !d 1.) Му му му му !d 2.) Му, му му му му. !d 3.) Му! !d Му, му му му, му му му. Му му му му му му. Му, му!
+
+compendium.mob.flicker.flickers.name=Светлячки
+compendium.mob.flicker.water_flicker.name=Светлячок воды
+compendium.mob.flicker.air_flicker.name=Светлячок воздуха
+compendium.mob.flicker.earth_flicker.name=Светлячок земли
+compendium.mob.flicker.fire_flicker.name=Светлячок огня
+compendium.mob.flicker.lightning_flicker.name=Светлячок молний
+compendium.mob.flicker.nature_flicker.name=Светлячок природы
+compendium.mob.flicker.ice_flicker.name=Светлячок льда
+compendium.mob.flicker.arcane_flicker.name=Светлячок магии
+compendium.mob.flicker.life_flicker.name=Светлячок жизни
+compendium.mob.flicker.ender_flicker.name=Светлячок края
+
+compendium.flickers.page1=Светлячки представляют собой уменьшенные версии элементалей из различных элементарных измерений, пришедшие в наш мир. Их магическая связь незначительна и они способны телепортироваться туда и обратно между своим и нашим измерениями. Вся #5Автоматизация Ars Magica#0 начинается именно с них. !d Светлячки робкие по своей природе и очень быстро телепортируются в свое измерение, если чуют угрозу или их атакуют.  Светлячков можно приманить небольшим, но продолжительным количеством магии, уменьшив вероятность побега. #5Светлячков можно захватить при помощи банки для светлячка#0.
+compendium.flickers.page2=Для каждой стихии есть свой тип светлячка. Светлячки различных стихий ведут себя по-разному. Например, воздушные светлячки предпочитают держаться высоко над землей, в то время как земляные светлячки предпочитают оставаться внизу. !d Светлячки различных стихий встречаются вблизи биомов, которые ассоциируются с их стихией.
+compendium.water_flicker.page1=#5Водные светлячки#0 встречаются в биомах с преобладанием воды. Например, болото, река, океан.
+compendium.air_flicker.page1=#5Воздушные светлячки#0 встречаются где угодно над землей (~25 блоков над поверхностью).
+compendium.earth_flicker.page1=#5Земляные светлячки#0 встречаются где угодно, но предпочитают подземелье. Они располагаются близко к земле.
+compendium.fire_flicker.page1=#5Огненные светлячки#0 встречаются в нижнем мире..
+compendium.lightning_flicker.page1=#5Светлячков молний#0 можно найти на пляжах и над океанами в небе, где любят формироваться бури. Во время шторма они встречаются где угодно.
+compendium.nature_flicker.page1=#5Природные светлячки#0 встречаются в лесах.
+compendium.ice_flicker.page1=#5Ледяные светлячки#0 располагаются в замороженных биомах. Например, тайга.
+compendium.arcane_flicker.page1=#5Магических светлячков#0 можно найти в магических биомах. Они очень любят Witchwood forest (магический лес ArsMagica).
+compendium.life_flicker.page1=#5Светлячки жизни#0 встречаются где угодно. У любого светлячка есть вероятность при спауне стать светлячком жизни вместо своей оригинальной стихии.
+compendium.ender_flicker.page1=#5Светлячки края#0 встречаются в краю. Иногда телепортирующийся эндермен может открыть достаточно большую дыру в пространстве для проскальзывания светлячков края.
+#endregion
+
+#region Bosses
+compendium.category.boss.name=Боссы
+
+compendium.boss.air_guardian.name=Хранитель Воздуха
+compendium.boss.arcane_guardian.name=Хранитель Магии
+compendium.boss.earth_guardian.name=Хранитель Земли
+compendium.boss.fire_guardian.name=Хранитель Огня
+compendium.boss.life_guardian.name=Хранитель Жизни
+compendium.boss.lightning_guardian.name=Хранитель Молний
+compendium.boss.ender_guardian.name=Хранитель Края
+compendium.boss.nature_guardian.name=Хранитель Природы
+compendium.boss.water_guardian.name=Хранитель Воды
+compendium.boss.winter_guardian.name=Хранитель Зимы
+
+compendium.air_guardian.page1=Хранитель воздуха состоит из потоков ветра и в основном использует атаки, основанные на отдаче. Было бы глупо сражаться с ним без какой-либо защиты от падения. Хранитель воздуха использует мощные заклинания дальнего боя, но ему требуется много концентрации, чтобы завершить чтение некоторых из них... !l Рекомендуемый магический уровень: 35
+compendium.air_guardian.page2=Для призыва Хранителя воздуха постройте платформу в облаках (на высоте 150 и выше), выложите на ней кольцо из золотой инкрустрации и бросьте в центр воздушную эссенцию.
+compendium.arcane_guardian.page1=Хранитель магии - могущественный маг древности. В его распоряжении большое количество заклинаний. Подготовьтесь к магическому дуэлю, который проверит все ваши знания о контрзаклинаниях. Хранитель магии защищен мощной печатью и имеет так же много приемов для ближнего боя, как и для дальнего. !l Рекомендуемый магический уровень: 45
+compendium.arcane_guardian.page2=Чтобы призвать Хранителя магии, сначала постройте храм знаний. Структура состоит из двух столбов книжных полок по 3 блока высотой с аналоем на земле между ними. На аналое устанавливается тайный компендиум. Прямо напротив структуры вплотную располагается кольцо из железной инкрустрации и в ее центр бросается магическая эссенция.
+compendium.earth_guardian.page1=Очень выносливый противник. Полностью состоит из камня и способен противостоять невероятным количествам физических атак. Будьте готовы испытать на себе его вихревые атаки и силу самой земли. !l Рекомендуемый магический уровень: 25
+compendium.earth_guardian.page2=Чтобы призвать Хранителя земли, сначала постройте 3х3 платформу из обсидиана с резным каменным кирпичом по центру. Далее установите кольцо из железной инкрустрации поверх обсидиана и по 1 винтеумному факелу вокруг кольца по центру на каждой из сторон (4 шт). И наконец бросьте в центр синий топаз, изумруд и химерит. !d После призыва Хранитель земли очистит большую территорию от лишних блоков, поэтому не рекомендуется призывать его у себя на базе.
+compendium.fire_guardian.page1=Хранитель огня - ходячее инферно из глубин нижнего мира. Он очень не любит, когда кто-то проносит воду в его мир. Чтобы призвать его, в нижнем мире установите платформу 3х3 из обсидиана с блоком угля по центру. Поверх обсидиана установите кольцо из золотой инкрустрации. Бросьте водную эссенцию на блок угля и Хранитель огня появится. Будьте готовы к битве! !l Рекомендуемый магический уровень: 90
+compendium.life_guardian.page1=Хранитель жизни обычно предпочитает не вмешиваться в естетвенный ход вещей. Пока кто-то не совершает ужасающий поступок против жизни. К счастью (или к несчастью, в зависимости от того, как вы на это смотрите) для вас, вы придумали способ сделать это. Создайте кольцо 5х5 с помощью волшебного мелка и установите свечи оберега вокруг кольца по центру каждой из сторон (всего 4 свечи).
+compendium.life_guardian.page2=Круг поможет сдержать и сфокусировать действие. Далее при полной луне принесите в жертву жителя деревни внутри круга. Этого должно быть достаточно, чтобы разозлить Хранителя жизни на битву. !d Монстр здесь только вы.
+compendium.life_guardian.page3=Хранитель жизни не атакует сам по себе, но может решить немного отбросить вас. Обычно он предпочитает, чтобы другие боролись вместо него, наполняя их своей огромной силой. В свою очередь, другие часто жертвуют своей жизнью ради защиты Хранителя. Битва с Хранителем жизни не похожа ни на одну из битв с другими хранителями. !d Рекомендуемый магический уровень: 50
+compendium.lightning_guardian.page1=Хранитель молний столь же непредсказуем, сколь и силен. Он может стрелять молниями на невероятной дистанции и по слухам может даже управлять синапсами внутри мозгов живых существ. Также он может воспроизводить эффект, подобный телекинезу, при помощи огромного количества концентрированного статического электричества, который оставляет несчастную жертву открытой для других атак.
+compendium.lightning_guardian.page2=Чтобы призвать Хранителя молний, создайте кольцо из золотой инкрустрации, установите батарею маны по центру и 2 железные решетки на нее (получится шпиль громоотвода). !d И наконец, дождитесь шторма (молния ударит в громоотвод и Хранитель призовется). !d Убедитесь в том, что вы хорошо защищены, т.к. Хранитель молний способен нанести огромный урон за короткий промежуток времени. Рекомендуемый магический уровень: 70
+compendium.ender_guardian.page1=Многочисленные сказки шепотом рассказывают о Хранителе края. Его глаза пылают отвратительным фиолетовым светом. Его чешуйчатая кожа такая же черная, как безлунная ночь. Увы, все эти рассказы о ходячем ужасе в лучшем случае расплывчаты и всегда окутаны завесой тайн. Никто никогда не видел Хранителя края. Больше всего в рассказах фигурирует Магнус Северинус, Архимаг Второй Эры.
+compendium.ender_guardian.page2=На пике своей силы он, по слухам, мог двигать горы силой мысли, создавать пышные сады из самых бесплодных земель и призывать защитников, которые могли останавливать целую армию. Увы, его самая надежная советница заболела и ее место занял ее недоброжелательный пасынок. Раздраженный льстивыми словами, поощряющими его силу и делающими его высокомерным, он собрал тайный совет вместе и перед всеми разорвал ткань между мирами, открыв портал в Край. Портал пульсировал мягкими фиолетовыми свечениями, которые как будто бы находились где-то в далеке от самого портала.
+compendium.ender_guardian.page3=Он прошел через портал и призвал Хранителя края. У него не оставалось времени кричать. Лист бумаги, пропитанный темной кровью, перелетел сквозь портал и в тот же момент он щель между измерениями захлопнулась. На бумаге был написан следующий ритуал:
+compendium.ender_guardian.page4=В Краю разместите платформу 3х3 из угольных блоков, поверх нее по центру установите черный аурем и окружите его кольцом из золотой инкрустрации. Зажгите огонь по центру каждой из сторон вне кольца и далее бросьте в центр конструкции эссенцию края и жемчуг края для того, чтобы дестабилизировать аурем и призвать Хранителя края. !d Эта бумага была заперта в волшебных сводках и забыта на тысячилетия... до этого момента.
+compendium.nature_guardian.page1=Хранитель природы страшен в бою. Он обладает смертельной косой, способной одолеть любого, и умением использовать ее. Только самые сильные или глупые стали мечтают заполучить ее. Те, кому удосужилось повстречаться с ним, заявляют, что он так же страшен в дальнем бою, как и в ближнем, если и не страшнее. !l Рекомендуемый магический уровень: 60
+compendium.nature_guardian.page2=Ходят слухи, что он защищает слуг природы, если их быстро уничтожают (спойлер: для призыва нужно как можно быстрее уничтожить 3 дриады). Природа может быть жестокой, но она никогда не потерпит избиение. !d Предупреждение: !l Это очень сильный босс и он может уничтожить даже самых стойких игроков.
+compendium.water_guardian.page1=Хранитель воды имеет уникальную сущность. Он всегда находится в жидком состоянии, что позволяет ему иногда уворачиваться от атак. Также он может обманывать, создавая свои копии и атакуя из засады, если кто-то повелся на приманку. !l Рекомендуемый магический уровень: 10
+compendium.water_guardian.page2=Чтобы призвать Хранителя воды, постройте кольцо из красной инкрустрации в любом биоме с преобладанием воды (океан, река и т.д.). Далее, во время дождя, бросьте в центр кольца лодку и ведро воды в память о пропавших в морях кораблях.
+compendium.winter_guardian.page1=Хранитель зимы - настоящее воплощение своего тезки [прим. переводчика: возможно, имеется в виду суровость зимы]. Он окружен холодными ветрами, которые подрывают силу всех, кто находится рядом с ним. Хранитель зимы избивает своих замороженных противников мощными дробящими ударами.
+compendium.winter_guardian.page2=Чтобы призвать Хранителя зимы, сначала найдите любой биом с преобладанием снега. Установите кольцо из золотой инкрустрации на землю и создайте в центре чучело Хранителю зимы: столб из двух блоков синего топаза и блок льда поверх них. Далее создайте вблизи кольца 3 снежных голема. Снеговики погибнут и появится Хранитель зимы. !d Предупреждение: !l Это очень сильный босс и он может уничтожить даже самых стойких игроков.
+#endregion
+
+# JEI
+am2.essence_refiner=Очиститель эссенции
+
+# Ritual shapes
+compendium.shape.hourglass.page1=Представляет собой две окружности, исходящие из креста (в виде восьмерки). В основном используется для увеличения продолжительности заклинаний
+compendium.shape.corruption.page1=Ритуал искажения. Искажает целевые объекты, превращая обелиски в темные ауремы и т.д.
+compendium.shape.celestialPurification.page1=Ритуал очищения небесной призмы. Превращает обелиск в небесную призму путем очищения
