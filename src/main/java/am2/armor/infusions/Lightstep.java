@@ -41,7 +41,7 @@ public class Lightstep extends ArmorImbuement{
 		BlockPos pos = player.getPosition().up();
 		int ll = world.getLightFor(EnumSkyBlock.BLOCK, pos);
 		if (ll < 7 && world.isAirBlock(pos)){
-			world.setBlockState(pos, BlockDefs.blockMageTorch.getDefaultState(), 2);
+			world.setBlockState(pos, BlockDefs.blockMageLight.getDefaultState(), 2);
 			return true;
 		}
 		return false;

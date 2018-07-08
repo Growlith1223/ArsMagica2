@@ -31,8 +31,9 @@ public class Colour extends SpellModifier{
 		for (Object obj : recipe) {
 			if (obj instanceof ItemStack) {
 				ItemStack is = (ItemStack) obj;
-				if (is.getItem().equals(Items.DYE))
-					NBTUtils.addTag(tag, SpellUtils.SPELL_DATA).setInteger("Color", is.getItemDamage());
+				if (is.getItem().equals(Items.DYE)) {
+					NBTUtils.addTag(tag, SpellUtils.SPELL_DATA).setInteger("Color", is.getMetadata());
+				}
 			}
 		}
 	}
@@ -43,8 +44,9 @@ public class Colour extends SpellModifier{
 
 	@Override
 	public float getModifier(SpellModifiers type, EntityLivingBase caster, Entity target, World world, NBTTagCompound nbt) {
-		if (type == SpellModifiers.COLOR)
+		if (type == SpellModifiers.COLOR) {
 			return NBTUtils.addTag(nbt, SpellUtils.SPELL_DATA).getInteger("Color");
+		}
 		return 0;
 	}
 

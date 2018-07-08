@@ -1,5 +1,6 @@
 package am2.spell.component;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
@@ -15,7 +16,9 @@ import am2.api.power.IPowerNode;
 import am2.api.rituals.IRitualInteraction;
 import am2.api.rituals.RitualShapeHelper;
 import am2.api.spell.SpellComponent;
+import am2.api.spell.SpellModifier;
 import am2.api.spell.SpellModifiers;
+import am2.blocks.BlockMageLight;
 import am2.buffs.BuffEffectIllumination;
 import am2.defs.BlockDefs;
 import am2.defs.ItemDefs;
@@ -23,10 +26,15 @@ import am2.defs.PotionEffectsDefs;
 import am2.items.ItemOre;
 import am2.particles.AMParticle;
 import am2.power.PowerNodeRegistry;
+import am2.spell.modifier.Colour;
+import am2.utils.NBTUtils;
 import am2.utils.SpellUtils;
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -64,8 +72,7 @@ public class Light extends SpellComponent implements IRitualInteraction{
 			return false;
 
 		if (!world.isRemote){
-			//TODO Colors
-			world.setBlockState(pos, BlockDefs.blockMageTorch.getDefaultState());
+			world.setBlockState(pos, BlockDefs.blockMageLight.getDefaultState().withProperty(BlockMageLight.COLOR, EnumDyeColor.byMetadata(getColor(stack))));
 		}
 
 		return true;
@@ -75,31 +82,20 @@ public class Light extends SpellComponent implements IRitualInteraction{
 	public EnumSet<SpellModifiers> getModifiers() {
 		return EnumSet.of(SpellModifiers.COLOR);
 	}
-
 	
-//	private int getColorMeta(ItemStack spell){
-//		int meta = 15;
-//		int color = 0xFFFFFF;
-//		if (SpellUtils.instance.modifierIsPresent(SpellModifiers.COLOR, spell, 0)){
-//			ISpellModifier[] mods = SpellUtils.instance.getModifiersForStage(spell, 0);
-//			int ordinalCount = 0;
-//			for (ISpellModifier mod : mods){
-//				if (mod instanceof Colour){
-//					byte[] data = SpellUtils.instance.getModifierMetadataFromStack(spell, mod, 0, ordinalCount++);
-//					color = (int)mod.getModifier(SpellModifiers.COLOR, null, null, null, data);
-//				}
-//			}
-//		}
-//
-//		for (int i = 0; i < 16; ++i){
-//			if (((ItemDye)Items.dye).field_150922_c[i] == color){
-//				meta = i;
-//				break;
-//			}
-//		}
-//
-//		return meta;
-//	}
+	private int getColor(ItemStack spell) {
+		int dye_color_num = 15;
+		if (SpellUtils.modifierIsPresent(SpellModifiers.COLOR, spell) ){
+			ArrayList<SpellModifier> modifiers = SpellUtils.getModifiersForStage(spell, -1);
+			for ( SpellModifier mod: modifiers) {
+				if( mod instanceof Colour) {
+					// not so good
+					dye_color_num = spell.getTagCompound().getCompoundTag("AM2").getCompoundTag(SpellUtils.SPELL_DATA).getCompoundTag(SpellUtils.SPELL_DATA).getInteger("Color");
+				}
+			}
+		};
+		return 15 - dye_color_num;
+	}
 
 	@Override
 	public boolean applyEffectEntity(ItemStack stack, World world, EntityLivingBase caster, Entity target){

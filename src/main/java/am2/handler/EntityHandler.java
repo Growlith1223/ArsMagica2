@@ -38,6 +38,7 @@ import am2.packet.AMPacketIDs;
 import am2.spell.ContingencyType;
 import am2.spell.SpellCastResult;
 import am2.trackers.EntityItemWatcher;
+import am2.utils.CloakUtils;
 import am2.utils.EntityUtils;
 import am2.utils.SpellUtils;
 import net.minecraft.client.Minecraft;
@@ -445,6 +446,8 @@ public class EntityHandler {
 			//GL11.glTranslatef(0, 0 - 0.5f * shrink, 0);
 			GL11.glScalef(1 - 0.5f * shrink, 1 - 0.5f * shrink, 1 - 0.5f * shrink);
 		}
+		
+		CloakUtils.renderCloakModel(event.getEntityPlayer(), mainModel, event.getPartialRenderTick());
 	}
 	
 	@SubscribeEvent

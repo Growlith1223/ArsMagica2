@@ -108,7 +108,7 @@ public class BlockDefs {
 	public static final BlockAM invisibleUtility = new BlockInvisibleUtility().registerAndName(new ResourceLocation("arsmagica2:invisible_utility"));
 	public static final BlockAM ores = new BlockArsMagicaOre().registerAndName(new ResourceLocation("arsmagica2:ore"));
 	public static final BlockAM blocks = new BlockArsMagicaBlock().registerAndName(new ResourceLocation("arsmagica2:block"));
-	public static final BlockAM blockMageTorch = new BlockMageLight().registerAndName(new ResourceLocation("arsmagica2:block_mage_light"));
+	public static final BlockAM blockMageLight = new BlockMageLight().registerAndName(new ResourceLocation("arsmagica2:block_mage_light"));
 	public static final BlockAMFlower desertNova = new BlockDesertNova().registerAndName(new ResourceLocation("arsmagica2:desert_nova"));
 	public static final BlockAMFlower cerublossom = new BlockAMFlower().registerAndName(new ResourceLocation("arsmagica2:cerublossom"));
 	public static final BlockAMFlower wakebloom = new BlockWakebloom().registerAndName(new ResourceLocation("arsmagica2:wakebloom"));
@@ -216,7 +216,7 @@ public class BlockDefs {
 		registerTexture(frost);
 		registerTexture(invisibleLight);
 		registerTexture(invisibleUtility);
-		registerTexture(blockMageTorch);
+		registerTexture(blockMageLight);
 		
 		//Building Blocks
 		registerTexture(magicWall);

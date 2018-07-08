@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -153,10 +154,10 @@ public class ParticleRenderer{
 		GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		Minecraft.getMinecraft().mcProfiler.startSection(name + "-render");
 
-		EntityLivingBase player = (EntityLivingBase) Minecraft.getMinecraft().getRenderViewEntity();
-		Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
-		Particle.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
-		Particle.interpPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+		Entity renderer = Minecraft.getMinecraft().getRenderViewEntity();
+		Particle.interpPosX = renderer.lastTickPosX + (renderer.posX - renderer.lastTickPosX) * partialTicks;
+		Particle.interpPosY = renderer.lastTickPosY + (renderer.posY - renderer.lastTickPosY) * partialTicks;
+		Particle.interpPosZ = renderer.lastTickPosZ + (renderer.posZ - renderer.lastTickPosZ) * partialTicks;
 
 		// bind the texture
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
